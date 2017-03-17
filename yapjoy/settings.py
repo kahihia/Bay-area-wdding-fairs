@@ -1,55 +1,42 @@
 # Django settings for yapjoy project.
-
+import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'app39782801@heroku.com'
-EMAIL_HOST_PASSWORD = '7tahzw8m0499'
+EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
+EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 LOGIN_URL = '/login/'
 ADMINS = (
     ('Adeel K', 'adeelpkpk@gmail.com'),
 )
-import os
-import pusher
 
-pusher.app_id = '267806'
-pusher.key = '235681c2c1c1ae380308'
-pusher.secret = '3db12c2387c3be546481'
+import pusher
+pusher.app_id = os.environ.get('PUSHER_APP_ID')
+pusher.key = os.environ.get('PUSHER_KEY')
+pusher.secret = os.environ.get('PUSHER_SECRET')
 
 MANAGERS = ADMINS
 DEFAULT_FROM_EMAIL = 'support@yapjoy.com'
+
+DB_NAME = os.environ.get('DB_NAME')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_HOST = os.environ.get('DB_HOST')
+DB_PORT = os.environ.get('DB_PORT')
+
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'dbi2kdfu97vnne',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'ue89o346vmgrnj',
-        'PASSWORD': 'pe4josv6oq78uibqbd4vpjvatf6',
-        'HOST': 'ec2-52-207-133-11.compute-1.amazonaws.com',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '5432',                      # Set to empty string for default.
+        'NAME': DB_NAME,                      # Or path to database file if using sqlite3.
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': DB_PORT,                      # Set to empty string for default.
         # 'CONN_MAX_AGE': 60,
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    #     'NAME': 'yapjoy',                      # Or path to database file if using sqlite3.
-    #     # The following settings are not used with sqlite3:
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'asd',
-    #     'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-    #     'PORT': '5432',                      # Set to empty string for default.
-    # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    #     'NAME': 'dbf9p7mq7lsq80',                      # Or path to database file if using sqlite3.
-    #     # The following settings are not used with sqlite3:
-    #     'USER': 'qolxdvgffhlidb',
-    #     'PASSWORD': 'gF6hNkmeUwrfOf5JqwcTLio9d-',
-    #     'HOST': 'ec2-50-16-229-91.compute-1.amazonaws.com',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-    #     'PORT': '5432',                      # Set to empty string for default.
-    # }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -100,8 +87,8 @@ DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
 DEFAULT_S3_PATH = "media"
 STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
 STATIC_S3_PATH = "static"
-AWS_ACCESS_KEY_ID = 'AKIAIXFGL3W7R47QWV2A'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'yapjoy-static'
 AWS_PRELOAD_METADATA = True
 MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
@@ -295,25 +282,13 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
-# CKEDITOR_UPLOAD_PATH = "uploads/"
-# CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': 'Custom',
-#         'toolbar_Custom': [
-#             ['Bold', 'Italic', 'Underline'],
-#             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-#             ['Link', 'Unlink'],
-#             ['RemoveFormat', 'Source']
-#         ]
-#     }
-# }
 
-SOCIAL_AUTH_FACEBOOK_KEY='778671392242244'
-SOCIAL_AUTH_FACEBOOK_SECRET='571c5632e92b3b1a5ae02ea9dce89e78'
 
-GOOGLE_CLIENT_ID = '920774801939-jjh416fdsoopdtgqm0dgkdnu6ndjrc1d.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET = 'p2qnu-mym1h0-fOvbmvXl4FB'
+SOCIAL_AUTH_FACEBOOK_KEY=os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET=os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -374,22 +349,22 @@ S3DIRECT_DESTINATIONS = {
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 AUTH_PROFILE_MODULE = 'yapjoy_registration.UserProfile'
 
-STRIPE_SECRET_KEY = 'sk_live_5tw0mrFpx8g33UKhPQZuaKvc'
-STRIPE_PUBLISHABLE_KEY = 'pk_live_Hxwa4UrkwLn3bhUqx6sjbQTF'
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
 
-STRIPE_SECRET_KEY_BAWF = 'sk_live_n8WrsUoKt0Esb2cfUAIBHWgn'
-STRIPE_PUBLISHABLE_KEY_BAWF = 'pk_live_fqbN9t5DE4vEfGqQEFzTDpZS'
+STRIPE_SECRET_KEY_BAWF = os.environ.get('STRIPE_SECRET_KEY_BAWF')
+STRIPE_PUBLISHABLE_KEY_BAWF = os.environ.get('STRIPE_PUBLISHABLE_KEY_BAWF')
 
-YAHOO_CLIENT_ID = "dj0yJmk9VG90Tm9GTk16clhXJmQ9WVdrOWVWZEVXbWxsTldNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05MA--"
-YAHOO_CLIENT_SECRET = "e2d3e379c96c8a4e4e34fdcbfb3ef5ee473865bd"
+YAHOO_CLIENT_ID = os.environ.get('YAHOO_CLIENT_ID')
+YAHOO_CLIENT_SECRET = os.environ.get('YAHOO_CLIENT_SECRET')
 
-LIVE_CLIENT_ID = "0000000040168962"
-LIVE_CLIENT_SECRET = "aS9Zv0EjCUwiEslFPpUovNHXQj89bsLQ"
+LIVE_CLIENT_ID = os.environ.get('LIVE_CLIENT_ID')
+LIVE_CLIENT_SECRET = os.environ.get('LIVE_CLIENT_SECRET')
 
 MERCHANT_SETTINGS = {
      "stripe": {
-        "API_KEY": "sk_live_5tw0mrFpx8g33UKhPQZuaKvc",
-        "PUBLISHABLE_KEY": "pk_live_Hxwa4UrkwLn3bhUqx6sjbQTF",
+        "API_KEY": os.environ.get('STRIPE_SECRET_KEY'),
+        "PUBLISHABLE_KEY": os.environ.get('STRIPE_PUBLISHABLE_KEY'),
     }
 }
 
@@ -512,5 +487,5 @@ SSLIFY_DISABLE_FOR_REQUEST = [
 ]
 # tokbox settings
 
-TOKBOX_KEY = '45284952'
-TOKBOX_SECRET = 'b00fa2eb9bf9bd29b7f82e098bee1009f019bc75'
+TOKBOX_KEY = '45284952'os.environ.get('TOKBOX_KEY')
+TOKBOX_SECRET = os.environ.get('TOKBOX_SECRET')
