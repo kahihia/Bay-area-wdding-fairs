@@ -2836,13 +2836,7 @@ def loginv3(request):
 
 @login_required(login_url='/login/')
 def redirect_view_select(request):
-    print 'inside redirect view'
-    profile = request.user.userprofile
-    print profile.type
-    if profile.type == UserProfile.PROFESSIONAL:
-        return HttpResponseRedirect(reverse('vendors__profile'))
-    else:
-        return HttpResponseRedirect(reverse('bg_profile'))
+    return HttpResponseRedirect('/crm/invoices/bulk/create/')
 
 from yapjoy_teamschat.models import EventTeam
 @cache_control(private=True)

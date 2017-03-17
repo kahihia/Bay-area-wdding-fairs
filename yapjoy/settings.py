@@ -1,47 +1,87 @@
 # Django settings for yapjoy project.
-import os
-DEBUG = False
+
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
-EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
+EMAIL_HOST_USER = 'app39782801@heroku.com'
+EMAIL_HOST_PASSWORD = '7tahzw8m0499'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 LOGIN_URL = '/login/'
 ADMINS = (
     ('Adeel K', 'adeelpkpk@gmail.com'),
 )
-
+import os
 import pusher
-pusher.app_id = os.environ.get('PUSHER_APP_ID')
-pusher.key = os.environ.get('PUSHER_KEY')
-pusher.secret = os.environ.get('PUSHER_SECRET')
+
+pusher.app_id = '267806'
+pusher.key = '235681c2c1c1ae380308'
+pusher.secret = '3db12c2387c3be546481'
 
 MANAGERS = ADMINS
 DEFAULT_FROM_EMAIL = 'support@yapjoy.com'
-
-DB_NAME = os.environ.get('DB_NAME')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_HOST = os.environ.get('DB_HOST')
-DB_PORT = os.environ.get('DB_PORT')
-
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': DB_NAME,                      # Or path to database file if using sqlite3.
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': DB_PORT,                      # Set to empty string for default.
+        'NAME': 'yapjoy',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': 'postgres',
+        'PASSWORD': 'asd',
+        'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '5432',                      # Set to empty string for default.
         # 'CONN_MAX_AGE': 60,
-    }
+    },
+    #
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'NAME': 'dbi2kdfu97vnne',                      # Or path to database file if using sqlite3.
+    #     # The following settings are not used with sqlite3:
+    #     'USER': 'ue89o346vmgrnj',
+    #     'PASSWORD': 'pe4josv6oq78uibqbd4vpjvatf6',
+    #     'HOST': 'ec2-52-207-133-11.compute-1.amazonaws.com',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '5432',                      # Set to empty string for default.
+    #     'CONN_MAX_AGE': 60,
+    # }
+    # PGPASSWORD='?!yapjoy!!11*?' pg_dump -Fc --no-acl --no-owner -h yapjoy.cytgypehlwaw.us-west-2.rds.amazonaws.com -U yapjoy yapjoy > amazonYapjoy.dump
+    # heroku pg:backups restore 'https://s3-us-west-2.amazonaws.com/yapjoy-static/static/storage/db/amazonYapjoy.dump' DATABASE --app yapjoy
+    # PGPASSWORD=?!yapjoy!!11*? pg_dump -Fc --no-acl --no-owner -h 127.0.0.1 -U yapjoy yapjoy > mydb.dump
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    # # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'NAME': 'yapjoy',  # Or path to database file if using sqlite3.
+    #     # The following settings are not used with sqlite3:
+    #     'USER': 'yapjoy',
+    #     'PASSWORD': '?!yapjoy!!11*?',
+    #     'HOST': 'yapjoy.cytgypehlwaw.us-west-2.rds.amazonaws.com',
+    # # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '5432',  # Set to empty string for default.
+    #     'CONN_MAX_AGE': 60,
+    # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'NAME': 'yapjoy',                      # Or path to database file if using sqlite3.
+    #     # The following settings are not used with sqlite3:
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'asd',
+    #     'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '5432',                      # Set to empty string for default.
+    # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'NAME': 'dbf9p7mq7lsq80',                      # Or path to database file if using sqlite3.
+    #     # The following settings are not used with sqlite3:
+    #     'USER': 'qolxdvgffhlidb',
+    #     'PASSWORD': 'gF6hNkmeUwrfOf5JqwcTLio9d-',
+    #     'HOST': 'ec2-50-16-229-91.compute-1.amazonaws.com',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '5432',                      # Set to empty string for default.
+    # }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['www.yapjoy.com','yapjoy.herokuapp.com','https://s3-us-west-2.amazonaws.com','.facebook.com','http://yui.yahooapis.com','bayareaweddingfairs.herokuapp.com']
+ALLOWED_HOSTS = ['www.yapjoy.com','yapjoy.herokuapp.com','https://s3-us-west-2.amazonaws.com','.facebook.com','http://yui.yahooapis.com']
 SITE_NAME = 'https://www.yapjoy.com/'
 
 # Local time zone for this installation. Choices can be found here:
@@ -87,20 +127,20 @@ DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
 DEFAULT_S3_PATH = "media"
 STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
 STATIC_S3_PATH = "static"
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = 'AKIAIXFGL3W7R47QWV2A'
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'yapjoy-static'
 AWS_PRELOAD_METADATA = True
 MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
 MEDIA_URL = 'https://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
 STATIC_ROOT = "/%s/" % STATIC_S3_PATH
-STATIC_URL = 'https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = '/static/'#''https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 #----------- aws settings ---------------
-
+# heroku config:set AWS_ACCESS_KEY_ID="AKIAIXFGL3W7R47QWV2A" AWS_SECRET_ACCESS_KEY="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" --app yapjoy
 STATICFILES_DIRS = (
     os.path.join('static'),
-    os.path.join(PROJECT_ROOT, 'static'),
+#     os.path.join(PROJECT_ROOT, 'static'),
 )
 # List of finder classes that know how to find static files in
 # various locations.
@@ -121,17 +161,19 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    # 'django.contrib.comments',
     'django.core.context_processors.request',
     'django.core.context_processors.i18n',
+    # 'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.contrib.auth.context_processors.auth', #this is required for admin
     'django.core.context_processors.csrf', #necessary for csrf protection
     'django.core.context_processors.static',
-    'django.contrib.messages.context_processors.messages',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
+    # 'django.contrib.messages.context_processors.messages',
+    # 'social.apps.django_app.context_processors.backends',
+    # 'social.apps.django_app.context_processors.login_redirect',
     # 'django.core.context_processors.auth',
-    'django.core.context_processors.debug',
+    # 'django.core.context_processors.debug',
 
 )
 SOCIAL_AUTH_FACEBOOK_SCOPE = [
@@ -150,9 +192,11 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = [
     # 'read_stream',
     # 'offline_access',
 ]
-
+INTERNAL_IPS = ('127.0.0.1',)
 MIDDLEWARE_CLASSES = (
-    'sslify.middleware.SSLifyMiddleware',
+
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'sslify.middleware.SSLifyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -160,16 +204,16 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
+    # 'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
+    # 'django.middleware.gzip.GZipMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 )
 REST_SESSION_LOGIN = False
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -220,11 +264,17 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.comments',
     'django.contrib.humanize',
     'django.contrib.admin',
+    # 'rest_framework',
+    # # 'rest_framework.authtoken',
+    # 'rest_auth.registration',
+    # 'rest_framework_swagger',
+    # 'rest_auth',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'sslify',
+    # 'sslify',
     'django_comments',
     'yapjoy_api',
     'yapjoy_feed',
@@ -242,7 +292,7 @@ INSTALLED_APPS = (
     'yapjoy_forum',
     'django_markdown',
     'fullcalendar',
-    'social.apps.django_app.default',
+    # 'social.apps.django_app.default',
     'django_contact_importer',
     'django_wysiwyg',
     'tinymce',
@@ -258,13 +308,14 @@ INSTALLED_APPS = (
     # 'friendship',
 
     'bayareaweddingfairs_tickets',
-    #'debug_toolbar',
+    # 'debug_toolbar',
     # 'cas_consumer',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth.registration',
     'rest_framework_swagger',
     'rest_auth',
+    'location_field.apps.DefaultConfig',
 
 )
 # DEBUG_TOOLBAR_PATCH_SETTINGS = False
@@ -282,13 +333,25 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+# CKEDITOR_UPLOAD_PATH = "uploads/"
+# CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'Custom',
+#         'toolbar_Custom': [
+#             ['Bold', 'Italic', 'Underline'],
+#             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+#             ['Link', 'Unlink'],
+#             ['RemoveFormat', 'Source']
+#         ]
+#     }
+# }
 
+SOCIAL_AUTH_FACEBOOK_KEY='778671392242244'
+SOCIAL_AUTH_FACEBOOK_SECRET='571c5632e92b3b1a5ae02ea9dce89e78'
 
-SOCIAL_AUTH_FACEBOOK_KEY=os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
-SOCIAL_AUTH_FACEBOOK_SECRET=os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
-
-GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
-GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+GOOGLE_CLIENT_ID = '920774801939-jjh416fdsoopdtgqm0dgkdnu6ndjrc1d.apps.googleusercontent.com'
+GOOGLE_CLIENT_SECRET = 'p2qnu-mym1h0-fOvbmvXl4FB'
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -341,33 +404,44 @@ S3DIRECT_DESTINATIONS = {
         lambda u: u.is_authenticated(),
         '*',
         'public-read',
-        AWS_STORAGE_BUCKET_NAME,
+        # AWS_STORAGE_BUCKET_NAME,
         'max-age=2592000',
         'attachment')
 }
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 AUTH_PROFILE_MODULE = 'yapjoy_registration.UserProfile'
 
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = 'sk_test_D8XQLQXVdpI2X03rn0Ycp5Y0'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_06mlzXo9xTcZCRy0XTkwYONA'
 
-STRIPE_SECRET_KEY_BAWF = os.environ.get('STRIPE_SECRET_KEY_BAWF')
-STRIPE_PUBLISHABLE_KEY_BAWF = os.environ.get('STRIPE_PUBLISHABLE_KEY_BAWF')
+STRIPE_SECRET_KEY_BAWF = 'sk_test_z3b8Yfc0Mcuh0P3M7VDfGZkt'
+STRIPE_PUBLISHABLE_KEY_BAWF = 'pk_test_ic11SWVPcUHwZ1mDBEBTdSX1'
+# STRIPE_SECRET_KEY_BAWF = 'sk_live_n8WrsUoKt0Esb2cfUAIBHWgn'
+# STRIPE_PUBLISHABLE_KEY_BAWF = 'pk_live_fqbN9t5DE4vEfGqQEFzTDpZS'
 
-YAHOO_CLIENT_ID = os.environ.get('YAHOO_CLIENT_ID')
-YAHOO_CLIENT_SECRET = os.environ.get('YAHOO_CLIENT_SECRET')
+YAHOO_CLIENT_ID = "dj0yJmk9VG90Tm9GTk16clhXJmQ9WVdrOWVWZEVXbWxsTldNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05MA--"
+YAHOO_CLIENT_SECRET = "e2d3e379c96c8a4e4e34fdcbfb3ef5ee473865bd"
 
-LIVE_CLIENT_ID = os.environ.get('LIVE_CLIENT_ID')
-LIVE_CLIENT_SECRET = os.environ.get('LIVE_CLIENT_SECRET')
+LIVE_CLIENT_ID = "0000000040168962"
+LIVE_CLIENT_SECRET = "aS9Zv0EjCUwiEslFPpUovNHXQj89bsLQ"
 
 MERCHANT_SETTINGS = {
      "stripe": {
-        "API_KEY": os.environ.get('STRIPE_SECRET_KEY'),
-        "PUBLISHABLE_KEY": os.environ.get('STRIPE_PUBLISHABLE_KEY'),
+        "API_KEY": "sk_live_5tw0mrFpx8g33UKhPQZuaKvc",
+        "PUBLISHABLE_KEY": "pk_live_Hxwa4UrkwLn3bhUqx6sjbQTF",
     }
 }
 
+# DEFAULT_AUTHENTICATION_CLASSES = (
+#     # 'rest_framework.authentication.SessionAuthentication',
+#     'rest_framework.authentication.BasicAuthentication'
+# ),
+
+DEFAULT_AUTHENTICATION_CLASSES = (
+        # 'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    ),
 
 
 REST_FRAMEWORK = {
@@ -483,9 +557,10 @@ LOGGING = {
 }
 
 SSLIFY_DISABLE_FOR_REQUEST = [
-    lambda request: request.get_full_path().startswith('/crm/bridegroom/reg')
+    lambda request: request.get_full_path().startswith('/crm')
 ]
+
 # tokbox settings
 
-TOKBOX_KEY = os.environ.get('TOKBOX_KEY')
-TOKBOX_SECRET = os.environ.get('TOKBOX_SECRET')
+TOKBOX_KEY = '45284952'
+TOKBOX_SECRET = 'b00fa2eb9bf9bd29b7f82e098bee1009f019bc75'
