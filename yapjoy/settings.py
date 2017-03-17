@@ -487,5 +487,5 @@ SSLIFY_DISABLE_FOR_REQUEST = [
 ]
 # tokbox settings
 
-TOKBOX_KEY = '45284952'os.environ.get('TOKBOX_KEY')
+TOKBOX_KEY = os.environ.get('TOKBOX_KEY')
 TOKBOX_SECRET = os.environ.get('TOKBOX_SECRET')
