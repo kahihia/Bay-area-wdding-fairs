@@ -1,0 +1,32 @@
+{% extends 'vendroid/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <h1>Invite Users</h1>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="vd_content-section example-icon clearfix">
+                                <div class="row">
+                                    <h4 class="grey-cascade">You have successfully invited your friends to YapJoy.</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

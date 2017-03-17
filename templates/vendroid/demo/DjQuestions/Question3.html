@@ -1,0 +1,114 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% block content %}
+    <style>
+    .select-images div img {
+        margin-bottom: 20px;
+    }
+    </style>
+    <style type="text/css">
+{#    background-image: url({% static "images/demo/Invite.png" %}) no-repeat; #}
+            .button-image{
+                background: url({% static "images/demo/Invite.png" %}) no-repeat;
+                cursor:pointer;
+                border: none;
+            }
+        </style>
+
+    <div class="">
+        <!-- Header Start -->
+{#        {% include "vendroid/demo/_partial/_header.html" %}#}
+        <!-- Header Ends -->
+        <div class="">
+<div class="" id="login-form" style="">
+{#	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>#}
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+{#					<div class="panel-heading text-center">#}
+{#						#}
+{#					</div>#}
+{#                    {{ form.errors }}#}
+                    <form class="form-horizontal" action="." method="post" role="form">
+					<div class="panel-body select-images" style="height:570px;">
+                        <h4 style="margin-bottom: 20px;">Is your Venue indoors or outdoors?</h4>
+
+
+
+
+
+{#               <input type="radio" name="gender" value="25"> Fewer than 25<br>#}
+{#                      <input type="radio" name="gender" value="female"> 25-50<br>#}
+{#                      <input type="radio" name="gender" value="other"> 50-75<br />#}
+{#                      <input type="radio" name="gender" value="other"> 75-100<br />#}
+{#                      <input type="radio" name="gender" value="other"> 100-150<br />#}
+{#                      <input type="radio" name="gender" value="other"> 150-200<br />#}
+{#                      <input type="radio" name="gender" value="other"> Greater than 200<br />#}
+
+
+                        <div class="col-sm-7 controls">
+                         <div class="vd_checkbox checkbox-success">
+                            <input type="checkbox" name="venue_select" value="Indoors" id="c1">
+                            <label for="c1"> Indoors </label>
+                          </div>
+                          <div class="vd_checkbox checkbox-success">
+                            <input type="checkbox" name="venue_select" value="Outdoors" id="c2">
+                            <label for="c2"> Outdoors </label>
+                          </div>
+                          <div class="vd_checkbox checkbox-success">
+                            <input type="checkbox" name="venue_select" value="Both" id="c3">
+                            <label for="c3"> Both </label>
+                          </div>
+                          <div class="vd_checkbox checkbox-success">
+                            <input type="checkbox" name="venue_select" value="We’re not sure yet" id="c4">
+                            <label for="c4"> We’re not sure yet </label>
+                          </div>
+
+                          <!--
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                    Option one is this and that&mdash;be sure to include why it's great
+                                  </label>
+                                </div>
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    Option two can be something else and selecting it will deselect option one
+                                  </label>
+                                </div>-->
+                        </div>
+                        <div class="clearfix"></div>
+{#                            <form acton="" method="post">#}
+{#                                {% csrf_token %}#}
+                                <input id="surveyDJ" name="surveyDJ" value="3" hidden />
+                                <button type="submit" id="invite-btn" class="btn btn-primary pull-right pink-background" style="margin-top: 20px;width: 120px;">Next</button>
+{#                            </form>#}
+
+
+
+
+
+					</div>
+{#					<div class="panel-footer">#}
+{#						<div class="clearfix">#}
+{#							<a href="extras-registration.html" class="btn btn-default pull-left">Register</a>#}
+{##}
+{#						</div>#}
+{#					</div>#}
+{#                        <div style="text-align: center !important;">#}
+{#                            <div class="panel-heading text-center">#}
+{#                                <h2 >Powered by <a href="https://www.yapjoy.com/">YapJoy</a> </h2>#}
+{#                            </div>#}
+{#                        </div>#}
+
+                    </form>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
+</div>
+
+
+{% endblock content %}

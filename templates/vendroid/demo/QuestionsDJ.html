@@ -1,0 +1,154 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% block content %}
+    <style>
+    .select-images div img {
+        margin-bottom: 20px;
+    }
+    </style>
+    <style type="text/css">
+{#    background-image: url({% static "images/demo/Invite.png" %}) no-repeat; #}
+            .button-image{
+                background: url({% static "images/demo/Invite.png" %}) no-repeat;
+                cursor:pointer;
+                border: none;
+            }
+        </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+<div class="container" id="login-form" style="margin-top: 80px;">
+{#	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>#}
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+{#					<div class="panel-heading text-center">#}
+{#						#}
+{#					</div>#}
+{#                    {{ form.errors }}#}
+                    <form class="form-horizontal" action="." method="post" role="form">
+					<div class="panel-body select-images">
+                        <h4 style="margin-bottom: 20px;">How many guests are you expecting?</h4>
+
+
+
+
+
+{#               <input type="radio" name="gender" value="25"> Fewer than 25<br>#}
+{#                      <input type="radio" name="gender" value="female"> 25-50<br>#}
+{#                      <input type="radio" name="gender" value="other"> 50-75<br />#}
+{#                      <input type="radio" name="gender" value="other"> 75-100<br />#}
+{#                      <input type="radio" name="gender" value="other"> 100-150<br />#}
+{#                      <input type="radio" name="gender" value="other"> 150-200<br />#}
+{#                      <input type="radio" name="gender" value="other"> Greater than 200<br />#}
+
+
+                        <div class="col-sm-7 controls">
+                          <div class="vd_radio radio-success">
+                            <input type="radio" value="Fewer than 25" name="optionyes" id="d25">
+                            <label for="d25">Fewer than 25</label>
+                          </div>
+                          <div class="vd_radio radio-success">
+                            <input type="radio" checked="checked" value="25-50" name="optionyes" id="d50">
+                            <label for="d50">25-50</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" checked="checked" value="50-75" name="optionyes" id="d75">
+                            <label for="d75">50-75</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" checked="checked" value="75-100" name="optionyes" id="d100">
+                            <label for="d100">75-100</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" checked="checked" value="100-150" name="optionyes" id="d150">
+                            <label for="d150">100-150</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" checked="checked" value="150-200" name="optionyes" id="d200">
+                            <label for="d200">150-200</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" checked="checked" value="Greater than 200" name="optionyes" id="d200plus">
+                            <label for="d200plus">Greater than 200</label>
+                          </div>
+                          <!--
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                    Option one is this and that&mdash;be sure to include why it's great
+                                  </label>
+                                </div>
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    Option two can be something else and selecting it will deselect option one
+                                  </label>
+                                </div>-->
+                        </div>
+                        <div class="clearfix"></div>
+                            <form acton="" method="post">
+                                {% csrf_token %}
+{#                                <input id="survey" name="survey" />#}
+                                <button disabled id="invite-btn" class="btn btn-primary pull-right pink-background" style="margin-top: 20px;width: 120px;">Invite</button>
+                            </form>
+
+
+
+
+
+					</div>
+{#					<div class="panel-footer">#}
+{#						<div class="clearfix">#}
+{#							<a href="extras-registration.html" class="btn btn-default pull-left">Register</a>#}
+{##}
+{#						</div>#}
+{#					</div>#}
+{#                        <div style="text-align: center !important;">#}
+{#                            <div class="panel-heading text-center">#}
+{#                                <h2 >Powered by <a href="https://www.yapjoy.com/">YapJoy</a> </h2>#}
+{#                            </div>#}
+{#                        </div>#}
+
+                    </form>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
+</div>
+
+
+<script>
+    $('#dj-img').on('click',function(){
+{#        $('#invite-btn').toggle('hidden');#}
+{#        $(this).attr('src','{% static "images/demo/Wedding DJ Selected.png" %}')#}
+        if (!$(this).hasClass('play')) {
+            $(this).attr('src', '{% static "images/demo/Wedding DJ Selected.png" %}');
+            $(this).addClass('play')
+            var input = $( "#survey" );
+            input.val( input.val() + "dj," );
+        } else  {
+            $(this).attr('src', '{% static "images/demo/Wedding DJ.png" %}');
+            $(this).removeClass('play')
+        }
+    })
+    $('#venue-img').on('click',function(){
+{#        $('#invite-btn').toggle('hidden');#}
+{#        $(this).attr('src','{% static "images/demo/Wedding DJ Selected.png" %}')#}
+        if (!$(this).hasClass('play')) {
+            $(this).attr('src', '{% static "images/demo/Wedding Venue Selected.png" %}');
+            $(this).addClass('play')
+            var input = $( "#survey" );
+            input.val( input.val() + "venue," );
+        } else  {
+            $(this).attr('src', '{% static "images/demo/Wedding Venue.png" %}');
+            $(this).removeClass('play')
+        }
+
+    })
+</script>
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% load static %}
+<div class="panel-body" id="id_panel_body">
+    <div class="event-list-wrap">
+        <div class="col-md-12">
+            <h1>Email Notification</h1>
+             <h4><a href="#" id="id_save_notification" style="margin-top: 0px;" class="pull-right">Save</a></h4>
+            <h5>send to {{ u.user.email }}</h5>
+            <hr/>
+
+            <div class="col-md-12" >
+                <span class="'pull-left" style="font-size: 19px; font-weight: 700;">Direct Messages</span>
+
+                <input class="pull-right" type="checkbox" name="notification_check" {% if u.direct %}checked="checked"{% endif %} id="id_direct" value="direct" />
+                <!-- Rounded switch -->
+{#                <label class="switch">#}
+{#                      <input type="checkbox">#}
+{#                      <div class="slider round"></div>#}
+{#                </label>#}
+                <hr />
+            </div>
+
+            <div class="col-md-12" \>
+                <span class="'pull-left" style="font-size: 19px; font-weight: 700;">Channels</span>
+                <input class="pull-right" type="checkbox" name="notification_check" id="id_channel" {% if u.channel %}checked="checked"{% endif %} value="channel" />
+                <hr />
+            </div>
+
+            <div class="col-md-12" >
+                <span class="'pull-left" style="font-size: 19px; font-weight: 700;">Weekly Updates</span>
+                <input class="pull-right" type="checkbox" name="notification_check" id="id_weekly" {% if u.weekly %}checked="checked"{% endif %} value="weekly" />
+                <hr />
+            </div>
+
+            <div class="col-md-12" >
+                <span class="'pull-left" style="font-size: 19px; font-weight: 700;">Daily Updates</span>
+                <input class="pull-right" type="checkbox" name="notification_check" id="id_daily" {% if u.daily %}checked="checked"{% endif %} value="daily" />
+                <hr />
+            </div>
+
+            <div class="col-md-12" >
+                <label>Push notifications may be managed in IOS application</label>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<script>
+    $('#id_save_notification').on('click',function(){
+        var direct = $("#id_direct").prop('checked')
+        var channel = $("#id_channel").prop('checked')
+        var weekly = $("#id_weekly").prop('checked')
+        var daily = $("#id_daily").prop('checked')
+        console.log('dirct: ', direct)
+        var data = {
+            'direct': direct,
+            'channel': channel,
+            'weekly': weekly,
+            'daily': daily,
+            'action':'notification'
+        }
+        ajax_call('/bg/profile/', "POST", data).done(function( data ) {
+            console.log('edit_profile: ', data)
+            $("#id_card").html(data);
+        });
+    })
+</script>

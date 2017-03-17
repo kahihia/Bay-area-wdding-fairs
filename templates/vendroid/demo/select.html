@@ -1,0 +1,222 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{#<!DOCTYPE html>#}
+{#<html lang="en" class="coming-soon">#}
+{#<head>#}
+{#    <meta charset="utf-8">#}
+{#    <title>Login Form</title>#}
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">#}
+{#    <meta name="apple-mobile-web-app-capable" content="yes">#}
+{#    <meta name="apple-touch-fullscreen" content="yes">#}
+{#    <meta name="author" content="KaijuThemes">#}
+{##}
+{#    <link type='text/css' href='http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500' rel='stylesheet'>#}
+{#    <link type='text/css'  href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">#}
+{#    <link href="{% static "bawf/css/skylo.css" %}" type="text/css" rel="stylesheet">                   <!-- Skylo -->#}
+{##}
+{#    <link href="{% static "bawf/css/font-awesome.min.css" %}" type="text/css" rel="stylesheet">#}
+{#    <link href="{% static "bawf/css/styles.css" %}" type="text/css" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#        .text-center {#}
+{#            text-align: center !important;#}
+{#        }#}
+{#        .panel-heading h2 {#}
+{#            height: 100%;#}
+{#            width: auto;#}
+{#            text-aligh: center !important;#}
+{#            float: center !important;#}
+{#        }#}
+{#        .red {#}
+{#            color: red;#}
+{#        }#}
+{#    </style>#}
+{#    </head>#}
+{##}
+{#    <body class="focused-form animated-content">#}
+{% block content %}
+    <style>
+    .select-images div img {
+        margin-bottom: 20px;
+    }
+    </style>
+    <style type="text/css">
+{#    background-image: url({% static "images/demo/Invite.png" %}) no-repeat; #}
+            .button-image{
+                background: url({% static "images/demo/Invite.png" %}) no-repeat;
+                cursor:pointer;
+                border: none;
+            }
+        </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+<div class="container" id="login-form" style="margin-top: 80px;">
+{#	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>#}
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+{#					<div class="panel-heading text-center">#}
+{#						#}
+{#					</div>#}
+{#                    {{ form.errors }}#}
+                    <form class="form-horizontal" action="." method="post" role="form">
+					<div class="panel-body select-images">
+                        <h4 class="text-center" style="margin-bottom: 20px;color: #BCB8B8;">What Professionals would you like on your team?</h4>
+
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Venue.png" %}" id="venue-img" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding DJ.png" %}" id="dj-img" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Cake.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Catering.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Decor.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Favors.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Florists.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Hair Stylist.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Invitations.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Lighting.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Limo.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Makeup Artist.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Photobooth.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Photography.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Planner.png" %}" />
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{% static "images/demo/Wedding Videography.png" %}" />
+                            </div>
+                        <div class="clearfix"></div>
+                            <form acton="" method="post">
+                                {% csrf_token %}
+                                <input id="survey" name="survey" hidden />
+                                <button type="submit" id="invite-btn" class="btn btn-primary pull-right pink-background" style="margin-top: 20px;width: 120px;">Select</button>
+                            </form>
+
+
+
+
+
+					</div>
+{#					<div class="panel-footer">#}
+{#						<div class="clearfix">#}
+{#							<a href="extras-registration.html" class="btn btn-default pull-left">Register</a>#}
+{##}
+{#						</div>#}
+{#					</div>#}
+{#                        <div style="text-align: center !important;">#}
+{#                            <div class="panel-heading text-center">#}
+{#                                <h2 >Powered by <a href="https://www.yapjoy.com/">YapJoy</a> </h2>#}
+{#                            </div>#}
+{#                        </div>#}
+
+                    </form>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
+</div>
+
+
+<script>
+    $('#dj-img').on('click',function(){
+{#        $('#invite-btn').toggle('hidden');#}
+{#        $(this).attr('src','{% static "images/demo/Wedding DJ Selected.png" %}')#}
+        if (!$(this).hasClass('play')) {
+            $(this).attr('src', '{% static "images/demo/Wedding DJ Selected.png" %}');
+            $(this).addClass('play')
+            var input = $( "#survey" );
+            input.val( input.val() + "dj," );
+        } else  {
+            $(this).attr('src', '{% static "images/demo/Wedding DJ.png" %}');
+            $(this).removeClass('play')
+        }
+    })
+    $('#venue-img').on('click',function(){
+{#        $('#invite-btn').toggle('hidden');#}
+{#        $(this).attr('src','{% static "images/demo/Wedding DJ Selected.png" %}')#}
+        if (!$(this).hasClass('play')) {
+            $(this).attr('src', '{% static "images/demo/Wedding Venue Selected.png" %}');
+            $(this).addClass('play')
+            var input = $( "#survey" );
+            input.val( input.val() + "venue," );
+        } else  {
+            $(this).attr('src', '{% static "images/demo/Wedding Venue.png" %}');
+            $(this).removeClass('play')
+        }
+
+    })
+</script>
+{% endblock content %}
+{#    <!-- Load site level scripts -->#}
+{##}
+{#<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>#}
+{#<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script> -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery-1.10.2.min.js" %}"></script> 							<!-- Load jQuery -->#}
+{#<script src="{% static "bawf/js/jqueryui-1.10.3.min.js" %}"></script> 							<!-- Load jQueryUI -->#}
+{#<script src="{% static "bawf/js/bootstrap.min.js" %}"></script> 								<!-- Load Bootstrap -->#}
+{#<script src="{% static "bawf/js/enquire.min.js" %}"></script> 									<!-- Load Enquire -->#}
+{##}
+{#<script src="{% static "bawf/js/velocity.min.js" %}"></script>					<!-- Load Velocity for Animated Content -->#}
+{#<script src="{% static "bawf/js/velocity.ui.min.js" %}"></script>#}
+{##}
+{#<script src="{% static "bawf/js/skylo.js" %}"></script> 		<!-- Skylo -->#}
+{##}
+{#<script src="{% static "bawf/js/wijets.js" %}"></script>     						<!-- Wijet -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery.sparklines.min.js" %}"></script> 			 <!-- Sparkline -->#}
+{##}
+{#<script src="{% static "bawf/js/prettify.js" %}"></script> 				<!-- Code Prettifier  -->#}
+{##}
+{#<script src="{% static "bawf/js/bootstrap-tabdrop.js" %}"></script>  <!-- Bootstrap Tabdrop -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery.nanoscroller.min.js" %}"></script> <!-- nano scroller -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery.dropdown.js" %}"></script> <!-- Fancy Dropdowns -->#}
+{#<script src="{% static "bawf/js/material.min.js" %}"></script> <!-- Bootstrap Material -->#}
+{#<script src="{% static "bawf/js/ripples.min.js" %}"></script> <!-- Bootstrap Material -->#}
+{##}
+{#<script src="{% static "bawf/js/application.js" %}"></script>#}
+{#<script src="{% static "bawf/js/demo.js" %}"></script>#}
+{#<script src="{% static "bawf/js/demo-switcher.js" %}"></script>#}
+{##}
+{#<!-- End loading site level scripts -->#}
+{#    <!-- Load page level scripts-->#}
+{##}
+{##}
+{#    <!-- End loading page level scripts-->#}
+{#    </body>#}
+{#</html>#}
+

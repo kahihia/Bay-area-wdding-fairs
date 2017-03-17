@@ -1,0 +1,46 @@
+{% load pagination_tags %}
+<div class="panel-body table-responsive">
+    <div class="dataTables_wrapper form-inline no-footer"
+         id="data-tables_wrapper">
+        <div id="button-id">
+        <table class="table table-striped dataTable no-footer" id="data-tables">
+            <thead>
+            <tr role="row">
+                <th>
+                    Promocode
+                </th>
+                <th>
+                    Discount Amount
+                </th>
+                <th>
+                    Discount Type
+                </th>
+                <th>
+                    Ticket Available
+                </th>
+                <th>
+                    Created At
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {#            {% autopaginate bgUsers 10 %}#}
+
+                {% for promo in promocode %}
+                    <tr role="row" class="gradeA odd">
+
+                        <td>{{  promo.code }}</td>
+                        <td>{{  promo.amount_percent }}</td>
+                        <td>{{  promo.type }}</td>
+                        <td>{{  promo.is_Available }}</td>
+                        <td>{{  promo.created_at }}</td>
+                        <td><input type="button" value="Edit" name="edit_promo"  data-id="{{ promo.id }}" class="btn vd_btn btn-brown promo_edit"/></td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table></div>
+        {% paginate %}
+    </div>
+</div>

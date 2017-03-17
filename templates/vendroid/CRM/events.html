@@ -1,0 +1,484 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+        $(function () {
+            $('#id_wedding_date').datepicker();
+            {#            $("#id_wedding_date").datetimepicker({#}
+            {#             'showTimepicker': false,#}
+            {#            });#}
+        });
+    </script>
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 80px;
+        }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+            <div class="clearfix"></div>
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="clearfix">
+
+                                <!-- vd_title-section -->
+
+                                <div class="vd_content-section clearfix">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget">
+                                                <div class="panel-body">
+                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                                                    {#                    <ul class="nav nav-tabs">#}
+                                                    {##}
+                                                    {##}
+                                                    {#                    </ul>#}
+                                                    <br>
+
+                                                    <div class="tab-content mgbt-xs-20">
+
+                                                        {% if successMessage %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-success">{{ successMessage }}</div>
+                                                            </div>
+                                                        {% endif %}
+                                                        {% if error_message %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-danger">{{ error_message }}</div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+                                                                <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"
+                                                                     width="20%"/><br/>
+
+                                                                <div class="clearfix"></div>
+                                                                <br/>
+
+                                                                <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"/>
+                                                                <h3 style="color: #ba8c00;">APPLY NOW TO BECOME AN EXHIBITOR</h3>
+                                                                <hr/>
+                                                            </div>
+
+                                                            <form class="form-horizontal" action="." method="post" role="form">
+{#                                                                  onsubmit="if (this.eventsCheck.checked == false)#}
+{#                                                                  { alert ('You didn\'t choose any of the checkboxes!'); return false; }#}
+{#                                                                  else { return true; }">#}
+                                                            {% csrf_token %}
+{#                                                                {{ form.errors }}#}
+                                                                {#                          {{ form.errors }}#}
+                                                                <!--Events-->
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Events</label>#}
+
+                                                                        <div class="col-sm-12  controls">
+
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    <b> Wedding Fair(s) Interested In (Please Select)<b style="color:red">*</b></b>
+                                                                                    <div class="col-sm-6">
+                                                                                        &nbsp;
+                                                                                    </div>
+                                                                                    </br>
+
+                                                                                    {#                                    <b><span style="margin-bottom: 10px;">Wedding Fair Interested In (Please Select)*</span></b><br />#}
+                                                                                    {% for event in spring_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Spring Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% for event in summer_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Summer Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% for event in fall_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Fall Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% for event in winter_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Winter Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% if eventsCheck %}
+                                                                                    <div class="red">Please select at least one event</div>
+                                                                                    {% endif %}
+
+                                                                                        {# {{ form.event }}#}
+{#                                                                                        {% if form.event.errors %}#}
+{#                                                                                            <div class="red">#}
+{#                                                                                                {{ form.event.errors }}#}
+{#                                                                                            </div>#}
+{#                                                                                        {% endif %}#}
+
+                                                                                    {#                                    {% for event in events %}#}
+                                                                                    {#                                        <input value="{{ event.id }}" id="id_event" name="id_event" type="checkbox">#}
+                                                                                    {#                                        <label for="checkbox">{{ event.name }}</label><br />#}
+                                                                                    {#                                    {% endfor %}#}
+                                                                                    <div class="clearfix"></div>
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+
+                                                                    {#                        <div class="form-group">#}
+                                                                    {#                            <label class="col-sm-3 control-label">Checkbox</label>#}
+                                                                    {#                            <div class="col-sm-9 controls">#}
+                                                                    {#                              <div class="vd_checkbox checkbox-success">#}
+                                                                    {#                                <input value="1" id="checkbox-1" type="checkbox">#}
+                                                                    {#                                <label for="checkbox-1"> Option one is this and that—be sure to include why it's great </label>#}
+                                                                    {#                              </div>#}
+                                                                    {#                              <div class="vd_checkbox check-success">#}
+                                                                    {#                                <input value="1" id="checkbox-2" type="checkbox">#}
+                                                                    {#                                <label for="checkbox-2"> Option one is this and that—be sure to include why it's great </label>#}
+                                                                    {#                              </div>#}
+                                                                    {#                            </div>#}
+                                                                    {#                          </div>#}
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    &nbsp;
+                                                                </div>
+                                                                <div class="clearfix"></div>
+
+                                                                <!--left col -6 -->
+                                                                <div class="col-sm-6">
+                                                                    {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Name</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12" placeholder="Name*">
+                                                                                    {{ form.name }}
+                                                                                    {% if form.name.errors %}
+                                                                                        <div class="red">{{ form.name.errors }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Phone</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.phone }}
+                                                                                    {% if form.phone.errors %}
+                                                                                        <div class="red">
+                                                                                            {{ form.phone.errors }}
+                                                                                        </div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">City</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.city }}
+                                                                                    {% if form.city.errors %}
+                                                                                        <div class="red">{{ form.city.errors }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Business Category</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.category }}
+                                                                                    {% if form.category.errors %}
+                                                                                        <div class="red">
+                                                                                            {{ form.category.errors }}
+                                                                                        </div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+                                                                    <!-- form-group -->
+                                                                </div>
+
+                                                                <!--right col -6 -->
+                                                                <div class="col-sm-6">
+                                                                    {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Business Name</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.business_name }}
+                                                                                    {% if form.business_name.errors %}
+                                                                                        <div class="red">
+                                                                                            {{ form.business_name.errors }}
+                                                                                        </div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Email</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.email }}
+                                                                                    {% if form.email.errors %}
+                                                                                        <div class="red">{{ form.email.errors }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Zip Code</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.zip }}
+                                                                                    {% if form.zip.errors %}
+                                                                                        {{ form.zip.errors }}{% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">How heard</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.how_heard }}
+                                                                                    {% if form.how_heard.errors %}
+                                                                                        <div class="red">{{ form.how_heard.errors }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="clearfix"></div>
+
+                                                                <!--whole col 12-->
+                                                                <div class="col-sm-12">
+
+                                                                <!-- form-group -->
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Comments</label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ form.comments }}
+                                                                                    {% if form.comments.errors %}
+                                                                                        <div class="red">{{ form.comments.errors }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label"></label>#}
+
+                                                                        <div class="col-sm-12 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    By clicking Submit button, you agree to our
+                                                                            <a href="http://bayareaweddingfairs.com/privacy-policy/" target="_blank">Privacy Policy</a>
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+{#                                                                        <b>By clicking Submit button, you agree to our#}
+{#                                                                            <a href="http://bayareaweddingfairs.com/privacy-policy/" target="_blank">Privacy Policy</a>#}
+{#                                                                        </b>#}
+                                                                    </div>
+
+{#                                                                    <div class="pd-20">#}
+                                                                        {#                        <input id="notification_sig" name="notification_sig" hidden="hidden" />#}
+                                                                        {#                        <button type="submit" class="btn vd_btn vd_bg-green pull-right"><span class="menu-icon"><i class="fa fa-fw fa-check"></i></span> Finish</button>#}
+{#                                                                    </div>#}
+
+
+                                                                    <!-- form-group -->
+                                                                    <div align="center">
+                                                                        <a style="margin-top: 50px;margin-right: 10px;"
+                                                                           href="{% url "event_invoice" %}"
+                                                                           class="btn vd_btn btn-default">Cancel</a>
+                                                                        <input id="notification_sig"
+                                                                               name="notification_sig" hidden="hidden"/>
+                                                                        <button style="background-color: #DAA520 !important;margin-top: 50px;"
+                                                                                type="submit"
+                                                                                class="btn vd_btn vd_bg-green">
+                                                                            <span class="menu-icon"><i
+                                                                                    class="fa fa-fw fa-check"></i></span>
+                                                                            Submit
+                                                                        </button>
+
+                                                                    </div>
+
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+
+                                                                    <!-- form-group -->
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br><br>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+    <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+    <script type="text/javascript">
+
+        if ($("#to").length > 0) {
+            $("#to").chosen();
+        }
+    </script>
+
+
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

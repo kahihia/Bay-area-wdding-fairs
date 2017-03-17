@@ -1,0 +1,68 @@
+{% load static %}
+<div id="id_card">
+    <div class="panel-body" id="id_panel_body">
+        <div class="event-list-wrap">
+            <a href="#" id="id_profile_edit">
+                <div class="col-md-9">
+                    <h2>{{ u.user.get_full_name }}</h2>
+                    <h4>View and edit profile</h4>
+
+                </div>
+            </a>
+            <div class="col-md-3">
+                {#                                                    <img src="{% static "images/options/dummyPic.png" %}" />#}
+                <img src="{{ u.get_image_url }}" />
+            </div>
+            <div class="col-md-12" style="margin-top:80px;">
+                <a href="#" id="id_feedback"><h4>Feedback and support <span class="fa fa-bell pull-right"></span></h4></a>
+                <hr />
+            </div>
+            <div class="col-md-12" style="margin-top:20px;">
+                <a href="#" id="id_notification"><h4>Notifications <span class="fa fa-bell pull-right"></span></h4></a>
+                <hr />
+            </div>
+            <div class="col-md-12" style="margin-top:20px;">
+                <a href="#" id="id_logout"><h4>Logout <span class="fa fa-bell pull-right"></span></h4></a>
+                <hr />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    $("#id_feedback").click(function () {
+
+        console.log("feedback");
+        data =  {action: 'feedback'},
+            ajax_call('/bg/profile/', "GET", data).done(function( data ) {
+
+                $("#id_card").html(data);
+            });
+
+    })
+    $("#id_profile_edit").click(function () {
+
+        console.log("profile");
+        data =  {action: 'profile'},
+            ajax_call('/bg/profile/', "GET", data).done(function( data ) {
+
+                $("#id_card").html(data);
+            });
+
+    });
+
+    $("#id_notification").click(function () {
+
+        console.log("notification");
+        data =  {action: 'notification'},
+            ajax_call('/bg/profile/', "GET", data).done(function( data ) {
+
+                $("#id_card").html(data);
+            });
+
+    });
+
+</script>

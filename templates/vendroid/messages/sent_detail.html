@@ -1,0 +1,106 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% block content %}
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-subtitle">
+                                    <br/>
+                                    <h1 class="pull-left">Email Management</h1>
+                                </div>
+                            </div>
+
+                            <!-- row -->
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                    <!--left panel-->
+                                    {% include "vendroid/messages/partial/_left_panel.html" %}
+
+                                    <!--right row col-5-->
+                                    <div class="col-sm-8 messages-read">
+{#                                    <div class="col-md-6 ">#}
+                                         <h3 class="messages-subject"><i class="icon-feather mgr-10 vd_green"></i> {{ message.subject }}</h3>
+                                         {% for message in conversation %}
+                                         <section class="messages-reply">
+                                            <div class="messages-from">
+                                                <span class="time-stamp"> {{ message.created_at|timesince }} ago</span>
+                                                <span class="profile-thumb profile-sm" style="background-image: url( /static/images/tempPhoto.png)"></span>
+                                                <span class="user-name"> {{ message.sender.get_full_name }}</span>
+                                            </div>
+                                            <p class="messages-to"><span>To: </span> {{ message.receiver.get_full_name }}</p>
+                                            <p class="messages-content">
+                                                {{ message.message }}            </p>
+                                         </section>
+                                         {% endfor %}
+
+                                        <section class="messages-comment">
+                                            <span class="profile-thumb profile-sm" style="background-image: url(/static/images/tempPhoto.png)"></span>
+                                            <p class="messages-content">
+                                                {{ message.message }}
+                                            </p>
+                                            <form method="post" action=".">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <span>Forward:</span>
+{#                                                    <select multiple="multiple" disabled="true" class="form-control" data-placeholder="To" name="to" id="to">#}
+{#                                                        <option value="{{ message.receiver.id }}" selected="selected">{{ message.receiver.get_full_name }}</option>#}
+{#                                                    </select>#}
+                                                    <select multiple="multiple" class="form-control"  data-placeholder="To" name="to_users" id="to">
+                                                        {% for friend in friends %}
+                                                            {% if friend.user == request.user %}
+                                                                <option value="{{ friend.friends.user.id }}">{{ friend.friends.user.get_full_name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ friend.user.id }}">{{ friend.user.get_full_name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <textarea name="message" class="form-control" style="height:200px" required></textarea>
+{#                                                <button type="submit" class="btn btn-blue pull-right">Reply</button>#}
+                                                <br><br/>
+                                                <button type="submit" class="btn vd_btn vd_bg-yellow vd_white pull-right"  id="sendBtn"><i class="fa fa-envelope append-icon"></i> Reply</button>
+                                            </form>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.mail.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/chosen.jquery.min.js" %}"></script>
+    {#    <script type="text/javascript" src="/static/js/jquery.mail.js"></script>#}
+
+    <script>
+    var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+    var imgCount = 0;
+    function startTime() {
+        if(imgCount == imgArray.length) {
+            imgCount = 0;
+        }
+        $('#to').choosen();
+        document.getElementById("ad").src = imgArray[imgCount];
+        imgCount++;
+        setTimeout("startTime()", 5000);
+    }
+    </script>
+    </html>
+
+{% endblock jquery %}

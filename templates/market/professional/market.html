@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{#{% block tags %}#}
+{#    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{#{% endblock %}#}
+{% block content %}
+    {#   <script>#}
+    {#    $(function() {#}
+    {#            $( "#id_end_date" ).datepicker();#}
+    {#        });#}
+    {#   </script>#}
+    <section class="recommendations-section">
+        <div class="col-md-11 col-md-offset-1 ">
+            <div class="row">
+                <h3 class="section-title">Market
+                    {#                    <a hidden data-toggle="modal" href="#addTodoModal" class="btn btn-primary pull-right margin-right-30">Add a Plan</a>#}
+                    <div class="clearfix"></div>
+                </h3>
+            </div>
+            <div class="clearfix"></div>
+            <section class="rec-list">
+                <div id="rec-list" class="list-view">
+                    <div class="items">
+                        {% for product in products %}
+                            <div class="col-md-3 wrap" >
+                                <div class="media height-350" style="cursor: pointer; {% if product.is_completed %}border: 2px solid green;{% endif %}" onclick="window.location='/market/{{ product.id }}/';">
+                                    <div class="media-body text-center">
+
+                                        <p>
+                                            <span class="profile-thumb profile-sm pull-left"
+                                                  style="background-image: url({{ product.user.userprofile.get_image_url }}); margin-right: 10px;"></span>
+                                            <small class="task-listen"><a
+                                                    href="{{ product.user.userprofile.get_profile_url }}">{{ product.user.get_full_name }}</a>
+                                                <br /> {{ product.created_at }}
+                                            </small>
+                                            {% if request.user == product.user and not product.awarded_to %}
+                                                <a onclick="acceptABid('{{ product.id }}','{{ product.amount|intcomma }}');"
+                                                   class="btn btn-primary pull-right acceptButton">Accept</a> {% endif %}
+                                            <br />
+                                            {#                                            <small class="task-listen pull-right">Bid: {{ product.amount|intcomma }}</small>#}
+                                        </p>
+                                    <div class="clearfix"></div>
+                                        <hr/>
+                                         {% if product.is_completed %}<h4 ><div style="color:green;">AWARDED</div></h4>{% endif %}
+                                        <h4>{{ product.title }}</h4>
+
+                                        <p>Budget:
+                                            ${{ product.amount|intcomma }} (Bids: {{ product.amount_min|intcomma }})</p>
+                                        <hr/>
+                                        <p class="status">
+                                            {{ product.description|truncatechars:"210" }}           </p>
+                                        {#                                        <hr />#}
+                                        {#                                         <div class="col-md-9 text-center" style="position: absolute; bottom: 5px;">#}
+                                        {#                                    <button class="btn btn-primary btn-block pull-right">Edit</button>#}
+                                        {#                                    </div>#}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+    <script type="text/javascript">
+        {% if form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#rec-list').yiiListView({
+                'ajaxUpdate': ['rec-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+        });
+        {% if form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+    </script>
+{% endblock %}

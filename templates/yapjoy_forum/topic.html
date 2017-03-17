@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load myfilters %}
+{% load url from future %}
+{% block content %}
+    <section class="recommendations-section">
+        <div class="col md-11 col-md-offset-1 margin-top-10">
+            <div class="row">
+                <h3 class="section-title">Topic: {{ topic.title }}
+                    <a id="new_topic" class="btn btn-primary pull-right margin-right-30" href="{% url 'forum-detail' topic.forum.id %}">Back to Topics</a>
+
+                    <div class="clearfix"></div>
+                </h3>
+
+
+
+            </div>
+        <div id="rec-list" class="list-view">
+
+
+                        <div class="items">
+
+                            <div class="col-md-12 wrap">
+                                <div class="media-body">
+                                    <div class="col-md-12">
+                                        <input name="searchtopic" id="searchtopic" class="form-control"
+                                               placeholder="Search topics in yapper" type="text">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+
+                    </div>
+            <section class="rec-list">
+
+                <div id="rec-list" class="list-view">
+                <div class="items">
+                        <div class="col-md-12 wrap">
+                            <div class="media-body">
+                                <br />
+                                <div class="col-md-4"><h4><a href="/forum/">Yapper</a> > <a href="/forum/{{ topic.forum.id }}">{{ topic.forum.title }}</a> > <a href="/forum/topic/{{ topic.id }}">{{ topic.title }}</a> </h4></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="items">
+
+                        <div class="col-md-12 wrap">
+                            <div class="media">
+
+                                <div class="media-body">
+                                    <div class="col-md-12">
+{#                                        <h2>Topic: {{ topic.title }}</h2>#}
+                                        Posted by <a href="/profile/{{ topic.creator.userprofile.id }}/">{{ topic.creator.get_full_name }}</a></a> at <span class="date">{{ topic.created }}</span>
+                                    <hr />
+                                        {% autoescape off %}
+                                        {{ topic.description|stripjs }}
+                                        {% endautoescape %}
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="clearfix"></div>
+                            </div>
+
+                            {% for post in posts.object_list %}
+
+                                <div class="media">
+
+                                    <div class="media-body">
+                                        <div class="col-md-12">{{ post.creator }} at {{ post.created }}
+                                            <p>
+                                                {{ post.body }}
+                                            </p>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+
+
+                            {% endfor %}
+                            <div>
+
+                                <div class="media-body">
+                                    <div class="col-md-12">
+{#                                        <a class="btn btn-primary"#}
+{#                                                              href="{% url 'reply' pk %}">Reply</a>#}
+                                                                                <a class="btn btn-primary" data-toggle="modal"
+                                                              href="#replyModal">Reply</a>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Posts  -->
+<div class="modal fade" id="replyModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title" style="margin-bottom: 0px;">Reply</h4>
+
+
+                    {#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
+                    {#        <!-- Nav tabs -->#}
+
+
+                    <iframe id="iframe_sub" src="{% url 'reply' pk %}" width="100%" height="292px"></iframe>
+
+                    <!-- end panel -->
+                    <!-- end panel -->
+
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+            <!-- Next/Prev page links  -->
+            {% if posts.object_list and posts.paginator.num_pages > 1 %}
+                <div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}">previous &lt;&lt; </a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp;Page {{ posts.number }} of {{ topics.paginator.num_pages }}
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}"> &gt;&gt; next</a>
+        {% endif %}
+    </span>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+            <script>
+
+        $('#searchtopic').keypress(function (e) {
+            if (e.which == 13) {
+                window.location.href = '/forum/search/?topic=' + $('#searchtopic').val();
+            }
+        });
+    </script>
+{% endblock content %}

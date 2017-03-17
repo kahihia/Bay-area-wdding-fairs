@@ -1,0 +1,205 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block content %}
+  <style>
+
+  </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/partial/_sidebar.html" %}#}
+
+            {% include "vendroid/partial/_sidebar.html" %}
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-subtitle">
+                                    <br/>
+                                    <h1 class="pull-left">
+                                        {% if request.user.is_superuser %}
+                                            Wedding Professional Form Create
+                                        {% else %}
+                                            Wedding Professional From View
+                                        {% endif %}
+                                    </h1>
+                                </div>
+                            </div>
+                            <div class="vd_content-section clearfix">
+                                <!--(1)start the left panel online messages -->
+                                <!-- row -->
+{#                                <div class="col-sm-12">#}
+                                    <div class="row">
+                                        <!--left row-->
+                                        <div class="panel widget vd_todo-widget light-widget">
+                                            <div class="panel-body">
+                                                <div class="container np">
+{#                                                    <h2><span class="append-icon fa fa-fw fa-database vd_yellow npl"></span>#}
+{#                                                        <span class="menu-text"><strong>#}
+{#                                                            {% if request.user.is_superuser %}#}
+{#                                                                Wedding Professional Form Create#}
+{#                                                            {% else %}#}
+{#                                                                Wedding Professional From View#}
+{#                                                            {% endif %}#}
+{#                                                        </strong></span>#}
+{#                                                    </h2>#}
+                                                    <!--Events Scroll Down-->
+                                                    <hr/>
+
+                                                    <!---dropdown events-->
+                                                    <div class="col-sm-12">
+{#                                                      <div class="col-sm-8">#}
+{#                                                        <h4>1.Please Choose Wedding Professional</h4>#}
+{#                                                        {% include "vendroid/CRM/wp_data_table.html" %}#}
+{#                                                      </div>#}
+
+{#                                                        <h4>1.Please Choose Events</h4>#}
+{#                                                        <div class="dropdown" id="id_event">#}
+{#                                                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Events#}
+{#                                                            <span class="caret"></span></button>#}
+{#                                                            <ul class="dropdown-menu">#}
+{#                                                              {% for event in events %}#}
+{#                                                                <li><a onclick="select_event('{{event.id}}')">{{ event.subject }}</a></li>#}
+{#                                                              {% endfor %}#}
+{#                                                            </ul>#}
+{#                                                            <hr/>#}
+{#                                                        </div>#}
+{#                                                        <div id="event_blank_out"></div>#}
+                                                        <div class="col-sm-4">
+
+
+{#                                                          <h4>Please Create the form</h4>#}
+{#                                                          <div id="show_wp">   <b>Wedding Professinal:</b> None</div>#}
+{#                                                          <div id="show_event"><b>Event:</b> None</div>#}
+                                                          <a data-toggle="modal" onclick="addWpFormModal();" class="btn vd_btn btn-xs vd_bg-blue" type="button">
+                                                            <i class="fa fa-plus append-icon"></i>
+                                                            {% if request.user.is_superuser %}
+                                                                Upload Form
+                                                            {% else %}
+                                                                Accept Form
+                                                            {% endif %}
+                                                          </a>
+
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+{#                                </div>#}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- .vd_content -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+        </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+    </div>
+
+
+
+
+
+{#    <!--The after submit pop up-->#}
+{#    <div class="col-md-12 help-contet text-center" id="id_feedbackbox">#}
+{#        <div class="modal fade" role="dialog">#}
+{#            <div class="modal-dialog">#}
+{#                <div class="modal-content">#}
+{#                    <div class="modal-body" id="id_feedback">#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+
+    {% include "vendroid/CRM/_wpForm_modal.html" %}
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src="{% static 'js/jquery.events.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery.datetimepicker.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/chosen.jquery.min.js" %}"></script>
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+    <script type="text/javascript">
+    $('.datepicker').datetimepicker(jQuery.extend({showMonthAfterYear:false}, $.datepicker.regional[''], { format:'Y-m-d H:i',}));
+
+
+    {% if WpForm.errors %}
+        alert("form is not valid please fill all fields and re-submit");
+        $('#addWpFormModal').modal('show');
+    {% endif %}
+
+
+
+
+
+{#    function submit_wp_form() {#}
+{##}
+{#        $.ajax({#}
+{#          url: '/crm/createWpform/',#}
+{#          type: 'post', // http method#}
+{#          data: $("#id_wpForm").serialize(),#}
+{##}
+{#            success: function (data) {#}
+{#                alert(data);#}
+{#                console.log("accept success "+data);#}
+{##}
+{#                if (data == "success"){#}
+{#                    alert("The form has been submitted successfully !";#}
+{#                    $('#id_feedbackbox').modal('show');#}
+{#                    $('#id_feedback').attr("class", "The form has been submitted successfully !");#}
+{##}
+{#                } else{#}
+{#                    alert("The form submit failed wedding professional form already exist";#}
+{#                    $('#id_feedbackbox').modal('show');#}
+{#                    $('#id_feedback').attr("class", "The form submit failed wedding professional form already exist");#}
+{##}
+{#                }#}
+{#            },#}
+{##}
+{#            error: function (xhr, errmsg, err) {#}
+{#               console.log("fail accept conversation "+errmsg+" "+err);#}
+{#            }#}
+{#        });#}
+{#    }#}
+
+    </script>
+{% endblock script %}

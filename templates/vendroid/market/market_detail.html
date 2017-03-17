@@ -1,0 +1,384 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+
+
+{% endblock %}
+{% block content %}
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+{#    <script type="text/javascript" src="{% static "vendroid/js/bootstrap.min.js" %}"></script>#}
+    <script>
+        $(function () {
+            $("#id_end_date").datepicker();
+        });
+
+    </script>
+    <script>
+    function deletePlan() {
+            bootbox.confirm("<h3>Are you sure you wish to delete this plan?</h3>", function (result) {
+                if (!result) return;
+                else {
+                    var formID = '#planDeleteForm';
+                    $.ajax({
+                        url: $(formID).attr('action'), // the endpoint
+                        type: $(formID).attr('method'), // http method
+                        data: $(formID).serialize(), // data sent with the post request
+
+                        // handle a successful response
+                        success: function (response) {
+                            //alert("success"); // another sanity check
+                            window.parent.location.href = "/plans/";
+
+                        },
+
+                        // handle a non-successful response
+                        error: function (xhr, errmsg, err) {
+
+                        }
+                    });
+                }
+            });
+
+
+        }
+    </script>
+    <style>
+    .red {
+        color: red;
+    }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-menu">
+{#                                    <h1>My Planner</h1>#}
+                                    <h1 class="section-title pull-left">Plan Detail</h1>
+
+                                    <!--Size scale buttons-->
+{#                                    <div class="vd_panel-menu hidden-sm hidden-xs pull-right" data-intro="<strong>Expand Control</strong><br/>To expand content page horizontally, vertically, or Both. If you just need one button just simply remove the other button code." data-step=5  data-position="left">#}
+{#                                        <div data-action="remove-navbar" data-original-title="Remove Navigation Bar Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-navbar-button menu"> <i class="fa fa-arrows-h"></i> </div>#}
+{#                                        <div data-action="remove-header" data-original-title="Remove Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-header-button menu"> <i class="fa fa-arrows-v"></i> </div>#}
+{#                                        <div data-action="fullscreen" data-original-title="Remove Navigation Bar and Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="fullscreen-button menu"> <i class="glyphicon glyphicon-fullscreen"></i> </div>#}
+{#                                    </div>#}
+                                    <div class="clearfix"></div>
+{#                                  <small class="subtitle">Calendar page with drag and drop events. See <a href="http://arshaw.com/fullcalendar/">fullcalendar</a> for detail</small>#}
+                                </div>
+                            </div>
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                 {% if message %}
+                                    <div class="col-lg-12 col-md-3">
+                                        <div class="alert alert-success alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="icon-cross"></i></button>
+                        <i class="fa fa-check-circle append-icon"></i>{{ message }}</div>
+                                    </div>
+                                {% endif %}
+                                    {% if message_failed %}
+                                    <div class="col-lg-12 col-md-3">
+                                        <div class="alert alert-danger alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="icon-cross"></i></button>
+                        <i class="fa fa-check-circle append-icon"></i>{{ message_failed }}</div>
+                                    </div>
+                                {% endif %}
+                                <!-- (1) the list of plans--->
+                                <div class="col-sm-9">
+                                    <div class="panel widget light-widget">
+{#                                            <div class="panel-body">#}
+                                        <div class="panel-body">
+                                            {% if product.awarded_to %}<h3 class="text-center"><div style="color:green;">This plan has been awarded.<hr /></div></h3>{% endif %}
+                                            <h3 >{{ product.title }}</h3>
+                                            <h4 class="margin-top-10" >Budget: ${{ product.amount|intcomma }}</h4>
+                                            <h4 class="margin-top-10" >Category: {{ product.category }}</h4>
+                                            <hr />
+                                            <p class="status">
+                                                {{ product.description }}           </p>
+                                             <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                 <div class="panel widget light-widget ">
+                                        <div class="panel-body">
+                                             <h3 class="section-title text-center">Bids {% if profile.type == "Professional" %}<a class="btn btn-primary pull-right margin-right-30">Place a Bid</a>{% endif %}<hr /></h3>
+                                                {% for pledge in pledges %}
+                                                <section class="rec-list">
+                                                    <div id="rec-list" class="list-view">
+                                                        <div class="items">
+                                                            <div class="col-md-12 wrap">
+                                                                <div class="media" {% if product.awarded_to == pledge %}style="border: solid 2px green;" {% endif %} id="media_pledge_{{ pledge.id }}">
+                                                                    <div class="media-body" style="margin-left:10px;">
+                                                                        <p>
+                                                                            <span class="profile-thumb profile-sm pull-left" style="background-image: url({{ pledge.user.userprofile.get_image_url }}); margin-right: 10px;"></span>
+                                                                            <small class="task-listen"><a href="{{ pledge.user.userprofile.get_profile_url }}">{{ pledge.user.get_full_name }}</a>
+                                                                                | {{ pledge.created_at }}
+                                                                            </small>
+                                                                           {% if request.user == product.user and not product.awarded_to %} <a onclick="acceptABid('{{ pledge.id }}','{{ pledge.amount|intcomma }}');" class="btn dropdown-toggle vd_bg-red vd_white pull-right">Accept</a> {% endif %}
+
+                                                                            <br>
+                                                                            <small >Bid: ${{ pledge.amount|intcomma }}</small>
+                                                                        </p>
+
+                                                                        <p class="status">
+                                                                            {{ pledge.message }}
+                                                                        </p>
+
+                                                                        <div class="clearfix"></div>
+                                                                    </div>
+                                                                </div>
+                                                                 <hr />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                {% endfor %}
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <!-- (2) the Button of edit plans abd back to plans--->
+                                <div class="col-sm-3">
+                                    <div class="panel widget light-widget ">
+
+                                        <div class="panel-body">
+                                            <div id="external-plans">
+                                                {% if product.status == "Pending" %}
+                                                <div class="text-center">
+                                                {% if not profile.type == "Professional" %}
+                                                {% if profile.check_subscription %}
+                                        <form class="inline-form " action="." method="post">
+                                                    {% csrf_token %}
+                                          <input type="submit" class="btn btn-success btn-block" value="PUBLISH" name="publish"/>
+                                          </form>
+                                                    {% else %}
+                                                     <a onclick="openSubscriptionModalUser();" class="btn btn-success btn-block" value="PUBLISH" name="publish">PUBLISH</a>
+                                                    {% endif %}
+                                                    {% else %}
+                                                    <form class="inline-form " action="." method="post">
+                                                    {% csrf_token %}
+                                          <input type="submit" class="btn btn-success btn-block" value="PUBLISH" name="publish"/>
+                                          </form>
+                                                    {% endif %}
+                                                    <br/>
+                                                    </div>
+                                                {% endif %}
+                                                <form class="inline-form">
+                                                    <div class="block">
+{#                                                        <h3 class="mgtp--20 mgbt-xs-20"> <strong>Edit this Plan</strong></h3>#}
+{#                                                        <div class="input-group-btn">#}
+{#                                                            <button class="btn dropdown-toggle vd_bg-red vd_white" type="button" data-toggle="modal" data-target="#addTodoModal"><i class="append-icon fa fa-fw fa-file-text-o"></i></button>#}
+{#                                                        </div>#}
+
+                                                        <div class="menu-action rounded-btn">
+                                                            <a data-original-title="edit" data-toggle="modal" href="#" data-placement="top" data-target="#addTodoModal" class="pull-left">Edit this Plan</a>
+                                                            <a data-original-title="edit" data-toggle="modal" data-placement="top" class="btn menu-icon vd_bd-green green pull-right" data-target="#addTodoModal"> <i class="fa fa-pencil"></i> </a>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <!-- /btn-group -->
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <br>
+                                            <div id="external-plans">
+                                                <form class="inline-form">
+                                                    <div class="block">
+{#                                                        <h3 class="mgtp--20 mgbt-xs-20"> <strong>Back to Plan Board</strong></h3>#}
+{#                                                        <div class="input-group-btn">#}
+{#                                                            <a href="/plansV2/" class="btn dropdown-toggle vd_bg-red vd_white"><i class="append-icon glyphicon glyphicon-th-large"></i></a>#}
+{#                                                        </div>#}
+
+                                                        <div class="menu-action rounded-btn">
+                                                            <a href="/plans/" class="pull-left">Back to Plan Board</a>
+                                                            <a href="/plans/" class="btn menu-icon vd_bd-green green pull-right"><i class="fa fa-book"></i></a>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+
+                                                        <!-- /btn-group -->
+                                                    </div>
+                                                </form>
+                                            </div>
+                                             <hr />
+                                            <div id="external-plans">
+                                                <form class="inline-form" action="." method="post">
+                                                    {% csrf_token %}
+                                                    <div class="block">
+{#                                                        <h3 class="mgtp--20 mgbt-xs-20"> <strong>Back to Plan Board</strong></h3>#}
+{#                                                        <div class="input-group-btn">#}
+{#                                                            <a href="/plansV2/" class="btn dropdown-toggle vd_bg-red vd_white"><i class="append-icon glyphicon glyphicon-th-large"></i></a>#}
+{#                                                        </div>#}
+
+                                                        <div class="menu-action rounded-btn">
+                                                            <a  class="pull-left">Delete this plan</a>
+                                                            <input id="delete_plan" name="delete_plan" hidden />
+                                                            <button type="submit" class="btn menu-icon vd_bd-green green pull-right"><i class="fa fa-ban"></i></button>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+
+                                                        <!-- /btn-group -->
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- (3) the list of Bids--->
+{#                                <div class="col-sm-9">#}
+{#                                   #}
+{#                                </div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="addTodoModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Edit a Plan</h4>
+                    {% if product.amount_min < 1 %}
+                        <form action="." method="POST">
+                        {% csrf_token %}
+                            <p>You can only edit the plan before bidding will start, once a bid is placed by any wedding professional, editing this plan will be disabled.</p>
+                        <!-- seth -->
+                        <div class="form-group">
+                            <label>Title:</label>
+                            {{ form.title }}
+                            <div class="red">{{ form.title.errors }}</div>
+                        </div>
+                        <div class="form-group due">
+                            <label>End Date:</label>
+                            <i class="fa fa-calendar"></i>
+                            {{ form.end_date| addcss:"form-control endpicker" }}
+                            <div class="red">{{ form.end_date.errors }}</div>
+                        </div>
+                        <div class="form-group due">
+                            <label>Category:</label>
+                            <i class="fa fa-calendar"></i>
+                            {{ form.category| addcss:"form-control endpicker" }}
+                            <div class="red">{{ form.category.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description:</label>
+                            {{ form.description }}
+                            <div class="red">{{ form.description.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Amount:</label>
+                            {{ form.amount|addcss:"form-control" }}
+                            <div class="red">{{ form.amount.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 margin-top-10">
+                                <button type="submit" class="btn btn-blue pull-right">Update</button>
+                                <input id="editPlan" name="editPlan" hidden="hidden" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                    {% else %}
+                        <h4 style="color: red;" class="text-center">You can only edit the plan before bidding will start, once a bid is placed by any wedding professional, editing this plan will be disabled.</h4><br /><br />
+                    {% endif %}
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <script>
+    {% if form.errors or form.description.errors %}
+        jQuery(document).ready(function(){
+             jQuery("#addTodoModal").modal('show');
+        })
+
+        {% endif %}
+    </script>
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+
+    <script type="text/javascript">
+        jQuery('.endpicker').datetimepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional[''], { format:'Y-m-d H:i',}));
+
+
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#rec-list').yiiListView({
+                'ajaxUpdate': ['rec-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+        });
+        /*]]>*/
+
+        function acceptABid(id, amount){
+            bootbox.confirm("<h3>Are you sure you wish to award this bid of $"+amount+"?</h3>", function (result) {
+                if (!result) return;
+                else {
+
+
+                    $.ajax({
+                                url: '.', // the endpoint
+                                type: 'post', // http method
+                                data: {id:id}, // data sent with the post request
+
+                                // handle a successful response
+                                success: function (response) {
+                                    //alert("success"); // another sanity check
+                                    if (response == "success") {
+                                        var id_box = '#media_pledge_' + id;
+                                        $(id_box).css('border', '2px solid green');
+                                        $('.acceptButton').each(function(n){
+                                            $(this).css('display','none');
+
+                                        });
+                                    }
+                                    if (response == "successFalse"){
+
+                                    }
+
+
+                                },
+
+                                // handle a non-successful response
+                                error: function (xhr, errmsg, err) {
+                                    alert(err, errmsg);
+                                }
+                            });
+                }
+            });
+
+        }
+
+    </script>
+{% endblock %}

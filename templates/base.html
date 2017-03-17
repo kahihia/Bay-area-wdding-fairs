@@ -1,0 +1,122 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+{#    {% cache 5000 base_head %}#}
+    <meta charset="utf-8">
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    {% if not jquery_min %}
+        <script type="text/javascript"  src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.yapjoy.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pager.css' %}"/>
+    {% block tags %}{% endblock tags %}
+    <script type="text/javascript" src="{% static 'js/jquery.ba-bbq.js' %}"></script>
+    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>
+    <!-- patch1 -->
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png" sizes="32x32">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- patch4 -->
+    <meta name="description" content="An Intelligent Way to Plan Stress Free Wedding online">
+    <meta name="keywords"
+          content="Wedding,bride,groom,wedding planners,venues,caterers,yapjoy,bayareawedding,wedding fairs">
+    <meta name="author" content="yapjoy">
+
+    <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    <!-- patch4 -->
+
+    <link rel="stylesheet" type="text/css" href="{% static "font-awesome-4.4.0/css/font-awesome.min.css" %}" media="all">
+    <link href={% static "css/styles.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static 'css/chosen.css' %}" rel="stylesheet" type="text/css" media="all"/>
+{#    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="all"/>#}
+{#    {% endcache base_head %}#}
+    {% block header_tags %}{% endblock header_tags %}
+
+</head>
+<body >
+{% include 'partial/_header.html' %}
+<section class="main-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1 side-nav">
+                {% include 'partial/_sidebar.html' %}
+            </div>
+            {% block content %}{% endblock content %}
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="subscrivemodal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+{#                <iframe src="/credit"></iframe>#}
+            </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-gray" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-blue" id="editTaskSubmitBtn">Save</button>
+                <!-- <button type="button" class="btn btn-gray" data-dismiss="modal">OK</button> -->
+                <button style = "display:none" type="button" class="btn btn-blue" id="editTaskSubmitBtn">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="subscriptionModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title" style="margin-bottom: 0px;">Membership</h4>
+
+
+                    {#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
+                    {#        <!-- Nav tabs -->#}
+
+
+                    <iframe id="iframe_sub" src="" width="100%" height="584px"></iframe>
+
+                    <!-- end panel -->
+                    <!-- end panel -->
+
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+{% block jquery %}{% endblock jquery %}
+</body>
+<script>
+
+    var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png", "https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png", "https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+    var imgCount = 0;
+    function startTime() {
+        {#    if(imgCount == imgArray.length) {#}
+        {#        imgCount = 0;#}
+        {#    }#}
+        {#    document.getElementById("ad").src = imgArray[imgCount];#}
+        {#    imgCount++;#}
+        {#    setTimeout("startTime()", 5000);#}
+    }
+    $('#subscribe').on('click',function(){
+        $('#subscribemodal').modal('show');
+    })
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68785620-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>

@@ -1,0 +1,56 @@
+{% load static %}
+<div class="panel-body" id="id_panel_body" style="width: 500px;">
+    <div class="event-list-wrap">
+        <div class="col-md-12">
+            <div col-sm-12="" col-md-offset-1="">
+                <!-- event name -->
+
+                <h2><a class="col-md-4 col-md-offset-4">{{ event.name }}</a></h2>
+                <br>
+
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <label style="font-size: 15px;">Verify your Email</label>
+
+                <label style="font-size: 15px;">A code was sent to {{ u.email }}</label>
+
+                <br>
+                <br>
+
+                <input type="text" placeholder="Please Enter Code" required="" class="form-control" id="id_code" name="password">
+                <div id="id_code_error"></div>
+                <br>
+                <div class="form-group">
+                    <button id="id_verify" class="btn btn-block btn-yapjoy-blue">Verify my email </button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+<script>
+    $('#id_verify').on('click',function(){
+        var data = {
+            'code':$('#id_code').val(),
+            'email': '{{ u.email }}',
+            'action':'verify_email'
+        }
+        ajax_call('/family_share_link/'+ '{{ event.family_ref_code }}' +'/', "POST", data).done(function( data ) {
+            console.log('error: ', data['error'])
+            if(data['error'] != "" || data['error'] != none){
+
+                $("#id_card").html(data);
+            }else{
+                $("#id_code_error").html(data['error'])
+            }
+
+        });
+    })
+</script>

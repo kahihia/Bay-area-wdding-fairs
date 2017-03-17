@@ -1,0 +1,500 @@
+{% extends "vendroid/demo/iframe_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{#    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+{#    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>#}
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
+{% block body %}
+    <body data-smooth-scrolling="0" data-active="dashboard" class="full-layout nav-right-hide nav-right-start-hide nav-top-fixed responsive clearfix nav-left-medium  nav-left-hide breakpoint-480" id="dashboard" style="background-color: #f6f9fc !important;">
+{% endblock body %}
+{% block content %}
+    <style>
+        a {
+            color: #07A6C3 !important;
+        }
+        .image-tiles .text-center {
+            border: 1px solid #BCB8B8 !important;
+            margin-top:8px !important;
+            margin-bottom:8px !important;
+            padding: 5px !important;
+        }
+        .image-tiles .col-md-12 img {
+            width: 100%
+        }
+{#    .image-tiles .col-md-4 {#}
+{#            padding-left: 4px;#}
+{#            padding-right:4px;#}
+{#        }#}
+    </style>
+    <style>
+     .card {
+{#  padding:1.5rem;#}
+  box-shadow:0 1px 2px #aaa;
+  background:white;
+{#  margin:0 1rem 1rem;#}
+  border-radius:3px;
+  user-select:none;
+  animation:fly-in-from-left .5s 1s ease both;
+  transform-origin:top left;
+}
+        .height-250 {
+{#        min-height: 330px !important;#}
+        /*max-height: 300px !important;*/
+        }
+        hr {
+            border: 0;
+            clear:both;
+            display:block;
+            width: 96%;
+            background-color:black;
+            height: 1px;
+        }
+        .image-cropper {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+            background: #eee no-repeat center;
+            background-size: cover;
+            border-color: darkgray;
+        }
+        .uploader {position:relative; overflow:hidden; width:100%; height:100%; background:#f3f3f3; border:3px dashed #BCB8B8;}
+
+{#        #filePhoto{#}
+{#            position:absolute;#}
+{#            width:100%;#}
+{#            height:550px;#}
+{#            top:-50px;#}
+{#            left:0;#}
+{#            z-index:2;#}
+{#            opacity:0;#}
+{#            cursor:pointer;#}
+{#        }#}
+
+        .uploader img{
+            position:absolute;
+{#            width:302px;#}
+{#            height:352px;#}
+            top:-1px;
+            left:-1px;
+            z-index:1;
+            border:none;
+        }
+    .vd_title-section{
+        background-color: white;
+        border-bottom:none;
+    }
+    .vd_content-wrapper{
+        background-color: #f6f9fc;
+    }
+     @media only screen and (max-width: 768px) {
+            .vd_content-wrapper{
+                padding-left:0px;
+                padding-right:0px;
+            }
+        }
+    .panel {
+        border: 0px;
+    }
+    .pinterest-button {
+        color:red;
+border:2px solid red;
+background-color: white
+    }
+        .upload-button {
+        color:#07A6C3;
+        border:2px solid #07A6C3 !important;
+        background-color: white
+    }
+        @media only screen and (max-width: 768px) {
+            @media screen and (-webkit-min-device-pixel-ratio:0) {
+                 iframe {
+                    width: 96% !important;
+                }
+                .modal-dialog {
+                width: 93%;
+            }
+            }
+
+
+            #right-div {
+                padding-left:0px;
+                padding-right:0px;
+            }
+        }
+{#    .hoover-buttons {#}
+{#      display: none; /* Hide button */#}
+{#    }#}
+{##}
+{#    .hoover-buttons:hover {#}
+{#       display: block; /* On :hover of div show button */#}
+{#    }#}
+
+    </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+{#        {% include "vendroid/partial/_header.html" %}#}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/partial/_sidebar.html" %}#}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+{#                    <div class="col-md-12" style="margin-top: 20px;"><h3>Upload pictures and a passage to share your vision</h3></div>#}
+{#                    <div class="card" style="margin-top:15px;margin-bottom:15px; padding:15px; background-color: white !important;">#}
+{#                    <form id="update-desc-form" action="" method="post">#}
+{#                        <textarea name="update_desc" id="update_desc" style="height: 130px;" placeholder="Describe your dreams">{% if product.description %}{{ product.description }}{% else %}{% endif %}</textarea>#}
+{#                     </form>#}
+{#                    </div>#}
+{#                    <div class="">#}
+
+{#                    </div>#}
+                    <div class="clearfix "></div>
+                        <div class="card" style="padding: 15px;background-color: white !important;">
+                            <div class="vd_content clearfix">
+{#                            <div class="col-md-6 col-xs-6" style="padding-left:0px;">#}
+{#                                <h4 class="text-center" id="loading" hidden>Uploading please wait....</h4>#}
+{#                        <input type="file" name="dreamCard"  id="filePhoto" class="btn btn-default upload-button" />#}
+{#                            </div>#}
+{#                                <div class="col-md-6 col-xs-6 " style="padding-right:0px;">#}
+{#                                    <a class="btn btn-block pinterest-button" style="height: 40px;" onclick="$('#pinterest-dashboard').modal('show');">{% if not product.dashboard_link %}LINK PINTEREST BOARD{% else %}PINTEREST LINKED{% endif %}</a>#}
+{#                                </div>#}
+                                <div class="clearfix"></div>
+                            <div  class="clearfix">
+{#                                <div id="image-upload" hidden class="vd_panel-header no-menu">#}
+{#                                    <div class="uploader" onclick="$('#filePhoto').click()" style="min-height: 500px;display:block;background-image: url('{% static "images/dreams/Drop Images graphic.png" %}'); background-repeat: no-repeat;		background-position: center; ">#}
+{#                                        click here or drag here your images for preview and set your dream card#}
+{#                                        <img src=""/>#}
+{#                                        <input  type="file" name="dreamCard"  id="filePhoto" />#}
+{#                                        <h1 class="text-center"  style="color: #BCB8B8;margin-top:50%">Click or Drop Image Here</h1>#}
+{##}
+{##}
+{#                                    </div>#}
+{#                                    <textarea style="width: 100%;margin-top:20px;" placeholder="Add image caption here" id="image-text" ></textarea>#}
+{#                                    <br/>#}
+{##}
+{#                                    <a style="margin-bottom: 20px;" class="btn vd_btn  " onclick="$('#image-upload').toggle('hidden');$('#image-list').toggle('hidden');" >#}
+{#                                         Cancel#}
+{#                                    </a>#}
+{#                                    <a style="margin-bottom: 20px;" class="btn vd_btn btn-xs btn-blue pull-right" onclick="uploadImage();">#}
+{#                                        <i class="fa fa-plus append-icon"></i> #}
+{#                                        Upload now#}
+{#                                    </a>#}
+{#                                </div>#}
+                                <div class="vd_content-section clearfix" style="background-color: white !important;">
+                                    <div class="row" id="ID_dreamlist">
+                                        {% include 'vendroid/demov2/dream/_partial_dream.html' %}
+                                    </div>
+                                </div>
+{#                                <div class="panel widget light-widget">#}
+{#                              <div class="panel-heading no-title"> </div>#}
+{#                              <div id="image-list" style="margin-top:15px;">#}
+{#                                  <div class="row" id="ID_dreamlist">#}
+{#                                        {% include 'vendroid/demov2/dream/_partial_dream.html' %}#}
+{#                                    </div>#}
+{#                                <!-- content-list -->#}
+{#                              </div>#}
+{##}
+{#                            </div>#}
+
+
+
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+{#                <div class="card" style=" margin-top: 15px; /* margin-bottom: 15px !important; */ background-color: white; padding: 30px">#}
+{#                                  <div class="row">#}
+{#                                        {% if not product.isListing %}#}
+{#                                        <form action="" method="post">#}
+{#                                            {% csrf_token %}#}
+{#                                            <input id="publish" name="publish" hidden />#}
+{#                                            <button type="submit" class="btn btn-primary btn-block btn-blue" style=" /* margin-top: 20px; */ /* width: 120px; */ width: 100%" >PUBLISH</button>#}
+{#                                        </form>#}
+{#                                    {% else %}#}
+{#                                            <button disabled class="btn btn-primary btn-block btn-blue" style=" /* margin-top: 20px; */ /* width: 120px; */ width: 100%" >Searching</button>#}
+{#                                    {% endif %}#}
+{#                                    </div>#}
+{#                                <!-- content-list -->#}
+{#                              </div>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{#<div class="modal fade" id="pinterest-dashboard" role="dialog" aria-hidden="true">#}
+{#        <div class="modal-dialog" style="width: 97%;">#}
+{#            <div class="modal-content">#}
+{##}
+{#                <div class="modal-body">#}
+{#                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>#}
+{#                    <!-- patch2 -->#}
+{#                    <h4 class="modal-title">Manage Dreams with Pinterest</h4>#}
+{#                    <hr/>#}
+{#                    <form class="form-horizontal" action="." method="post" role="form">#}
+{#                        {% csrf_token %}#}
+{#                        <div class="alert alert-danger {% if not form.errors %}vd_hidden{% endif %}">#}
+{#                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i#}
+{#                                    class="icon-cross"></i></button>#}
+{#                            <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>#}
+{#                            {{ form.errors }}#}
+{#                        </div>#}
+{#                        <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">#}
+{#                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i#}
+{#                                    class="icon-cross"></i></button>#}
+{#                            <span class="vd_alert-icon"><i#}
+{#                                    class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>#}
+{#                        <div class="alert alert-success vd_hidden">#}
+{#                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i#}
+{#                                    class="icon-cross"></i></button>#}
+{#                            <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well#}
+{#                            done!</strong>.#}
+{#                        </div>#}
+{#                        <div class="form-group  mgbt-xs-20">#}
+{#                            <div class="col-md-12">#}
+{#                                <div class="label-wrapper sr-only">#}
+{#                                    <label class="control-label" for="email">Pinterest Dashboard Link</label>#}
+{#                                </div>#}
+{#                                <p>Enter your own dashboard link of Pinterest#}
+{#                                    or set it to default.#}
+{#                                </p>#}
+{##}
+{#                                <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}"#}
+{#                                     id="email-input-wrapper"><span class="menu-icon"> </span>#}
+{##}
+{#                                    <input id="dashboardlink" type="url" name="dashboardlink"#}
+{#                                           value="{{ product.dashboard_link }}" class="form-control"/>#}
+{#                                    <a class="pull-right" href="#"#}
+{#                                       onclick="$('#dashboardlink').val('https://www.pinterest.com/baweddingfairs/');">Set#}
+{#                                        Default</a>#}
+{#                                </div>#}
+{#                                {% if form.username.errors %}#}
+{#                                    <div class="vd_red" for="username">{{ form.username.errors }}</div>{% endif %}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div id="vd_login-error" class="alert alert-danger hidden"><i#}
+{#                                class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <div class="col-md-12 text-center mgbt-xs-5">#}
+{#                                <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">#}
+{#                                    Update#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </form>#}
+{##}
+{#                </div>#}
+                {#            <div class="modal-footer">#}
+                {##}
+                {#                </div>#}
+{#            </div>#}
+{#            <!-- /.modal-content -->#}
+{#        </div>#}
+{#        <!-- /.modal-dialog -->#}
+{#    </div>#}
+{% endblock content %}
+
+
+{% block script %}
+{#    <script src="{% static 'js/bootbox.min.js' %}"></script>#}
+{#    <script type="text/javascript">#}
+{#        {% if send_publishing %}#}
+{#            parent.openDecide();#}
+{#        {% endif %}#}
+{#        var imageLoader = document.getElementById('filePhoto');#}
+{#            imageLoader.addEventListener('change', handleImage, false);#}
+{##}
+{#        var targetFile;#}
+{#        function handleImage(e) {#}
+{#            var reader = new FileReader();#}
+{#            reader.onload = function (event) {#}
+{##}
+{#                $('.uploader img').attr('src', event.target.result);#}
+{#            };#}
+{#            reader.readAsDataURL(e.target.files[0]);#}
+{##}
+{#            targetFile = e.target.files[0];#}
+{#        }#}
+{#        $("#filePhoto").change(function () {#}
+{#            $('#loading').toggle('hidden;')#}
+{#            $("#filePhoto").toggle('hidden;')#}
+{#            uploadImage()#}
+{#        });#}
+{##}
+{##}
+{#        function uploadImage(){#}
+{#            var formdata = new FormData();#}
+{#            formdata.append("image", targetFile);#}
+{#            formdata.append("description", $('#image-text').val());#}
+{#            $.ajax({#}
+{#                url: '',#}
+{#                type: 'post',#}
+{#                data: formdata,#}
+{#                processData: false,#}
+{#                contentType: false,#}
+{##}
+{#                success: function (response) {#}
+{#                    $('#ID_dreamlist').html(response);#}
+{#                    $('#loading').toggle('hidden;')#}
+{#                    $("#filePhoto").toggle('hidden;')#}
+{#                    $('#filePhoto').val('');#}
+{#                    var input =$('#filePhoto')#}
+{##}
+{#                    function clearInput() {#}
+{#                        input = input.val('').clone(true);#}
+{#                    };#}
+{##}
+{#                    $('#image-upload').toggle('hidden');#}
+{#                    $('#image-list').toggle('hidden');#}
+{#                    parent.push_success_alert('Dream image added successfully.');#}
+{#                },#}
+{##}
+{#                error: function (xhr, errmsg, err) {#}
+{##}
+{#                }#}
+{#            });#}
+{#        }#}
+{#        // update_desc#}
+{##}
+{#    var typingTimer;                //timer identifier#}
+{#    var doneTypingInterval = 2000;  //time in ms (5 seconds)#}
+{#    $('#update_desc').on('keyup',function(){#}
+{#        alert('changing')#}
+{#         clearTimeout(typingTimer);#}
+{#        typingTimer = setTimeout( save_desc, doneTypingInterval );#}
+{##}
+{#    })#}
+{#    $('#update_desc').on('keydown', function () {#}
+{#      clearTimeout(typingTimer);#}
+{#    });#}
+{#    function save_desc(){#}
+{#        $.ajax({#}
+{#                url: '',#}
+{#                type: 'post',#}
+{#                data: $('#update-desc-form').serialize(),#}
+{#                processData: false,#}
+{#                contentType: false,#}
+{##}
+{#                success: function (response) {#}
+{#                    $('#ID_dreamlist').html(response);#}
+{#                    alert(response)#}
+{#                    parent.push_success_alert('Dream description is saved successfully.');#}
+{#                },#}
+{##}
+{#                error: function (xhr, errmsg, err) {#}
+{##}
+{#                }#}
+{#            })#}
+{#    }#}
+{##}
+{#    function deleteImage(id) {#}
+{#            event.preventDefault()#}
+{#            bootbox.confirm("<h3>Are you sure you wish to delete this image?</h3>", function (result) {#}
+{#                if (!result) return;#}
+{#                else {#}
+{#                    delete_image#}
+{#                    $.ajax({#}
+{#                        url: '',#}
+{#                        type: 'post',#}
+{#                        data: {'delete_image':id},#}
+        {#                processData: false,#}
+        {#                contentType: false,#}
+{##}
+{#                        success: function (response) {#}
+{#                            alert(response)#}
+{#                            if(response=="Done"){#}
+{#                                $('#image_containing_div_'+id).toggle('hidden')#}
+{#                                parent.push_success_alert('Image has been removed successfully.');#}
+{#                            }else{#}
+{#                                parent.push_failure_alert('You cannot delete this image.')#}
+{#                            }#}
+{##}
+{#                        },#}
+{##}
+{#                        error: function (xhr, errmsg, err) {#}
+{##}
+{#                        }#}
+{#                    })#}
+{#                }#}
+{#            });#}
+{##}
+{##}
+{#        }#}
+{#        {% if send_publishing_error %}#}
+{#            parent.push_failure_alert('{{ send_publishing_error }}')#}
+{#        {% endif %}#}
+{#        function submit_desc_edit_form(id){#}
+{#            event.preventDefault()#}
+{#            $.ajax({#}
+{#                        url: '',#}
+{#                        type: 'post',#}
+{#                        data: $('#image_desc_edit_'+id).serialize(),#}
+        {#                processData: false,#}
+        {#                contentType: false,#}
+{##}
+{#                        success: function (response) {#}
+{#                            alert(response)#}
+{#                            if(response=="Done"){#}
+{#                                $('#image_containing_div_'+id).toggle('hidden')#}
+{#                                $('#image_desc_edit_'+id).toggle('hidden');#}
+{#                                $('#image_desc_edit_button_'+id).toggle('hidden');#}
+{#                                $('#description-edit_two_'+id).toggle('hidden');#}
+{##}
+{#                                $('#description-edit_two_'+id).html($('#description-edit_'+id).val());#}
+{##}
+{#                                parent.push_success_alert('Image description has been edited successfully.');#}
+{#                                setTimeout(#}
+{#                                  function()#}
+{#                                  {#}
+{#                                    parent.resizeIDreamsframe();#}
+{#                                  }, 5000);#}
+{#                            }else{#}
+{#                                parent.push_failure_alert('You cannot edit this description.')#}
+{#                            }#}
+{##}
+{#                        },#}
+{##}
+{#                        error: function (xhr, errmsg, err) {#}
+{##}
+{#                        }#}
+{#                    })#}
+{#        }#}
+{#        $( ".hoover-div" )#}
+{#         .on("mouseenter", function() {#}
+{#          $(".hoover-buttons").show();#}
+{#        })#}
+{#        .on("mouseleave", function() {#}
+{#          $(".hoover-buttons").hide();#}
+{#        });#}
+{#        $(document).ready(function(){#}
+{#            if ( $(window).width() < 500) {#}
+{#              $('.image-tiles .images_dream').removeClass('col-xs-4')#}
+{#              $('.image-tiles .images_dream').addClass('col-xs-12')#}
+{#            }else{#}
+{#                $('.image-tiles .images_dream').addClass('col-xs-4')#}
+{#              $('.image-tiles .images_dream').removeClass('col-xs-12')#}
+{#            }#}
+{#        })#}
+{#        $(window).resize(function(){#}
+{#            if ( $(window).width() < 500) {#}
+{#              $('.image-tiles .images_dream').removeClass('col-xs-4')#}
+{#              $('.image-tiles .images_dream').addClass('col-xs-12')#}
+{#            }else{#}
+{#                $('.image-tiles .images_dream').addClass('col-xs-4')#}
+{#              $('.image-tiles .images_dream').removeClass('col-xs-12')#}
+{#            }#}
+{#        })#}
+{##}
+{#    </script>#}
+{#    image-tiles#}
+
+
+{% endblock %}

@@ -1,0 +1,679 @@
+{% extends "vendroid/demo/base_vendor.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% load rest_framework %}
+{% block content %}
+    <style>
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+        {#                div.panel-heading.vd_bg-green.vd_bd-green {#}
+        {#                    background-color: white !important;#}
+        {#                    color: black !important;#}
+        {#                    border: 1px grey solid !important;#}
+        {#                }#}
+        {#                div.panel-heading.vd_bg-green.vd_bd-green a{#}
+        {#                    color: grey !important;#}
+        {#                }#}
+        .yelpSaveButton {
+            margin-bottom:15px;
+        }
+        .image-cropper {
+            max-width: 110px;
+            min-width: 110px;
+            max-height: 110px;
+            min-height: 110px;
+        {#            position: relative;#}
+        {#            overflow: hidden;#}
+        {#            border-radius: 50%;#}
+        {#            background: #eee no-repeat center;#}
+        {#            background-size: cover;#}
+        {#            border-color: darkgray;#}
+        }
+        #profile-image-id img:hover {
+            content: url('{% static "images/vendorProfile/Stock_Profile_Picture.png" %}');
+            cursor: pointer;
+        {#             position:absolute;#}
+        {#               left:50% ;#}
+        {#             right: 50% ;#}
+        {#            opacity:0.5;#}
+        {#             margin-top:    -111px;#}
+        {#             margin-left: -106px;#}
+        {#            z-index:15;#}
+        }
+        .images-mobile {
+            width: 120px;
+            min-width: 120px;
+            max-height: 120px;
+            min-height: 120px;
+            /* overflow: hidden; */
+            /* position: relative; */
+            max-width: 120px;
+        }
+        .panel {
+            border:none !important;
+            border-radius:none !important;
+        }
+        .blue-button {
+            background-color: #07A6C3;
+            color: white;
+        {#            border-radius: 20px;#}
+            margin-top: 10px;
+            width: 80%;
+            height: 60px;
+            line-height: 26px;
+        }
+        {#        ul.tab {#}
+        {#            list-style-type: none;#}
+        {#            margin: 0;#}
+        {#            padding: 0;#}
+        {#            overflow: hidden;#}
+        {#            border: 1px solid #ccc;#}
+        {#            background-color: #f1f1f1;#}
+        {#        }#}
+        {##}
+        {#        /* Float the list items side by side */#}
+        {#        ul.tab li {float: left;}#}
+        {##}
+        {#        /* Style the links inside the list items */#}
+        {#        ul.tab li a {#}
+        {#            display: inline-block;#}
+        {#            color: black;#}
+        {#            text-align: center;#}
+        {#            padding: 14px 16px;#}
+        {#            text-decoration: none;#}
+        {#            transition: 0.3s;#}
+        {#            font-size: 17px;#}
+        {#        }#}
+        {##}
+        {#        /* Change background color of links on hover */#}
+        {#        ul.tab li a:hover {#}
+        {#            background-color: #ddd;#}
+        {#        }#}
+        {##}
+        {#        /* Create an active/current tablink class */#}
+        {#        ul.tab li a:focus, .active {#}
+        {#            background-color: #ccc;#}
+        {#        }#}
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        {#        .social_icons_style {#}
+        {#                width: 20%;#}
+        {#                padding:0px;#}
+        {#                display: inline;#}
+        {#                margin-top:15px;#}
+        {#                align:center;#}
+        {#                width: 60% !important;#}
+        {#                align: center;#}
+        {#            }#}
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+        .form-wizard .nav > li.active .menu-icon {
+            background: #07A6C3;
+        }
+        .panel-group .panel+.panel {
+            margin-top:0px;
+        }
+        .progress-img {
+            width: 50%;
+        }
+        .modal {
+            width: 98%;
+        }
+        @media only screen and (max-width: 500px) {
+            .yelpSaveButton {
+                margin-bottom:0px;
+            }
+            .blue-button {
+                background-color: #07A6C3;
+                color: white;
+            {#            border-radius: 20px;#}
+                margin-top: 10px;
+                width: 300px;
+                height: 60px;
+                line-height: 26px;
+            }
+            .images-mobile {
+                width:100%;
+                max-width:100%;
+                max-height:120px;
+                min-height:120px;
+            {#            height:auto;#}
+                overflow: hidden;
+                position: relative;
+            }
+            .progress-img {
+                width: 100%;
+            }
+            .mb-panel-col-md-8 {
+                padding-left:0px;
+                padding-right:0px;
+            }
+            .panel{
+            {#                border:none !important;#}
+            }
+
+            .mb-content-wrapper-child {
+                margin-top:0px;
+            }
+            .mb-panel-body{
+                padding:0px !important;
+            }
+            .mb-row {
+                margin-left: -17px !important;
+                margin-right: -17px !important;
+
+            }
+            .nav-justified {
+                width: 100%;
+            }
+            .nav-justified > li {
+            {#  float: left;#}
+                display: table-cell;
+            }
+            .yelp-heading {
+                font-size: 18px;
+            }
+            .mb-col-xs-12 {
+                padding:0px;
+            }
+            .image-cropper {
+                width: 70px;
+                height: 70px;
+                max-height: 70px;
+                min-height: 70px;
+                max-width:70px;
+                min-width:70px;
+            {#            position: relative;#}
+            {#            overflow: hidden;#}
+            {#            border-radius: 50%;#}
+            {#            background: #eee no-repeat center;#}
+            {#            background-size: cover;#}
+            {#            border-color: darkgray;#}
+            }
+            .company__fonts {
+                font-size: 16px;
+            }
+            .social_icons_style {
+                width: 20%;
+                padding:0px;
+                display: inline;
+                margin-top:15px;
+            }
+
+
+
+        }
+
+        {#   ul.experiences li {#}
+        {#    padding-left: 33px;#}
+        {#    margin-bottom: 2.5em;#}
+        {#    list-style: none;#}
+        {#    background: url('../img/misc/list-bullet-darkgray.png') no-repeat;#}
+        {#    border-left: 1px solid #yourcolor;#}
+        {# } #}
+        {#    @import "compass/css3";#}
+
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+{#        {% include "vendroid/demo/_partial/_header_yapjoy_theme_vendor.html" %}#}
+
+        <div class="content">
+            <div class="container">
+
+
+
+                <div class="vd_content-wrapper yp-content-wrap" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <div class="panel panel-vendor-register">
+                                    <div class="panel-title">
+                                        <h4>Vendor Registration</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form method="POST" class="form-group">
+                                            {% csrf_token %}
+                                            {#                                          {% render_form serializer %}#}
+                                            {#                                          {% if error %}#}
+                                            {#                                              {% for e in error %}#}
+{#                                            <small id="emailHelp" class="form-text text-muted error help-block">{{ serializer.error }} </small>#}
+                                            {#                                              {% endfor %}#}
+                                            {#                                          {% endif %}#}
+                                            <div class="form-group">
+                                                {#                                            <label for="exampleInputEmail1">NAME</label>#}
+                                                {% render_field serializer.full_name style=style %}
+                                                {#                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Full Name">#}
+                                            <small id="nameHelp" class="form-text text-muted error"></small>
+                                            </div>
+                                            <div class="form-group">
+
+                                                {% render_field serializer.email style=style %}
+                                                <small id="emailHelp" class="form-text text-muted error"></small>
+                                            </div>
+                                            <div class="form-group">
+                                                {% render_field serializer.phone style=style %}
+                                               <small id="phoneHelp" class="form-text text-muted error"></small>
+                                            </div>
+                                            <div class="form-group">
+                                                {% render_field serializer.business_location style=style %}
+                                                <small id="businessHelp" class="form-text text-muted error"></small>
+                                            </div>
+                                            <div class="form-group">
+                                                {% render_field serializer.profession style=style %}
+                                                <small id="professionHelp" class="form-text text-muted error"></small>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>
+                                                    <input type="checkbox" required>
+                                                    I agree to the YapJoy Terms of Service and
+                                                    Privacy Policy</label>
+                                            </div>
+
+                                            {#                                          <div class="form-group">#}
+                                            {#                                             <button class="btn btn-block btn-reg-disable">Register - send verification email </button>#}
+                                            {#                                          </div>#}
+
+                                            <div class="form-group">
+                                                <button id="id_register" class="btn btn-block btn-yapjoy-blue">Register - send verification email </button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+        {% include "vendroid/demov2/vendors/profile/_partial_modals.html" %}
+
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("#id_register").on('click', function(e){
+
+                var email = $("input[name=email]").val();
+                var name = $("input[name=Name]").val();
+                var phone = $("input[name=phone]").val();
+                var business = $("input[name=business_location]").val();
+                var profession = $("input[name=profession]").val();
+                if(email == ''){
+                    $("#emailHelp").html('Please Enter the Email')
+                    e.preventDefault();
+                }else{
+                    if(!isValidEmailAddress(email)){
+
+                        $("#emailHelp").html('Please Enter the correct')
+                        e.preventDefault();
+                    }
+                    else{
+                        $("#emailHelp").html('')
+                    }
+                }if(name == ''){
+                    $("#nameHelp").html('Please Enter the Full Name')
+                    e.preventDefault();
+                }else{
+                    $("#nameHelp").html('')
+                }if(phone == ''){
+                    $("#phoneHelp").html('Please Enter the Phone Number')
+                    e.preventDefault();
+                }else{
+                    $("#phoneHelp").html('')
+                }if(business == ''){
+                    $("#businessHelp").html('Please Enter the Business Location')
+                    e.preventDefault();
+                }else{
+                    $("#businessHelp").html('')
+                }if(profession == ''){
+                    $("#professionHelp").html('Please Enter the Profession')
+                    e.preventDefault();
+                }else{
+                    $("#professionHelp").html('')
+                }
+
+            });
+            function isValidEmailAddress(emailAddress) {
+                var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+                return pattern.test(emailAddress);
+            };
+            $('#nav').children('li').first().children('a').addClass('active')
+                .next().addClass('is-open').show();
+
+            $('#nav').on('click', 'li > a', function() {
+
+                if (!$(this).hasClass('active')) {
+
+                    $('#nav .is-open').removeClass('is-open').hide();
+                    $(this).next().toggleClass('is-open').toggle();
+
+                    $('#nav').find('.active').removeClass('active');
+                    $(this).addClass('active');
+                } else {
+                    $('#nav .is-open').removeClass('is-open').hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+        //Video upload url
+        var i = 0;
+        $("#ID_btnVideo").click(function(){
+            if (i == 0){
+                $("#ID_videoUrl").show();
+                i = 1;
+            } else {
+                $("#ID_videoUrl").hide();
+                i = 0
+            }
+        });
+
+        function saveVideoUrl(obj){
+            var url = obj.value;
+            console.log("url is ", url);
+            $("#ID_videoUrl").hide();
+
+            if (url.length == 0){
+                alert("Please enter something if you would like to upload the video")
+            } else {
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {'videoUrl': url},
+
+                    success: function (response) {
+                        $("#ID_VideoShow").html(response);
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        alert("change video failed");
+                    }
+                });
+            }
+        }
+
+
+        //Tab 1
+        $("#defaultOpen").click();
+        function openTopTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = $(".tabcontent");
+
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = $(".tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            {#            evt.currentTarget.className += " active";#}
+        }
+
+        //Tab 2
+        $("#defaultOpenBottomTab").click();
+        function openBottomTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = $(".tabcontentBtm");
+
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = $(".tablinksBtm");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            {#            evt.currentTarget.className += " active";#}
+        }
+        {#        $.ajax({#}
+        {#          xhr: function() {#}
+        {#            var xhr = new window.XMLHttpRequest();#}
+        {##}
+        {#            xhr.upload.addEventListener("progress", function(evt) {#}
+        {#              if (evt.lengthComputable) {#}
+        {#                var percentComplete = evt.loaded / evt.total;#}
+        {#                percentComplete = parseInt(percentComplete * 100);#}
+        {#                console.log(percentComplete);#}
+        {##}
+        {#                if (percentComplete === 100) {#}
+        {##}
+        {#                }#}
+        {##}
+        {#              }#}
+        {#            }, false);#}
+        {##}
+        {#            return xhr;#}
+        {#          },#}
+        {#          url: posturlfile,#}
+        {#          type: "POST",#}
+        {#          data: JSON.stringify(fileuploaddata),#}
+        {#          contentType: "application/json",#}
+        {#          dataType: "json",#}
+        {#          success: function(result) {#}
+        {#            console.log(result);#}
+        {#          }});#}
+        $('#profile-image-id').on('click',function(){
+            $('#EditProfileImage').modal('show');
+        });
+        $('#profile_complete_form').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#directory_access_button').attr('disabled','disabled')
+            $('#directory_access_button').html('Requesting, Please wait.')
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: $(this).serialize(),
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#directory_access_button_success').toggle('hidden')
+                    $('#profile_complete_form').toggle('hidden')
+                    $('#directory_access_button').html('')
+                    $('#DirectoryRequestDiv').html(response)
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+
+        $('#profile_image_form').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#update_image_button').attr('disabled','disabled')
+            $('#update_image_button').html('Uploading, Please wait.')
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#update_image_button').html('Upload')
+                    $('#EditProfileImage').modal('hide')
+                    $('#profile_image_update').attr('src',response)
+                    $('#update_image_button').removeAttr('disabled')
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+        $('#AlbumPictureRemoveForm').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            {#            $('#update_image_button').attr('disabled','disabled')#}
+            {#            $('#update_image_button').html('Uploading, Please wait.')#}
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    {#                    $('#update_image_button').html('Upload')#}
+                    {#                    $('#EditProfileImage').modal('hide')#}
+                    $('#all_images').html(response);
+                    $('#AlbumPictureView').modal('hide');
+                    {#                    $('#update_image_button').removeAttr('disabled')#}
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+
+        $('#videoUploaderForm').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#videoUploadbutton').attr('disabled','disabled')
+            $('#uploading_image').attr('src', '{% static "images/vendorProfile/dots64.gif" %}')
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#ID_VideoShow').html(response);
+                    $('#videoUploadbutton').removeAttr('disabled')
+                    $('#uploading_image').attr('hidden', 'hidden')
+                    $('#uploadVideoDiv').toggle('hidden')
+                    {#                        $('#EditProfileImage').modal('hide')#}
+                    {#                        $('#profile_image_update').attr('src',response)#}
+                    {#                        $('#update_image_button').removeAttr('disabled')#}
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    {#                        $('#directory_access_button').removeAttr('I am ready. Apply!')#}
+                }
+            });
+
+        })
+        function updateYelp(){
+            var name = $('#ID_yelpName').val().trim();
+            var zip = $('#ID_yelpZip').val().trim();
+            console.log("txt is ", name, zip);
+
+            if ((name.length == 0) || (zip.length == 0)) {
+                alert("Please fill up all the fields")
+            } else {
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {'YelpName': name,
+                        'YelpZip': zip
+                    },
+                    success: function (response) {
+                        $("#yelpPanel").html(response);
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        alert("change description failed");
+                    }
+                });
+            }
+        }
+        {#        $('#company__name__id').mouseover(function() {#}
+        {#            $('#company__name__icon').show();#}
+        {#        });#}
+        {#        $('#company__location__id').mouseover(function() {#}
+        {#            $('#company__location__icon').show();#}
+        {#        });#}
+        $("#company__name__id").on("mouseenter", function() {
+            $("#company__name__icon").show();
+        }).on("mouseleave", function() {
+            $("#company__name__icon").hide();
+        });
+        $("#company__location__id").on("mouseenter", function() {
+            $("#company__location__icon").show();
+        }).on("mouseleave", function() {
+            $("#company__location__icon").hide();
+        });
+        $("#company__name__id,#company__location__id").on('click',function(){
+            window.location.href = "{% url "vendors__storefrontEdit" %}";
+        })
+
+    </script>
+
+{% endblock script %}

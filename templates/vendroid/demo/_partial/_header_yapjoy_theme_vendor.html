@@ -1,0 +1,303 @@
+{#{% load static %}#}
+{#{% load humanize %}#}
+{#<style>#}
+{#    .header-1 {#}
+{#        height: 40px !important;#}
+{#    }#}
+{#    .a-white {#}
+{#        color: white;#}
+{#        margin-left: 22px;#}
+{#        margin-right: 22px;#}
+{#    }#}
+{#    .vd_top-nav .vd_panel-menu {#}
+{#        top: 10px;#}
+{#    }#}
+{#    .vd_nav-width {#}
+{#        width: 450px#}
+{#    }#}
+{#</style>#}
+{#<header class="header-1" id="header" style="height: 41px !important;">#}
+{#    <div class="vd_top-menu-wrapper" style="background-color: rgb(7, 160, 195);height:40px;">#}
+{#        <div class="container ">#}
+{#            <div class="vd_top-nav vd_nav-width  ">#}
+{#                <div class="vd_panel-header">#}
+{#                    <div class="logo">#}
+{##}
+{#                        <a href="/" class="pull-left" style="margin-top: 8px;"><img alt="logo"  src="{% static "images/logo/logo.png" %}" style="height: 26px;"></a>#}
+{#                    </div>#}
+{#                    <div class="vd_panel-menu  hidden-sm "  >#}
+{#                        <a class="a-white pull-left" href="{% url "vendors__profile" %}">#}
+{##}
+{#                            <div class="menu-text">Profile</div>#}
+{#                        </a>#}
+{#                        <a class="a-white pull-left" href="{% url "yapjoy_vendor_select" %}">#}
+{##}
+{#                            <div class="menu-text"><i class="fa fa-book"></i> Directory</div>#}
+{#                        </a>#}
+{#                        <a class="a-white pull-left" href="#">#}
+{##}
+{#                            <div class="menu-text">Clients</div>#}
+{#                        </a>#}
+{##}
+{##}
+{##}
+{#                    </div>#}
+{##}
+                    {##}
+                    {#                            </div>#}
+{#                    <!-- vd_panel-menu -->#}
+{#                </div>#}
+{#                <!-- vd_panel-header -->#}
+{##}
+{#            </div>#}
+{##}
+{#            <div class="vd_container">#}
+{#                <div class="row">#}
+{#                    <div class="col-sm-6 col-xs-12 pull-right">#}
+{#                        <div class="vd_mega-menu-wrapper">#}
+{#                            <div class="vd_mega-menu pull-right">#}
+{#                                <ul class="mega-ul">#}
+{##}
+{#                                    <li id="top-menu-profile" class="profile mega-li">#}
+{#                                        <a href="#" class="mega-link" data-action="click-trigger">#}
+{#                                                <span class="mega-image" style="height: 18px;">#}
+{#                                                    <img src="{{ request.user.userprofile.get_image_url }}" style="margin-top: -6px;max-height: 26px;" alt="profile image"/>#}
+{#                                                </span>#}
+{#                                            <span class="mega-name" style="margin-top: -6px;">#}
+{#                                                    {{ request.user.get_full_name }} <i class="fa fa-caret-down fa-fw"></i>#}
+{#                                                </span>#}
+{#                                        </a>#}
+{##}
+{#                                        <div class="vd_mega-menu-content  width-xs-2  left-xs left-sm"#}
+{#                                             data-action="click-target">#}
+{#                                            <div class="child-menu">#}
+{#                                                <div class="content-list content-menu">#}
+{#                                                    <ul class="list-wrapper pd-lr-10">#}
+                                                        {#                                                                <li><a href="/profile/">#}
+                                                        {#                                                                    <div class="menu-icon"><i class=" fa fa-user"></i>#}
+                                                        {#                                                                    </div>#}
+                                                        {#                                                                    <div class="menu-text">Profile</div>#}
+                                                        {#                                                                </a></li>#}
+                                                        {#                                                                <li><a href="/settings/">#}
+                                                        {#                                                                    <div class="menu-icon"><i class=" fa fa-cogs"></i>#}
+                                                        {#                                                                    </div>#}
+                                                        {#                                                                    <div class="menu-text">Settings</div>#}
+                                                        {#                                                                </a></li>#}
+                                                        {#                                                                <li><a href="/feedback/">#}
+                                                        {#                                                                    <div class="menu-icon"><i class=" fa fa-support"></i>#}
+                                                        {#                                                                    </div>#}
+                                                        {#                                                                    <div class="menu-text">Support</div>#}
+                                                        {#                                                                </a></li>#}
+{##}
+{##}
+{#                                                        <li class="line"></li>#}
+{##}
+{##}
+{##}
+{#                                                        <li><a href="/logout/">#}
+{#                                                            <div class="menu-icon"><i#}
+{#                                                                    class=" fa fa-sign-out"></i></div>#}
+{#                                                            <div class="menu-text">Logout</div>#}
+{#                                                        </a></li>#}
+{#                                                    </ul>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{##}
+{#                                    </li>#}
+{##}
+{##}
+{#                                </ul>#}
+{#                                <!-- Head menu search form ends -->#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <!-- container -->#}
+{#    </div>#}
+{#    <!-- vd_primary-menu-wrapper -->#}
+{##}
+{#</header>#}
+{#<script src="{% static "vendroid/js/jquery.js" %}"></script>#}
+{% load static %}
+{% load humanize %}
+<style>
+    .header-1 {
+        height: 40px !important;
+    }
+    .vd_mega-menu-content::before {
+        -moz-border-color: none;
+        border-color: transparent transparent #07A6C3;
+        border-image: none;
+        border-style: solid;
+        border-width: 5px;
+        content: "";
+        display: block;
+        height: 0;
+        opacity: 1;
+        width: 0;
+        position: absolute;
+        top: -12px;
+    }
+</style>
+<header class="header-1" id="header">
+            <div class="vd_top-menu-wrapper" >
+                <div class="container ">
+                    <div class="vd_top-nav vd_nav-width  ">
+                        <div class="vd_panel-header">
+                            <div class="logo">
+
+                                <a href="/" class="" style="margin-top: 8px;"><img alt="logo"  src="{% static "images/logo/logo.png" %}" style="height: 26px;"></a>
+                            </div>
+                            <div style="top:5px !important;" class="vd_panel-menu right-pos visible-sm visible-xs">
+{#                                    <li id="top-menu-2" class="one-icon mega-li" style="padding:2px;">#}
+{#      <a href="{% url "vendors__storefrontEdit" %}" class="mega-link" data-action="click-trigger" style="border:none;">#}
+{#    	<span class="mega-icon"><i class="fa fa-envelope"></i></span>#}
+{#          <img src="{% static "images/vendorProfile/Storefront_icon.png" %}" style="width:20px;" />#}
+{#		<span class="badge vd_bg-red">10</span>#}
+{#      </a>#}
+                                <a
+                                >
+                                    <span
+                                            class="menu" onclick="$('#listingError').modal('show');"
+
+{#                                            data-action="toggle-navbar-left" #}
+                                            style="background-color: #07A6C3;">
+{#                                        <i class="fa fa-reorder" style="color: white;"></i>#}
+                                        <i class="fa fa-book" aria-hidden="true" style="color:white;margin-top:7px;"></i>
+                                    </span>
+                                </a>
+{#    </li>#}
+
+
+
+                        </div>
+                            <div style="top:5px !important;" class="vd_panel-menu left-pos visible-sm visible-xs">
+{#                                    <li id="top-menu-2" class="one-icon mega-li" style="padding:2px;">#}
+{#      <a href="{% url "vendors__storefrontEdit" %}" class="mega-link" data-action="click-trigger" style="border:none;">#}
+{#    	<span class="mega-icon"><i class="fa fa-envelope"></i></span>#}
+{#          <img src="{% static "images/vendorProfile/Storefront_icon.png" %}" style="width:20px;" />#}
+{#		<span class="badge vd_bg-red">10</span>#}
+{#      </a>#}
+                                <a href="{% url "vendors__profile" %}">
+                                    <span
+                                            class="menu"
+
+{#                                            data-action="toggle-navbar-left" #}
+                                            style="background-color: #07A6C3;">
+{#                                        <i class="fa fa-reorder" style="color: white;"></i>#}
+                                        <img src="{% static "images/vendorProfile/Storefront_icon.png" %}" style="width:20px;" />
+                                    </span>
+                                </a>
+{#    </li>#}
+
+
+
+                        </div>
+{##}
+{#                            </div>#}
+                            <!-- vd_panel-menu -->
+                        </div>
+                        <!-- vd_panel-header -->
+
+                    </div>
+
+                    <div class="vd_container">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12 pull-right">
+                                <div class="vd_mega-menu-wrapper">
+                                    <div class="vd_mega-menu pull-right">
+                                        <ul class="mega-ul">
+                                                <li id="top-menu-2" class="one-icon mega-li" style="padding:2px;">
+      <a href="{% url "vendors__profile" %}" class="mega-link"    style="border:none;">
+{#    	<span class="mega-icon"><i class="fa fa-envelope"></i></span>#}
+          <img src="{% static "images/vendorProfile/Storefront_icon.png" %}" style="width:20px;" />
+{#		<span class="badge vd_bg-red">10</span>#}
+      </a>
+    </li>
+                                            <li id="top-menu-2" class="one-icon mega-li" style="padding:2px;margin-right: 216px;">
+      <a  class="mega-link"  {% if profile.is_approved %}href="{% url "vendors__storelisting" %}"{% else %}onclick="$('#listingError').modal('show');"{% endif %} style="border:none;">
+{#    	<span class="mega-icon"><i class="fa fa-envelope"></i></span>#}
+          <i class="fa fa-book" aria-hidden="true" style="color:white;margin-top:7px;"></i>
+{#		<span class="badge vd_bg-red">10</span>#}
+      </a>
+    </li>
+                                            <li id="top-menu-profile" class="profile mega-li">
+{#                                                <a href="/" class="mega-link" data-action="click-trigger">Check the link</a>#}
+                                                <a href="/" class="mega-link" data-action="click-trigger">
+                                                <span class="mega-image" style="height: 18px;">
+                                                    <img src="{{ request.user.userprofile.get_image_url }}" style="margin-top: -6px;max-height: 26px;" alt="profile image"/>
+                                                </span>
+                                                <span class="mega-name" style="margin-top: -6px;">
+                                                    {{ request.user.get_full_name }} <i class="fa fa-caret-down fa-fw"></i>
+                                                </span>
+                                                </a>
+
+
+                                                <div class="vd_mega-menu-content  width-xs-2  left-xs left-sm"
+                                                     data-action="click-target">
+                                                    <div class="child-menu">
+                                                        <div class="content-list content-menu">
+                                                            <ul class="list-wrapper pd-lr-10">
+{#                                                                <li><a href="/profile/">#}
+{#                                                                    <div class="menu-icon"><i class=" fa fa-user"></i>#}
+{#                                                                    </div>#}
+{#                                                                    <div class="menu-text">Profile</div>#}
+{#                                                                </a></li>#}
+{#                                                                <li><a href="/settings/">#}
+{#                                                                    <div class="menu-icon"><i class=" fa fa-cogs"></i>#}
+{#                                                                    </div>#}
+{#                                                                    <div class="menu-text">Settings</div>#}
+{#                                                                </a></li>#}
+{#                                                                {% if id %}#}
+{#                                                                 <li><a href="{% url "support" %}">#}
+{#                                                                    <div class="menu-icon"><i class=" fa fa-support"></i>#}
+{#                                                                    </div>#}
+{#                                                                    <div class="menu-text">Support</div>#}
+{#                                                                </a></li>#}
+{##}
+{#                                                                    <li><a href="{% url "settings" %}">#}
+{#                                                                            <li><a href="/settings/">#}
+{#                                                                            <div class="menu-icon"><i class=" fa fa-cogs"></i>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="menu-text">Settings</div>#}
+{#                                                                    </a></li>#}
+{#                                                                {% endif %}#}
+
+
+                                                                <li class="line"></li>
+
+
+
+                                                                <li><a href="/logout/vendor/">
+                                                                    <div class="menu-icon"><i
+                                                                            class=" fa fa-sign-out"></i></div>
+                                                                    <div class="menu-text">Logout</div>
+                                                                </a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+
+
+                                        </ul>
+                                        <!-- Head menu search form ends -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- container -->
+            </div>
+            <!-- vd_primary-menu-wrapper -->
+
+        </header>
+<script src="{% static "vendroid/js/jquery.js" %}"></script>
+

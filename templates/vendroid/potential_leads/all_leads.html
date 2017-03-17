@@ -1,0 +1,863 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load fullcalendar_tags %}
+{% block header_tags %}
+    {{ pictureWallForm.media }}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("maps", "3.4", {
+            other_params: "sensor=false&language=fr"
+        });
+    </script>
+    <script type="text/javascript" src="{% static "js/jquery.googlemap.js" %}"></script>
+{% endblock header_tags %}
+{% block content %}
+    <link href="{% static "vendroid/plugins/prettyPhoto-plugin/css/prettyPhoto.css" %}" rel="stylesheet"
+          type="text/css">
+    <script type="text/javascript"
+            src="{% static "vendroid/plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js" %}"></script>
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+        .chart {
+            padding: 0;
+            margin: 0;
+            height: 30%;
+            list-style: none;
+            overflow: hidden;
+            font-family: 'Lato', Calibri, Arial, sans-serif;
+        }
+
+        .progressDiv {
+        {#width: 84%;#}{#background: #fcfcfc;#}{#height: 325px;#}{#border: 1px solid #ccc;#}{#position: relative;#}{#left: 7%;#}{#display: inline-block;#}{#border-radius: 2px;#}{#box-shadow: 0px 1px 1px 1px #ccc;#}
+        }
+
+        .statChartHolder {
+        {#width: 35%;#}{#height: 90%;#}{#position: relative;#}{#border-right: 1px solid #ccc;#}{#top: 15px;#}{#    display: inline-block;#}
+        }
+
+        .statRightHolder {
+            display: inline-block;
+            height: 90%;
+            width: 64%;
+            position: relative;
+        {#top: -32px;#}{#margin: 0;#}
+        }
+
+        .statRightHolder ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .statRightHolder li {
+            border-bottom: 1px solid #ccc;
+            height: 85px;
+            width: 95%;
+            position: relative;
+            top: -25px;
+        }
+
+        .statRightHolder h3 {
+            display: inline-block;
+            margin-right: 15px;
+            color: #B6B5B5;
+            font-weight: 300;
+            font-size: 38px;
+        }
+
+        .statRightHolder span {
+            display: inline-block;
+            color: #B6B5B5;
+            font-size: 21px;
+            font-weight: 300;
+        }
+
+        .statsLeft {
+            list-style: none;
+            display: inline-block;
+            width: 45%;
+        }
+
+        .statsLeft li {
+            width: 100%;
+            height: 14px;
+            border: none;
+            top: 5px;
+            margin-bottom: 25px;
+        }
+
+        .statsLeft h3 {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        .statsLeft span {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        .statsRight {
+            width: 45%;
+            display: inline-block;
+            position: absolute;
+        }
+
+        .statsRight li {
+            width: 100%;
+            height: 14px;
+            border: none;
+            top: 5px;
+            margin-bottom: 25px;
+        }
+
+        .statsRight h3 {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        .statsRight span {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        /* Pie Chart */
+        .progress-pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #E5E5E5;
+            position: relative;
+        }
+
+        .progress-pie-chart.gt-50 {
+            background-color: #81CE97;
+        }
+
+        .ppc-progress {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0, 200px, 200px, 100px);
+        }
+
+        .ppc-progress .ppc-progress-fill {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0, 100px, 200px, 0);
+            background: #81CE97;
+            transform: rotate(60deg);
+        }
+
+        .gt-50 .ppc-progress {
+            clip: rect(0, 100px, 200px, 0);
+        }
+
+        .gt-50 .ppc-progress .ppc-progress-fill {
+            clip: rect(0, 200px, 200px, 100px);
+            background: #E5E5E5;
+        }
+
+        .ppc-percents {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 173.91304px / 2);
+            top: calc(50% - 173.91304px / 2);
+            width: 173.91304px;
+            height: 173.91304px;
+            background: #fff;
+            text-align: center;
+            display: table;
+        }
+
+        .ppc-percents span {
+            display: block;
+            font-size: 2.6em;
+            font-weight: bold;
+            color: #81CE97;
+        }
+
+        .pcc-percents-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .progress-pie-chart {
+            margin: 50px auto 0;
+        }
+
+
+    </style>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .topwidth {
+            top: 10px;
+            left: 20px;
+        }
+
+        .topoptionwidth {
+            top: 7px;
+            left: 20px;
+            height: 420px;
+        }
+
+        .stylo {
+            font-size: x-large;
+            height: 200px;
+            border-radius: 3px;
+        }
+
+        .stylo2 {
+            top: 10px;
+            background-color: white;
+            border-radius: 3px;
+        }
+
+        .optionsStyle {
+            height: 400px;
+            width: 350px;
+        }
+
+    </style>
+    <style>
+        .nav-left-medium .content .vd_container {
+            margin-left: 0px;
+        }
+
+        .vd_content-section {
+            margin-left: -15px;
+        }
+    </style>
+    <div class="vd_body">
+    <!-- Header Start -->
+    {% include "vendroid/partial/_header.html" %}
+    <!-- Header Ends -->
+    <div class="content">
+    <div class="container">
+        {#                {% include "vendroid/partial/_sidebar.html" %}#}
+
+        <!-- Middle Content Start -->
+        {% include "vendroid/messages/partial/chat_list.html" %}
+
+        <div class="vd_content-wrapper">
+            <div class="vd_container">
+                <div class="vd_content clearfix">
+                    <div class="vd_head-section clearfix">
+                    </div>
+                    <!-- vd_head-section -->
+
+                    <!-- vd_title-section -->
+
+                    <div class="vd_content-section clearfix">
+                        <div class="row">
+
+                            {#<!-- Panel Widget -->               </div>#}
+
+
+
+
+{#                        </div>#}
+                        <!-- .vd_content-section -->
+
+
+                        <div class="col-md-12 mgbt-md-20 mgbt-lg-0">
+                            <div class="row">
+                            <!--col-md-7 -->
+                           <div class="col-md-12 mgbt-md-20 mgbt-lg-0 ">
+                                    <div >
+                                     {% if profile.type == "Professional" %}
+                                         <div class="col-md-12 np">
+                                          <div class="panel widget vd_todo-widget light-widget">
+
+                                                    <div class="panel-body" style="min-height: 550px; max-height: 550px;">
+                                                                                                            <h4>Top 200 Potential Candidates</h4>
+                                                        <p class="mgbt-xs-20"><span class="append-icon"> <i
+                                                                class="fa fa-check-circle-o vd_green"></i> </span>
+                                                            <a>All 200 Potential Leads</a>
+                                                        </p>
+
+                                                        <div id="map" style="width: 100%; height: 450px;"></div>
+                                                        <script type="text/javascript">
+                                                            $(function () {
+                                                                $("#map").googleMap();
+                                                                {% for sug in suggestions %}
+                                                                    $("#map").addMarker({
+
+                                                                        address: "{{ sug.get_full_map_address }}", // Postale Address
+                                                                        url: '{{ sug.get_profile_url }}', // Link
+                                                                        title: '{{ sug.user.get_full_name }}'
+                                                                    });
+                                                                {% endfor %}
+                                                            })
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                         </div>
+
+
+                                             {% endif %}
+                                    <!-- col-md-12 -->
+                                </div>
+                                <!-- .row -->
+
+                            <!-- .col-md-5 -->
+                        </div>
+                            <!-- .col-md-5 -->
+                            </div>
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .content -->
+
+
+
+
+    </div>
+
+    </div>
+    <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+    </div>
+    </div>
+{% endblock content %}
+{% block script %}
+    {#    <script src="{% static "js/jquery.min.js" %}"></script>#}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "vendroid/js/jquery.dashboard.js" %}'></script>
+    <script>
+        rsvp = {{ profile.rsvp_count|default_if_none:0 }};
+        invites = {{ profile.invitation_count|default_if_none:0 }};
+        jQuery("#seo-sparkline").sparkline([invites, rsvp], {
+            type: 'pie',
+            height: '25px',
+            sliceColors: ['#2e8258', '#4abc96', '#1FAE66']
+        });
+
+        {% if not profile.type == "Professional" %}
+            {% if not profile.type == "Other" %}
+                {% if not profile.wedding_date or profileform.errors %}
+                    jQuery('#registerModal').modal('show');
+
+                    /*<![CDATA[*/
+                    jQuery(function (jQuery) {
+                        jQuery('#id_wedding_date').datepicker({'showAnim': 'slide', 'dateFormat': 'mm/dd/yy'});
+                    });
+                    /*]]>*/
+                {% endif %}
+            {% else %}
+                {% if profile.gender == "N/A" or profileform.errors %}
+                    jQuery('#registerModal').modal('show');
+
+
+                {% endif %}
+            {% endif %}
+
+        {% elif not company.name %}
+
+            //professionalModal
+            jQuery('#professionalModal').modal('show');
+
+        {% elif company.name and not profile.subscribed %}
+            openSubscriptionModal();
+        {% endif %}
+        if (jQuery("#to").length > 0) {
+            jQuery("#to").chosen();
+        }
+        ;
+
+    </script>
+    {#     <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
+    {#         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>#}
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300italic,400' rel='stylesheet' type='text/css'>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+
+            function openImage(url) {
+                alert(url);
+            }
+
+            $(document).ready(function () {
+                $.support.cors = true;
+                $.ajax({
+                    url: "https://server-yapjoy.herokuapp.com/api/news_feed/", // the endpoint
+                    dataType: 'json',
+                    type: "GET", // http method
+
+                    // handle a successful response
+                    success: function (data, status) {
+                        $.each(data, function (key, val) {
+                            //  alert(val.text); new-wall-id
+                            var news = '<li><div class="menu-icon"><i class="append-icon icon-newspaper"></i></div><div class="menu-text">' + val.text + '</div></li>';
+                            $('#new-wall-id').append(news);
+                        });
+                    },
+
+                    // handle a non-successful response
+                    error: function (xhr, errmsg, err) {
+                        console.log(errmsg)
+                    }
+                });
+            });
+
+
+            $.getJSON("/tasks/taskcompletechart/", function (json) {
+                console.log(json)
+                RenderBarChart('completeTaskGraph', json, ' Tasks Completed with total tasks', 'No of Tasks');
+
+            });
+            $.getJSON("/growthgraph/plans/", function (json) {
+                console.log(json)
+                {% if profile.type == "Professional" %}
+                    RenderPieChart('growthGraph', json, 'Plans Awarded', 'Plans Graph');
+                {% else %}
+                    RenderPieChart('growthGraph', json, 'Your Plans', 'Plans Graph');
+                {% endif %}
+
+            });
+
+
+            function RenderColumnChart(elementId, dataList, title, name) {
+                console.log('RenderBarChart')
+                new Highcharts.Chart({
+                    exporting: {enabled: false},
+                    chart: {
+                        renderTo: elementId,
+                        plotBackgroundColor: null,
+                        plotBorderWidth: 2,
+                        plotShadow: true,
+                        backgroundColor: null
+                    },
+
+                    title: {
+                        text: title,
+                        style: {
+                            color: 'black',
+                            {#                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                        }
+                    },
+                    tooltip: {
+                        useHTML: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 0, '.', ',');
+                            {#                        return this.y;#}
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false,
+                                style: {
+                                    color: 'black',
+                                    {#                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    xAxis: {
+                        categories: [],
+                        {#                    gridLineWidth: 1,#}
+
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '11px Roboto, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '11px Roboto, sans-serif'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+
+                            type: 'column',
+                            name: name,
+                            data: dataList
+                        }
+                    ]
+                });
+                console.log('here compete')
+            };
+
+            function RenderPieChart(elementId, dataList, title, name) {
+                console.log('RenderPieChart')
+                new Highcharts.Chart({
+                    {#                exporting: { enabled: false },#}
+                    credits: false,
+                    chart: {
+                        renderTo: elementId,
+                        plotBackgroundColor: null,
+                        plotBorderWidth: 0,
+                        plotShadow: true,
+                        backgroundColor: null
+                    }, title: {
+                        text: title,
+                        style: {
+                            color: 'black',
+                            {#                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                        }
+                    },
+                    {#                tooltip: {#}
+                    {#                    useHTML: true,#}
+                    {#                    formatter: function () {#}
+                    {#                        return Highcharts.numberFormat(this.y,0, '.', ',');#}
+                    {#                        return this.y;#}
+                    {#                    }#}
+                    {#                },#}
+
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false,
+
+                                style: {
+                                    color: 'black',
+                                    {#                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                                }
+                            }
+
+                        }
+                    },
+                    xAxis: {
+                        categories: [],
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '7px Roboto,sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '7px Roboto, sans-serif'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            name: name,
+                            data: dataList,
+                        }
+                    ]
+                });
+            };
+        });
+
+        function RenderBarChart(elementId, dataList, title, name) {
+            console.log('RenderBarChart')
+            new Highcharts.Chart({
+                exporting: {enabled: false},
+                chart: {
+                    renderTo: elementId,
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 2,
+                    plotShadow: true,
+                    backgroundColor: null
+                }, title: {
+                    text: title,
+                    style: {
+                        color: 'black',
+                        {#                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                    }
+                },
+                tooltip: {
+                    useHTML: true,
+                    formatter: function () {
+                        return Highcharts.numberFormat(this.y, 0, '.', ',');
+                        {#                    return this.y;#}
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            style: {
+                                color: 'black',
+                                {#                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                            }
+                        },
+                        showInLegend: true
+                    }
+                },
+                xAxis: {
+                    categories: [],
+                    labels: {
+                        style: {
+                            color: 'black',
+                            font: '11px Roboto, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    labels: {
+                        style: {
+                            color: 'black',
+                            font: '11px Roboto, sans-serif'
+                        }
+                    }
+                },
+                series: [
+                    {
+
+                        type: 'bar',
+                        name: name,
+                        data: dataList
+                    }
+                ]
+            });
+            console.log('here compete')
+        }
+        ;
+
+
+        function RenderLineChart(elementId, dataList, title, name) {
+            console.log('RenderBarChart')
+            new Highcharts.Chart({
+                {#            exporting: { enabled: false },#}
+                chart: {
+                    renderTo: elementId,
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 2,
+                    plotShadow: true,
+                    backgroundColor: null
+                },
+                exporting: {
+                    buttons: {
+                        'myButton': {
+                            _id: 'myButton',
+                            symbol: 'diamond',
+                            {#                symbol: 'url(https://s3.amazonaws.com/galtnetworkassets/avatar/john-galt.png)',#}
+                            {#                symbol: '(Users/Admin/Desktop/chess.png)',#}
+                            symbolX: 12,
+                            symbolY: 12,
+                            x: 0,
+                            symbolFill: '#B5C9DF',
+                            hoverSymbolFill: '#779ABF',
+                            onclick: function () {
+                                doFunction();
+                                {#                    alert('click!')#}
+                            }
+                        }
+                    }
+                },
+                title: {
+                    text: title,
+                    style: {
+                        color: 'black',
+                        {#                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                    }
+
+                },
+
+                tooltip: {
+                    useHTML: true,
+                    formatter: function () {
+                        return Highcharts.numberFormat(this.y, 0, '.', ',');
+                        {#                    return this.y;#}
+                    }
+                },
+                plotOptions: {
+                    column: {
+
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            style: {
+                                color: 'black',
+                                {#                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                            }
+                        },
+
+                        showInLegend: true
+                    }
+                },
+                xAxis: {
+
+                    categories: [],
+                    lineColor: null,
+                    labels: {
+                        style: {
+                            color: 'black',
+                            font: '11px, Roboto, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    valueDecimals: 2,
+
+                    labels: {
+
+                        style: {
+                            color: 'black',
+                            font: '11px Roboto, sans-serif'
+
+                        }
+                    }
+                },
+                series: [
+                    {
+
+                        type: 'line',
+                        name: name,
+                        data: dataList
+                    }
+                ]
+            });
+            console.log('here compete')
+        }
+        ;
+    </script>
+    <script>
+        $.getJSON("data.json", function (json) {
+            options.xAxis.categories = json[0]['data'];
+            {#                options.series[0] = json[1];#}
+            {#                options.series[1] = json[2];#}
+            chart = new Highcharts.Chart(options);
+        });
+    </script>
+    <script>
+        function doFunction() {
+
+            {#       document.getElementById('option_id').size='4'#}
+            var dropdown = document.getElementById('option_id');
+            var event;
+            event = document.createEvent('MouseEvents');
+            event.initMouseEvent('mousedown', true, true);
+            dropdown.dispatchEvent(event);
+
+        }
+        ;
+    </script>
+    <script>
+
+        $(function () {
+            var $ppc = $('.progress-pie-chart-task'),
+                    percent = parseInt($ppc.data('percent')),
+                    deg = 360 * percent / 100;
+            {#        alert(percent)#}
+            if (percent > 50) {
+                $ppc.addClass('gt-50');
+            }
+            $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
+            {#      $('.ppc-percents span').html(percent+'%');#}
+        });
+    </script>
+    <script>
+
+        $(function () {
+            var $ppcrsvp = $('.rsvp_chart'),
+                    percentrsvp = parseInt($ppcrsvp.data('percent')),
+                    degrsvp = 360 * percentrsvp / 100;
+            {#        alert(percent)#}
+            if (percentrsvp > 50) {
+                $ppcrsvp.addClass('gt-50');
+            }
+            $('.ppc-progress-fill-rsvp').css('transform', 'rotate(' + degrsvp + 'deg)');
+            {#      $('.ppc-percents-rsvp span').html(percentrsvp+'%');#}
+        });
+        {% if not profile.type == "Professional" %}
+            $('#imagesPinterest').slideUp();
+            setTimeout(function () {
+                $(document).ready(function () {
+
+                    var getDivId = document.getElementById("imagesPinterest");
+                    var images = getDivId.getElementsByTagName("img");
+                    for (var i = 0; i < images.length; i++) {
+                        //console.log(i)
+                        anc = images[i].parentElement;
+                        $(anc).removeAttr('target');
+                        $(anc).removeAttr('data-pin-href');
+                        $(anc).addClass("image_class");
+
+                        // console.log(anc);
+                    }
+
+                });
+                $('.image_class').on('click', function (event) {
+                    event.preventDefault();
+                    $("#picture-iframe").modal('show');
+                    img = $(this);
+                    // alert(img.find('img')[0].src);
+                    $('#picture-iframe-image').attr("src", img.find('img')[0].src);
+                    $('#image_send').val(img.find('img')[0].src);
+                });
+            }, 4000);
+            $('#imagesPinterest').slideDown();
+        {% endif %}
+        {% if show_dialogue %}
+            $(document).ready(function () {
+{#                event.preventDefault();#}
+                {#            $('#subscriptionModal').modal('hide');#}
+                $('#iframe_sub').attr('src', '/subscribe/');
+                //$('#subscriptionModal').modal('hide');
+{#                $('.modal').removeClass('show');#}
+                $('#subscriptionModal').modal('show');
+            });
+        {% endif %}
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.fc-header-center span h2').css('font-size','06px');
+        });
+    </script>
+{% endblock script %}

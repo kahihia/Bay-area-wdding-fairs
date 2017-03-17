@@ -1,0 +1,192 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <div class="vd_head-section clearfix">
+                                <div class="vd_panel-header">
+                                    <ul class="breadcrumb">
+                                        <li><a href="/forum/">Yapper</a></li>
+                                        <li><a href="/forum/{{ topic.forum.id }}">{{ topic.forum.title }}</a></li>
+                                        <li class="active">{{ topic.title }}</li>
+                                        {#                  <a  href="/forum/topic/{{ topic.id }}"></a>#}
+                                    </ul>
+                                </div>
+                                <!-- vd_panel-header -->
+                            </div>
+
+
+                            <div class="vd_content-section clearfix">
+
+                                <div class="row">
+
+                                    {#                                <div><h4>    </h4></div>#}
+
+                                        <div class="col-sm-12">
+                                        <div class="panel widget light-widget">
+                                    <div class="panel-body">
+                                         <input name="searchtopic" id="searchtopic" class="form-control"
+                                           placeholder="Search topics in yapper" type="text"/>
+                                    <br/>
+                                    <div class="clearfix">
+                                <div class=" no-subtitle">
+{#                                    <br/>#}
+
+                                    <h3 class="section-title pull-left">Topic: {{ topic.title }}</h3>
+                                    <a id="new_topic" class="pull-right margin-right-30"
+                                       href="{% url 'forum-detail' topic.forum.id %}">Back to Topics</a>
+                                <div class="clearfix"></div>
+{#                                    <hr/>#}
+                                    {% if topic.picture %}
+                                    <div class="col-md-12">
+                                        <img src="{{ topic.picture.url }}"/><br />
+                                    </div>
+                                    {% endif %}
+                                    {{ topic.description|safe }}
+{#                                    <hr/>#}
+                                    <p>
+                                        <td>Posted by <a
+                                            href="/profile/{{ topic.creator.userprofile.id }}/">{{ topic.creator.get_full_name }}</a> <strong>at <span class="date">{{ topic.created }}</span></strong>
+                                    </td>
+                                    </p>
+
+
+
+                                </div>
+                            </div>
+{#                                    <hr />#}
+                                    <div class="clearfix"></div>
+                                    <br />
+                                        <table class="table table-striped table-hover">
+
+
+                                            <tbody>
+
+
+                                            <div class="clearfix"></div>
+
+                                            {% for post in posts.object_list %}
+
+                                                <tr class="">
+
+
+                                                </tr>
+                                                <tr class=col-md-12">
+
+
+                                                    <div class="col-md-10">{{ post.body }}</div>
+                                                    <div class="col-md-2">by <a href="/profile/{{ post.creator.userprofile.id }}/">{{ post.creator.get_full_name }}</a> <strong><span
+                                                            class="date text-right">at {{ post.created }}</span></strong>
+                                                    </div>
+                                                </tr>
+
+                                            {% endfor %}
+
+
+                                            </tbody>
+
+                                        </table>
+                                        <a class="btn vd_btn vd_bg-green vd_white" data-toggle="modal"
+                                           href="#replyModal">Reply</a>
+                                    </div>
+                                    </div>
+                                    </div>
+
+                                </div>
+                                <!-- col-md-x -->
+                            </div>
+                            <!-- row -->
+
+                        </div>
+                        <!-- .vd_content-section -->
+
+                    </div>
+                    <!-- .vd_content -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+    <div class=" child-menu">
+        <div class="modal fade" id="replyModal" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                        <h4 class="modal-title" style="margin-bottom: 0px;">Reply</h4>
+
+
+                        {#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
+                        {#        <!-- Nav tabs -->#}
+
+
+                        <iframe id="iframe_sub" src="{% url 'reply' pk %}" width="100%" height="292px"></iframe>
+
+                        <!-- end panel -->
+                        <!-- end panel -->
+
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+
+
+
+    <script>
+
+        $('#searchtopic').keypress(function (e) {
+            if (e.which == 13) {
+                window.location.href = '/forum/search/?topic=' + $('#searchtopic').val();
+            }
+        });
+    </script>
+{% endblock script %}

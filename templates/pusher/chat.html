@@ -1,0 +1,40 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% block content %}
+
+   <h1>This is a test chat app</h1>
+    <div id="data"></div>
+{% endblock content %}
+{% block script %}
+
+    <script src="{% static "pusher/pusher.min.js" %}"></script>
+    <script>
+    $(document).ready(function(){
+        var pusher = new Pusher('ad53ba68297c735fc8fc', { encrypted: true });
+{#    var pusher = new Pusher('ad53ba68297c735fc8fc', {#}
+{#      cluster: 'APP_CLUSTER'#}
+{#    });#}
+    var channel = pusher.subscribe('presence-channel');
+    var channel = pusher.channel('presence-channel');
+    var eventName = 'new-comment';
+    var callback = function(data) {
+{#        alert(data)#}
+{#        alert(data.title)#}
+{#        alert(data.message)#}
+        $('#data').append(data.message+'<br />')
+
+      };
+
+    // listen for 'new-comment' event on channel 1, 2 and 3
+    pusher.bind(eventName, callback);
+{#    channel.bind('my-event', function(data) {#}
+{#      alert('An event was triggered with message: ' + data.message);#}
+{#    });#}
+    })
+    </script>
+
+{% endblock %}

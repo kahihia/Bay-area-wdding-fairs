@@ -1,0 +1,243 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block content %}
+  <style>
+
+  </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/partial/_sidebar.html" %}#}
+
+            {% include "vendroid/partial/_sidebar.html" %}
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-subtitle">
+                                    <br/>
+                                    <h1 class="pull-left">CRM For Admin</h1>
+                                </div>
+                            </div>
+                            <div class="vd_content-section clearfix">
+                                <!--(1)start the left panel online messages -->
+                                <!-- row -->
+{#                                <div class="col-sm-12">#}
+                                    <div class="row">
+                                        <!--left row-->
+                                        <div class="panel widget vd_todo-widget light-widget">
+                                            <div class="panel-body">
+                                                <div class="container np">
+                                                    <h2><span class="append-icon fa fa-fw fa-database vd_yellow npl"></span>
+                                                        <span class="menu-text"><strong>Customer Files Loading</strong></span>
+                                                    </h2>
+                                                    <!--Events Scroll Down-->
+                                                    <hr/>
+
+                                                    <!---dropdown events-->
+                                                    <div class="col-sm-12">
+                                                      <div class="col-sm-8">
+                                                        <h4>1.Please Choose Wedding Professional</h4>
+                                                        {% include "vendroid/CRM/wp_data_table.html" %}
+                                                      </div>
+
+                                                      <div class="col-sm-4">
+                                                          <div class="dropdown" id="id_event">
+                                                            <h4>2.Please Choose Events</h4>
+                                                            &nbsp;
+                                                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Events
+                                                            <span class="caret"></span></button>
+                                                            <ul class="dropdown-menu">
+                                                              {% for event in events %}
+                                                                <li><a onclick="select_event('{{event.id}}')">{{ event.subject }}</a></li>
+                                                              {% endfor %}
+                                                            </ul>
+                                                            <hr/>
+                                                          </div>
+
+
+                                                        <!---File loading button-->
+{#                                                        <div class="col-sm-4">#}
+{#                                                          <div class="">#}
+{#                                                            <a data-toggle="modal" href="#file-upload" class="btn vd_btn btn-xs vd_bg-blue">#}
+{#                                                                <i class="fa fa-plus append-icon"></i> Add .CSV File </a>#}
+{#                                                             <hr />#}
+{#                                                            <div class="clearfix"></div>#}
+{#                                                          </div>#}
+{#                                                        </div>#}
+
+                                                        <!--Confirm Panel--->
+
+
+                                                          <h4>3. Please confirm the chosen info</h4>
+                                                          <div id="show_wp">   <b>Wedding Professinal:</b> None</div>
+                                                          <div id="show_event"><b>Event:</b> None</div>
+                                                          <a data-toggle="modal" href="#file-upload" class="btn vd_btn btn-xs vd_bg-blue">
+                                                            <i class="fa fa-plus append-icon"></i>Confirm and Add CSV File
+                                                          </a>
+
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+{#                                </div>#}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- .vd_content -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+        </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+    </div>
+
+    <!----File Load----->
+    <div class="modal fade" id="file-upload" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Upload File</h4>
+                    <hr/>
+                    <form class="form-horizontal" action="." method="post" role="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="alert alert-danger {% if not csvform.errors %}vd_hidden{% endif %}">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                            {{ csvform.errors }}
+                        </div>
+                        <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i
+                                    class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>
+                        <div class="alert alert-success vd_hidden">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well
+                            done!</strong>.
+                        </div>
+                        <div class="form-group  mgbt-xs-20">
+                            <div class="col-md-12">
+                                <div class="label-wrapper sr-only">
+                                    <label class="control-label" for="email">Upload File</label>
+                                </div>
+                                <p>Select an File file to attach.</p>
+
+                                <div class="vd_input-wrapper {% if csvform.csvFile.errors %}vd_bd-red{% endif %}"
+                                     id="file-input-wrapper"><span class="menu-icon"> </span>
+
+                                    {{ csvform.csvFile }}
+                                </div>
+                                {% if csvform.csvFile.errors %}
+                                    <div class="vd_red">{{ csvform.csvFile.errors }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div id="vd_login-error" class="alert alert-danger hidden"><i
+                                class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 text-center mgbt-xs-5">
+                                <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">Add
+                                    File
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script>
+    function  select_wp(id) {
+        console.log(id);
+        $.ajax({
+          url: '/crm/fileload/',
+          type: 'post', // http method
+          data: {select_wp: id},
+
+            success: function (wp_name) {
+                var data = wp_name['wp_name'];
+                console.log("accept success "+data);
+                console.log("accept success "+wp_name[0]);
+
+                $('#show_wp').html('<div id="show_wp"><b>Wedding Professinal:</b>'+data+'</div>');
+            },
+
+            error: function (xhr, errmsg, err) {
+               console.log("fail accept conversation "+errmsg+" "+err);
+            }
+        });
+    }
+
+    function  select_event(id) {
+        console.log("id is "+id);
+        $.ajax({
+          url: '/crm/fileload/',
+          type: 'post', // http method
+          data: {select_event: id},
+
+            success: function (event_name) {
+                var data = event_name['event_name'];
+                console.log("accept success "+data);
+
+                $('#show_event').html('<div id="show_wp"><b>Event:</b>'+data+'</div>');
+            },
+
+            error: function (xhr, errmsg, err) {
+               console.log("fail accept conversation "+errmsg+" "+err);
+            }
+        });
+    }
+    </script>
+{% endblock script %}

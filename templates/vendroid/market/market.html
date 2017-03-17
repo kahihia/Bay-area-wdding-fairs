@@ -1,0 +1,231 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+{% endblock %}
+{% block content %}
+    <script>
+        $(function () {
+            $("#id_end_date").datepicker();
+        });
+    </script>
+    <style>
+    .height-250 {
+  min-height: 330px !important;
+  /*max-height: 300px !important;*/
+}
+    </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-menu">
+                                    {#                                    <h1>My Planner</h1>#}
+                                    <h1 class="section-title pull-left">Planning Book</h1>
+
+                                    <!--Size scale buttons-->
+                                    <div class="vd_panel-menu pull-right"
+                                         data-step=5 data-position="left">
+                                                       <a class="btn btn-success "  href="/rsvp">Manage RSVP</a>
+                                    {% if not profile.type == "Professional" %}
+                                        {% if profile.check_subscription %}
+                                        <a style="margin-right: 15px;" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal"><i
+                                                class="fa fa-plus fa-fw"></i>Add Planning Book Item</a>
+                                        {% else %}
+                                        <a style="margin-right: 15px;" class="btn btn-success" onclick="openSubscriptionModalUser()"><i
+                                                class="fa fa-plus fa-fw"></i>Add Planning Book Item</a>
+                                        {% endif %}
+                                    {% else %}
+                                        <a style="margin-right: 15px;" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal"><i
+                                                class="fa fa-plus fa-fw"></i>Add Planning Book Item</a>
+                                    {% endif %}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    {#                                  <small class="subtitle">Calendar page with drag and drop events. See <a href="http://arshaw.com/fullcalendar/">fullcalendar</a> for detail</small>#}
+                                </div>
+                            </div>
+                            {#            <section class="rec-list">#}
+                            <div class="vd_content-section clearfix">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel widget light-widget">
+                <div class="panel-heading no-title">
+{#                  <div class="vd_panel-menu">#}
+{#  <div data-action="refresh" class="menu entypo-icon smaller-font" data-placement="bottom" data-toggle="tooltip" data-original-title="Refresh"> <i class="icon-cycle"></i> </div>#}
+{#  <div class="menu entypo-icon smaller-font" data-placement="bottom" data-toggle="tooltip" data-original-title="Config">#}
+{#    <div data-action="click-trigger" class="menu-trigger"> <i class="icon-cog"></i> </div>#}
+{#    <div style="display: none;" class="vd_mega-menu-content  width-xs-2  left-xs" data-action="click-target">#}
+{#      <div class="child-menu">#}
+{#        <div class="content-list content-menu">#}
+{#          <ul class="list-wrapper pd-lr-10">#}
+{#            <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-user"></i></div> <div class="menu-text">Panel Menu</div> </a> </li>#}
+{#          </ul>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#  <div class="menu entypo-icon" data-placement="bottom" data-toggle="tooltip" data-original-title="Close" data-action="close"> <i class="icon-cross"></i> </div>#}
+{#</div>#}
+<!-- vd_panel-menu -->
+
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                      {% for product in products %}
+                    <div class="col-sm-3">
+                      <div class="alert alert-success" style="cursor: pointer;">
+{#                          <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well done!</strong> You successfully read <a href="#" class="alert-link">this important alert message</a>.#}
+
+                                                                <div class="media height-250 "
+                                                                     onclick="window.location='/plans/{{ product.id }}/';">
+                                                                    <div class="media-body text-center">
+                                                                        {% if product.is_completed %}<h4 ><div style="color:green;"><span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span>AWARDED</div></h4>{% endif %}
+                                                                        <h4>{{ product.title|truncatechars:"20" }}</h4>
+                                                                        <p>Budget: ${{ product.amount|intcomma }} (Bids: {{ product.amount_min|intcomma }})<br />
+                                                                            Category: {{ product.category }}
+                                                                        </p>
+                                                                        <p>Days Left: {{ product.end_date|timeuntil }}</p>
+                                                                        <hr/>
+                                                                        <p class="status">
+                                                                            {{ product.description|truncatechars:"130" }}           </p>
+                                                                        {#                                        <hr />#}
+                                                                        {#                                         <div class="col-md-9 text-center" style="position: absolute; bottom: 5px;">#}
+                                                                        {#                                    <button class="btn btn-primary btn-block pull-right">Edit</button>#}
+                                                                        {#                                    </div>#}
+                                                                    </div>
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+
+                      </div>
+{#                      <div class="alert alert-info"> <span class="vd_alert-icon"><i class="fa fa-info-circle vd_blue"></i></span><strong>Heads up!</strong> This <a href="#" class="alert-link">alert needs your attention</a>, but it's not super important. </div>#}
+{#                      <div class="alert alert-warning"> <span class="vd_alert-icon"><i class="fa fa-exclamation-triangle vd_yellow"></i></span><strong>Warning!</strong> Best check yo self, you're <a href="#" class="alert-link">not looking too good</a>. </div>#}
+{#                      <div class="alert alert-danger"> <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again. </div>#}
+                    </div>
+                      {% endfor %}
+
+                  </div>
+                  <!-- row -->
+                </div>
+                <!-- panel-body -->
+              </div>
+              <!-- Panel Widget -->
+
+
+
+            </div>
+          </div>
+          <!-- row -->
+
+
+
+        </div>
+                        </div>
+                        {#            </section>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    {#    </section>#}
+    <!-- (7) Add task Form -->
+    <div class="modal fade" id="addTodoModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Add a Plan</h4>
+
+                    <form action="." method="POST">
+                        {% csrf_token %}
+                        <!-- seth -->
+                        <div class="form-group">
+                            <label>Title:</label>
+                            {{ form.title }}
+                            <div class="red">{{ form.title.errors }}</div>
+
+                        </div>
+                        <div class="form-group due">
+                            <label>End Date:</label>
+                            {{ form.end_date| addcss:"form-control endpicker" }}
+                            <div class="red">{{ form.end_date.errors }}</div>
+                        </div>
+                        <div class="form-group due">
+                            <label>Category:</label>
+                            {{ form.category| addcss:"form-control endpicker" }}
+                            <div class="red">{{ form.category.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description:</label>
+                            {{ form.description }}
+                            <div class="red">{{ form.description.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Amount:</label>
+                            {{ form.amount|addcss:"form-control" }}
+                            <div class="red">{{ form.amount.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 margin-top-10">
+                                <button type="submit" class="btn btn-blue pull-right">Create</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+{% endblock content %}
+{% block script %}
+{#    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>#}
+{#    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>#}
+{#    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{#    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>#}
+
+    <script type="text/javascript">
+{#        jQuery('.endpicker').datetimepicker(jQuery.extend({showMonthAfterYear: false}, jQuery.datepicker.regional[''], {format: 'Y-m-d H:i',}));#}
+
+        {% if form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+        /*<![CDATA[*/
+{#        jQuery(function ($) {#}
+{#            jQuery('#rec-list').yiiListView({#}
+{#                'ajaxUpdate': ['rec-list'],#}
+{#                'ajaxVar': 'ajax',#}
+{#                'pagerClass': 'pager',#}
+{#                'loadingClass': 'list-view-loading',#}
+{#                'sorterClass': 'sorter',#}
+{#                'enableHistory': false#}
+{#            });#}
+{#        });#}
+{#        {% if form.errors %}#}
+{#            $("#addTodoModal").modal('show');#}
+{#        {% endif %}#}
+    </script>
+
+{% endblock %}

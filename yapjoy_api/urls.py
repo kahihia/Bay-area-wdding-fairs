@@ -1,0 +1,35 @@
+from django.conf.urls import patterns, include, url
+from yapjoy_api.views import *
+
+urlpatterns = patterns('',
+    url(r'^register/$', Registration.as_view(), name='api_register'),
+    url(r'^profile/$', Profile.as_view(), name='api_profile'),
+    url(r'^feed/$', Feed.as_view(), name='api_feed'),
+    url(r'^userfeed/$', UserFeed.as_view(), name='api_userfeed'),
+    url(r'^friends/$', Friends_view.as_view(), name='api_friends'),
+    url(r'^feed/comments/(?P<id>[^\.]+)/$', FeedComments.as_view(), name='api_feed_comments'),
+    url(r'^messages/inbox/$', Inbox.as_view(), name='api_inbox'),
+    url(r'^messages/outbox/$', Outbox.as_view(), name='api_outbox'),
+    url(r'^messages/draft/$', Draft.as_view(), name='api_draft'),
+    url(r'^notifications/$', Notification.as_view(), name='api_notification'),
+    url(r'^createtask/$', createTask.as_view(), name='api_create_task'),
+    url(r'^updateuser/$', UpdateUserInfo.as_view(), name='api_Update_user'),
+    url(r'^recommend/$', recommendations.as_view(), name='recommendations'),
+    url(r'^allevents/$', EventsAll.as_view(), name='EventsAll'),
+    url(r'^eventcreate/$', EventCreate.as_view(), name='EventCreate'),
+    url(r'^createpost/$', PostCreate.as_view(), name='PostCreate'),
+    url(r'^login/$', loginUser.as_view(), name='loginUser'),
+    url(r'^friends/(?P<username>[-_@.+0-9a-zA-Z ]+)/$', UserFriendFeed.as_view(), name='UserFriendFeed'),
+    url(r'^feedlike/$', FeedLike.as_view(), name='FeedLike'),
+    url(r'^postcomment/$', PostComment.as_view(), name='postComment'),
+    url(r'^logout/$', Logout.as_view(), name='LogoutUSer'),
+    url(r'^deletepost/$', DeletePost.as_view(), name='DeletePost'),
+    url(r'^tasks/$', TasksUser.as_view(), name='TasksUser'),
+    url(r'^plans/$', PlansUser.as_view(), name='PlansUser'),
+    url(r'^plans/(?P<id>[^\.]+)/$', PlansDetail.as_view(), name='PlansDetail'),
+
+   #-------------- BAWF -------------
+    url(r'^bawf/events/$', Events.as_view(), name='bawf_events'),
+    url(r'^bawf/crm/eventslist/autocomplete/$', AutocompleteVendors.as_view(), name='bawf_search'),
+    url(r'^bawf/crm/interestedeventslist/autocomplete/$', AutocompleteVendorsInterested.as_view(), name='bawf_search'),
+)

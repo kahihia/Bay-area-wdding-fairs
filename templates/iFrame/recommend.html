@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load pagination_tags %}
+{% load static %}
+
+{% block content %}
+            <section class="recommendations-section">
+    <div class="col-md-11 col-md-offset-1 ">
+        
+            <h3 class="section-title">Recommendations</h3>
+            <section class="rec-list">
+
+            <div id="rec-list" class="list-view">
+<div class="items">
+{% autopaginate recommend 10 %}
+    {%  for rec in recommend %}
+    <div class="media">
+        <div class="media-left">
+            <span class="profile-thumb profile-sm" style="background-image: url({{ rec.get_image_url }})"></span>
+        </div>
+        <div class="media-body">
+            <h5 class="media-heading"><a href="{{ rec.get_profile_url }}">{{ rec.user.get_full_name }}{% if rec.subscribed == True %} - <small style="color: #ff9800;">Featured</small>{% endif %}</a></h5>
+            <p class="status">
+                {{ rec.type }}            </p>
+            <!-- patch4 -->
+            <!-- hide distance  -->
+            <!-- <p class="status">Distance: 1,000.00 miles</p> -->
+           <!--  <p class="status">Rating: 3</p>
+            <p class="status"><i class="fa fa-eye"></i> 52</p> -->
+
+
+             <!-- patch4 -->
+             <!--  show interest -->
+            <p class="descript">{{ rec.looking_for }}</p>
+        </div>
+    </div>
+    {% endfor %}
+{% paginate %}
+</div><div class="keys" style="display:none" title="/recommendations"><span>156</span></div>
+</div>
+        </section>
+    </div>
+    
+    
+</section>
+{% endblock content %}
+{% block jquery %}
+<script type="text/javascript" src="{% static "static/js/jquery.yiilistview.js" %}"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+jQuery(function($) {
+jQuery('#rec-list').yiiListView({'ajaxUpdate':['rec-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+});
+/*]]>*/
+</script>
+
+<script>
+var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+var imgCount = 0;
+function startTime() {
+    if(imgCount == imgArray.length) {
+        imgCount = 0;
+    }
+    document.getElementById("ad").src = imgArray[imgCount];
+    imgCount++;
+    setTimeout("startTime()", 5000);
+}
+</script>
+{% endblock %}

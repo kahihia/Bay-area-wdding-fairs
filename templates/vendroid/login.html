@@ -1,0 +1,565 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="coming-soon">
+<head>
+    <meta charset="utf-8">
+    <title>Login Form</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="author" content="KaijuThemes">
+
+    <link type='text/css' href='http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500' rel='stylesheet'>
+    <link type='text/css'  href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
+    <link href="{% static "bawf/css/skylo.css" %}" type="text/css" rel="stylesheet">                   <!-- Skylo -->
+
+    <link href="{% static "bawf/css/font-awesome.min.css" %}" type="text/css" rel="stylesheet">
+    <link href="{% static "bawf/css/styles.css" %}" type="text/css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries. Placeholdr.js enables the placeholder attribute -->
+{#    <!--[if lt IE 9]>#}
+{#        <link href="assets/css/ie8.css" type="text/css" rel="stylesheet">#}
+{#        <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>#}
+{#    <![endif]-->#}
+
+    <!-- The following CSS are included as plugins and can be removed if unused-->
+    <style>
+        .text-center {
+            text-align: center !important;
+        }
+        .panel-heading h2 {
+            height: 100%;
+            width: auto;
+            text-aligh: center !important;
+            float: center !important;
+        }
+        .red {
+            color: red;
+        }
+    </style>
+    </head>
+
+    <body class="focused-form animated-content">
+
+
+<div class="container" id="login-form">
+	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="panel panel-default" style="border: 2px solid #ba8c00;">
+					<div class="panel-heading">
+						<h2>Login to BayAreaWeddingFairs CRM</h2>
+					</div>
+{#                    {{ form.errors }}#}
+                    <form class="form-horizontal" action="." method="post" role="form">
+					<div class="panel-body">
+                   {#     <form class="form-horizontal" action="." method="post" role="form">#}
+{#                  {% csrf_token %}#}
+{#                  <div class="alert alert-danger {% if not form.errors %}vd_hidden{% endif %}">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ form.errors }}</div>#}
+{#                      <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>#}
+{#                      <div class="alert alert-danger {% if not InvalidDetails %}vd_hidden{% endif %}">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ InvalidDetails }}</div>#}
+{#                  <div class="alert alert-success vd_hidden">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well done!</strong>. </div>                  #}
+{#                    <div class="form-group  mgbt-xs-20">#}
+{#                      <div class="col-md-12">#}
+{#                        <div class="label-wrapper sr-only">#}
+{#                          <label class="control-label" for="email">Email</label>#}
+{#                        </div>#}
+{#                        <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}" id="email-input-wrapper"> <span class="menu-icon"> <i class="fa fa-envelope"></i> </span>#}
+{#                          {{ form.username|addcss:"required" }}#}
+{#                        </div>#}
+{#                      {% if form.username.errors %}<div class="vd_red" for="username">{{ form.username.errors }}</div>{% endif %}#}
+{#                        <div class="label-wrapper">#}
+{#                          <label class="control-label sr-only" for="password">Password</label>#}
+{#                        </div>#}
+{#                        <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}" id="password-input-wrapper" > <span class="menu-icon"> <i class="fa fa-lock"></i> </span>#}
+{#                          {{ form.password|addcss:"required" }}#}
+{#                        </div>#}
+{#                      {% if form.password.errors %}<div class="vd_red" for="password">{{ form.password.errors }}</div>{% endif %}#}
+{#                      </div>#}
+{#                    </div>#}
+{#                    <div id="vd_login-error" class="alert alert-danger hidden"><i class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field </div>#}
+{#                    <div class="form-group">#}
+{#                      <div class="col-md-12 text-center mgbt-xs-5">#}
+{#                        <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">Login</button>#}
+{#                      </div>#}
+{#                      <div class="col-md-12">#}
+{#                        <div class="row">#}
+{#                          <div class="col-xs-6">#}
+{#                            <div class="vd_checkbox">#}
+{#                              <input type="checkbox" id="checkbox-1" value="1">#}
+{#                              <label for="checkbox-1"> Remember me</label>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                          <div class="col-xs-6 text-right">#}
+{#                            <div class=""> <a href="/forgotPasswordV2/">Forget Password? </a> </div>#}
+{#                          </div>#}
+{#                        </div>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </form>#}
+                        {% if InvalidDetails %}
+                            <div class="form-group mb-md">
+
+		                        <div class="col-xs-12">
+		                        	<div class="input-group red" >
+										<span class="input-group-addon">
+											<i class="ti ti-user"></i>
+										</span>
+{#										{{ form.errors }}#}
+                                    {{ InvalidDetails }}
+									</div>
+		                        </div>
+							</div>
+                        {% endif %}
+							<div class="form-group mb-md">
+{#                                {{ form.errors }}#}
+{#                                {{ InvalidDetails }}#}
+		                        <div class="col-xs-12">
+		                        	<div class="input-group">
+										<span class="input-group-addon">
+											<i class="ti ti-user"></i>
+										</span>
+										{{ form.username }}
+                                        <div class="red">{{ form.username.errors }}</div>
+									</div>
+		                        </div>
+							</div>
+
+							<div class="form-group mb-md">
+		                        <div class="col-xs-12">
+		                        	<div class="input-group">
+										<span class="input-group-addon">
+											<i class="ti ti-key"></i>
+										</span>
+										{{ form.password }}
+                                        <div class="red">{{ form.password.errors }}</div>
+									</div>
+		                        </div>
+							</div>
+
+							<div class="form-group mb-n">
+								<div class="col-xs-12">
+{#									<a href="extras-forgotpassword.html" class="pull-left">Forgot password?</a>#}
+									<div class="checkbox-inline icheck pull-right p-n">
+{#										<div class="checkbox">#}
+{#											<label for=""><input type="checkbox" /> Remeber me</a></label>#}
+{#										</div>#}
+									</div>
+								</div>
+							</div>
+
+					</div>
+					<div class="panel-footer">
+						<div class="clearfix">
+{#							<a href="extras-registration.html" class="btn btn-default pull-left">Register</a>#}
+							<button type="submit" class="btn btn-primary btn-raised pull-right" style="background: #ba8c00;">Login</button>
+						</div>
+					</div>
+                        <div style="text-align: center !important;">
+                            <div class="panel-heading text-center">
+                                <h2 >Powered by <a href="https://www.yapjoy.com/">YapJoy</a> </h2>
+                            </div>
+                        </div>
+
+                    </form>
+				</div>
+			</div>
+		</div>
+</div>
+
+
+
+    <!-- Load site level scripts -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script> -->
+
+<script src="{% static "bawf/js/jquery-1.10.2.min.js" %}"></script> 							<!-- Load jQuery -->
+<script src="{% static "bawf/js/jqueryui-1.10.3.min.js" %}"></script> 							<!-- Load jQueryUI -->
+<script src="{% static "bawf/js/bootstrap.min.js" %}"></script> 								<!-- Load Bootstrap -->
+<script src="{% static "bawf/js/enquire.min.js" %}"></script> 									<!-- Load Enquire -->
+
+<script src="{% static "bawf/js/velocity.min.js" %}"></script>					<!-- Load Velocity for Animated Content -->
+<script src="{% static "bawf/js/velocity.ui.min.js" %}"></script>
+
+<script src="{% static "bawf/js/skylo.js" %}"></script> 		<!-- Skylo -->
+
+<script src="{% static "bawf/js/wijets.js" %}"></script>     						<!-- Wijet -->
+
+<script src="{% static "bawf/js/jquery.sparklines.min.js" %}"></script> 			 <!-- Sparkline -->
+
+<script src="{% static "bawf/js/prettify.js" %}"></script> 				<!-- Code Prettifier  -->
+
+<script src="{% static "bawf/js/bootstrap-tabdrop.js" %}"></script>  <!-- Bootstrap Tabdrop -->
+
+<script src="{% static "bawf/js/jquery.nanoscroller.min.js" %}"></script> <!-- nano scroller -->
+
+<script src="{% static "bawf/js/jquery.dropdown.js" %}"></script> <!-- Fancy Dropdowns -->
+<script src="{% static "bawf/js/material.min.js" %}"></script> <!-- Bootstrap Material -->
+<script src="{% static "bawf/js/ripples.min.js" %}"></script> <!-- Bootstrap Material -->
+
+<script src="{% static "bawf/js/application.js" %}"></script>
+<script src="{% static "bawf/js/demo.js" %}"></script>
+<script src="{% static "bawf/js/demo-switcher.js" %}"></script>
+
+<!-- End loading site level scripts -->
+    <!-- Load page level scripts-->
+
+
+    <!-- End loading page level scripts-->
+    </body>
+</html>
+
+{#{% load static %}#}
+{#{% load myfilters %}#}
+{#<!DOCTYPE html>#}
+{#<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->#}
+{#<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->#}
+{#<!--[if gt IE 9]><!-->	<html><!--<![endif]-->#}
+{##}
+{#<!-- Specific Page Data -->#}
+{##}
+{#<!-- End of Data -->#}
+{##}
+{#<head>#}
+{#    <meta charset="utf-8" />#}
+{#    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>#}
+{#    <meta name="keywords" content="HTML5 Template, CSS3, All Purpose Admin Template, Vendroid" />#}
+{#    <meta name="description" content="Login Pages - Responsive Admin HTML Template">#}
+{#    <meta name="author" content="Venmond">#}
+{#    #}
+{#    <!-- Set the viewport width to device width for mobile -->#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">    #}
+{#    #}
+{#    #}
+{#    <!-- Fav and touch icons -->#}
+{#    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "vendroid/img/ico/apple-touch-icon-144-precomposed.png" %}">#}
+{#    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "vendroid/img/ico/apple-touch-icon-114-precomposed.png" %}">#}
+{#    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "vendroid/img/ico/apple-touch-icon-72-precomposed.png" %}">#}
+{#    <link rel="apple-touch-icon-precomposed" href="{% static "vendroid/img/ico/apple-touch-icon-57-precomposed.png" %}">#}
+{#    <link rel="shortcut icon" href="{% static "images/favicon.png" %}">#}
+{#    #}
+{#    #}
+{#    <!-- CSS -->#}
+{#       #}
+{#    <!-- Bootstrap & FontAwesome & Entypo CSS -->#}
+{#    <link href="{% static "vendroid/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static "vendroid/css/font-awesome-ie7.min.css" %}"><![endif]-->#}
+{#    <link href="{% static "vendroid/css/font-entypo.css" %}" rel="stylesheet" type="text/css">#}
+{##}
+{#    <!-- Fonts CSS -->#}
+{#    <link href="{% static "vendroid/css/fonts.css" %}"  rel="stylesheet" type="text/css">#}
+{##}
+{#    <!-- Plugin CSS -->#}
+{#    <link href="{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/prettyPhoto-plugin/css/prettyPhoto.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/isotope/css/isotope.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/pnotify/css/jquery.pnotify.css" %}" media="screen" rel="stylesheet" type="text/css">#}
+{#	<link href="{% static "vendroid/plugins/google-code-prettify/prettify.css" %}" rel="stylesheet" type="text/css">#}
+{##}
+{##}
+{#    <link href="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+{##}
+{#	<!-- Specific CSS -->#}
+{##}
+{##}
+{#    <!-- Theme CSS -->#}
+{#    <link href="{% static "vendroid/css/theme.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <!--[if IE]> <link href="{% static "vendroid/css/ie.css" %}" rel="stylesheet" > <![endif]-->#}
+{#    <link href="{% static "vendroid/css/chrome.css" %}" rel="stylesheet" type="text/chrome"> <!-- chrome only css -->#}
+{##}
+{##}
+{##}
+{#    <!-- Responsive CSS -->#}
+{#        	<link href="{% static "vendroid/css/theme-responsive.min.css" %}" rel="stylesheet" type="text/css">#}
+{##}
+{#	  #}
+{# #}
+{# #}
+{#    <!-- for specific page in style css -->#}
+{#        #}
+{#    <!-- for specific page responsive in style css -->#}
+{#        #}
+{#    #}
+{#    <!-- Custom CSS -->#}
+{#    <link href="{% static "vendroid/custom/custom.css" %}" rel="stylesheet" type="text/css">#}
+{##}
+{#    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>#}
+{##}
+{#    <!-- Head SCRIPTS -->#}
+{#    <script type="text/javascript" src="{% static "vendroid/js/modernizr.js" %}"></script>#}
+{#    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect.min.js" %}"></script>#}
+{#    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect-modernizr.js" %}"></script>#}
+{# #}
+{#    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->#}
+{#    <!--[if lt IE 9]>#}
+{#      <script type="text/javascript" src="{% static "vendroid/js/html5shiv.js" %}"></script>#}
+{#      <script type="text/javascript" src="{% static "vendroid/js/respond.min.js" %}"></script>#}
+{#    <![endif]-->#}
+{#    #}
+{#</head>    #}
+{#{% include "vendroid/loader/waiting_loader.html" %}#}
+{#<body id="pages" class="full-layout no-nav-left no-nav-right  nav-top-fixed background-login     responsive remove-navbar login-layout   clearfix" data-active="pages "  data-smooth-scrolling="1">     #}
+{#<div class="vd_body">#}
+{#<!-- Header Start -->#}
+{##}
+{#<!-- Header Ends --> #}
+{#<div class="content">#}
+{#  <div class="container"> #}
+{#    #}
+{#    <!-- Middle Content Start -->#}
+{#    #}
+{#    <div class="vd_content-wrapper">#}
+{#      <div class="vd_container">#}
+{#        <div class="vd_content clearfix">#}
+{#          <div class="vd_content-section clearfix">#}
+{#            <div class="vd_login-page">#}
+{#              <div class="heading clearfix">#}
+{#                <div class="logo">#}
+{#                  <h2 class="mgbt-xs-5"><img src="{% static "images/unnamed_2.png" %}" class="width-60" alt="logo"></h2>#}
+{#                </div>#}
+{#                <h4 class="text-center font-semibold vd_grey">LOGIN TO YOUR ACCOUNT</h4>#}
+{#              </div>#}
+{#              <div class="panel widget">#}
+{#                <div class="panel-body">#}
+{#                  <div class="login-icon entypo-icon"> <i class="icon-key"></i> </div>#}
+{#                  <form class="form-horizontal" action="." method="post" role="form">#}
+{#                  {% csrf_token %}#}
+{#                  <div class="alert alert-danger {% if not form.errors %}vd_hidden{% endif %}">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ form.errors }}</div>#}
+{#                      <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>#}
+{#                      <div class="alert alert-danger {% if not InvalidDetails %}vd_hidden{% endif %}">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ InvalidDetails }}</div>#}
+{#                  <div class="alert alert-success vd_hidden">#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>#}
+{#                    <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well done!</strong>. </div>                  #}
+{#                    <div class="form-group  mgbt-xs-20">#}
+{#                      <div class="col-md-12">#}
+{#                        <div class="label-wrapper sr-only">#}
+{#                          <label class="control-label" for="email">Email</label>#}
+{#                        </div>#}
+{#                        <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}" id="email-input-wrapper"> <span class="menu-icon"> <i class="fa fa-envelope"></i> </span>#}
+{#                          {{ form.username|addcss:"required" }}#}
+{#                        </div>#}
+{#                      {% if form.username.errors %}<div class="vd_red" for="username">{{ form.username.errors }}</div>{% endif %}#}
+{#                        <div class="label-wrapper">#}
+{#                          <label class="control-label sr-only" for="password">Password</label>#}
+{#                        </div>#}
+{#                        <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}" id="password-input-wrapper" > <span class="menu-icon"> <i class="fa fa-lock"></i> </span>#}
+{#                          {{ form.password|addcss:"required" }}#}
+{#                        </div>#}
+{#                      {% if form.password.errors %}<div class="vd_red" for="password">{{ form.password.errors }}</div>{% endif %}#}
+{#                      </div>#}
+{#                    </div>#}
+{#                    <div id="vd_login-error" class="alert alert-danger hidden"><i class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field </div>#}
+{#                    <div class="form-group">#}
+{#                      <div class="col-md-12 text-center mgbt-xs-5">#}
+{#                        <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">Login</button>#}
+{#                      </div>#}
+{#                      <div class="col-md-12">#}
+{#                        <div class="row">#}
+{#                          <div class="col-xs-6">#}
+{#                            <div class="vd_checkbox">#}
+{#                              <input type="checkbox" id="checkbox-1" value="1">#}
+{#                              <label for="checkbox-1"> Remember me</label>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                          <div class="col-xs-6 text-right">#}
+{#                            <div class=""> <a href="/forgotPasswordV2/">Forget Password? </a> </div>#}
+{#                          </div>#}
+{#                        </div>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </form>#}
+{#                </div>#}
+{#              </div>#}
+{#              <!-- Panel Widget -->#}
+{#              <div class="register-panel text-center font-semibold"> <a href="/register/">REGISTER AN ACCOUNT<span class="menu-icon"><i class="fa fa-angle-double-right fa-fw"></i></span></a> </div>#}
+{#            </div>#}
+{#            <!-- vd_login-page --> #}
+{#            #}
+{#          </div>#}
+{#          <!-- .vd_content-section --> #}
+{#          #}
+{#        </div>#}
+{#        <!-- .vd_content --> #}
+{#      </div>#}
+{#      <!-- .vd_container --> #}
+{#    </div>#}
+{#    <!-- .vd_content-wrapper --> #}
+{#    #}
+{#    <!-- Middle Content End --> #}
+{#    #}
+{#  </div>#}
+{#  <!-- .container --> #}
+{#</div>#}
+{#<!-- .content -->#}
+{##}
+{#<!-- Footer Start -->#}
+{#  <footer class="footer-2"  id="footer">      #}
+{#    <div class="vd_bottom ">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#              <div class=" col-xs-12">#}
+{#                <div class="copyright text-center">#}
+{#                  	Copyright &copy;2014 Venmond Inc. All Rights Reserved #}
+{#                </div>#}
+{#              </div>#}
+{#            </div><!-- row -->#}
+{#        </div><!-- container -->#}
+{#    </div>#}
+{#  </footer>#}
+{#<!-- Footer END -->#}
+{##}
+{#</div>#}
+{##}
+{#<!-- .vd_body END  -->#}
+{#<a id="back-top" href="#" data-action="backtop" class="vd_back-top visible"> <i class="fa  fa-angle-up"> </i> </a>#}
+{#<!--#}
+{#<a class="back-top" href="#" id="back-top"> <i class="icon-chevron-up icon-white"> </i> </a> -->#}
+{##}
+{#<!-- Javascript =============================================== --> #}
+{#<!-- Placed at the end of the document so the pages load faster --> #}
+{##}
+{#<!--[if lt IE 9]>#}
+{#  <script type="text/javascript" src="{% static "vendroid/js/excanvas.js" %}"></script>#}
+{#<![endif]-->#}
+{#<script type="text/javascript" src="{% static "vendroid/js/bootstrap.min.js" %}"></script>#}
+{#<script type="text/javascript" src='{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}'></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js" %}"></script>#}
+{##}
+{#<script type="text/javascript" src="{% static "vendroid/js/caroufredsel.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/js/plugins.js" %}"></script>#}
+{##}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/breakpoints/breakpoints.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/dataTables/jquery.dataTables.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js" %}"></script>#}
+{##}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/blockUI/jquery.blockUI.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/pnotify/js/jquery.pnotify.min.js" %}"></script>#}
+{##}
+{#<script type="text/javascript" src="{% static "vendroid/js/theme.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/custom/custom.js" %}"></script>#}
+{# #}
+{#<!-- Specific Page Scripts Put Here -->#}
+{#<script type="text/javascript">#}
+{#$(document).ready(function() {#}
+{#	#}
+{#		"use strict";#}
+{#	#}
+{#        var form_register_2 = $('#login-form');#}
+{#        var error_register_2 = $('.alert-danger', form_register_2);#}
+{#        var success_register_2 = $('.alert-success', form_register_2);#}
+{##}
+{#        form_register_2.validate({#}
+{#            errorElement: 'div', //default input error message container#}
+{#            errorClass: 'vd_red', // default input error message class#}
+{#            focusInvalid: false, // do not focus the last invalid input#}
+{#            ignore: "",#}
+{#            rules: {#}
+{#				#}
+{#                email: {#}
+{#                    required: true,#}
+{#                    email: true#}
+{#                },				#}
+{#                password: {#}
+{#                    required: true,#}
+{#					minlength: 6#}
+{#                },#}
+{#				#}
+{#            },#}
+{#			#}
+{#			errorPlacement: function(error, element) {#}
+{#				if (element.parent().hasClass("vd_checkbox") || element.parent().hasClass("vd_radio")){#}
+{#					element.parent().append(error);#}
+{#				} else if (element.parent().hasClass("vd_input-wrapper")){#}
+{#					error.insertAfter(element.parent());#}
+{#				}else {#}
+{#					error.insertAfter(element);#}
+{#				}#}
+{#			}, #}
+{#			#}
+{#            invalidHandler: function (event, validator) { //display error alert on form submit              #}
+{#                success_register_2.hide();#}
+{#                error_register_2.show();#}
+{##}
+{##}
+{#            },#}
+{##}
+{#            highlight: function (element) { // hightlight error inputs#}
+{#		#}
+{#				$(element).addClass('vd_bd-red');#}
+{#				$(element).parent().siblings('.help-inline').removeClass('help-inline hidden');#}
+{#				if ($(element).parent().hasClass("vd_checkbox") || $(element).parent().hasClass("vd_radio")) {#}
+{#					$(element).siblings('.help-inline').removeClass('help-inline hidden');#}
+{#				}#}
+{##}
+{#            },#}
+{##}
+{#            unhighlight: function (element) { // revert the change dony by hightlight#}
+{#                $(element)#}
+{#                    .closest('.control-group').removeClass('error'); // set error class to the control group#}
+{#            },#}
+{##}
+{#            success: function (label, element) {#}
+{#                label#}
+{#                    .addClass('valid').addClass('help-inline hidden') // mark the current input as valid and display OK icon#}
+{#                	.closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group#}
+{#				$(element).removeClass('vd_bd-red');#}
+{##}
+{#					#}
+{#            },#}
+{##}
+{#            submitHandler: function (form) {#}
+{#				$(form).find('#login-submit').prepend('<i class="fa fa-spinner fa-spin mgr-10"></i>')/*.addClass('disabled').attr('disabled')*/;					#}
+{#                success_register_2.show();#}
+{#                error_register_2.hide();				#}
+{#				setTimeout(function(){window.location.href = "index.html"},2000)	 ; 				#}
+{#            }#}
+{#        });	#}
+{#	#}
+{#	#}
+{# });#}
+{#</script>#}
+{#<!-- Specific Page Scripts END -->#}
+{##}
+{##}
+{##}
+{##}
+{#<!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information. -->#}
+{##}
+{#<script>#}
+{#  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){#}
+{#  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),#}
+{#  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)#}
+{#  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');#}
+{##}
+{#  ga('create', 'UA-68785620-1', 'auto');#}
+{#  ga('send', 'pageview');#}
+{##}
+{#</script>#}
+{##}
+{#</body>#}
+{#</html>#}

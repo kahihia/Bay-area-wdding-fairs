@@ -1,0 +1,43 @@
+<div class="vd_navbar vd_nav-width vd_navbar-chat vd_bg-black-80 vd_navbar-right   " style="margin-right: 0px !important;">
+	<div class="navbar-menu clearfix">
+    	<div class="content-list content-image content-chat">
+            <ul class="list-wrapper no-bd-btm pd-lr-10">
+                <li class="group-heading vd_bg-black-20">FRIENDS</li>
+                {% for friend in all_friends %}
+                     {% if friend.user == user %}
+                        <li>
+                            <a class="mega-link open" data-action="click-trigger">
+                                    <div class="menu-icon"><img src="{{ friend.friends.user.userprofile.get_image_url }}" alt="Profile image"></div>
+                                    <div class="menu-text">{% if friend.friends.user.get_full_name %}{{ friend.friends.user.get_full_name }}{% else %}N/A{% endif %}
+                                        <div class="menu-info">
+                                            <span class="menu-date">{{ friend.friends.user.userprofile.type }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="menu-badge"><span class="badge status vd_bg-green">&nbsp;</span></div>
+                            </a>
+                        </li>
+                     {% else %}
+                         <li>
+                            <a class="mega-link open" data-action="click-trigger">
+                                    <div class="menu-icon"><img src="{{ friend.user.userprofile.get_image_url }}" alt="profile else image"></div>
+                                    <div class="menu-text">{% if friend.user.get_full_name %}{{ friend.user.get_full_name }}{% else %}N/A{% endif %}
+                                        <div class="menu-info">
+                                            <span class="menu-date">{{ friend.user.userprofile.type }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="menu-badge"><span class="badge status vd_bg-green">&nbsp;</span></div>
+                            </a>
+                        </li>
+                     {% endif %}
+
+                {% endfor %}
+
+            </ul>
+        </div>
+
+            
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+    <li class="clearfix"></li>
+</div>

@@ -1,0 +1,51 @@
+{% load pagination_tags %}
+
+<div class="panel-body table-responsive">
+    <div class="dataTables_wrapper form-inline no-footer"
+         id="data-tables_wrapper">
+
+        <table class="table table-striped dataTable no-footer" id="data-tables" aria-describedby="data-tables_info" role="grid">
+            <thead>
+            <tr role="row">
+                <th>
+                    Sales Person
+                </th>
+                <th>
+                    Vendors
+                </th>
+                <th>
+                    Task Subject
+                </th>
+                <th>
+                    Message
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Due Date
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for t in tasks %}
+                <tr role="row" class="gradeA odd">
+
+                    <td>{{  t.sales.username }}</td>
+                    <td>{{  t.exhibitor.user.username }}</td>
+                    <td>{{  t.subject }}</td>
+                    <td>{{  t.message }}</td>
+                    <td>{{  t.status }}</td>
+                    <td>{{  t.dueDate }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{#        {% paginate %}#}
+    </div>
+</div>
+<script>
+    $('#data-tables').dataTable();
+</script>

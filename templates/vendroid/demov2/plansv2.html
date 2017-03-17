@@ -1,0 +1,438 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% block content %}
+    <style>
+        .carousel-inner > .item > img {
+            margin: 0 auto;
+        }
+    </style>
+    <style>
+        .height-250 {
+            min-height: 330px !important;
+        }
+
+        .answers-spacing h4 {
+            margin-bottom: 20px;
+        }
+        .large-links {
+            font-size:20px;
+            line-height: 30px;
+        }
+        .tabs .nav-tabs > li > a {
+            line-height: 10px !important;
+            color: #d9d9d9;
+        }
+        .vd_timeline .tl-item {
+            height: 50px !important;
+        }
+        .vd_timeline .tl-item-date {
+            margin-bottom: 30px;
+        }
+        .tl-item .panel-body {
+            padding-left: 5px !important;
+        }
+        .tl-item .panel-body h4{
+            font-size: 15px;
+            margin-top: 14px;
+        }
+        .active-product {
+            background-color: #d6e3f0;
+
+        }
+        iframe {
+                width: 100% !important;
+            }
+        .active-product .tl-icon {
+            background-color: rgb(7,160,195) !important;
+        }
+        .active-product .tl-label h4 {
+            margin-top:15px; color: #07A6C3 !important;
+        }
+        .vd_navbar, .navbar-tabs-menu {
+            box-shadow: none;
+            webkit-box-shadow: none;
+        }
+{#        nav nav-tabs#}
+         @media only screen and (max-width: 500px) {
+             .nav-tabs .tab-text {
+                font-size: 14px !important;
+            }
+             .nav-tabs .tab-text-forward {
+                font-size: 18px !important;
+            }
+        }
+
+
+        @media only screen and (max-width: 768px) {
+            @media screen and (-webkit-min-device-pixel-ratio:0) {
+                 iframe {
+                    width: 96% !important;
+                }
+                .modal-dialog {
+                width: 93%;
+            }
+            }
+
+
+            #right-div {
+                padding-left:0px;
+                padding-right:0px;
+            }
+            .modal-dialog {
+                width: 93%;
+            }
+        }
+     #book-vendor-button:hover {
+         background-color: #07A6C3 !important;
+
+     }
+{#    * {#}
+{#          background: #000 !important;#}
+{#          color: #0f0 !important;#}
+{#          outline: solid #f00 1px !important;#}
+{#        }#}
+    </style>
+    <script>
+        function resizeIframe(obj) {
+            var hei = obj.contentWindow.document.body.scrollHeight;// + 400;
+            obj.style.height = hei + 'px';
+        }
+        function resizeIframePlans(obj) {
+            var hei = obj.contentWindow.document.body.scrollHeight;
+            obj.style.height = hei + 'px';
+        }
+    </script>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/demov2/_partial/_sidebar.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper" style="padding:0px;">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="clearfix">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel widget light-widget" style="margin-bottom: 0px;">
+                                            <div class="panel-body" style="background-color: #f6f9fc; min-height: 1050px;">
+                                                <div class="row">
+                                                    <div class="col-md-4 col-xs-4" hidden id="laoding-div">
+                                                        <h1 style="margin-top: 350px;color: #BCB8B8;" class="text-center">Loading...</h1>
+                                                    </div>
+                                                    <div class="col-md-6 col-xs-12" id="right-div" >
+                                                        <div class="col-md-12" style="background-color: #d6e3f0;padding:20px;margin-top:2px !important;">
+                                                            <img id="product-image" style="display: inline-block;width:40px; margin-right:10px;" />
+                                                            <h4 style="color: rgb(7,160,195);margin-top:8px;display: inline-block;" id="product-title"></h4>
+{#                                                            <img data-toggle="dropdown" class="pull-right" style=" margin-top: 15px; width:25px;curser: pointer;" src="{% static "images/plans/OpenListingSettings.png" %}">#}
+{#                                                            <ul class="dropdown-menu pull-right" role="menu">#}
+{#                        <li><a  id="book-vendor-button" style="curser:pointer;">Mark as Booked</a></li>#}
+{##}
+{#                      </ul>#}
+                                                        </div>
+                                                        <div class="col-md-12" style="margin-top:35px;padding-left:0px;padding-right:0px;">
+                                                            <div class="tabs">
+                                                                <ul class="nav nav-tabs widget large-links li-icons-class" style="background-color: #f6f9fc !important;">
+                                                                    <li class="active"><a href="#home-tab" id="plan-iframe-button"
+                                                                                          data-toggle="tab"> <span
+                                                                            class="menu-icon"></span>  <span class="tab-text" style="font-size: 18px;">Plan &nbsp;&nbsp;&nbsp;</span>
+                                                                        <span class="tab-text-forward" style="font-size: 26px;">></span><span
+                                                                            class="menu-active">
+                                                                    </span> </a></li>
+                                                                    <li id="dreams-li" class=""><a id="dream-iframe-button"
+                                                                                    href="#posts-tab" data-toggle="tab"> <span class="menu-icon"></span>  <span class="tab-text" style="font-size: 18px;">Dream &nbsp;&nbsp;&nbsp;</span><span class="tab-text-forward" style="font-size: 26px;">></span> <span
+                                                                            class="menu-active">
+                                                                        </span> </a></li>
+                                                                    <li class="" id="decide-li"><a tabindex="-1" id="decide-iframe-button"
+                                                                                    href="#list-tab" data-toggle="tab"
+                                                                    > <span class="menu-icon"></span>  <span class="tab-text" style="font-size: 18px;">Decide &nbsp;&nbsp;&nbsp;</span> <span
+                                                                            class="menu-active">
+                                                                        </span> </a></li>
+{#                                                                    <a style="color: #BCB8B8;font-size:15px;" id="book-vendor-button" href="#" class="pull-right">Mark as Booked</a>#}
+                                                                </ul>
+                                                                <div class="tab-content active">
+                                                                    <div class="tab-pane active answers-spacing"
+                                                                         id="home-tab" style="background-color: #f6f9fc !important;">
+                                                                        <iframe FRAMEBORDER="no" BORDER="0"
+                                                                                SCROLLING="no"
+                                                                                height="579px"
+                                                                                frameBorder="0"
+                                                                                width="100%"
+                                                                                id="plan-iframe-id" onload="resizeIframe(this)"
+                                                                        ></iframe>
+                                                                    </div>
+                                                                    <div class="tab-pane " style="background-color: #f6f9fc !important;" id="posts-tab">
+                                                                        <iframe id="dream-iframe-id" height="600px"
+                                                                                style="background-color: #f6f9fc !important;"
+                                                                                BORDER="0"
+                                                                                frameborder="no"
+                                                                                width="100%" onload="resizeIframe(this)"
+                                                                                src=""></iframe>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="list-tab">
+                                                                        <iframe id="decide-iframe-id" height="600px"
+                                                                                style="border: 2px white solid;"
+                                                                                SCROLLING="no" BORDER="0"
+                                                                                width="100%" onload="resizeIframe(this)"
+                                                                                src=""></iframe>
+
+                                                                    </div>
+                                                                    <div class="tab-pane " id="application-tab"
+                                                                         style="background-color: #F3E8E9;">
+                                                                        <iframe id="discover-iframe-id" height="600px"
+                                                                                style="border: 2px white solid;"
+                                                                                SCROLLING="no" BORDER="0"
+                                                                                width="100%" onload="resizeIframe(this)"
+                                                                                src=""></iframe>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="shortlist-tab"> Tab 5
+                                                                    </div>
+                                                                    <div class="tab-pane" id="bids-tab"> Tab 6</div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <!-- row -->
+                                            </div>
+                                            <!-- panel-body -->
+                                        </div>
+                                        <!-- Panel Widget -->
+
+
+                                    </div>
+                                </div>
+                                <!-- row -->
+
+
+                            </div>
+                        </div>
+                        {#            </section>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    {#    </section>#}
+    <!-- (7) Add task Form -->
+    <div class="modal fade" id="booked-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body" style="min-height: 300px;">
+                    <a class="close" style="color: #07A6C3;" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <!-- patch2 -->
+                    {#                <h4 class="modal-title">LOG IN</h4>#}
+                    {#                <hr/>#}
+                    <h1 style="margin-top: 100px;color: #BCB8B8;" class="text-center">Please allow up to 1 week before receiving any bids</h1>
+
+                </div>
+                {#            <div class="modal-footer">#}
+                {##}
+                {#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="generalQuestions" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body" style="min-height: 300px;">
+                    <a class="close" style="color: #07A6C3;" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <!-- patch2 -->
+                    {#                <h4 class="modal-title">LOG IN</h4>#}
+                    {#                <hr/>#}
+                    <iframe FRAMEBORDER="no" BORDER="0"
+{#                            SCROLLING="no"#}
+                            frameBorder="0"
+                            width="100%" onload="resizeIframe(this)"
+                            id="generalQuestions-iframe-id"
+                    ></iframe>
+
+                </div>
+                {#            <div class="modal-footer">#}
+                {##}
+                {#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <script>
+
+        var product_cat_name = '{{ product.category.name }}';
+        var product_id = '{{ product.id }}';
+        var product_cat_id = '{{ product.category_id }}';
+        var product_title = '{{ product.title }}';
+        var product_image = 'https://s3-us-west-2.amazonaws.com/yapjoy-static/media/{{ product.category.image_icon }}';
+        function changeProduct(product_cat_name_val, product_id_val, product_cat_id_val, product_title_val, product_image){
+            product_cat_name = product_cat_name_val;
+            product_id = product_id_val;
+            product_cat_id = product_cat_id_val;
+            product_title = product_title_val;
+            product_image = product_image;
+            get_product();
+
+        };
+    </script>
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/pnotify/js/jquery.pnotify.min.js" %}"></script>
+
+    <!-- Flot Chart  -->
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.resize.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.pie.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.categories.min.js" %}"></script>
+
+    <script type="text/javascript">
+
+
+
+
+        function get_product(){
+            $('#right-div').hide();
+            $('#laoding-div').show();
+            $('#product-title').html(product_title);
+            $('#product-image').attr('src',product_image);
+            $(".tl-item").removeClass("active-product");
+            $('#prod-active-id-'+product_id).attr("class","tl-item active-product");
+            refresh_desired_tab();
+            $('#laoding-div').hide();
+            $('#right-div').show();
+            if ( $(window).width() < 850) {
+              hideSideBar()
+            }
+        }
+        var is_using_dream = false;
+        var is_using_plans = true;
+        var is_using_decide = false;
+        function mark_all_false(){
+            is_using_dream = false;
+            is_using_plans = false;
+            is_using_decide = false;
+        }
+        function refresh_desired_tab(){
+
+            if(is_using_dream){
+                $('#dream-iframe-id').attr('src','/dream_req/'+product_id+'/')
+                mark_all_false();
+                is_using_dream = true;
+                return;
+            }else if(is_using_plans){
+                $('#plan-iframe-id').attr('src','/question_req/'+product_cat_id+'/'+product_id+'/')
+                mark_all_false();
+                is_using_plans = true;
+                return;
+            }else if(is_using_decide){
+                $('#decide-iframe-id').attr('src','/vendors/shortlist_req/'+product_id)
+                mark_all_false();
+                is_using_decide = true;
+                return;
+            }
+        }
+        get_product(product_cat_name, product_id, product_cat_id, product_title);
+        $('#discover-iframe-button').on('click',function(){
+            $('#discover-iframe-id').attr('src','/shortlist/req/'+product_cat_name+'/'+product_id+'/')
+        })
+        $('#dream-iframe-button').on('click',function(){
+            $('#dream-iframe-id').attr('src','/dream_req/'+product_id+'/')
+            mark_all_false();
+            is_using_dream = true;
+        })
+        $('#plan-iframe-button').on('click',function(){
+            $('#plan-iframe-id').attr('src','/question_req/'+product_cat_id+'/'+product_id+'/')
+            mark_all_false();
+            is_using_plans = true;
+        })
+        $('#decide-iframe-button').on('click',function(){
+            $('#decide-iframe-id').attr('src','/vendors/shortlist_req/'+product_id)
+            mark_all_false();
+            is_using_decide = true;
+        })
+        $('#book-vendor-button').on('click',function(){
+            $('#booked-modal').modal('show');
+        })
+        function push_success_alert(message){
+            notification("topright","success","fa fa-check-circle vd_green","Success",message);
+        };
+        function push_failure_alert(message){
+            notification("topright","error","fa fa-exclamation-circle vd_red","Error",message);
+        };
+
+        function resizeIDreamsframe() {
+            $('#dream-iframe-id').height( $('#dream-iframe-id').contents().find("body").height() );
+        }
+        function resizeIPlansframe() {
+            $('#plan-iframe-id').height( $('#plan-iframe-id').contents().find("body").height() );
+        }
+        function resizeIDecideframe() {
+            $('#decide-iframe-id').height( $('#decide-iframe-id').contents().find("body").height() );
+        }
+        function openPlans(){
+            $('#plan-iframe-id').attr('src','/question_req/'+product_cat_id+'/'+product_id+'/')
+            mark_all_false();
+            is_using_plans = true;
+        }
+        function openDreams(){
+{#            alert('works')#}
+            $('.li-icons-class li').removeClass('active')
+            $('.tab-pane').removeClass('active')
+            $('#dreams-li').attr('class','active')
+            $('#posts-tab').addClass('active')
+            $('#dream-iframe-id').attr('src','/dream_req/'+product_id+'/');
+            mark_all_false();
+            is_using_dream = true;
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+{#            get_product()#}
+        }
+        function openDecide(){
+{#            alert('works')#}
+            $('.li-icons-class li').removeClass('active')
+            $('.tab-pane').removeClass('active')
+            $('#decide-li').attr('class','active')
+            $('#list-tab').addClass('active')
+            $('#decide-iframe-id').attr('src','/vendors/shortlist_req/'+product_id)
+            mark_all_false();
+            is_using_decide = true;
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+{#            get_product()#}
+        }
+
+
+        function dismissGeneralQuestionModal(){
+            $('#generalQuestions').modal('hide');
+
+        }
+        {% if showModal %}
+            $('#generalQuestions').modal('show');
+            $('#generalQuestions-iframe-id').attr('src','/question_general/')
+        {% endif %}
+
+
+    function hideSideBar(){
+        $('#dashboard').addClass('nav-left-hide')
+    }
+
+    </script>
+
+{% endblock %}

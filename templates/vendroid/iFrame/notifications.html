@@ -1,0 +1,137 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                {% include "vendroid/messages/partial/chat_list.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#          <div class="vd_head-section clearfix">#}
+{#            <div class="vd_panel-header">#}
+{#              <ul class="breadcrumb">#}
+{#                <li><a href="index.php">Home</a> </li>#}
+{#                <li><a href="listtables-tables-variation.php">List &amp; Tables</a> </li>#}
+{#                <li class="active">Blog Large List</li>#}
+{#              </ul>#}
+{#              <div class="vd_panel-menu hidden-sm hidden-xs" data-intro="<strong>Expand Control</strong><br/>To expand content page horizontally, vertically, or Both. If you just need one button just simply remove the other button code." data-step="5" data-position="left">#}
+{#    <div data-action="remove-navbar" data-original-title="Remove Navigation Bar Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-navbar-button menu"> <i class="fa fa-arrows-h"></i> </div>#}
+{#      <div data-action="remove-header" data-original-title="Remove Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-header-button menu"> <i class="fa fa-arrows-v"></i> </div>#}
+{#      <div data-action="fullscreen" data-original-title="Remove Navigation Bar and Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="fullscreen-button menu"> <i class="glyphicon glyphicon-fullscreen"></i> </div>#}
+{##}
+{#</div>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="vd_title-section clearfix">#}
+{#            <div class="vd_panel-header">#}
+{#              <h1>Blog Large List</h1>#}
+{#              <small class="subtitle">List with large image on left suited for blog with landscape picture.</small> </div>#}
+{#          </div>#}
+          <div class="vd_content-section clearfix">
+            <!-- row -->
+            <div class="row">
+              <!-- col-md-4 -->
+
+              <div class="col-md-12">
+                <div class="panel widget light-widget">
+                  <div class="panel-heading no-title"> </div>
+                  <div class="panel-body">
+                    <h3 class="mgtp--5"> Notifications</h3>
+                  <hr />
+                    <div class="content-list content-image">
+                      <ul class="list-wrapper no-bd-btm">
+                          {% for notification in notifications %}
+
+
+                                                    <div class="alert alert-success">
+                                                        <span class="vd_alert-icon">
+                                                            <i class="fa fa-check-circle vd_green">
+
+                                                            </i>
+                                                        </span>
+                                                        <a  class="alert-link">{{ notification.userprofile.user.get_full_name }}</a> <span class="time-stamp">{{ notification.created_at|timesince }} ago</span>
+                                                        <p><strong>{{ notification.message }}</strong></p> </div>
+
+
+
+{#                                    <a class="check" ><i class="fa fa-check fa-lg"></i></a>#}
+{#                <p class=""><a href="">{{ notification.userprofile.user.get_full_name }}</a> <span class="time-stamp">{{ notification.created_at|timesince }} ago</span></p>#}
+{#                <p class="">{{ notification.message }}</p>#}
+                                                    <!-- panel-body -->
+                                                {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+
+              </div>
+              <!-- col-md-4 -->
+
+            </div>
+            <!--row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+        </div>
+                            <!-- .vd_content-section -->
+
+
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src="{% static "js/jquery.notifications.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript">
+/*<![CDATA[*/
+jQuery(function($) {
+jQuery('#notify-list').yiiListView({'ajaxUpdate':['notify-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+});
+/*]]>*/
+</script>
+
+    </script>
+{% endblock script %}

@@ -1,0 +1,214 @@
+{% extends "vendroid/demo/base.html" %}
+{% load myfilters %}
+{% load url from future %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/partial/_sidebar.html" %}#}
+{#                {% include "vendroid/messages/partial/chat_list.html" %}#}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="">
+                        <div class="vd_content clearfix">
+
+{##}
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-subtitle">#}
+{#                                    <h1>Leave Feedback</h1>#}
+{##}
+{##}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="vd_content-section clearfix">
+                            <div class="panel widget">
+{#                  <div class="panel-heading vd_bg-green">#}
+{#                    <h3 class="panel-title"> Settings </h3>#}
+{#                  </div>#}
+                  <div class="panel-body">
+{#                  <div class="col-md-12">#}
+{#                <a class="btn btn-primary btn-blue" style="margin-bottom: 20px;width: 120px;" href="/demov2/plans/{{ id }}/" >Back</a>#}
+{#            </div>#}
+                     <div class="col-md-4">
+                          <h3>YapJoy Support</h3>
+                      <h4>(925) 215-7189</h4>
+                  <p>Unfortunately, we can not get everything right the first time. Please describe the issue that you are having and we will do our best to resolve any problem you might be having</p>
+                      <div class="flashes">
+                                    {% if success %}
+                                    <div class="alert alert-success">Thank you for your feedback! We will be reviewing your submission
+                                        shortly.
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                  <form  method="post" id="composeForm" action=".">
+            {% csrf_token %}
+
+{#                  <div class="panel-body">#}
+{#                    <form class="form-horizontal" role="form" action="#">#}
+
+{#                      <div class="form-group clearfix">#}
+{#                        <label class="col-sm-2 control-label">Subject</label>#}
+{##}
+{#                        <div class="col-sm-10 controls">#}
+{#                        {{ form.subject|addcss:'input-border-btm'}}#}
+{#                            <p style="color: red;">{{ form.subject.errors.0 }}</p>#}
+{##}
+{#                        </div>#}
+{#                      </div>#}
+                      <div class="form-group  clearfix">
+                        <label class="col-sm-12 control-label">Feedback</label>
+                        <div class="col-sm-12 controls">
+
+                        {{ form.message|addcss:'input-border-btm'}}
+
+
+                     <p style="color: red;">{{ form.message.errors.0 }}</p>
+
+{#                          <input type="text" id="subject-input" class="input-border-btm" placeholder="Subject Title">#}
+                        </div>
+                      </div>
+
+                      <div class="form-group  clearfix">
+                        <label class="col-sm-12 control-label">Emotional State</label>
+                        <div class="col-sm-12 controls">
+
+                        {{ form.subject|addcss:'input-border-btm'}}
+
+
+                     <p style="color: red;">{{ form.subject.errors.0 }}</p>
+
+
+{#                          <input type="text" id="subject-input" class="input-border-btm" placeholder="Subject Title">#}
+                        </div>
+                      </div>
+
+
+                      <div class="form-group form-actions  pull-right">
+                        <div class="col-md-12">
+                            <a href="{% url "PlansStepv2" %}" class="btn vd_btn vd_bg-green vd_white ">Cancel</a>
+                          <button type="submit" class="btn vd_btn vd_bg-green vd_white " id="createBtn"><i class="fa fa-envelope append-icon"></i> Send</button>
+
+                        </div>
+                      </div>
+{#                    </form>#}
+{#                  </div>#}
+
+                  <!-- panelbody  -->
+                  </form>
+
+{#                                <div class="row">#}
+{#                                    <div class="col-md-12">#}
+{#                                        <div class="panel-body">#}
+{#                                        <div class="form-group">#}
+{#                           <label class="col-sm-12 control-label">Kindly fill the form below or email us your feedback at  <a href="mailto:info@yapjoy.com">info@yapjoy.com</a></label>#}
+{##}
+{#                      </div>#}
+{#                                    </div>#}
+{#                                    </div>#}
+
+
+{#                                    </div>#}
+                                    <!-- col-md-x -->
+
+                     </div>
+                  </div>
+                  </div>
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+{#        <footer class="footer-1" id="footer">#}
+{#            <div class="vd_bottom ">#}
+{#                <div class="container">#}
+{#                    <div class="row">#}
+{#                        <div class=" col-xs-12">#}
+{#                            <div class="copyright">#}
+{#                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <!-- row -->#}
+{#                </div>#}
+{#                <!-- container -->#}
+{#            </div>#}
+{#        </footer>#}
+        <!-- Footer END -->
+
+
+    </div>
+    <div class="modal fade" id="successModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+{#                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>#}
+{#                <!-- patch2 -->#}
+{#                <h4 class="modal-title">Login</h4>#}
+{#                <hr/>#}
+
+                <h1 class="text-center grey" style="margin-top: 35px;">Thanks for the feedback!<br />
+                We will get back to you shortly</h1>
+
+                <div class="col-md-12 text-center" style="margin-top: 25px;">
+                    <img src="{% static "images/demo/Working_Man.png" %}" />
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <button class="btn btn-block btn-blue" data-dismiss="modal" style="width: 100%;margin-top: 35px;margin-bottom: 35px;">Okay</button>
+                </div>
+
+
+            </div>
+            {#            <div class="modal-footer">#}
+            {##}
+            {#                </div>#}
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{% endblock content %}
+{% block script %}
+    <script>
+        {% if success %}
+            $('#successModal').modal('show');
+        {% endif %}
+    </script>
+{#    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>#}
+{#    <script>#}
+{#        rsvp = {{ profile.rsvp_count|default_if_none:0 }};#}
+{#        invites = {{ profile.invitation_count|default_if_none:0 }};#}
+{#        $("#seo-sparkline").sparkline([invites,rsvp], {#}
+{#            type: 'pie',#}
+{#            height: '25px',#}
+{#            sliceColors: ['#2e8258','#4abc96','#1FAE66']#}
+{#		});#}
+{##}
+{##}
+{#    </script>#}
+{% endblock script %}

@@ -1,0 +1,232 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+    $(function () {
+            $('#id_wedding_date').datepicker();
+{#            $("#id_wedding_date").datetimepicker({#}
+{#             'showTimepicker': false,#}
+{#            });#}
+        });
+    </script>
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+    .red {
+        color: red;
+    }
+    textarea {
+        height: 80px;
+    }
+    .btn-brown {
+        background-color: #ba8c00 !important;
+    }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+      <div class="vd_container">
+        <div class="vd_content clearfix">
+
+          <!-- vd_head-section -->
+
+          <div class="clearfix">
+
+          <!-- vd_title-section -->
+
+          <div class="vd_content-section clearfix">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-body">
+{#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+{#                    <ul class="nav nav-tabs">#}
+{##}
+{##}
+{#                    </ul>#}
+                    <br>
+                    <div class="tab-content mgbt-xs-20">
+                         {% if successMessage %}
+                    <div class="flashes">
+                        <div class="alert alert-success">{{ successMessage }}</div>
+                    </div>
+                    {% endif %}
+                      <div class="tab-pane active" id="privacy">
+                          <div class="col-md-12 text-center">
+                             {% include "vendroid/CRM/partial/_header_inside.html" %}
+
+                          </div>
+                          <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-3 pull-right">
+{#                                      <a class="btn vd_btn pull-right btn-brown" href="/crm/invoices/add/" style="margin-bottom: 20px;">ADD EXHIBITOR</a>#}
+                                      <form  action="." method="post" enctype="multipart/form-data">
+                                          {% csrf_token %}
+                                          {{ form.as_p }}
+                                            <button style="margin-bottom: 20px;" class="btn vd_btn pull-right btn-brown" type="submit">Upload</button>
+                                      </form>
+                                      <br />
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="panel-heading vd_bg-grey">
+                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Events Registered</h3>
+                                      </div>
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+                                                      <th>Name
+                                                      </th>
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+                                                      <th>Is Visible</th>
+                                                      <th>Price</th>
+                                                      <th>
+                                                          Created At
+                                                      </th>
+                                                      <th>
+                                                          View
+                                                      </th>
+                                                      <th>Delete</th>
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  {% for csv in events %}
+                                                      <tr role="row" class="gradeA odd">
+                                                          <td>{{ csv.name }}</td>
+{#                                                          <td>{{ csv.csv }}</td>#}
+                                                          <td>{{ csv.is_visible }}</td>
+                                                          <td>{{ csv.created_at }}</td>
+                                                          <td>${{ csv.amount|intcomma }}</td>
+                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>
+                                                          <td>
+                                                              <form action="." method="post">
+                                                                  {% csrf_token %}
+                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />
+                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>
+                                                              </form>
+
+                                                          </td>
+                                                      </tr>
+                                                  {% endfor %}
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          </div>
+
+                      </div>
+                    </div>
+                    <br><br>
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-6 -->
+
+            </div>
+            <!-- row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+        </div>
+        <!-- .vd_content -->
+      </div>
+      <!-- .vd_container -->
+    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+  <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+    <script type="text/javascript">
+
+        if($("#to").length > 0){
+            $("#to").chosen();
+        }
+    </script>
+
+
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

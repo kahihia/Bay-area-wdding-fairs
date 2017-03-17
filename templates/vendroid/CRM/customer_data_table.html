@@ -1,0 +1,106 @@
+{% load pagination_tags %}
+<style>
+  th{
+    font-size: 15px;
+  }
+  td{
+    font-size: 10px;
+{#    word-break: break-all;#}
+  }
+
+  .pagination{
+    font-size:15px;
+  }
+
+  .dataTable{
+{#    width: 200px !important;#}
+{#    max-width:200px;#}
+    overflow-x: scroll;
+  }
+</style>
+
+
+
+<div class="dataTable">
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Mailing Street</th>
+        <th>Mailing City</th>
+        <th>Other City</th>
+        <th>Mailing State</th>
+        <th>Zip</th>
+        <th>Brides First Name</th>
+        <th>Brides Last Name</th>
+        <th>Wedding Location</th>
+        <th>Budget</th>
+        <th>Vendor Interested In</th>
+        <th>Wedding Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- content-list -->
+
+      {% autopaginate userinfos 10 %}
+      {% for userinfo in userinfos %}
+        {% if forloop.counter0|divisibleby:2%}
+        <tr class="success">
+        {% else %}
+        <tr class="danger">
+        {% endif %}
+          <td>{{userinfo.LastName}}
+              {% if userinfo.userprofileID == 0%}
+              <a class="btn btn-default vd_bg-blue vd-white" data-target="#inviteCustomer" data-toggle="modal">Invite</a>
+{#              <button type="button" href="" class="btn btn-default vd_bg-yellow vd-white pull-right" data-dismiss="modal">Message</button>#}
+              {% else %}
+              <a class="btn btn-default vd_bg-yellow vd-white" href="/profile/{{ userinfo.userprofile_id }}/" role="button">Message</a>
+{#              <button type="button" class="btn btn-default vd_bg-yellow vd-white pull-right" data-dismiss="modal">Invite</button>#}
+              {% endif %}
+          </td>
+          <td>{{userinfo.Email}} </td>
+          <td>{{userinfo.MailingStreet}}</td>
+          <td>{{userinfo.MailingCity}}</td>
+          <td>{{userinfo.OtherCity}}</td>
+          <td>{{userinfo.MailingState}}</td>
+          <td>{{userinfo.MailingZip}}</td>
+          <td>{{userinfo.BridesFirstName}}</td>
+          <td>{{userinfo.BridesLastName}}</td>
+          <td>{{userinfo.WeddingLocation}}</td>
+          <td>{{userinfo.Budget}}</td>
+          <td>{{userinfo.VendorInterestedIn}}</td>
+          <td>{{userinfo.WeddingDate}}</td>
+
+
+
+          <!--invite part-->
+          <div class="modal fade" id="inviteCustomer" role="dialog" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <form action="" method="post">
+                          {% csrf_token %}
+
+                          <div class="modal-body">
+                              <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                              <h4 class="modal-title text-center">Invite Customer who are not on YapJoy</h4>
+                              <div class="form-group"><input id="emails" name="emails" class="form-control" type="text" value={{userinfo.Email}}/>
+                              </div>
+
+                          </div>
+                          <div class="modal-footer">
+                              <button type="submit" class="btn btn-success">Invite</button>
+                          </div>
+                      </form>
+                  </div>
+                  <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+          </div>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+{% paginate %}

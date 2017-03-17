@@ -1,0 +1,289 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+
+
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet"
+          type="text/css">
+    <script>
+        $(function () {
+            $('#id_wedding_date').datepicker();
+        });
+    </script>
+
+    <!-- Specific Page Scripts Put Here -->
+
+    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="">
+
+                                <!-- vd_title-section -->
+
+                                <div class="vd_content-section clearfix">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget">
+                                                <div class="panel-body">
+                                                    <br>
+                                                    <div class="tab-content mgbt-xs-20">
+                                                        {% if successMessage %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-success">{{ successMessage }}</div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+                                                                {% include "vendroid/CRM/partial/_header_inside.html" %}
+
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+
+                                                                    <div class="col-md-12">
+                                                                        <div class="panel-heading vd_bg-grey">
+                                                                            <h3 class="panel-title text-center"><span
+                                                                                    class="menu-icon">  </span> Ticket
+                                                                                Pricing </h3>
+                                                                        </div>
+
+                                                                        <div class="clearfix"></div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6" style="margin-top: 10px;">
+                                                                        <div id="ticket_form" style="display:none">
+
+                                                                            <form id="ticketing_form"
+                                                                                  name="ticketing_form"
+                                                                                  action="/crm/invoices/ticketing/"
+                                                                                  method="POST">
+                                                                                <p><label for="id_name">Name:</label>
+                                                                                    <input class="form-control"
+                                                                                           id="id_name" name="name"
+                                                                                           placeholder="e.g: Pleasanton DoubleTree - (12PM-4PM) "
+                                                                                           type="text"></p>
+                                                                                <p><label for="id_standard_amount">Standard
+                                                                                    Ticket Price:</label> <input
+                                                                                        class="form-control"
+                                                                                        id="id_standard_amount"
+                                                                                        name="standard_amount"
+                                                                                        placeholder="e.g: 10.0"
+                                                                                        type="text"></p>
+                                                                                <p><label for="id_early_bird_amount">EarlyBird
+                                                                                    Ticket Price:</label> <input
+                                                                                        class="form-control"
+                                                                                        id="id_early_bird_amount"
+                                                                                        name="early_bird_amount"
+                                                                                        placeholder="e.g: 10.0"
+                                                                                        type="text"></p>
+                                                                                <p><label for="id_group_amount">Group
+                                                                                    Ticket Price:</label> <input
+                                                                                        class="form-control"
+                                                                                        id="id_group_amount"
+                                                                                        name="group_amount"
+                                                                                        placeholder="e.g: 10.0"
+                                                                                        type="text"></p>
+                                                                                <p><label for="id_event_date">Event
+                                                                                    Date:</label> <input
+                                                                                        class="form-control"
+                                                                                        id="id_event_date"
+                                                                                        name="event_date"
+                                                                                        placeholder="e.g: YYYY-MM-DD"
+                                                                                        type="text"></p>
+                                                                                <p><label for="id_is_Expire">Ticket
+                                                                                    Expire :</label> <input
+                                                                                        id="id_is_Expire"
+                                                                                        name="is_Expire"
+                                                                                        type="checkbox"></p>
+
+                                                                                <input hidden name="event_id" id="event_id" />
+                                                                                <input type="submit"
+                                                                                       class="btn vd_btn btn-brown pull-left"
+                                                                                       value="Submit">
+                                                                            </form>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+{#                                                                        <input name="search" id="search" type="text" class="form-control"  /> <br />#}
+{#                                                                        <button id="search_ticket" class="btn vd_btn btn-brown" value="Search Ticket">Search</button>#}
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div id="grid_table">
+                                                                            {% autopaginate events 20 %}
+                                                                            {% include "vendroid/CRM/partial/_grid_ticketing_price.html" %}
+                                                                        </div>
+                                                                        <div id="search_div"></div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br><br>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_container -->
+
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+            <div class="clearfix"></div>
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+    <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+
+{% endblock content %}
+{% block script %}
+
+    <script>
+        $(document).ready(function () {
+            console.log("Ready");
+
+            $("#button-id input:button").click(function () {
+
+                var id = $(this).attr("data-id");
+                $("#event_id").val(id);
+                var data = {
+                    'event': id
+                };
+                ajaxCall('/crm/eventdata', 'GET', data).done(function (data) {
+                    console.log("data: ", data['expire']);
+                    if (data != "") {
+                        $('#id_name').val(data["name"]);
+                        $('#id_standard_amount').val(data["standard"]);
+                        $('#id_early_bird_amount').val(data["early_birds"]);
+                        $('#id_group_amount').val(data["group"]);
+                        $('#id_event_date').val(data["date"]);
+                        if (data['expire'] == true) {
+                            $('#id_is_Expire').prop('checked', true);
+                        } else {
+                            $('#id_is_Expire').prop('checked', false);
+                        }
+                        $("#ticket_form").css("display", "block");
+                    }
+                });
+            });
+
+            $("#search_ticket").click(function () {
+{#                alert('asd')#}
+                var search = $("#search").val();
+                var data = {
+                    'ticket':search
+                };
+                ajaxCall('/crm/invoices/ticketing/', 'GET', data).done(function (data) {
+
+                    $("#grid_table").hide();
+                    $("#search_div").append(data)
+                })
+            });
+
+            function ajaxCall(url, type, data) {
+                var mes;
+                mes = $.ajax({
+                    url: url,
+                    type: type,
+                    data: data,
+
+                    success: function (response) {
+                        console.log('success', response);
+                        return response;
+
+                    },
+
+                    error: function (error) {
+                        return error
+                    }
+                });
+                return mes;
+            }
+        })
+    </script>
+
+{% endblock script %}

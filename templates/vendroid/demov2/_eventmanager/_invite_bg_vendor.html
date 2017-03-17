@@ -1,0 +1,44 @@
+{% load static %}
+<div class="mb-content-wrapper-child" >
+    <div class="vd_content clearfix"></div>
+    <!--Main panel-->
+    <div class="row mb-row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-vendor-register">
+                <div class="panel-title">
+                    <h4>Invite your team</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="event-list-wrap">
+                    <h4 style="color: grey;">Share these invite links with your team of vendors, family and close friends.</h4>
+                    <div class="col-md-12" style="margin-top: 30px;">
+                        <div class="col-md-2">
+                            <img width="100%" src="{% static "vendroid/img/invite/Family Collaboration.png" %}" />
+                        </div>
+                        <div class="col-md-10">
+                            <h3>Family</h3>
+                            <h4>can chat and invite new teammates</h4>
+                            <div class="about-footer">
+                                            <a href="https://www.yapjoy.com/family_share_link/{{ event.family_ref_code }}/" target="_blank"><i class="fa fa-link" aria-hidden="true"></i> &nbsp;https://www.yapjoy.com/family_share_link/{{ event.family_ref_code }}/</a>
+                                        </div>
+                        </div>
+                        <div class="col-md-2">&nbsp;</div>
+                        <div class="col-md-10"><hr /></div>
+                        <div class="col-md-2">
+                            <img width="100%" src="{% static "vendroid/img/invite/Vendor team chat.png" %}" />
+                        </div>
+                        <div class="col-md-10">
+                            <h3>Vendors</h3>
+                            <h4>can chat with anyone on your team</h4>
+                            <div class="about-footer">
+                                            <a href="https://www.yapjoy.com/vendor_share_link/{{ event.vendor_ref_code }}/" target="_blank"><i class="fa fa-link" aria-hidden="true"></i> &nbsp;https://www.yapjoy.com/vendor_share_link/{{ event.vendor_ref_code }}/</a>
+                                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--vd_content-wrapper-->

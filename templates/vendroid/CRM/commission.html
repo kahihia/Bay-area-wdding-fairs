@@ -1,0 +1,447 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+<style>
+{#  th{#}
+{#    font-size: 15px;#}
+{#  }#}
+{#  td{#}
+{#    font-size: 10px;#}
+{#    word-break: break-all;#}
+{#  }#}
+
+  .pagination{
+    font-size:15px;
+  }
+
+  .dataTables_wrapper{
+{#    width: 200px !important;#}
+{#    max-width:200px;#}
+    overflow-x: scroll;
+  }
+</style>
+
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+{#    <script>#}
+{#    $(function () {#}
+{#            $('#id_wedding_date').datepicker();#}
+{#            $("#id_wedding_date").datetimepicker({#}
+{#             'showTimepicker': false,#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+
+    <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
+{#    <link href="{% static "vendroid/plugins/dataTables/css/dataTables.boots/trap.css" %}" rel="stylesheet" type="text/css">#}
+
+
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+{#    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
+    <style>
+    .red {
+        color: red;
+    }
+    textarea {
+        height: 80px;
+    }
+    .btn-brown {
+        background-color: #ba8c00 !important;
+    }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                  <div class="vd_container">
+                    <div class="vd_content clearfix">
+
+                      <!-- vd_head-section -->
+
+                      <div class="">
+
+                      <!-- vd_title-section -->
+
+                      <div class="vd_content-section clearfix">
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="panel widget">
+                              <div class="panel-body">
+            {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+            {#                    <ul class="nav nav-tabs">#}
+            {##}
+            {##}
+            {#                    </ul>#}
+                                <br>
+                                <div class="tab-content mgbt-xs-20">
+                                     {% if successMessage %}
+                                <div class="flashes">
+                                    <div class="alert alert-success">{{ successMessage }}</div>
+                                </div>
+                                {% endif %}
+                                  <div class="tab-pane active" id="privacy">
+                                      <div class="col-md-12 text-center">
+                                          {% include "vendroid/CRM/partial/_header_inside.html" %}
+
+                                      </div>
+                                      <div class="col-md-12">
+                                          <div class="row">
+                                              <div class="col-md-12" style="margin-bottom: 10px;">
+                                                  <div class="col-md-12">
+                                                     <div class="col-md-6">
+                                                          <form action="" method="post" id="searchForm">
+                                                          {% csrf_token %}
+                                                          <div class="col-md-4" style="padding: 0px;">
+{#                                                              {{ form.events|addcss:'form-control' }}#}
+                                                          <select id="staff_value" name="staff_value" class="form-control">
+{#                                                            <optgroup>#}
+{#                                                                <option>First</option>#}
+{#                                                            </optgroup>#}
+                                                          <option value="">-------------</option>
+                                                              {% for user in staff %}
+                                                          <option value="{{ user.id }}"  {% if user.id == staff_value %}selected{% endif %}>{{ user.get_full_name }}
+                                                              ({{ user.email }}) {{ user.id }} - {{ staff_value }} {% if user.id == staff_value %}selected{% endif %}
+                                                          </option>
+                                                              {% endfor %}
+                                                        </select>
+
+                                                          </div>
+                                                      <div class="col-md-6"><button class="btn vd_btn btn-brown pull-left" style="margin-left: 10px;" id="search-btn" type="submit" style="margin-bottom: 20px;">SEARCH</button></div>
+                                                      <br />
+                                                      </form>
+                                                     </div>
+                                                      <div class="col-md-6">
+{#                                                          <form action="" method="post" id="searchForm">#}
+{#                                                          {% csrf_token %}#}
+{#                                                      <div class="col-md-2 pull-right"><button class="btn vd_btn btn-brown pull-right" style="margin-left: 2px;" id="search-btn" type="submit" style="margin-bottom: 20px;">SEARCH</button></div>#}
+{#                                                          <div class="col-md-4 pull-right" style="padding: 0px;">#}
+{#                                                              {{ form.events|addcss:'form-control' }}#}
+{#                                                          <select id="id_events_year" name="events_year" class="form-control pull-right">#}
+{#                                                            <optgroup>#}
+{#                                                                <option>First</option>#}
+{#                                                            </optgroup>#}
+{#                                                          <option>-------------</option>#}
+{#                                                          <option value="lastyear">Last Year ({{ last_year_no }})</option>#}
+{#                                                          <option value="thisyear">This Year ({{ this_year_no }})</option>#}
+{#                                                          <option value="nextyear">Next Year ({{ next_year_no }})</option>#}
+{##}
+{#                                                        </select>#}
+{##}
+{#                                                          </div>#}
+{##}
+{#                                                      <br />#}
+{#                                                      </form>#}
+                                                      </div>
+
+                                                  </div>
+                                                  <div class="clearfix"></div>
+{#                                                  <a class="btn vd_btn pull-right btn-brown" target="_blank" href="http://bayareaweddingfairs.com/vendor-registration-yj/" style="margin-bottom: 20px;">ADD EXHIBITOR</a>#}
+                                              </div>
+                                               <div class="col-md-12">
+                              <div class="row">
+{#                                  <div class="col-md-12">#}
+{#                                      <a class="btn vd_btn pull-right btn-brown" href="/crm/invoices/add/" style="margin-bottom: 20px;">ADD EXHIBITOR</a>#}
+{#                                  </div>#}
+                                  <div class="col-md-12">
+                                      <div class="panel-heading vd_bg-grey">
+                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Contracted Vendors </h3>
+                                      </div>
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+{#                                          {% if event_selected or csv_export_id %}#}
+{#                                          <form action="" method="post">{% csrf_token %}#}
+{#                                              <input name="csv_export_all" id="csv_export_all" value="{{ event_selected.id }}" hidden />#}
+{#                                              <input name="csv_export_id" id="csv_export_id" value="{{ csv_export_id }}" hidden />#}
+{#                                              <button type="submit" class="btn vd_btn btn-brown pull-right">Export</button>#}
+{#                                          </form>#}
+{#                                          {% endif %}#}
+                                            <form action="" method="post">
+                                            {% csrf_token %}
+                                              <table aria-describedby="data-tables_info dataTable" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+{#                                                      <th>Registration ID#}
+{#                                                      </th>#}
+                                                      <th>
+                                                          Vendor's Name
+                                                      </th>
+                                                      <th>
+                                                          Company
+                                                      </th>
+{#                                                      <th>#}
+{#                                                          Phone#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Email#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Business Category#}
+{#                                                      </th>#}
+{#                                                      <th>Status</th>#}
+                                                      <th>Show Signed Up
+                                                      </th>
+
+                                                      <th>Total Amount</th>
+                                                      <th>Balance Due</th>
+
+                                                      <th>Commission Percentage
+                                                      </th>
+                                                      <th>Commission </th>
+                                                      <th>Assigned to</th>
+{#                                                      <th>#}
+{#                                                          Payment Method#}
+{#                                                      </th>#}
+                                                      <th>Status</th>
+                                                      <th>Commission Payment Date</th>
+                                                      <th>Mark Commission</th>
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Invoices#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Sales#}
+{#                                                      </th>#}
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                 {% if events %}
+{#                                                      {% autopaginate events 10 %}#}
+                                                 {% endif %}
+                                                  {% for event in events %}
+                                                      <tr role="row" class="gradeA odd">
+{#                                                          <td>{{ event.id }}</td>#}
+                                                          <td><a href="{% url "contracted_contractor_detail" event.id %}" style="color:dodgerblue">{{ event.name }}</a></td>
+                                                          <td>{{ event.business_name }}</td>
+{#                                                          <td>{{ event.phone }}</td>#}
+{#                                                          <td>{{ event.email }}</td>#}
+{#                                                          <td>{{ event.status }}</td>#}
+                                                          <td>{{ event.event.name }} - {{ event.event.date }}</td>
+
+
+                                                          <td>${{ event.total_amount }}</td>
+                                                       <td>${{ event.amount_due }}</td>
+
+                                                          <td>{{ event.commission }}%</td>
+                                                          <td>${{ event.get_percent_amount }}</td>
+                                                          <td>{% if event.sales %}{{ event.sales.get_full_name }}{% else %}N/A{% endif %}</td>
+{#                                                          <td>{{ event.payment_method }}</td>#}
+                                                          <td>{% if event.status == "Deleted" %}Deleted{% else %}{% if event.total_amount == 0 %}No invoice available{% else %}{% if event.amount_due == 0 %}Paid{% else %}<span style="color:red;">Unpaid</span>{% endif %}{% endif %}{% endif %}</td>
+
+                                                          <td>{% if event.sales_commission %}{{ event.sales_commission.created_at|date:"Y-m-d" }}{% else %}N/A{% endif %}</td>
+                                                          <td>{% if event.is_commission_paid %}Paid{% else %}<input name="mark_paid_checkbox" id="mark_paid_checkbox" value="{{ event.id }}" type="checkbox" />{% endif %}</td>
+{#                                                          <td>{{ event.status }}</td>#}
+{#                                                          <td><a href="{%  url "event_invoice_detail" event.id   %}" class="btn vd_btn btn-brown">View invoice</a></td>#}
+{#                                                          <td><a href="/crm/invoices/edit/{{ event.id }}" class="btn vd_btn btn-brown">Edit invoice</a></td>#}
+{#                                                          <td>{% if event.sales  %}#}
+{#                                                                <div class="salesNow">{{event.sales.get_full_name }}</div>#}
+{#                                                              {% else %}#}
+{#                                                                No sales#}
+{#                                                              {% endif %}#}
+{#                                                              <a onclick="chooseSales({{ event.id }})" class="btn vd_btn btn-brown">Assign To</a>#}
+{#                                                              <div class="dropdown">#}
+{#                                                                  <button class="btn vd_btn btn-brown dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Assign Sales#}
+{#                                                                  <span class="caret"></span></button>#}
+{#                                                                  <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+{#                                                                      {% for sales in salesCandidates %}#}
+{#                                                                        <li role="presentation"><a role="menuitem" onclick="chooseSales({{ event.id}}, {{sales.id}});">{{ sales.get_full_name }}</a></li>#}
+{#                                                                      {% endfor %}#}
+{#                                                                  </ul>#}
+{#                                                                </div>#}
+{#                                                          </td>#}
+                                                      </tr>
+                                                  {% endfor %}
+                                                  </tbody>
+                                              </table>
+                                            <input hidden name="staff_value_retain" id="staff_value_retain" value="{{ staff_value }}" />
+                                          <button type="submit" class="btn vd_btn btn-brown pull-right">Mark Paid</button>
+{#                                            {% paginate %}#}
+                                            </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                                          </div>
+                                      </div>
+
+                                      </div>
+
+                                  </div>
+                                </div>
+                                <br><br>
+
+
+
+
+
+
+
+
+
+                              </div>
+                            </div>
+                            <!-- Panel Widget -->
+                          </div>
+                          <!-- col-md-6 -->
+
+                        </div>
+                        <!-- row -->
+
+                      </div>
+                      <!-- .vd_content-section -->
+
+                    </div>
+                    <!-- .vd_content -->
+                  </div>
+      <!-- .vd_container -->
+                </div>
+                    <!-- .vd_container -->
+{#                </div>#}
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+            <div class="clearfix"></div>
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{#  <script src="{% static "js/chosen.jquery.min.js" %}"></script>#}
+
+{#    <script type="text/javascript">#}
+{##}
+{#        if($("#to").length > 0){#}
+{#            $("#to").chosen();#}
+{#        }#}
+{##}
+{##}
+{#        function chooseSales(wpID, salesID){#}
+{#            console.log("convert"+id);#}
+{#            $.ajax({#}
+{#                url: '/crm/invoices/interested_detail/'+wpID+'/',#}
+{#                type: 'post', // http method#}
+{#                data: {chooseSales: salesID},#}
+{##}
+{#                success: function (response) {#}
+{#                    var sales = response['sales'];#}
+{#                    console.log('success', sales);#}
+{#                    $('.salesNow').html(sales);#}
+{#                    $('#contractorDetail').html(response);#}
+{#                    $('#contractorDetail').modal('show');#}
+{#                    $('#editTaskFormModal').dialog({#}
+{#                       height:500,#}
+{#                       width:500,#}
+{#                       modal:true#}
+{#                   });#}
+{#                },#}
+{##}
+{#                error: function (xhr, errmsg, err) {#}
+{#                   console.log("fail Convert to Contracted Vendor "+errmsg+" "+err);#}
+{#                }#}
+{#            });#}
+{#        };#}
+{##}
+{#    $('#search').on('keyup',function () {#}
+{#        $('#search-btn').text('Searching');#}
+{#        $.ajax({#}
+{#                url: '',#}
+{#                type: 'post', // http method#}
+{#                data:$('#searchForm').serialize(),#}
+{##}
+{#                success: function (response) {#}
+{#                   alert(response)#}
+{#                    if(response=='success'){#}
+{#                        $('#search-btn').removeAttr('disabled','disabled')#}
+{#                        $('#search-btn').text('ADD INTERESTED VENDOR')#}
+{#                    }else{#}
+{#                        $('#search-btn').attr('disabled','disabled')#}
+{#                        $('#search-btn').text('NO RESULTS FOUND')#}
+{#                    }#}
+{##}
+{#                },#}
+{##}
+{#                error: function (xhr, errmsg, err) {#}
+{#                   console.log("fail Convert to Contracted Vendor "+errmsg+" "+err);#}
+{#                }#}
+{#            });#}
+{#    })#}
+{#    </script>#}
+
+
+{% endblock content %}
+{% block script %}
+
+     <script src="{% static "vendroid/plugins/dataTables/table2CSV.js" %}"></script>
+    <script type="text/javascript">
+            $(document).ready(function() {
+
+
+                    $('#data-tables').dataTable({
+                        "aaSorting": [[ 10, 'desc' ]],
+                         "aLengthMenu": [[10, 15, 25, 35, 50, 100, -1], [10, 15, 25, 35, 50, 100, "All"]],
+                    });
+
+                $('#data-tables').each(function() {
+    var $table = $(this);
+
+    });$('#export').click(function() {
+{#        alert('click is working')#}
+      $('#data-tables').table2CSV();
+{#      window.location.href = 'data:text/csv;charset=UTF-8,'#}
+{#                            + encodeURIComponent(csv);#}
+    });
+            } );
+    </script>
+
+{% endblock script %}

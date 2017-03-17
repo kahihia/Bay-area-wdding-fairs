@@ -1,0 +1,2279 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 80px;
+        }
+    .displayNone{
+        display: None;
+    }
+    .modal-header{
+        background-color: rgb(186, 140, 0) !important;
+    }
+    .bg-brown{
+        background-color: rgb(186, 140, 0) !important;
+    }
+    .progress-bar{
+        background-color: rgb(186, 140, 0) !important;
+    }
+    a {
+        color: #ba8c00;
+    }
+    .nav-tabs .active a {
+        background-color: #ba8c00 !important;
+        color: white !important;
+    }
+    /* highlight results */
+{#    .ui-autocomplete span.hl_results {#}
+{#        background-color: #ffff66;#}
+{#    }#}
+{##}
+{#    /* loading - the AJAX indicator */#}
+{#    .ui-autocomplete-loading {#}
+{#        background: white url('../img/ui-anim_basic_16x16.gif') right center no-repeat;#}
+{#    }#}
+{##}
+{#    /* scroll results */#}
+{#    .ui-autocomplete {#}
+{#        max-height: 250px;#}
+{#        overflow-y: auto;#}
+{#        /* prevent horizontal scrollbar */#}
+{#        overflow-x: hidden;#}
+{#        /* add padding for vertical scrollbar */#}
+{#        padding-right: 5px;#}
+{#    }#}
+{##}
+{#    .ui-autocomplete li {#}
+{#        font-size: 16px;#}
+{#    }#}
+{##}
+{#    /* IE 6 doesn't support max-height#}
+{#    * we use height instead, but this forces the menu to always be this tall#}
+{#    */#}
+{#    * html .ui-autocomplete {#}
+{#        height: 250px;#}
+{#    }#}
+    </style>
+    <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+    <script>
+{#        $(document).ready(function(){#}
+            function setupAgreement(){
+                var return_url = "/crm/invoices/bulk/create/?email={{ email }}";
+                var allVals = [];
+{#                alert('works');#}
+                 $('#bulk_check:checked').each(function() {
+                    allVals.push($(this).val());
+                    });
+                var data = {
+                    agreements:allVals,
+                    make_agreement:"Yes",
+                    email:"{{ email }}"
+                }
+                $.ajax({
+                    type: "post",
+                    url: "",
+{#                    dataType: "json",#}
+                    data: data,
+                    success: function(data){
+                        alert(data);
+                        if(data="Done"){
+                            window.location.href = return_url;
+                        }
+{#                        alert('success')#}
+                    },
+{#                    complete: function (xhr, status) { alert('complete: '+status); }#}
+                    });
+            }
+
+{#        })#}
+
+    function show_fields(amount, amount_div, date, date_div, self_id, save_id){
+        $(amount).removeAttr('hidden');
+        $(amount_div).attr('hidden','hidden');
+        $(date).removeAttr('hidden');
+        $(date_div).attr('hidden','hidden');
+        $(save_id).removeClass('displayNone');
+        $(self_id).addClass('displayNone');
+
+    }
+    </script>
+    <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+                <div class="clearfix"></div>
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="clearfix">
+
+                                <!-- vd_title-section -->
+
+                                <div class="vd_content-section clearfix">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget">
+                                                <div class="panel-body">
+                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                                                    {#                    <ul class="nav nav-tabs">#}
+                                                    {##}
+                                                    {##}
+                                                    {#                    </ul>#}
+                                                    <br>
+
+                                                    <div class="tab-content mgbt-xs-20">
+                                                        {% if successMessage %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-success">
+                                                                    <div class="pull-left">{{ successMessage }}</div>
+                                                                    <a href=""
+                                                                       class="pull-right"
+                                                                       class="btn vd_btn vd_bg-green pull-right">
+
+                                                                        View
+                                                                    </a>
+
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+
+                                                            </div>
+                                                        {% endif %}
+                                                        {% if errorMessage %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-danger">
+                                                                    <div class="pull-left">{{ errorMessage }}</div>
+                                                                    <a href=""
+                                                                       class="pull-right"
+                                                                       class="btn vd_btn vd_bg-green pull-right">
+
+                                                                        View
+                                                                    </a>
+
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+                                                                {% include "vendroid/CRM/partial/_header_inside.html" %}
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <form class="form-horizontal" action="" method="post"
+                                                                  role="form">
+                                                                {% csrf_token %}
+                                                                {#                                                                {{ form.errors }}#}
+                                                                {#                          {{ form.errors }}#}
+                                                                <div class="col-sm-12">
+                                                                    {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label">Search Email</label>
+
+                                                                        <div class="col-sm-6 controls">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    {{ searchForm.email }}
+                                                                                    {% if searchForm.email.errors %}
+                                                                                        <div class="red">{{ searchForm.email.errors.0 }}</div>
+                                                                                    {% endif %}
+                                                                                <input name="search_email" id="search_email" hidden />
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+                                                                    <div class="col-md-3">
+                                                                        {#                                                                                                <input id="notification_sig" name="notification_sig" hidden="hidden" />#}
+                                                                        <button style="background-color: #ba8c00 !important;margin-bottom: 20px;"
+                                                                                type="submit"
+                                                                                class="btn vd_btn vd_bg-green pull-left">
+                                                                            <span class="menu-icon">
+{#                                                                                <i#}
+{#                                                                                    class="fa fa-fw fa-check"></i>#}
+                                                                            </span>
+                                                                            Search
+                                                                        </button>
+
+
+                                                                    </div>
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+
+
+                                                                <div class="clearfix"></div>
+
+                                                                    <!-- form-group -->
+
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                </form>
+                                                            </div>
+                                                        <div class="col-md-6"><form class="form-horizontal" action="" method="post"
+                                                                  role="form">
+                                                                {% csrf_token %}
+                                                                {#                                                                {{ form.errors }}#}
+                                                                {#                          {{ form.errors }}#}
+                                                                <div class="col-sm-12">
+                                                                    {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
+
+                                                                    <div class="form-group">
+{#                                                                        <label class="col-sm-3 control-label">Search Email</label>#}
+                                                                        <div class="col-md-3 pull-right">
+                                                                        {#                                                                                                <input id="notification_sig" name="notification_sig" hidden="hidden" />#}
+                                                                        <button style="background-color: #ba8c00 !important;margin-bottom: 20px;"
+                                                                                type="submit"
+                                                                                class="btn vd_btn vd_bg-green pull-left">
+                                                                            <span class="menu-icon">
+{#                                                                                <i#}
+{#                                                                                    class="fa fa-fw fa-check"></i>#}
+                                                                            </span>
+                                                                            Search
+                                                                        </button>
+
+
+                                                                    </div>
+                                                                        <div class="col-sm-6 controls pull-right">
+                                                                            <div class="row mgbt-xs-0">
+                                                                                <div class="col-xs-12">
+                                                                                    <select id="id_events_scope" name="events_scope" class="form-control pull-right">
+                            {#                                                            <optgroup>#}
+                            {#                                                                <option>First</option>#}
+                            {#                                                            </optgroup>#}
+                                                                                      <option>-------------</option>
+                                                                                      <option value="today">Today</option>
+                                                                                      <option value="thismonth">This Month</option>
+                                                                                      <option value="all">All</option>
+                                                                                      <option value="">------</option>
+                                                                                        <option value="pending">Pending</option>
+                                                                                      <option value="viewed">Viewed</option>
+                                                                                      <option value="paid">Paid</option>
+
+                                                                                    </select>
+                                                                                <input name="search_events" id="search_events" hidden />
+                                                                                </div>
+                                                                                <!-- col-xs-12 -->
+                                                                            </div>
+                                                                            <!-- row -->
+                                                                        </div>
+
+                                                                        <!-- col-sm-10 -->
+                                                                    </div>
+
+
+                                                                <div class="clearfix"></div>
+
+                                                                    <!-- form-group -->
+
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                </form></div>
+
+
+<div class="col-md-12">
+    <ul class="nav nav-tabs nav-justified">
+                      <li class="active"><a href="#tab21" data-toggle="tab">Sent Agreements</a></li>
+                      <li><a href="#tab22" data-toggle="tab">Future Payments</a></li>
+                      <li><a href="#tab23" data-toggle="tab">All Invoices</a></li>
+                      <li><a href="#tab24" data-toggle="tab">Future Agreements</a></li>
+                      {% if email %}
+                          <li><a href="#tab26" data-toggle="tab">Cards</a></li>
+                        {% endif %}
+
+                    </ul>
+                                                        <div class="tab-content  mgbt-xs-20">
+                      <div class="tab-pane active" id="tab21">
+                      {% if invoices_sent %}
+                                                        <div class="col-md-12">
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Sent Agreements</h3>#}
+{#                                      </div>#}
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+                                                      <th>Invoice ID
+                                                      </th>
+                                                      <th>Business Name</th>
+                                                      <th>Event
+                                                      </th>
+                                                      <th>
+                                                          Amount
+                                                      </th>
+                                                      <th>
+                                                          Status
+                                                      </th>
+                                                      <th>
+                                                          Description
+                                                      </th>
+                                                      <th>
+                                                          Created at
+                                                      </th>
+                                                      <th>
+                                                          Signed Date
+                                                      </th>
+{#                                                      <th>Resend / View</th>#}
+{#                                                      <th>Remove</th>#}
+                                                      <th>Action</th>
+{#                                                      <th>Edit</th>#}
+{#                                                      <th>View Invoice</th>#}
+{#                                                      <th>#}
+{#                                                          Registration Date#}
+{#                                                      </th>#}
+{#                                                      <th>Terms and Conditions</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Amount#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Invoices#}
+{#                                                      </th>#}
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+
+                                                  {% for invoice in invoices_sent|dictsortreversed:"created_at" %}
+                                                      {% if invoice.type == "Deposit" %}
+                                                      <tr role="row" class="gradeA odd"
+{#                                                          {% if invoice.status == "Failed" %}style="border: 2px solid red;"{% endif %}#}
+                                                      >
+                                                          <td>{{ invoice.id }}</td>
+                                                      <td>{{ invoice.event_invoice.register_event.business_name }}</td>
+                                                          <td>{{ invoice.get_event }} </td>
+
+                                                          <td>${{ invoice.get_amount_sent }}</td>
+                                                          <td {% if invoice.status == "Failed" %}style="color: red;font-weight: bold;"{% endif %}{% if invoice.status == "Viewed" or invoice.status == "Pending" or invoice.status == "Cancel" %}style="color: red;font-weight: bold;"{% endif %}>{{ invoice.status }}</td>
+                                                          <td>{% if invoice.type == "Deposit" %}({{ invoice.type }} / Agreement){% else %}{{ invoice.type }}{% endif %} amount invoice</td>
+                                                          <td>{{ invoice.created_at|date:"Y-m-d" }}</td>
+                                                          <td>{% if invoice.event_invoice.transaction_id_deposit_date %}{{ invoice.event_invoice.transaction_id_deposit_date|date:"Y-m-d" }}{% else %}N/A{% endif %}</td>
+{#                                                       <td>#}
+{#                                                      {% if invoice.type == "Deposit" %}#}
+{#                                                         <form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_resend_id" name="invoice_resend_id" value="{{ invoice.id }}" />#}
+{#                                                              <input hidden id="resendoldagreement" name="resendoldagreement" value="{{ invoice.id }}" />#}
+{#                                                              {% if not invoice.status == "Paid" %}<button class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important" {% if not invoice.agreement_code %}disabled{% endif  %} >Resend</button>{% endif  %}#}
+{#                                                              <a class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important"#}
+{#                                                              href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"#}
+{#                                                              >View</a>#}
+{#                                                          </form>#}
+{#                                                      {% else %}#}
+{#                                                          <form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_recharge_id" name="invoice_recharge_id" value="{{ invoice.id }}" />#}
+{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important">Charge</button>#}
+{#                                                          </form>#}
+{#                                                      {% endif %}#}
+{#                                                       </td>#}
+{#                                                      <td>#}
+{#                                                      <form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_remove_id" name="invoice_remove_id" value="{{ invoice.id }}" />#}
+{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton"#}
+{#                                                                      onclick="deleteAgreement(event);"#}
+{#                                                                      onclick="return confirm('Are you sure you wish to delete this agreement?');"#}
+{#                                                                      class="btn btn-danger" >Remove</button>#}
+{#                                                          </form>#}
+{#                                                      </td>#}
+                                                      <td>
+
+
+
+
+                                                      <div class="btn-group">
+                      <button type="button" {% if invoice.status == "Pending" and invoice.check_expiry %}style="background-color: lightgrey;"{% endif %}
+{#                              class="btn vd_btn vd_bg-green dropdown-toggle btn-block" style="background-color: #ba8c00 !important"#}
+                              data-toggle="dropdown"> Action <i class="fa fa-caret-down prepend-icon"></i> </button>
+                      <ul class="dropdown-menu" role="menu">
+                      <li>
+                           <a
+                                                                      class="btn btn-block
+{#                                                                      vd_btn#}
+{#                                                                      vd_btn vd_bg-green btn-block#}
+                                                                                    "
+{#                                                                      style="background-color: #ba8c00 !important"#}
+                                                              href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"
+                                                          style="-webkit-appearance: button;cursor: pointer;"
+                                                              >View</a>
+                      <li class="divider"></li>
+                      </li>
+                        {% if invoice.type == "Deposit" %}<li>
+                                                         <form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_resend_id" name="invoice_resend_id" value="{{ invoice.id }}" />
+                                                              <input hidden id="resendoldagreement" name="resendoldagreement" value="{{ invoice.id }}" />
+{#                                                              {% if not invoice.status == "Paid" %}#}
+                                                                  <button
+{#                                                                      class="btn vd_btn vd_bg-green btn-block"#}class="btn-block"
+                                                                      type="submit"
+{#                                                                      style="background-color: #ba8c00 !important"#}
+{#                                                                      {% if not invoice.agreement_code %}disabled{% elif  invoice.status == "Paid" %}disabled{% elif invoice.status == "Signed" %}disabled{% endif %} #}
+                                                              >Resend</button>
+{#                                                              <li class="divider"></li>#}
+{#                                                              {% endif  %}#}
+
+
+                                                          </form>
+                            </li>
+                                                      {% else %}
+                            <li>
+                                                          <form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_recharge_id" name="invoice_recharge_id" value="{{ invoice.id }}" />
+                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %}
+{#                                                                      class="btn vd_btn vd_bg-green btn-block"#}
+                                                                      type="submit" class="btn-block"
+{#                                                                      style="background-color: #ba8c00 !important"#}
+                                                              >Charge</button>
+                                                          </form>
+                            </li>
+                                                      {% endif %}
+{#                        <li class="divider"></li>#}
+{#                      <li><form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_cancel_id" name="invoice_cancel_id" value="{{ invoice.id }}" />#}
+{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"#}
+{#                                                                      onclick="deleteAgreement(event);"#}
+{#                                                                      onclick="return confirm('Are you sure you wish to cancel this agreement?');"#}
+{#                                                                      class="btn btn-danger btn-block"#}
+{#                                                              >Cancel</button>#}
+{#                                                          </form></li>#}
+                      {% if not invoice.status == "Cancel" %}
+                      <li><form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_cancel_id" name="invoice_cancel_id" value="{{ invoice.id }}" />
+                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"
+{#                                                                      onclick="deleteAgreement(event);"#}
+                                                                      onclick="return confirm('Are you sure you wish to cancel this agreement?');"
+{#                                                                      class="btn btn-danger btn-block"#}
+                                                              >Cancel</button>
+                                                          </form></li>
+                          {% elif invoice.status == "Cancel" %}
+                          <li><form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_uncancel_id" name="invoice_uncancel_id" value="{{ invoice.id }}" />
+                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"
+{#                                                                      onclick="deleteAgreement(event);"#}
+                                                                      onclick="return confirm('Uncancel will change the status to pending?');"
+{#                                                                      class="btn btn-danger btn-block"#}
+                                                              >Uncancel</button>
+                                                          </form></li>
+                          {% endif %}
+                        <li><form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_remove_id" name="invoice_remove_id" value="{{ invoice.id }}" />
+                                                              <button {% if invoice.status == "Paid" %}disabled{% elif invoice.status == "Signed" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"
+{#                                                                      onclick="deleteAgreement(event);"#}
+                                                                      onclick="return confirm('Are you sure you wish to delete this agreement?');"
+{#                                                                      class="btn btn-danger btn-block"#}
+                                                              >Remove</button>
+                                                          </form></li>
+                      </ul>
+                    </div>
+                                                      </td>
+{#                                                          <td>#}
+{#                                                              <a onclick="edit_request_deposit()"></a>#}
+{#                                                          </td>#}
+{#                                                          <td><a href="{% url "invoices_view_pay" invoice.code %}" class="btn vd_btn btn-brown btn-block">View Invoice</a></td>#}
+{#                                                          <td>{{ invoice.registered_event.event.name }}</td>#}
+{#                                                          <td>{{ invoice.registered_event.business_name }}</td>#}
+{#                                                          <td>{{ invoice.registered_event.event.date }}</td>#}
+{#                                                          <td>{{ invoice.registered_event.created_at }}</td>#}
+{#                                                          <td>{% if invoice.is_signed %}Accepted{% else %}Not Accepted{% endif %}</td>#}
+{#                                                          <td>{{ invoice.status }}</td>#}
+
+{#                                                          <td>${{ invoice.amount|intcomma }}</td>#}
+{#                                                          <td><a data-toggle="modal" href="{% url "invoices_view_pay" invoice.id %}" o class="btn vd_btn btn-brown">View Invoice</a></td>#}
+{#                                                          {% if not invoice.is_signed %}#}
+{#                                                              <td><a onclick="openInvoiceModal('{{ invoice.id }}');" class="btn vd_btn btn-brown btn-block">Accept</a></td>#}
+{#                                                          {% else %}#}
+{#                                                              <td><a href="{% url "invoices_view_pay" invoice.id %}" class="btn vd_btn btn-brown btn-block">View Invoice</a></td>#}
+{#                                                          {% endif %}#}
+{#                                                      </td>#}
+                                                      </tr>
+                                                  {% endif %}
+                                                  {% endfor %}
+
+                                                  </tbody>
+                                              </table>
+
+                                          </div>
+
+{#                                        <div class="col-md-12">#}
+{#                                             <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Mark</th>#}
+{#                                                      <th>Email</th>#}
+{##}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th></th>#}
+{#                                                      <th>List Price#}
+{#                                                      </th>#}
+{#                                                      <th>Electricity</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>Method</th>#}
+{#                                                      <th>PV Prize</th>#}
+{#                                                      <th>Total Amount</th>#}
+{#                                                      <th>#}
+{#                                                          Created at#}
+{#                                                      </th>#}
+{#                                                      <th>Remove</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for invoice in event_invoices %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+{#                                                          <td>{{ invoice.email }}</td>#}
+{#                                                          <td>${{ csv.offered_price }}</td>#}
+{#                                                          <td>${{ csv.list_price }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{##}
+{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.payment_method }}</td>#}
+{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+{#                                                          <td>${{ csv.get_total }}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                        </div>#}
+{#                                      {% if event_invoices %}#}
+{#                                          <div class="col-md-12">#}
+{#                                          {% for o in event_invoices %}#}
+{#                                              {{ o }}#}
+{#                                          {% endfor %}#}
+{#                                          </div>#}
+{#                                          {% endif %}#}
+
+
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div>{% endif %}</div>
+                      <div class="tab-pane" id="tab22"> {% if invoices_sent %}
+                                                            <div class="col-md-12">
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Future Payments</h3>#}
+{#                                      </div>#}
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+                                                      <th>Invoice ID
+                                                      </th>
+                                                      <th>Business Name</th>
+                                                      <th>Event
+                                                      </th>
+                                                      <th>
+                                                          Amount
+                                                      </th>
+                                                      <th>
+                                                          Status
+                                                      </th>
+                                                      <th>
+                                                          Description
+                                                      </th>
+                                                      <th>
+                                                          Created at
+                                                      </th>
+                                                      <th>
+                                                          Signed Date
+                                                      </th>
+{#                                                      <th>Resend / View</th>#}
+{#                                                      <th>Remove</th>#}
+                                                      <th>Action</th>
+{#                                                      <th>Edit</th>#}
+{#                                                      <th>View Invoice</th>#}
+{#                                                      <th>#}
+{#                                                          Registration Date#}
+{#                                                      </th>#}
+{#                                                      <th>Terms and Conditions</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Amount#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Invoices#}
+{#                                                      </th>#}
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+
+                                                  {% for invoice in invoices_sent|dictsortreversed:"created_at" %}
+                                                      {% if invoice.type == "Deposit" %}
+                                                      {% else %}
+                                                           <tr role="row" class="gradeA odd"
+{#                                                          {% if invoice.status == "Failed" %}style="border: 2px solid red;"{% endif %}#}
+                                                      >
+                                                          <td>{{ invoice.id }}</td>
+                                                      <td>{{ invoice.event_invoice.register_event.business_name }}</td>
+                                                          <td>{{ invoice.get_event }} </td>
+
+                                                          <td>${{ invoice.get_amount_sent }}</td>
+                                                          <td {% if invoice.status == "Failed" %}style="color: red;font-weight: bold;"{% endif %}{% if invoice.status == "Viewed" or invoice.status == "Pending" or invoice.status == "Cancel" %}style="color: red;font-weight: bold;"{% endif %}>{{ invoice.status }}</td>
+                                                          <td>{% if invoice.type == "Deposit" %}({{ invoice.type }} / Agreement){% else %}{{ invoice.type }}{% endif %} amount invoice</td>
+                                                          <td>{{ invoice.created_at|date:"Y-m-d" }}</td>
+                                                          <td>{% if invoice.event_invoice.transaction_id_deposit_date %}{{ invoice.event_invoice.transaction_id_deposit_date|date:"Y-m-d" }}{% else %}N/A{% endif %}</td>
+{#                                                       <td>#}
+{#                                                      {% if invoice.type == "Deposit" %}#}
+{#                                                         <form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_resend_id" name="invoice_resend_id" value="{{ invoice.id }}" />#}
+{#                                                              <input hidden id="resendoldagreement" name="resendoldagreement" value="{{ invoice.id }}" />#}
+{#                                                              {% if not invoice.status == "Paid" %}<button class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important" {% if not invoice.agreement_code %}disabled{% endif  %} >Resend</button>{% endif  %}#}
+{#                                                              <a class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important"#}
+{#                                                              href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"#}
+{#                                                              >View</a>#}
+{#                                                          </form>#}
+{#                                                      {% else %}#}
+{#                                                          <form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_recharge_id" name="invoice_recharge_id" value="{{ invoice.id }}" />#}
+{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important">Charge</button>#}
+{#                                                          </form>#}
+{#                                                      {% endif %}#}
+{#                                                       </td>#}
+{#                                                      <td>#}
+{#                                                      <form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_remove_id" name="invoice_remove_id" value="{{ invoice.id }}" />#}
+{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton"#}
+{#                                                                      onclick="deleteAgreement(event);"#}
+{#                                                                      onclick="return confirm('Are you sure you wish to delete this agreement?');"#}
+{#                                                                      class="btn btn-danger" >Remove</button>#}
+{#                                                          </form>#}
+{#                                                      </td>#}
+                                                      <td>
+
+
+
+
+                                                      <div class="btn-group">
+                      <button type="button" {% if invoice.status == "Pending" and invoice.check_expiry %}style="background-color: lightgrey;"{% endif %}
+{#                              class="btn vd_btn vd_bg-green dropdown-toggle btn-block" style="background-color: #ba8c00 !important"#}
+                              data-toggle="dropdown"> Action <i class="fa fa-caret-down prepend-icon"></i> </button>
+                      <ul class="dropdown-menu" role="menu">
+                      <li>
+                           <a
+                                                                      class="btn btn-block
+{#                                                                      vd_btn#}
+{#                                                                      vd_btn vd_bg-green btn-block#}
+                                                                                    "
+{#                                                                      style="background-color: #ba8c00 !important"#}
+                                                              href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"
+                                                          style="-webkit-appearance: button;cursor: pointer;"
+                                                              >View</a>
+                      <li class="divider"></li>
+                      </li>
+                        {% if invoice.type == "Deposit" %}<li>
+                                                         <form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_resend_id" name="invoice_resend_id" value="{{ invoice.id }}" />
+                                                              <input hidden id="resendoldagreement" name="resendoldagreement" value="{{ invoice.id }}" />
+{#                                                              {% if not invoice.status == "Paid" %}#}
+                                                                  <button
+{#                                                                      class="btn vd_btn vd_bg-green btn-block"#}class="btn-block"
+                                                                      type="submit"
+{#                                                                      style="background-color: #ba8c00 !important"#}
+                                                                      {% if not invoice.agreement_code %}disabled
+{#{% elif  invoice.status == "Paid" %}disabled{% elif invoice.status == "Signed" %}disabled#}
+{% endif %}
+                                                                  >Resend</button>
+{#                                                              <li class="divider"></li>#}
+{#                                                              {% endif  %}#}
+
+
+                                                          </form>
+                            </li>
+                                                      {% else %}
+                            <li>
+                                                          <form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_recharge_id" name="invoice_recharge_id" value="{{ invoice.id }}" />
+                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %}
+{#                                                                      class="btn vd_btn vd_bg-green btn-block"#}
+                                                                      type="submit" class="btn-block"
+{#                                                                      style="background-color: #ba8c00 !important"#}
+                                                              >Charge</button>
+                                                          </form>
+                            </li>
+                                                      {% endif %}
+{#                        <li class="divider"></li>#}
+{#                      <li><form action="" method="post">#}
+{#                                                              {% csrf_token %}#}
+{#                                                              <input hidden id="invoice_cancel_id" name="invoice_cancel_id" value="{{ invoice.id }}" />#}
+{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"#}
+{#                                                                      onclick="deleteAgreement(event);"#}
+{#                                                                      onclick="return confirm('Are you sure you wish to cancel this agreement?');"#}
+{#                                                                      class="btn btn-danger btn-block"#}
+{#                                                              >Cancel</button>#}
+{#                                                          </form></li>#}
+                        <li><form action="" method="post">
+                                                              {% csrf_token %}
+                                                              <input hidden id="invoice_remove_id" name="invoice_remove_id" value="{{ invoice.id }}" />
+                                                              <button {% if invoice.status == "Paid" %}disabled{% elif invoice.status == "Signed" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"
+{#                                                                      onclick="deleteAgreement(event);"#}
+                                                                      onclick="return confirm('Are you sure you wish to delete this agreement?');"
+{#                                                                      class="btn btn-danger btn-block"#}
+                                                              >Remove</button>
+                                                          </form></li>
+                      </ul>
+                    </div>
+                                                      </td>
+{#                                                          <td>#}
+{#                                                              <a onclick="edit_request_deposit()"></a>#}
+{#                                                          </td>#}
+{#                                                          <td><a href="{% url "invoices_view_pay" invoice.code %}" class="btn vd_btn btn-brown btn-block">View Invoice</a></td>#}
+{#                                                          <td>{{ invoice.registered_event.event.name }}</td>#}
+{#                                                          <td>{{ invoice.registered_event.business_name }}</td>#}
+{#                                                          <td>{{ invoice.registered_event.event.date }}</td>#}
+{#                                                          <td>{{ invoice.registered_event.created_at }}</td>#}
+{#                                                          <td>{% if invoice.is_signed %}Accepted{% else %}Not Accepted{% endif %}</td>#}
+{#                                                          <td>{{ invoice.status }}</td>#}
+
+{#                                                          <td>${{ invoice.amount|intcomma }}</td>#}
+{#                                                          <td><a data-toggle="modal" href="{% url "invoices_view_pay" invoice.id %}" o class="btn vd_btn btn-brown">View Invoice</a></td>#}
+{#                                                          {% if not invoice.is_signed %}#}
+{#                                                              <td><a onclick="openInvoiceModal('{{ invoice.id }}');" class="btn vd_btn btn-brown btn-block">Accept</a></td>#}
+{#                                                          {% else %}#}
+{#                                                              <td><a href="{% url "invoices_view_pay" invoice.id %}" class="btn vd_btn btn-brown btn-block">View Invoice</a></td>#}
+{#                                                          {% endif %}#}
+{#                                                      </td>#}
+                                                      </tr>
+                                                      {% endif %}
+
+                                                  {% endfor %}
+
+                                                  </tbody>
+                                              </table>
+
+                                          </div>
+
+{#                                        <div class="col-md-12">#}
+{#                                             <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Mark</th>#}
+{#                                                      <th>Email</th>#}
+{##}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th></th>#}
+{#                                                      <th>List Price#}
+{#                                                      </th>#}
+{#                                                      <th>Electricity</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>Method</th>#}
+{#                                                      <th>PV Prize</th>#}
+{#                                                      <th>Total Amount</th>#}
+{#                                                      <th>#}
+{#                                                          Created at#}
+{#                                                      </th>#}
+{#                                                      <th>Remove</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for invoice in event_invoices %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+{#                                                          <td>{{ invoice.email }}</td>#}
+{#                                                          <td>${{ csv.offered_price }}</td>#}
+{#                                                          <td>${{ csv.list_price }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{##}
+{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.payment_method }}</td>#}
+{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+{#                                                          <td>${{ csv.get_total }}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                        </div>#}
+{#                                      {% if event_invoices %}#}
+{#                                          <div class="col-md-12">#}
+{#                                          {% for o in event_invoices %}#}
+{#                                              {{ o }}#}
+{#                                          {% endfor %}#}
+{#                                          </div>#}
+{#                                          {% endif %}#}
+
+
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div>
+                                                        {% endif %} </div>
+                      <div class="tab-pane" id="tab23"> {% if pending_invoices %}
+                                                        <div class="col-md-12">
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> All Invoices</h3>#}
+{#                                      </div>#}
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+{#                                                      <th>Invoice ID#}
+{#                                                      </th>#}
+                                                      <th>Event
+                                                      </th>
+                                                      <th>
+                                                          Amount
+                                                      </th>
+                                                      <th>
+                                                          Status
+                                                      </th>
+                                                      <th>
+                                                          Payment Status
+                                                      </th>
+                                                      <th>
+                                                          Description
+                                                      </th>
+                                                      <th>
+                                                          Sending Date
+                                                      </th><th>
+                                                          Payment Method
+                                                      </th>
+                                                      <th>
+                                                          Created at
+                                                      </th><th>
+                                                          Edit
+                                                      </th>
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+
+                                                  {% for invoice in pending_invoices|dictsortreversed:"created_at" %}
+                                                      {% if not invoice.event_invoice.check_deposit_date_if_future %}
+                                                      {% if invoice.deposit or invoice.vendor_register.payment_method == "Cash" or invoice.vendor_register.payment_method == "Check" %}
+                                                      <tr role="row" class="gradeA odd">
+                                                        <form action="" method="post">
+                                                            {% csrf_token %}
+                                                          <td>{{ invoice.vendor_register.register.event }}</td>
+                                                          <td><div id="edit_deposit_div_{{ invoice.id }}">${{ invoice.deposit }}</div><input hidden id="edit_deposit_{{ invoice.id }}" name="amount" value="{{ invoice.deposit }}" /></td>
+                                                          <td>{{ invoice.check_deposit }}</td>
+                                                          <td>{{ invoice.check_deposit_paid }}</td>
+                                                          <td>(Deposit / Agreement) amount invoice {{ invoice.event_invoice.check_deposit_date_if_future }}</td>
+                                                          <td><div id="edit_deposit_date_div_{{ invoice.id }}">{{ invoice.event_invoice.deposit_date }}</div><input hidden name="date" id="edit_deposit_date_{{ invoice.id }}" value="{{ invoice.event_invoice.deposit_date|date:"Y-m-d" }}" /></td>
+                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
+                                                          <td>{{ invoice.created_at }}</td>
+                                                          <td>
+                                                              <a onclick="show_fields('#edit_deposit_{{ invoice.id }}','#edit_deposit_div_{{ invoice.id }}', '#edit_deposit_date_{{ invoice.id }}','#edit_deposit_date_div_{{ invoice.id }}', '#edit_deposit_button_{{ invoice.id }}','#edit_deposit_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_deposit_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_deposit_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                                <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
+                                                                <input hidden value="deposit" name="edit_pending_invoice_type" />
+                                                          </td>
+                                                            </form>
+                                                      </tr>
+
+                                                      {% endif %}
+                                                      {% if invoice.balance1 %}
+                                                      <tr role="row" class="gradeA odd">
+                                                      <form action="" method="post">
+                                                            {% csrf_token %}
+                                                          <td>{{ invoice.vendor_register.register.event }}</td>
+                                                          <td><div id="edit_balance1_div_{{ invoice.id }}">${{ invoice.balance1 }}</div><input hidden id="edit_balance1_{{ invoice.id }}" name="amount" value="{{ invoice.balance1 }}" /></td>
+                                                          <td>{{ invoice.check_balance1 }}</td>
+                                                          <td>{{ invoice.check_balance1_paid }}</td>
+                                                          <td>Balance1 amount invoice</td>
+                                                          <td><div id="edit_balance1_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance1_date }}</div><input name="date"  hidden id="edit_balance1_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance1_date|date:"Y-m-d" }}" /></td>
+                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
+                                                          <td>{{ invoice.created_at }}</td>
+                                                          <td>
+                                                              <a onclick="show_fields('#edit_balance1_{{ invoice.id }}','#edit_balance1_div_{{ invoice.id }}', '#edit_balance1_date_{{ invoice.id }}','#edit_balance1_date_div_{{ invoice.id }}', '#edit_balance1_button_{{ invoice.id }}','#edit_balance1_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance1_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance1_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
+                                                                <input hidden value="balance1" name="edit_pending_invoice_type" />
+                                                          </td>
+                                                          </form>
+                                                      </tr>
+                                                      {% endif %}
+                                                      {% if invoice.balance2 %}
+                                                      <tr role="row" class="gradeA odd">
+                                                      <form action="" method="post">
+                                                            {% csrf_token %}
+                                                          <td>{{ invoice.vendor_register.register.event }}</td>
+                                                          <td><div id="edit_balance2_div_{{ invoice.id }}">${{ invoice.balance2 }}</div><input hidden id="edit_balance2_{{ invoice.id }}" name="amount" value="{{ invoice.balance2 }}" /></td>
+                                                          <td>{{ invoice.check_balance2 }}</td>
+                                                          <td>{{ invoice.check_balance2_paid }}</td>
+                                                          <td>Balance2 amount invoice</td>
+                                                          <td><div id="edit_balance2_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance2_date }}</div><input name="date"  hidden id="edit_balance2_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance2_date|date:"Y-m-d" }}" /></td>
+                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
+                                                          <td>{{ invoice.created_at }}</td>
+                                                          <td>
+                                                              <a onclick="show_fields('#edit_balance2_{{ invoice.id }}','#edit_balance2_div_{{ invoice.id }}', '#edit_balance2_date_{{ invoice.id }}','#edit_balance2_date_div_{{ invoice.id }}', '#edit_balance2_button_{{ invoice.id }}','#edit_balance2_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance2_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance2_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
+                                                                <input hidden value="balance2" name="edit_pending_invoice_type" />
+                                                          </td>
+                                                          </form>
+                                                      </tr>
+                                                      {% endif %}
+                                                      {% if invoice.balance3 %}
+                                                      <tr role="row" class="gradeA odd">
+                                                      <form action="" method="post">
+                                                            {% csrf_token %}
+                                                          <td>{{ invoice.vendor_register.register.event }}</td>
+                                                          <td><div id="edit_balance3_div_{{ invoice.id }}">${{ invoice.balance3 }}</div><input hidden id="edit_balance3_{{ invoice.id }}" name="amount" value="{{ invoice.balance3 }}" /></td>
+                                                          <td>{{ invoice.check_balance3 }}</td>
+                                                          <td>{{ invoice.check_balance3_paid }}</td>
+                                                          <td>Balance3 amount invoice</td>
+                                                          <td><div id="edit_balance3_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance3_date }}</div><input name="date"  hidden id="edit_balance3_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance3_date|date:"Y-m-d" }}" /></td>
+                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
+                                                          <td>{{ invoice.created_at }}</td>
+                                                          <td>
+                                                              <a onclick="show_fields('#edit_balance3_{{ invoice.id }}','#edit_balance3_div_{{ invoice.id }}', '#edit_balance3_date_{{ invoice.id }}','#edit_balance3_date_div_{{ invoice.id }}', '#edit_balance3_button_{{ invoice.id }}','#edit_balance3_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance3_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance3_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
+                                                                <input hidden value="balance3" name="edit_pending_invoice_type" />
+                                                          </td>
+                                                          </form>
+                                                      </tr>
+                                                      {% endif %}
+                                                      {% endif %}
+                                                  {% endfor %}
+
+                                                  </tbody>
+                                              </table>
+
+                                          </div>
+
+{#                                        <div class="col-md-12">#}
+{#                                             <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Mark</th>#}
+{#                                                      <th>Email</th>#}
+{##}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th></th>#}
+{#                                                      <th>List Price#}
+{#                                                      </th>#}
+{#                                                      <th>Electricity</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>Method</th>#}
+{#                                                      <th>PV Prize</th>#}
+{#                                                      <th>Total Amount</th>#}
+{#                                                      <th>#}
+{#                                                          Created at#}
+{#                                                      </th>#}
+{#                                                      <th>Remove</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for invoice in event_invoices %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+{#                                                          <td>{{ invoice.email }}</td>#}
+{#                                                          <td>${{ csv.offered_price }}</td>#}
+{#                                                          <td>${{ csv.list_price }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{##}
+{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.payment_method }}</td>#}
+{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+{#                                                          <td>${{ csv.get_total }}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                        </div>#}
+{#                                      {% if event_invoices %}#}
+{#                                          <div class="col-md-12">#}
+{#                                          {% for o in event_invoices %}#}
+{#                                              {{ o }}#}
+{#                                          {% endfor %}#}
+{#                                          </div>#}
+{#                                          {% endif %}#}
+
+
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div> {% endif %}</div>
+                      <div class="tab-pane" id="tab24"> {% if pending_invoices %} <div class="col-md-12">
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Future Agreements</h3>#}
+{#                                      </div>#}
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+{#                                                      <th>Invoice ID#}
+{#                                                      </th>#}
+                                                      <th>Event
+                                                      </th>
+                                                      <th>
+                                                          Amount
+                                                      </th>
+                                                      <th>
+                                                          Status
+                                                      </th>
+                                                      <th>
+                                                          Payment Status
+                                                      </th>
+                                                      <th>
+                                                          Description
+                                                      </th>
+                                                      <th>
+                                                          Sending Date
+                                                      </th><th>
+                                                          Payment Method
+                                                      </th>
+                                                      <th>
+                                                          Created at
+                                                      </th><th>
+                                                          Edit
+                                                      </th>
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+
+                                                  {% for invoice in pending_invoices|dictsortreversed:"created_at" %}
+                                                      {% if invoice.event_invoice.check_deposit_date_if_future %}
+                                                      {% if invoice.deposit or invoice.vendor_register.payment_method == "Cash" or invoice.vendor_register.payment_method == "Check" %}
+                                                      <tr role="row" class="gradeA odd">
+                                                        <form action="" method="post">
+                                                            {% csrf_token %}
+                                                          <td>{{ invoice.vendor_register.register.event }}</td>
+                                                          <td><div id="edit_deposit_div_{{ invoice.id }}">${{ invoice.deposit }}</div><input hidden id="edit_deposit_{{ invoice.id }}" name="amount" value="{{ invoice.deposit }}" /></td>
+                                                          <td>{{ invoice.check_deposit }}</td>
+                                                          <td>{{ invoice.check_deposit_paid }}</td>
+                                                          <td>(Deposit / Agreement) amount invoice {{ invoice.event_invoice.check_deposit_date_if_future }}</td>
+                                                          <td><div id="edit_deposit_date_div_{{ invoice.id }}">{{ invoice.event_invoice.deposit_date }}</div><input hidden name="date" id="edit_deposit_date_{{ invoice.id }}" value="{{ invoice.event_invoice.deposit_date|date:"Y-m-d" }}" /></td>
+                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
+                                                          <td>{{ invoice.created_at }}</td>
+                                                          <td>
+                                                              <a onclick="show_fields('#edit_deposit_{{ invoice.id }}','#edit_deposit_div_{{ invoice.id }}', '#edit_deposit_date_{{ invoice.id }}','#edit_deposit_date_div_{{ invoice.id }}', '#edit_deposit_button_{{ invoice.id }}','#edit_deposit_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_deposit_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_deposit_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                                <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
+                                                                <input hidden value="deposit" name="edit_pending_invoice_type" />
+                                                          </td>
+                                                            </form>
+                                                      </tr>
+
+                                                      {% endif %}
+{#                                                      {% if invoice.balance1 %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <form action="" method="post">#}
+{#                                                            {% csrf_token %}#}
+{#                                                          <td>{{ invoice.vendor_register.register.event }}</td>#}
+{#                                                          <td><div id="edit_balance1_div_{{ invoice.id }}">${{ invoice.balance1 }}</div><input hidden id="edit_balance1_{{ invoice.id }}" name="amount" value="{{ invoice.balance1 }}" /></td>#}
+{#                                                          <td>{{ invoice.check_balance1 }}</td>#}
+{#                                                          <td>{{ invoice.check_balance1_paid }}</td>#}
+{#                                                          <td>Balance1 amount invoice</td>#}
+{#                                                          <td><div id="edit_balance1_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance1_date }}</div><input name="date"  hidden id="edit_balance1_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance1_date|date:"Y-m-d" }}" /></td>#}
+{#                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td>#}
+{#                                                              <a onclick="show_fields('#edit_balance1_{{ invoice.id }}','#edit_balance1_div_{{ invoice.id }}', '#edit_balance1_date_{{ invoice.id }}','#edit_balance1_date_div_{{ invoice.id }}', '#edit_balance1_button_{{ invoice.id }}','#edit_balance1_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance1_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>#}
+{#                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance1_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>#}
+{#                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />#}
+{#                                                                <input hidden value="balance1" name="edit_pending_invoice_type" />#}
+{#                                                          </td>#}
+{#                                                          </form>#}
+{#                                                      </tr>#}
+{#                                                      {% endif %}#}
+{#                                                      {% if invoice.balance2 %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <form action="" method="post">#}
+{#                                                            {% csrf_token %}#}
+{#                                                          <td>{{ invoice.vendor_register.register.event }}</td>#}
+{#                                                          <td><div id="edit_balance2_div_{{ invoice.id }}">${{ invoice.balance2 }}</div><input hidden id="edit_balance2_{{ invoice.id }}" name="amount" value="{{ invoice.balance2 }}" /></td>#}
+{#                                                          <td>{{ invoice.check_balance2 }}</td>#}
+{#                                                          <td>{{ invoice.check_balance2_paid }}</td>#}
+{#                                                          <td>Balance2 amount invoice</td>#}
+{#                                                          <td><div id="edit_balance2_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance2_date }}</div><input name="date"  hidden id="edit_balance2_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance2_date|date:"Y-m-d" }}" /></td>#}
+{#                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td>#}
+{#                                                              <a onclick="show_fields('#edit_balance2_{{ invoice.id }}','#edit_balance2_div_{{ invoice.id }}', '#edit_balance2_date_{{ invoice.id }}','#edit_balance2_date_div_{{ invoice.id }}', '#edit_balance2_button_{{ invoice.id }}','#edit_balance2_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance2_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>#}
+{#                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance2_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>#}
+{#                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />#}
+{#                                                                <input hidden value="balance2" name="edit_pending_invoice_type" />#}
+{#                                                          </td>#}
+{#                                                          </form>#}
+{#                                                      </tr>#}
+{#                                                      {% endif %}#}
+{#                                                      {% if invoice.balance3 %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <form action="" method="post">#}
+{#                                                            {% csrf_token %}#}
+{#                                                          <td>{{ invoice.vendor_register.register.event }}</td>#}
+{#                                                          <td><div id="edit_balance3_div_{{ invoice.id }}">${{ invoice.balance3 }}</div><input hidden id="edit_balance3_{{ invoice.id }}" name="amount" value="{{ invoice.balance3 }}" /></td>#}
+{#                                                          <td>{{ invoice.check_balance3 }}</td>#}
+{#                                                          <td>{{ invoice.check_balance3_paid }}</td>#}
+{#                                                          <td>Balance3 amount invoice</td>#}
+{#                                                          <td><div id="edit_balance3_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance3_date }}</div><input name="date"  hidden id="edit_balance3_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance3_date|date:"Y-m-d" }}" /></td>#}
+{#                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td>#}
+{#                                                              <a onclick="show_fields('#edit_balance3_{{ invoice.id }}','#edit_balance3_div_{{ invoice.id }}', '#edit_balance3_date_{{ invoice.id }}','#edit_balance3_date_div_{{ invoice.id }}', '#edit_balance3_button_{{ invoice.id }}','#edit_balance3_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance3_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>#}
+{#                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance3_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>#}
+{#                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />#}
+{#                                                                <input hidden value="balance3" name="edit_pending_invoice_type" />#}
+{#                                                          </td>#}
+{#                                                          </form>#}
+{#                                                      </tr>#}
+{#                                                      {% endif %}#}
+                                                      {% endif %}
+                                                  {% endfor %}
+
+                                                  </tbody>
+                                              </table>
+
+                                          </div>
+
+{#                                        <div class="col-md-12">#}
+{#                                             <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Mark</th>#}
+{#                                                      <th>Email</th>#}
+{##}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th></th>#}
+{#                                                      <th>List Price#}
+{#                                                      </th>#}
+{#                                                      <th>Electricity</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>Method</th>#}
+{#                                                      <th>PV Prize</th>#}
+{#                                                      <th>Total Amount</th>#}
+{#                                                      <th>#}
+{#                                                          Created at#}
+{#                                                      </th>#}
+{#                                                      <th>Remove</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for invoice in event_invoices %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+{#                                                          <td>{{ invoice.email }}</td>#}
+{#                                                          <td>${{ csv.offered_price }}</td>#}
+{#                                                          <td>${{ csv.list_price }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{##}
+{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.payment_method }}</td>#}
+{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+{#                                                          <td>${{ csv.get_total }}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                        </div>#}
+{#                                      {% if event_invoices %}#}
+{#                                          <div class="col-md-12">#}
+{#                                          {% for o in event_invoices %}#}
+{#                                              {{ o }}#}
+{#                                          {% endfor %}#}
+{#                                          </div>#}
+{#                                          {% endif %}#}
+
+
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div>
+                                                        {% endif %}</div>
+                      <div class="tab-pane"  id="tab26">
+                      {% if email %}
+                                                        <div class="col-md-12">
+                                      <div class="panel-heading vd_bg-grey" style="margin-bottom: 15px;margin-top:15px;">
+                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Cards</h3>
+{#                                          <a onclick="$('#card-view').toggle('hidden');" class="pull-right" >Show</a>#}
+                                      </div>
+                                      <div id="card-view" class="panel-body">
+{#                                          {% if success_message_card %}#}
+{#                                              <div class="col-md-12 text-center" style="color: green">#}
+{#                                                    {{ success_message_card|safe }}#}
+{#                                              </div>#}
+{#                                          {% endif %}#}
+                                      {% if not is_customer %}
+                                      <div class="col-md-12">
+                                          <a id="add_new_card" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Add Card</a>
+                                          <form action="" method="post" id="request_new_card_form">
+                                              <input id="request_new_card" name="request_new_card" value="{{ email }}" hidden />
+                                              <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Card Update Request</button>
+                                          </form>
+                                      </div>
+
+                                      <div class="col-md-4 col-md-offset-8" {% if not card_errors %}hidden{% endif %} id="cc_form_div">
+                                          <form action="" method="post" id="invoice-form">
+                                              {% csrf_token %}
+                                              <input hidden id="stripe_token" name="stripe_token" />
+                                              <input hidden value="{{ email }}" id="search_email" name="search_email" />
+                                              Card No: {{ cc_form.number }}
+                                              <div style="color: red;">{{ cc_form.number.errors.0 }}</div>
+                                              Expiry: {{ cc_form.month }}{{ cc_form.month.errors }} {{ cc_form.year }}{{ cc_form.year.errors }}
+                {#                              <br/>#}
+                                              <div style="color: red;">{{ cc_form.agree.errors.0 }}{% if card_errors %}{{ card_errors }}{% endif %}</div><div style="color: red;" id="stripe-error-message"></div><br />
+                                              <button class="btn vd_btn pull-right btn-brown " style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;" id="submit-invoice">Submit</button>
+                                           </form>
+                                      </div>
+                                          {% endif %}
+                                      {% if is_customer %}
+                                        <div class="col-md-4">Customer ID: {{ profile.stripe_id_bawf }}</div>
+                                        <div class="col-md-4">**** **** **** {{ is_customer }}</div>
+                                        <div class="col-md-4">
+                                            <form action="." method="post">
+                                                <input hidden value="{{ profile.id }}" id="removeCard" name="removeCard" />
+                                                <input hidden value="{{ email }}" id="search_email" name="search_email" />
+                                                <button class="pull-right btn btn-danger">Remove</button>
+                                            </form>
+                                            <form action="" method="post" id="request_new_card_form">
+                                              <input id="request_new_card" name="request_new_card" value="{{ email }}" hidden />
+                                              <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Card Update Request</button>
+                                          </form>
+{#                                            <a class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Edit</a>#}
+                                        </div>
+                                      {% else %}
+                                          <div class="col-md-12 text-center">
+                                                No Cards Available
+                                          </div>
+                                      {% endif %}
+
+
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div>
+                                                        {% endif %}</div>
+                    </div>
+</div>
+
+
+
+{#                                                        {{ agreement_sent }}#}
+{#                                                        {% if agreement_sent %}#}
+{#                                                            <div class="col-md-12">#}
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Agreements</h3>#}
+{#                                      </div>#}
+{#                                      <div class="panel-body table-responsive">#}
+{#                                          <div class="dataTables_wrapper form-inline no-footer"#}
+{#                                               id="data-tables_wrapper">#}
+{#                                              <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Agreement No</th>#}
+{#                                                      <th>Sending Date#}
+{#                                                      </th>#}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th>User</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>Resend</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for agg in agreement_sent %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                          <td>{{ agg.id }}</td>#}
+{#                                                          <td>{{ agg.created_at }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{#                                                          <td>{{ agg.email }}</td>#}
+{#                                                          <td>{{ agg.status }}</td>#}
+{#                                                          <td><form action="" method="post">{% csrf_token %}<input hidden id="resendAgreement" name="resendAgreement" value="{{ agg.id }}" /><input hidden id="email_search" name="email_search" value="{{ email }}" /><button class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important">Resend</button></form></td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.created_at }}</td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                          </div>#}
+{#                                      </div>#}
+{#                       <div class="clearfix"></div>#}
+{#                                  </div>#}
+{#                                                        {% endif %}#}
+                                                        {% if invoices %}
+                                                        <div class="col-md-12">
+                                      <div class="panel-heading vd_bg-grey">
+                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Invoices Requested</h3>
+                                      </div>
+                                      <div class="panel-body table-responsive">
+                                        <form action="" method="POST">
+                                        {% csrf_token %}
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+                                                      <th>Mark</th>
+                                                      <th>Ref #</th>
+                                                      <th>Show</th>
+                                                      <th>Payment Type</th>
+                                                      <th>Payment Status</th>
+
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+                                                      <th>Offered Price</th>
+                                                      <th>PV Price Offered</th>
+                                                      <th>Email List Price
+                                                      </th>
+                                                      <th>Electricity</th>
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>Method</th>#}
+{#                                                      <th>PV Prize</th>#}
+                                                      <th>Total Amount</th>
+{#                                                      <th>Amount Due</th>#}
+                                                      <th>
+                                                          Created at
+                                                      </th>
+                                                      <th>Edit</th>
+{#                                                      <th>Remove</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  {% for csv in invoices|dictsortreversed:"created_at" %}
+                                                      <tr role="row" class="gradeA odd">
+                                                      <td>{% if not csv.is_complete %}
+{#                                                          {% if not csv.register.event.check_date %}N/A{% else %}#}
+                                                              <input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" />
+{#                                                          {% endif %}#}
+                                                      {% else %}Sent{% endif %}</td>
+                                                          <td>{{ csv.id }}</td>
+                                                          <td>{{ csv.register.event }}</td>
+                                                          <td>{{ csv.payment_method }}</td>
+                                                          <td>{{ csv.check_invoice_status_paid }}</td>
+{#                                                          <td>{{ csv.get_status }}</td>#}
+                                                          <td>${{ csv.offered_price }}</td>
+                                                          <td>${% if csv.pv_prize_offered %}{{ csv.pv_prize_offered }}{% else %}0{% endif %}</td>
+                                                          <td>{% if csv.list_price %}${{ csv.list_price }}{% elif csv.email_list %}Yes{% else %}No{% endif %}</td>
+{#                                                          <td>{{ csv.csv }}</td>#}
+
+                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.payment_method }}</td>#}
+{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+                                                          <td>${{ csv.get_total }}</td>
+{#                                                          <td>${{ csv.register.get_amount_due }}</td>#}
+                                                          <td>{{ csv.created_at }}</td>
+                                                          <td><a style="background-color: #ba8c00 !important" class="btn vd_btn vd_bg-green" href="/crm/invoices/contracted_detail/{{ csv.register.id }}/" >Edit</a></td>
+{#                                                          <td><form action="" method="post">#}
+{#                                                              <input hidden id="edit_invoice" name="edit_invoice" value="{{ invoice.id }}" />#}
+{#                                                              <button class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important">Edit</button>#}
+{#                                                          </form></td>#}
+{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+                                                      </tr>
+                                                  {% endfor %}
+                                                  </tbody>
+                                              </table>
+
+                                          <div class="col-md-12">
+                                              <hr />
+                                              <h4>Total: ${{ total|intcomma }}</h4>
+                                              <hr />
+                                          </div>
+
+                                          <input hidden id="create_bulk_signal" name="create_bulk_signal" />
+                                          <input hidden id="email_search" name="email_search" value="{{ email }}" />
+                                                <button type="submit" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;margin-bottom: 20px;" >Setup Invoice</button>
+{#                                          <a  data-toggle="modal" class="btn vd_btn vd_bg-green pull-right"#}
+{#                                              style="background-color: #ba8c00 !important;margin-bottom: 20px;"#}
+{#                                              href="#modal_wizard"  hidden>Create Invoice (Wizard)</a>#}
+{#                                              <a onclick="setupAgreement()" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;margin-bottom: 20px;">Send Agreement</a>#}
+                                          </div>
+
+                                        </form>
+{#                                        <div class="col-md-12">#}
+{#                                             <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Mark</th>#}
+{#                                                      <th>Email</th>#}
+{##}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th></th>#}
+{#                                                      <th>List Price#}
+{#                                                      </th>#}
+{#                                                      <th>Electricity</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>Method</th>#}
+{#                                                      <th>PV Prize</th>#}
+{#                                                      <th>Total Amount</th>#}
+{#                                                      <th>#}
+{#                                                          Created at#}
+{#                                                      </th>#}
+{#                                                      <th>Remove</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for invoice in event_invoices %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+{#                                                          <td>{{ invoice.email }}</td>#}
+{#                                                          <td>${{ csv.offered_price }}</td>#}
+{#                                                          <td>${{ csv.list_price }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{##}
+{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.payment_method }}</td>#}
+{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+{#                                                          <td>${{ csv.get_total }}</td>#}
+{#                                                          <td>{{ invoice.created_at }}</td>#}
+{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                        </div>#}
+{#                                      {% if event_invoices %}#}
+{#                                          <div class="col-md-12">#}
+{#                                          {% for o in event_invoices %}#}
+{#                                              {{ o }}#}
+{#                                          {% endfor %}#}
+{#                                          </div>#}
+{#                                          {% endif %}#}
+
+                                      <form action="" method="post">
+                                          {% csrf_token %}
+                                        <input hidden name="no_of_ids" name="no_of_ids" value="{% for o in invoices_generate %}{{ o.id }}, {% endfor %}" />
+                                      <input hidden id="email_search" name="email_search" value="{{ email }}" />
+                                          {% if invoices_generate %}
+                                      <div class="col-md-12">
+                                          <div class="col-md-3">Event</div>
+                                          <div class="col-md-2">Deposit</div>
+                                          <div class="col-md-2">Balance1</div>
+                                          <div class="col-md-2">Balance2</div>
+                                          <div class="col-md-2">Balance3</div>
+{#                                          <div class="col-md-1">Date</div>#}
+                                          <div class="col-md-1 text-center">Total</div>
+                                      </div>
+                                            {% for o in invoices_generate %}
+                                            <div class="col-md-12">
+                                          <div class="col-md-3">{{ o.register.event }}</div>
+                                          <div class="col-md-2"><input class="row_invoice" name="deposit_{{ o.id }}" id="deposit_{{ o.id }}" value="0"/></div>
+                                          <div class="col-md-2"><input class="row_invoice" name="balance1_{{ o.id }}" id="balance1_{{ o.id }}" value="0" /></div>
+                                          <div class="col-md-2"><input class="row_invoice" name="balance2_{{ o.id }}" id="balance2_{{ o.id }}" value="0"/></div>
+                                          <div class="col-md-2"><input class="row_invoice" name="balance3_{{ o.id }}" id="balance3_{{ o.id }}" value="0"/></div>
+{#                                          <div class="col-md-1"><input /><div class="clearfix"></div></div>#}
+                                          <div class="col-md-1 text-center">$<span id="total_amount_{{ o.id }}">XXX</span>/${{ o.get_total }}</div>
+                                                </div>
+
+                                            {% endfor %}
+                                              <div class="col-md-12">
+                                          <div class="col-md-3">Total</div>
+                                          <div class="col-md-2">$<span id="total_deposit">0</span></div>
+                                          <div class="col-md-2">$<span id="total_balance1">0</span></div>
+                                          <div class="col-md-2">$<span id="total_balance2">0</span></div>
+                                          <div class="col-md-2">$<span id="total_balance3">0</span></div>
+{#                                          <div class="col-md-1"><input /><div class="clearfix"></div></div>#}
+                                          <div class="col-md-1 text-center">&nbsp;</div>
+                                                </div>
+                                              <script>
+                                                $('.row_invoice').on('keyup', function(){
+                                                    var total_amount = 0;
+                                                    var total_deposit = 0;
+                                                    var total_balance1 = 0;
+                                                    var total_balance2 = 0;
+                                                    var total_balance3 = 0;
+
+                                                    {% for o in invoices_generate %}
+                                                        var deposits = [];
+                                                        var balance_1 = [];
+                                                        var balance_2 = [];
+                                                        var balance_3 = [];
+                                                        var id = '{{ o.id }}';
+                                                        var deposit = parseInt($('#deposit_'+id).val());
+                                                        var balance1 = parseInt($('#balance1_'+id).val());
+                                                        var balance2 = parseInt($('#balance2_'+id).val());
+                                                        var balance3 = parseInt($('#balance3_'+id).val());
+                                                        deposits.push(deposit);
+                                                        balance_1.push(balance1);
+                                                        balance_2.push(balance2);
+                                                        balance_3.push(balance3);
+                                                        total_amount = deposit + balance1 + balance2 + balance3;
+{#                                                        alert(total_amount)#}
+                                                        var i;
+                                                        for (i = 0; i < deposits.length; ++i) {
+                                                            // do something with `substr[i]`
+                                                            total_deposit += deposits[i];
+                                                            $('#total_deposit').text(total_deposit)
+                                                        }
+                                                        var j;
+                                                        for (j = 0; j < deposits.length; ++j) {
+                                                            // do something with `substr[i]`
+                                                            total_balance1 += balance_1[j];
+                                                            $('#total_balance1').text(total_balance1)
+                                                        }
+                                                        var k;
+                                                        for (k = 0; k < deposits.length; ++k) {
+                                                            // do something with `substr[i]`
+                                                            total_balance2 += balance_2[k];
+                                                            $('#total_balance2').text(total_balance2)
+                                                        }
+                                                        var l;
+                                                        for (l = 0; l < deposits.length; ++l) {
+                                                            // do something with `substr[i]`
+                                                            total_balance3 += balance_3[l];
+                                                            $('#total_balance3').text(total_balance3)
+                                                        }
+                                                        $('#total_amount_'+id).text(total_amount)
+
+                                                    {% endfor %}
+{#                                                    alert(amounts)#}
+
+
+                                                })
+                                              </script>
+                                              <div class="col-md-12">
+                                          <div class="col-md-3">&nbsp;</div>
+                                          <div class="col-md-2">Deposit Date</div>
+                                          <div class="col-md-2">Balance1 Date</div>
+                                          <div class="col-md-2">Balance2 Date</div>
+                                          <div class="col-md-2">Balance3 Date</div>
+{#                                          <div class="col-md-1"><input /><div class="clearfix"></div></div>#}
+                                          <div class="col-md-1 text-center">&nbsp;</div>
+                                                </div>
+                                              <div class="col-md-12">
+                                          <div class="col-md-3">&nbsp;</div>
+                                          <div class="col-md-2"><input name="date_deposit" placeholder="Date" class="datepicker-restrict"></div>
+                                          <div class="col-md-2"><input name="date_balance1" class="datepicker-restrict"/></div>
+                                          <div class="col-md-2"><input name="date_balance2" class="datepicker-restrict"/></div>
+                                          <div class="col-md-2"><input name="date_balance3" class="datepicker-restrict"/></div>
+{#                                          <div class="col-md-1"><input /><div class="clearfix"></div></div>#}
+{#                                          <div class="col-md-1 text-center">&nbsp;</div>#}
+                                                </div>
+{#                                              <div class="col-md-2">{{ dateform.date_deposit|addcss:"datepicker-restrict" }}</div>#}
+{#                                          <div class="col-md-2">{{ dateform.date_balance1|addcss:"datepicker-restrict" }}</div>#}
+{#                                          <div class="col-md-2">{{ dateform.date_balance2|addcss:"datepicker-restrict" }}</div>#}
+{#                                          <div class="col-md-2">{{ dateform.date_balance3|addcss:"datepicker-restrict" }}</div>#}
+
+                                            <div class="col-md-12 text-right" style="margin-top: 15px;">
+                                            <input type="checkbox" name="is_manual" id="is_manual" style="margin-bottom: 10px;" /> Charge manually <br />
+                                                <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="background-color: #ba8c00 !important;margin-bottom: 20px;" type="submit">Generate Invoice</button>
+
+                                            </div>
+                                            {% endif %}
+                                      </form>
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div>
+                                                        {% endif %}
+{#                                                        <form class="form-horizontal" action="." method="post"#}
+{#                                                                  role="form">#}
+{#                                                                {% csrf_token %}#}
+{#                                                                <div class="col-sm-6">#}
+                                                                    {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
+{##}
+{#                                                                    <div class="form-group">#}
+{#                                                                        <label class="col-sm-3 control-label">Email</label>#}
+{##}
+{#                                                                        <div class="col-sm-9 controls">#}
+{#                                                                            <div class="row mgbt-xs-0">#}
+{#                                                                                <div class="col-xs-12">#}
+{#                                                                                    {{ form.email }}#}
+{#                                                                                    {% if form.email.errors %}#}
+{#                                                                                        <div class="red">{{ form.email.errors.0 }}</div>#}
+{#                                                                                    {% endif %}#}
+{#                                                                                </div>#}
+{#                                                                                <!-- col-xs-12 -->#}
+{#                                                                            </div>#}
+{#                                                                            <!-- row -->#}
+{#                                                                        </div>#}
+{#                                                                        <!-- col-sm-10 -->#}
+{#                                                                    </div>#}
+{#                                                                    {% if not invoices_exist == 0 %}#}
+{#                                                                        <div class="form-group">#}
+{#                                                                            <label class="col-sm-3 control-label">Invoices</label>#}
+{##}
+{#                                                                            <div class="col-sm-9 controls">#}
+{#                                                                                <div class="row mgbt-xs-0">#}
+{#                                                                                    <div class="col-xs-12">#}
+{#                                                                                        {{ form.invoice_events }}#}
+{#                                                                                        {% if form.invoice_events.errors %}#}
+{#                                                                                            <div class="red">{{ form.invoice_events.errors.0 }}</div>#}
+{#                                                                                        {% endif %}#}
+{#                                                                                    </div>#}
+{#                                                                                    <!-- col-xs-12 -->#}
+{#                                                                                </div>#}
+{#                                                                                <!-- row -->#}
+{#                                                                            </div>#}
+{#                                                                            <!-- col-sm-10 -->#}
+{#                                                                        </div>#}
+{##}
+{#                                                                    {% else %}#}
+{#                                                                         <div class="form-group">#}
+{#                                                                            <label class="col-sm-3 control-label">Invoices</label>#}
+{##}
+{#                                                                            <div class="col-sm-9 controls">#}
+{#                                                                                <div class="row mgbt-xs-0">#}
+{#                                                                                    <div class="col-xs-12">#}
+{#                                                                                        <p>No available invoices for bulk.</p>#}
+{#                                                                                    </div>#}
+{#                                                                                    <!-- col-xs-12 -->#}
+{#                                                                                </div>#}
+{#                                                                                <!-- row -->#}
+{#                                                                            </div>#}
+{#                                                                            <!-- col-sm-10 -->#}
+{#                                                                        </div>#}
+{#                                                                    {% endif %}#}
+{##}
+{#                                                                    <div class="pd-20">#}
+                                                                        {#                                                                                                <input id="notification_sig" name="notification_sig" hidden="hidden" />#}
+{#                                                                        <button style="background-color: #ba8c00 !important;margin-top: 110px;"#}
+{#                                                                                type="submit"#}
+{#                                                                                class="btn vd_btn vd_bg-green pull-right">#}
+{#                                                                            <span class="menu-icon">#}
+{#                                                                                <i#}
+{#                                                                                    class="fa fa-fw fa-check"></i>#}
+{#                                                                            </span>#}
+{#                                                                            Submit#}
+{#                                                                        </button>#}
+{##}
+{#                                                                    </div>#}
+{##}
+{#                                                                    <!-- form-group -->#}
+{##}
+{#                                                                </div>#}
+{#                                                            </form>#}
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br><br>
+
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+    </div>
+{#     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>#}
+    <div class="modal fade" id="modal_edit_invoice" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form action="" method="post">
+        {% csrf_token %}
+            <div class="modal-body">
+                <input hidden id="edit_request_deposit" name="edit_request_deposit" />
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title">Deposit</h4>
+                <input id="deposit_amount_edit" name="deposit_amount_edit" class="form-control" />
+                <h4 class="modal-title">Balance 1</h4>
+                <input id="balance_one_amount_edit" name="balance_one_amount_edit" class="form-control" />
+                <h4 class="modal-title">Balance 2</h4>
+                <input id="balance_two_amount_edit" name="balance_two_amount_edit" class="form-control" />
+                <h4 class="modal-title" style="margin-bottom: 0px;">Balance 3</h4>
+                <input id="balance_three_amount_edit" name="balance_three_amount_edit" class="form-control" />
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary pull-right" type="submit">Confirm</button>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+ <div class="modal fade" id="modal_wizard" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header vd_bg-blue vd_white">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                          <h4 class="modal-title" id="myModalLabel">Creating Invoice</h4>
+                        </div>
+            <div class="modal-body">
+
+                          <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+{#                  <div class="panel-heading vd_bg-grey">#}
+{#                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> Wizard With Progress and No Tab Click </h3>#}
+{#                  </div>#}
+                  <div class="panel-body">
+                    <form class="form-horizontal" action="#" role="form">
+                      <div id="wizard-2" class="form-wizard">
+                        <ul class="nav nav-pills nav-justified">
+                          <li class="active"><a href="#tab21" data-toggle="tab">
+                            <div class="menu-icon bg-brown"> 1 </div>
+                            Create Invoice </a></li>
+                          <li><a href="#tab22" data-toggle="tab">
+                            <div class="menu-icon bg-brown"> 2 </div>
+                            Select Invoices </a></li>
+                          <li><a href="#tab23" data-toggle="tab">
+                            <div class="menu-icon bg-brown"> 3 </div>
+                            Notes </a></li>
+                          <li><a href="#tab24" data-toggle="tab">
+                            <div class="menu-icon bg-brown"> 4 </div>
+                            Setup Invoices </a></li>
+{#                          <li><a href="#tab25" data-toggle="tab">#}
+{#                            <div class="menu-icon"> 5 </div>#}
+{#                            Confirm </a></li>#}
+                        </ul>
+                        <div class="progress progress-striped active">
+                          <div style="width: 20%;" class="progress-bar progress-bar-info"> </div>
+                        </div>
+                        <div class="tab-content no-bd pd-25">
+                          <div class="tab-pane active" id="tab21">
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">First Name</label>
+                              <div class="col-sm-3 controls">
+                                <input class="input-border-btm" type="text">
+                              </div>
+                              <label class="col-sm-2 control-label">Last Name</label>
+                              <div class="col-sm-3 controls">
+                                <input class="input-border-btm" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">User Name</label>
+                              <div class="col-sm-3 controls">
+                                <input class="input-border-btm" type="text">
+                              </div>
+                              <label class="col-sm-2 control-label">Email</label>
+                              <div class="col-sm-3 controls">
+                                <input class="input-border-btm" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Password</label>
+                              <div class="col-sm-3 controls">
+                                <input class="input-border-btm" type="password">
+                              </div>
+                              <label class="col-sm-2 control-label">Confirm Password</label>
+                              <div class="col-sm-3 controls">
+                                <input class="input-border-btm" type="password">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="tab22">
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Address</label>
+                              <div class="col-sm-7 controls">
+                                <input class="input-border-btm" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">City</label>
+                              <div class="col-sm-7 controls">
+                                <input class="input-border-btm" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Country</label>
+                              <div class="col-sm-2 controls">
+                                <select class="input-border-btm">
+                                  <option>USA</option>
+                                  <option>Canada</option>
+                                  <option>UK</option>
+                                  <option>Thailand</option>
+                                  <option>Indonesia</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Post Code</label>
+                              <div class="col-sm-1 controls">
+                                <input class="input-border-btm" maxlength="5" type="text">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="tab23">
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Homephone</label>
+                              <div class="col-sm-10 controls">
+                                <select class="width-10  input-border-bottom">
+                                  <option>+1</option>
+                                  <option>+60</option>
+                                  <option>+61</option>
+                                  <option>+62</option>
+                                  <option>+63</option>
+                                </select>
+                                <input class="width-30  input-border-btm" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Handphone</label>
+                              <div class="col-sm-10 controls">
+                                <select class="width-10  input-border-bottom">
+                                  <option>+1</option>
+                                  <option>+60</option>
+                                  <option>+61</option>
+                                  <option>+62</option>
+                                  <option>+63</option>
+                                </select>
+                                <input class="width-30  input-border-btm" type="text">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="tab24">
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Credit Card Number</label>
+                              <div class="col-sm-5 controls">
+                                <input class="input-border-btm" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">CVV</label>
+                              <div class="col-sm-10 controls">
+                                <input class="width-10  input-border-btm" maxlength="3" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Expired Date</label>
+                              <div class="col-sm-10 controls">
+                                <select class="width-20  input-border-btm">
+                                  <option>January</option>
+                                  <option>February</option>
+                                  <option>March</option>
+                                  <option>April</option>
+                                  <option>May</option>
+                                </select>
+                                <select class="width-10  input-border-btm">
+                                  <option>2013</option>
+                                  <option>2014</option>
+                                  <option>2015</option>
+                                  <option>2016</option>
+                                  <option>2017</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                            <div class="tab-pane" id="tab26">
+
+                          </div>
+                          <div class="tab-pane" id="tab25">
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">First Name</label>
+                              <div class="col-sm-5 controls">
+                                <div class="control-value"> John </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Last Name</label>
+                              <div class="col-sm-10 controls">
+                                <div class="control-value"> Doe </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Address</label>
+                              <div class="col-sm-10 controls">
+                                <div class="control-value"> Address Examples Here </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">City</label>
+                              <div class="col-sm-10 controls">
+                                <div class="control-value"> Los Angeles </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Country</label>
+                              <div class="col-sm-10 controls">
+                                <div class="control-value"> USA </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-actions-condensed wizard">
+                            <div class="row mgbt-xs-0">
+                              <div class="col-sm-9 col-sm-offset-2"> <a class="btn vd_btn prev disabled" href="javascript:void(0);"><span class="menu-icon"><i class="fa fa-fw fa-chevron-circle-left"></i></span> Previous</a> <a class="btn vd_btn next" href="javascript:void(0);">Next <span class="menu-icon"><i class="fa fa-fw fa-chevron-circle-right"></i></span></a> <a style="display: none;" class="btn vd_btn vd_bg-green finish" href="javascript:void(0);"><span class="menu-icon"><i class="fa fa-fw fa-check"></i></span> Finish</a> </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-12 -->
+            </div>
+                        </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+    <script>
+
+        $(document).ready(function(){
+            $('#request_new_card_form').submit(function(event){
+                event.preventDefault();
+                $.ajax({
+                    url: '',
+                    type: 'post',
+                    data: $('#request_new_card_form').serialize(),
+                    {#                processData: false,#}
+                    {#                contentType: false,#}
+
+                    success: function (response) {
+                        {#                            alert(response)#}
+                        if(response=="Done"){
+
+
+                            notification("topright","success","fa fa-check-circle vd_green","Success",'Request for card change has been sent successfully.');
+
+                        }else{
+                            notification("topright","error","fa fa-exclamation-circle vd_red","Error","System is busy at the moment, please try again later.");
+                        }
+
+                    },
+
+                    error: function (xhr, errmsg, err) {
+
+                    }
+                })
+            });
+            {#        alert('working')#}
+            $(".datepicker-restrict").datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true
+
+            });
+        })
+    function open_invoice_edit_modal(id, deposit, balance1, balance2, balance3){
+        $('#modal_edit_invoice').modal('show');
+        $('#edit_request_deposit').val(id);
+        $('#deposit_amount_edit').val(deposit);
+        $('#balance_one_amount_edit').val(balance1);
+        $('#balance_two_amount_edit').val(balance2);
+        $('#balance_three_amount_edit').val(balance3);
+    }
+    </script>
+{% endblock content %}
+{% block script %}
+
+
+<script>
+
+
+{#     {% if not is_customer %}#}
+        // alert('working');
+        var key = '{{ public_key }}';
+        Stripe.setPublishableKey(key);
+        $('#submit-invoice').on('click',function (event) {
+            event.preventDefault();
+            $('#submit-invoice').attr('disabled', true);
+            //alert('submit');
+            $("#stripe-error-message").html("");
+            if ($("#id_number").length == 1) {
+                // alert('inside');
+                var form = this;
+                var card = {
+                    number: $("#id_number").val(),
+                    expMonth: $("#id_month").val(),
+                    expYear: $("#id_year").val(),
+{#                    cvc: $("#id_verification_value").val()#}
+                };
+                //console.log(card);
+                Stripe.card.createToken(card, function (status, response) {
+                    if (status === 200) {
+                        console.log(status, response);
+                        //jQuery("#credit-card-errors").hide();
+                        //jQuery("#last_4_digits").val(response.card.last4);
+                        $("#stripe_token").val(response.id);
+                        //jQuery('#setupPayment').prop('disabled', false);
+{#                        $('#submit-invoice').removeAttr('disabled');#}
+                        $('#invoice-form').submit();
+                    } else {
+                        console.log(response.error);
+                        console.log(response.error.param);
+                        $("#stripe-error-message").text(response.error.message);
+                        $('#submit-invoice').removeAttr('disabled');
+                    }
+                });
+                return false;
+            }
+            return true;
+        });
+{#        {% endif %}#}
+    {% if redirect %}
+        parent.window.location.href = '/dashboard/';
+    {% endif %}
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68785620-1', 'auto');
+  ga('send', 'pageview');
+
+    $('#add_new_card').on('click',function(){
+        $('#cc_form_div').slideToggle();
+    })
+
+$(function() {
+{#    var name = $("#id_email").val();#}
+    var tags = [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ];
+    $("#id_email").autocomplete({
+{#        source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]#}
+        source: "/api/bawf/crm/eventslist/autocomplete/",
+{#        minLength: 2,#}
+{#        select: function(event, ui) {#}
+{#            var url = ui;#}
+{#            alert(ui)#}
+{#            $("#id_email").val('')#}
+{#            if(url != '#') {#}
+{#                location.href = '/crm/invoices/bulk/create/' + url;#}
+{#            }#}
+{#        },#}
+
+{#        html: true, // optional (jquery.ui.autocomplete.html.js required)#}
+
+      // optional (if other layers overlap autocomplete list)
+{#        open: function(event, ui) {#}
+{#            $(".ui-autocomplete").css("z-index", 1000);#}
+{#        }#}
+    });
+
+});
+
+$('#data-tables').dataTable({
+{#        "aoColumns": [{"iDataSort": 6}],#}
+    {% if view_all %}
+        "iDisplayLength": -1,
+        "aLengthMenu": [[10, 15, 25, 35, 50, 100, -1], [10, 15, 25, 35, 50, 100, "All"]],
+    {% else %}
+        "iDisplayLength": 25,
+        "aLengthMenu": [[10, 15, 25, 35, 50, 100], [10, 15, 25, 35, 50, 100]],
+    {% endif %}
+    "aaSorting": [[ 7, 'desc' ]],
+
+{#            "columnDefs": [#}
+{#                { "type": "datetime-moment", targets: 6 }#}
+{#            ]#}
+    });
+function deleteAgreement(event) {
+            event.preventDefault()
+            bootbox.confirm("<h3>Are you sure you wish to delete this agreement?</h3>", function (result) {
+                if (!result) return;
+                else {
+                    return true;
+                }
+            });
+
+
+        }
+
+</script>
+
+{% endblock script %}

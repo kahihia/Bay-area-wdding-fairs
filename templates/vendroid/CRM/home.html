@@ -1,0 +1,116 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block content %}
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/partial/_sidebar.html" %}#}
+
+            {% include "vendroid/partial/_sidebar.html" %}
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-subtitle">
+                                    <br/>
+                                    <h1 class="pull-left">Customer Relationship Management</h1>
+                                    {% if request.user.is_superuser %}
+
+                                      <a class="btn btn-success vd-white pull-right" style="margin-right: 10px;" href="fileload/">Load File</a>
+                                      <a class="btn btn-success vd-white pull-right" style="margin-right: 10px;" type="button" onclick="addWpFormModal();">Create WP Form</a>
+                                    {% endif %}
+
+                                    {% if not request.user.is_superuser and request.user.userprofile.type == "Professional" %}
+{#                                        <a class="btn btn-default vd_bg-blue vd-white pull-right" type="button" href="/crm/viewWpform/">View Form</a>#}
+                                        <a class="btn btn-success vd-white pull-right" style="margin-right: 10px;" type="button" onclick="addWpFormModal();">View Form</a>
+                                    {% endif %}
+                                </div>
+                                {% if request.user.is_superuser %}
+                                      <a class="btn btn-success vd-white pull-right" style="margin-right: 10px;" href="event/">Create Event</a>
+                                {% endif %}
+                            </div>
+                            <div class="vd_content-section clearfix">
+                                <!--(1)start the left panel online messages -->
+                                <!-- row -->
+{#                                <div class="col-sm-12">#}
+                                    <div class="row">
+                                        <!--left row-->
+                                        <div class="panel widget vd_todo-widget light-widget">
+                                            <div class="panel-body">
+                                                <div class="container np">
+                                                    <h2><span class="append-icon fa fa-fw fa-database vd_yellow npl"></span>
+                                                        <span class="menu-text"><strong>Information</strong></span>
+                                                    </h2>
+                                                </div>
+                                                {% include "vendroid/CRM/customer_data_table.html" %}
+                                            </div>
+
+                                        </div>
+                                    </div>
+{#                                </div>#}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- .vd_content -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+        </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+    </div>
+
+    {% include "vendroid/CRM/_wpForm_modal.html" %}
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script type="text/javascript" src="{% static 'js/jquery.events.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery.datetimepicker.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/chosen.jquery.min.js" %}"></script>
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+    <script type="text/javascript">
+    $('.datepicker').datetimepicker(jQuery.extend({showMonthAfterYear:false}, $.datepicker.regional[''], { format:'Y-m-d H:i',}));
+
+
+    {% if WpForm.errors %}
+        alert("form is not valid please fill all fields and re-submit");
+        $('#addWpFormModal').modal('show');
+    {% endif %}
+
+
+{% endblock script %}

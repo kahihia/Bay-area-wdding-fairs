@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load comments %}
+{% block content %}
+    <section class="messages-section">
+        {% include 'messages/partial/_sidebar.html' %}
+        <div class="col-md-9">
+            <h3 class="section-title">Draft</h3>
+            <ul class=" list-unstyled messages-list">
+                <li> <a href="#" class="add-btn delete-btn" id="delete-all">
+                    <i class="glyphicon glyphicon-trash"></i> Delete</a></li>
+            </ul>
+
+
+            <div class="table table-striped messages" id="mail-list">
+                <table class="table table-striped messages">
+                    <thead>
+                    <tr>
+                        <th id="mail-list_c0">Mark</th>
+                        <th id="mail-list_c1">To</th>
+                        <th id="mail-list_c2">Subject</th>
+                        <th id="mail-list_c3">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for message in drafts %}
+                        <tr class="odd">
+                            <td class="checkbx"><input type="checkbox" class="checkMailMessage" data-id="95"/></td>
+                            <td class="user"><a href='/profile/{{ message.receiver.username }}/'>{{ message.receiver.get_full_name }}</a></td>
+                            <td class="subject"><a href='/messages/draft/{{ message.id }}/'>{{ message.subject }}</a></td>
+                            <td class="time-stamp"><span class='time-stamp'>{{ message.created_at|timesince }} ago</span></td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="keys" style="display:none" title="/mail/sent"><span>95</span><span>94</span></div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="/static/js/jquery.mail.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.yiigridview.js"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#mail-list').yiiGridView({
+                'ajaxUpdate': ['mail-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'grid-view-loading',
+                'filterClass': 'filters',
+                'tableClass': 'table table-striped messages',
+                'selectableRows': 1,
+                'enableHistory': false,
+                'updateSelector': '{page}, {sort}',
+                'filterSelector': '{filter}',
+                'pageVar': 'MailMessage_page'
+            });
+        });
+        /*]]>*/
+    </script>
+{% endblock jquery %}

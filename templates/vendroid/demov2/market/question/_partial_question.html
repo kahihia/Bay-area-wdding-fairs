@@ -1,0 +1,176 @@
+<script>
+    var newOption = "";
+    var selectDate = "";
+    var specialIndex = 0;
+    {#    var dateOrText = [];#}
+</script>
+<style>
+    .vd_radio.radio-success input[type=radio]:checked + label:before {
+        border: 1px solid #07A6C3;
+    }
+</style>
+<div id="ID_QuestionOption">
+    <div class="col-md-12 col-xs-12" style="padding: 25px;background-color: #f0f0f0">
+        <h4 class="question_font" style="">{{ question.title}}</h4>
+    </div>
+    {% for l in options %}
+        {% if question.isAllowMulti %}
+            <div class="clearfix"></div>
+            <div class="radio-success" style="margin-left: 10px;border-bottom: 1px solid lightgrey;">
+                <input  type="checkbox" onclick="CheckboxChecked{{ l.id }}('{{ forloop.counter0 }}')" class="inputRadio" id="IDOption{{ l.id }}" name="checkbox" pass_id="{{ forloop.counter0 }}"  value="{{ l.option }}">
+                {#                 {% endif %}#}
+                <label class="option_font" style="font-size: 18px !important;margin-left:6px;margin-top: 3px;display: inline-block;width: 90%;" for="IDOption{{ l.id }}" >{{ l.option }}</label>
+
+            </div>
+            <script>
+                function CheckboxChecked{{ l.id }}(value){
+                    {% if  l.isDateTime %}
+                        $('#IDOptionText_'+value).toggle('hidden');
+                    {% elif l.isTextArea %}
+                        $('#IDOptionText_'+value).toggle('hidden');
+                    {% endif %}
+                }
+
+            </script>
+
+            {% if l.isTextArea %}
+                <div style="margin: 10px;" id="IDOptionText_{{ forloop.counter0 }}" class="IDOptionText_hidden" hidden>
+                    <textarea rows="2" cols="2" maxlength="200" id="textareaOthers_{{ forloop.counter0 }}" name="textOther"></textarea>
+                </div>
+            {% endif %}
+
+            {% if l.isDateTime %}
+                <input style="margin: 10px;" class="DateTime IDOptionText_hidden" id="IDOptionText_{{ forloop.counter0 }}" hidden />
+            {% endif %}
+        {% else %}
+            <div class="vd_radio radio-success" style="margin-left: 10px;border-bottom: 1px solid lightgrey;">
+                <input {% if  l.isDateTime %}onclick="$('.IDOptionText_hidden').hide();$('#IDOptionText_{{ forloop.counter0 }}').toggle('hidden');"{% elif l.isTextArea %}onclick="$('.IDOptionText_hidden').hide();$('#IDOptionText_{{ forloop.counter0 }}').toggle('hidden');"{% else %}onclick="$('.IDOptionText_hidden').hide();"{% endif %} type="radio" class="inputRadio" id="IDOption{{ l.id }}" name="options" pass_id="{{ forloop.counter0 }}" value="{{ l.option }}" />
+                <label class="option_font" for="IDOption{{ l.id }}" style="margin-bottom:0px;display: inline-block;width: 95%;font-size: 18px; margin-top:3px; margin-bottom:3px;">{{ l.option }}</label>
+                {% if l.isTextArea %}
+                    <div style="margin: 10px;" id="IDOptionText_{{ forloop.counter0 }}" class="IDOptionText_hidden" hidden>
+                        <textarea rows="2" cols="2" maxlength="200" id="textareaOthers_{{ forloop.counter0 }}" name="textOther"></textarea>
+                    </div>
+                    <script>
+                        specialIndex = {{ forloop.counter0 }}
+                    </script>
+                {% endif %}
+
+                {% if l.isDateTime %}
+                    <input  style="margin: 10px;" class="DateTime IDOptionText_hidden" id="IDOptionText_{{ forloop.counter0 }}" hidden />
+                    <script>
+                        specialIndex = {{ forloop.counter0 }}
+                    </script>
+                {% endif %}
+            </div>
+            {#            <hr />#}
+        {% endif %}
+    {% endfor %}
+
+    <div class="col-md-12 col-xs-12" style="padding:25px;background-color: #f0f0f0;">
+        {% if index > 0 %}
+            <a class="btn btn-primary pull-left btn-blue" style="margin-top: 20px;width: 120px;" onclick="goBack({{ index }})">Back</a>
+        {% endif %}
+
+
+        {% if isFinish or isLast %}
+            <a class="btn btn-primary pull-right btn-blue col-xs-12" style="margin-top: 20px;width: 120px;" onclick="submitForward({{index}}, {{ question.id }})">Finished</a>
+        {% else %}
+            <a class="btn btn-primary btn-blue pull-right col-xs-12" style="margin-top: 20px;width: 120px;" onclick="submitForward({{index}}, {{ question.id }})">Next</a>
+        {% endif %}
+    </div>
+</div>
+{#<br><br/>#}
+<script>
+    var selectedDate;
+    //deal with datetime
+    $(document).ready(function () {
+        $(".DateTime").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+        });
+    });
+    function submitForward(index, questionId){
+        var isMultiple = "{{ question.isAllowMulti }}";
+        newOption = ""
+        if (isMultiple == "False") {
+            $('input[name=options]:checked').each(function(i) {
+                var id_pass = $('input[name=options]:checked').attr('pass_id');
+                {
+                    if ($(this).val() != 'on') {
+                        newOption += $(this).val();
+                        newOption += ": ";
+                    }
+                    var otherText = $('#textareaOthers_'+id_pass).val();
+                    console.log("otherText", otherText);
+                    if (otherText) {
+                        newOption += otherText + ", "
+                    }
+
+                    var selectDate = $("#IDOptionText_"+id_pass).val();
+                    console.log("select Date", selectDate);
+                    if (selectDate) {
+                        newOption += selectDate + ", "
+                    }
+                }
+            });
+        }else {
+
+            if ($(':checkbox:checked').length == 0){
+                alert("please choose at least one option");
+                return
+            }
+
+            $('input[name=checkbox]:checked').each(function(i){
+                var id_pass = $(this).attr('pass_id');
+                if ($(this).val() != 'on') {
+                    newOption += $(this).val();
+                    var datetime_check = $('#IDOptionText_'+id_pass).val();
+                    var textarea_check = $('#textareaOthers_'+id_pass).val();
+
+                    if(datetime_check || textarea_check){
+                        newOption += ": ";
+                    }else{
+                        newOption += ",";
+                    }
+
+                }
+                var otherText = $('#textareaOthers_'+id_pass).val();
+                if (otherText){
+                    newOption += otherText +", "
+                }
+                var selectDateMul = $('#IDOptionText_'+id_pass).val();
+                if (selectDateMul){
+                    newOption += selectDateMul+", "
+                }
+            });
+        }
+        var varFinish = "{{ isFinish }}";
+        console.log("send options",newOption);
+        $.ajax({
+            url : "",
+            type : "POST",
+            data : { 'index': index+1, 'answer':newOption, 'questionId':questionId},
+
+            success : function(response) {
+                if (varFinish == "True" || "{{ isLast }}" == "True"){
+                    console.log("finish");
+                    {% if isGeneral %}
+                        parent.dismissGeneralQuestionModal();
+                    {% else %}
+                        window.location.href = "/answer/{{ option_id_forward }}/{{ product_id }}/{{ user_id }}/";
+                    {% endif %}
+                } else {
+                    $("#ID_question").html(response);
+                    parent.update_product_percentage('{{ product_id }}','{{ product.get_progress }}')
+                }
+            },
+
+            error : function(xhr,errmsg,err) {
+                alert("change answer failed");
+            }
+        });
+    };
+    parent.resizeIPlansframe()
+
+</script>

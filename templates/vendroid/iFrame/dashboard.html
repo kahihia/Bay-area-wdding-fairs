@@ -1,0 +1,229 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-subtitle">#}
+{#                                    <h1>Home</h1>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                    <div class="col-lg-8 col-md-9">
+                                        <div class="panel widget light-widget">
+                                            <div>
+                                                    <div class="menu">
+                                                        <form method="post" action="." enctype="multipart/form-data" id="form_post_id" >
+                                                    {% csrf_token %}
+
+                                                            <textarea name="Post_comment" id="Post_comment" class="no-bd" rows="3" placeholder="What are you doing?"></textarea>
+                                                            <div class="vd_textarea-menu vd_bg-yellow vd_bd-yellow">
+                                                                <ul class="nav nav-pills ">
+                                                                <li class="one-icon">
+                                                                    <a name="image">
+                                                                        <span class="menu-icon">
+
+                                                                            <i class="fa fa-camera fa-fw"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="pull-right">
+                                                                    <a onclick="document.getElementById('form_post_id').submit(); return false;" id="form_button_submit" type="submit" style="border-left:1px solid rgba(255,255,255,.3)">
+                                                                        <span class="menu-icon">
+                                                                            <i class="fa fa-check fa-fw"></i>
+                                                                        </span>
+                                                                        <span class="menu-text">
+                                                                            Post
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+
+                                                                </ul>
+
+                                                        </div>
+                                                        </form>
+                                                        <script>
+                                                            function submitTheForm(){
+
+                                                            }
+                                                        </script>
+                                                    </div> <!-- child-menu -->
+                                                  </div>
+                                        </div>
+
+                                            {% include "vendroid/partial/_user_feed.html" %}
+
+
+                                    </div>
+                                    <!-- col-md-x -->
+                                    <div class="col-lg-4 col-md-3">
+                                        {% if not profile.type == "Professional"  %}
+                                     {% if not profile.type == "Other"  %}
+                                        <div class="panel vd_status-widget vd_bg-green widget">
+
+                                        <!-- vd_panel-menu -->
+
+                                            <div class="panel-body vd_bg-green text-center">
+                                                <div class="clearfix">
+                                                    <span class="menu-value">
+                                                        {{ profile.wedding_date|timeuntil }}
+                                                    </span>
+                                                </div>
+                                                <div class="menu-text clearfix">
+                                                   Wedding Day Count Down
+                                                </div>
+                                             </div>
+                                        </div>
+                                        <div class="panel widget">
+                                              <div class="panel-heading vd_bg-green">
+                                                <h3><span class="menu-icon"> RSVP &amp; Invitations Sent</span></h3>
+                                                <div class="vd_panel-menu">
+
+                                                </div>
+                            <!-- vd_panel-menu -->
+
+                                              </div>
+                                              <div class="panel-body">
+                                                <div class="row mgbt-xs-0">
+                                                  <div class="col-xs-8">
+                                                    <h2 class="vd_green mgbt-xs-0">RSVP: {{ profile.rsvp_count|intcomma }}</h2>
+                                                    <div class="vd_grey">Invitations Sent: {{ profile.invitation_count|default_if_none:0 }}</div>
+                                                  </div>
+                                                  <div class="col-xs-4">
+                                                    <div id="seo-sparkline" class="mgtp-15 mgr-10 text-right"><canvas height="30" width="30" style="display: inline-block; vertical-align: top; width: 30px; height: 30px;"></canvas></div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        {% endif %}
+                                        {% endif %}
+                                        <div class="panel widget panel-bd-top vd_todo-widget light-widget">
+
+                                              <div class="panel-body">
+                                                <h2 class="mgbt-xs-20"> <span class="append-icon"> <i class="fa fa-check-circle-o vd_green"></i> </span> Task List</h2>
+                                                {% if tasks %}
+                                                <div class="controls">
+
+                                                  {% for task in tasks %}
+                                                  <div class="vd_checkbox checkbox-done">
+                                                    <input data-action="refresh" id="checkbox-{{ task.id }}" value="1" onclick="completeTask({{ task.id }});" type="checkbox" {% if task.complete %}checked="true"{% endif %} >
+                                                    <label for="checkbox-{{ task.id }}"> {{ task.subject }} </label>
+                                                  </div>
+                                                  {% endfor %}
+
+                                                </div>
+                                                <div class="row mgtp-15 mgbt-xs-0">
+                                                    <div class="col-xs-6"> <a role="button" href="/tasks/" class="btn vd_btn vd_bg-green">View All</a> </div>
+{#                                                    <div class="col-xs-6 text-right"> <a role="button" href="#" class="btn vd_btn vd_bg-grey"><i class="icon-trash"></i></a> </div>#}
+                                                  </div>
+                                                 {% else %}
+                                                <div class="row mgtp-15 mgbt-xs-0">
+                                                    <div class="col-xs-6"> <a role="button" href="/tasks/" class="btn vd_btn vd_bg-green">Add a Task</a> </div>
+{#                                                    <div class="col-xs-6 text-right"> <a role="button" href="#" class="btn vd_btn vd_bg-grey"><i class="icon-trash"></i></a> </div>#}
+                                                  </div>
+                                              {% endif %}
+                                              </div>
+                                            </div>
+                                        <div class="panel widget light-widget panel-bd-top vd_bdt-green">
+                                            <div class="panel-heading no-title"></div>
+                                            <div class="panel-body">
+                                                <h3 class="mgtp--5"> Events List</h3>
+
+                                                <div class="content-list content-image">
+                                                    <ul class="list-wrapper no-bd-btm">
+                                                        {% for event in events %}
+                                                        <li>
+                                                            <a href="/events/">
+                                                                <div class="menu-icon"><i class="fa fa-calendar"></i></div>
+                                                                <div class="menu-text">{{ event.title }}
+                                                                    <div class="menu-info">
+                                                                        <span class="menu-date">{{ event.start }} </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="menu-badge"><span
+                                                                        class="badge status vd_bg-green">&nbsp;</span>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel widget light-widget text-center ">
+                                            <div class="panel-body ">
+                                                <a href="http://bayareaweddingfairs.com/"> <img
+                    src="https://s3-us-west-2.amazonaws.com/yapjoyimages/images/static_ad.png"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "vendroid/js/jquery.dashboard.js" %}'></script>
+    <script>
+        rsvp = {{ profile.rsvp_count|default_if_none:0 }};
+        invites = {{ profile.invitation_count|default_if_none:0 }};
+        $("#seo-sparkline").sparkline([invites,rsvp], {
+            type: 'pie',
+            height: '25px',
+            sliceColors: ['#2e8258','#4abc96','#1FAE66']
+		});
+
+
+    </script>
+{% endblock script %}

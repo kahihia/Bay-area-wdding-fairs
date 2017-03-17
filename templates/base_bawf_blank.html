@@ -1,0 +1,222 @@
+{% load static %}
+{% load myfilters %}
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->	<html><!--<![endif]-->
+
+<!-- Specific Page Data -->
+
+<!-- End of Data -->
+
+<head>
+    <meta charset="utf-8" />
+    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>
+    <meta name="keywords" content="HTML5 Template, CSS3, All Purpose Admin Template, " />
+    <meta name="description" content="Responsive Admin Template for multipurpose use">
+    <meta name="author" content="Venmond">
+
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "vendroid/img/ico/apple-touch-icon-144-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "vendroid/img/ico/apple-touch-icon-114-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "vendroid/img/ico/apple-touch-icon-72-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static "vendroid/img/ico/apple-touch-icon-57-precomposed.png" %}">
+    <link rel="shortcut icon" href="{% static "images/favicon_bawf.ico" %}">
+
+
+    <!-- CSS -->
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <!-- Bootstrap & FontAwesome & Entypo CSS -->
+    <link href="{% static "vendroid/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static "vendroid/css/font-awesome-ie7.min.css" %}"><![endif]-->
+    <link href="{% static "vendroid/css/font-entypo.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Fonts CSS -->
+    <link href="{% static "vendroid/css/fonts.css" %}"  rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/prettyPhoto-plugin/css/prettyPhoto.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/isotope/css/isotope.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/pnotify/css/jquery.pnotify.css" %}" media="screen" rel="stylesheet" type="text/css">
+	<link href="{% static "vendroid/plugins/google-code-prettify/prettify.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/chosen.css' %}" rel="stylesheet" type="text/css" media="all"/>
+
+    <link href="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">
+
+	<!-- Specific CSS -->
+	<link href="{% static "vendroid/plugins/fullcalendar/fullcalendar.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/fullcalendar/fullcalendar.print.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/introjs/css/introjs.min.css" %}" rel="stylesheet" type="text/css">
+
+
+    <!-- Theme CSS -->
+    <link href="{% static "vendroid/css/theme.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE]> <link href="{% static "vendroid/css/ie.css" %}" rel="stylesheet" > <![endif]-->
+    <link href="{% static "vendroid/css/chrome.css" %}" rel="stylesheet" type="text/chrome"> <!-- chrome only css -->
+
+
+    <!-- Specific CSS -->
+	<link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/dataTables/css/dataTables.bootstrap.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive CSS -->
+        	<link href="{% static "vendroid/css/theme-responsive.min.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- for specific page responsive in style css -->
+
+
+    <!-- Custom CSS -->
+    <link href="{% static "vendroid/custom/custom.css" %}" rel="stylesheet" type="text/css">
+
+
+
+    <!-- Head SCRIPTS -->
+    <script type="text/javascript" src="{% static "vendroid/js/modernizr.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect-modernizr.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "vendroid/plugins/dataTables/jquery.dataTables.min.js" %}"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="{% static "vendroid/js/html5shiv.js" %}"></script>
+      <script type="text/javascript" src="{% static "vendroid/js/respond.min.js" %}"></script>
+    <![endif]-->
+    {% block header_tags %}
+    {% endblock header_tags %}
+
+
+
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+
+
+</head>
+{% if not "dashboard" in request.path %}
+    {% include "vendroid/loader/waiting_loader_bawf_iframe.html" %}
+{% endif %}
+<body id="dashboard" class="full-layout nav-right-hide nav-right-start-hide nav-top-fixed responsive clearfix breakpoint-975 nav-left-medium " data-active="dashboard" data-smooth-scrolling="0">
+{% block content %}
+{% endblock content %}
+
+<!-- .vd_body END  -->
+
+<!--
+<a class="back-top" href="#" id="back-top"> <i class="icon-chevron-up icon-white"> </i> </a> -->
+<div class="modal fade" id="subscriptionModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title" style="margin-bottom: 0px;">Membership</h4>
+
+
+                    {#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
+                    {#        <!-- Nav tabs -->#}
+
+
+                    <iframe id="iframe_sub" src="" width="100%" height="510px"></iframe>
+
+                    <!-- end panel -->
+                    <!-- end panel -->
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<!-- Javascript =============================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<!--[if lt IE 9]>
+  <script type="text/javascript" src="{% static "vendroid/js/excanvas.js" %}"></script>
+<![endif]-->
+<script type="text/javascript" src="{% static "vendroid/js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src='{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}'></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/js/caroufredsel.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/js/plugins.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/plugins/breakpoints/breakpoints.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/blockUI/jquery.blockUI.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/pnotify/js/jquery.pnotify.min.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/js/theme.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/custom/custom.js" %}"></script>
+
+<!-- Specific Page Scripts Put Here -->
+<!-- Flot Chart  -->
+{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.resize.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.pie.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.categories.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.time.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.animator.min.js" %}"></script>#}
+{##}
+{#<!-- Vector Map -->#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" %}"></script>#}
+{#<script type="text/javascript" src="{% static "vendroid/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %}"></script>#}
+{##}
+{#<!-- Calendar -->#}
+
+<script type="text/javascript" src='{% static "vendroid/plugins/moment/moment.min.js" %}'></script>
+<script type="text/javascript" src='{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}'></script>
+<script type="text/javascript" src='{% static "vendroid/plugins/fullcalendar/fullcalendar.min.js" %}'></script>
+
+<!-- Intro JS (Tour) -->
+<script type="text/javascript" src='{% static "vendroid/plugins/introjs/js/intro.min.js" %}'></script>
+
+<!-- Sky Icons -->
+<script type="text/javascript" src='{% static "vendroid/plugins/skycons/skycons.js" %}'></script>
+<script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+<script>
+    $("#searchField").keypress(function (e) {
+        if (e.which == 13) {
+            window.location.href = '/directory/?name=' + $(this).val();
+
+        }
+    });
+</script>
+{% block script %}
+{% endblock script %}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68785620-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+</html>

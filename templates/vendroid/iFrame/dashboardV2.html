@@ -1,0 +1,2326 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% load fullcalendar_tags %}
+{% block header_tags %}
+    {{ pictureWallForm.media }}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("maps", "3.4", {
+            other_params: "sensor=false&language=fr"
+        });
+    </script>
+    <script type="text/javascript" src="{% static "js/jquery.googlemap.js" %}"></script>
+{% endblock header_tags %}
+{% block content %}
+    <link href="{% static "vendroid/plugins/prettyPhoto-plugin/css/prettyPhoto.css" %}" rel="stylesheet"
+          type="text/css">
+    <script type="text/javascript"
+            src="{% static "vendroid/plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js" %}"></script>
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+        .chart {
+            padding: 0;
+            margin: 0;
+            height: 30%;
+            list-style: none;
+            overflow: hidden;
+            font-family: 'Lato', Calibri, Arial, sans-serif;
+        }
+
+        .progressDiv {
+        {#width: 84%;#}{#background: #fcfcfc;#}{#height: 325px;#}{#border: 1px solid #ccc;#}{#position: relative;#}{#left: 7%;#}{#display: inline-block;#}{#border-radius: 2px;#}{#box-shadow: 0px 1px 1px 1px #ccc;#}
+        }
+
+        .statChartHolder {
+        {#width: 35%;#}{#height: 90%;#}{#position: relative;#}{#border-right: 1px solid #ccc;#}{#top: 15px;#}{#    display: inline-block;#}
+        }
+
+        .statRightHolder {
+            display: inline-block;
+            height: 90%;
+            width: 64%;
+            position: relative;
+        {#top: -32px;#}{#margin: 0;#}
+        }
+
+        .statRightHolder ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .statRightHolder li {
+            border-bottom: 1px solid #ccc;
+            height: 85px;
+            width: 95%;
+            position: relative;
+            top: -25px;
+        }
+
+        .statRightHolder h3 {
+            display: inline-block;
+            margin-right: 15px;
+            color: #B6B5B5;
+            font-weight: 300;
+            font-size: 38px;
+        }
+
+        .statRightHolder span {
+            display: inline-block;
+            color: #B6B5B5;
+            font-size: 21px;
+            font-weight: 300;
+        }
+
+        .statsLeft {
+            list-style: none;
+            display: inline-block;
+            width: 45%;
+        }
+
+        .statsLeft li {
+            width: 100%;
+            height: 14px;
+            border: none;
+            top: 5px;
+            margin-bottom: 25px;
+        }
+
+        .statsLeft h3 {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        .statsLeft span {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        .statsRight {
+            width: 45%;
+            display: inline-block;
+            position: absolute;
+        }
+
+        .statsRight li {
+            width: 100%;
+            height: 14px;
+            border: none;
+            top: 5px;
+            margin-bottom: 25px;
+        }
+
+        .statsRight h3 {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        .statsRight span {
+            font-size: 17px;
+            display: inline-block;
+        }
+
+        /* Pie Chart */
+        .progress-pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #E5E5E5;
+            position: relative;
+        }
+
+        .progress-pie-chart.gt-50 {
+            background-color: #81CE97;
+        }
+
+        .ppc-progress {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0, 200px, 200px, 100px);
+        }
+
+        .ppc-progress .ppc-progress-fill {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0, 100px, 200px, 0);
+            background: #DF9DA9;
+            transform: rotate(60deg);
+        }
+
+        .gt-50 .ppc-progress {
+            clip: rect(0, 100px, 200px, 0);
+        }
+
+        .gt-50 .ppc-progress .ppc-progress-fill {
+            clip: rect(0, 200px, 200px, 100px);
+            background: #E5E5E5;
+        }
+
+        .ppc-percents {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 173.91304px / 2);
+            top: calc(50% - 173.91304px / 2);
+            width: 173.91304px;
+            height: 173.91304px;
+            background: #fff;
+            text-align: center;
+            display: table;
+        }
+
+        .ppc-percents span {
+            display: block;
+            font-size: 2.6em;
+            font-weight: bold;
+            color: #DF9DA9;
+        }
+
+        .pcc-percents-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .progress-pie-chart {
+            margin: 50px auto 0;
+        }
+        .calendar-ref #calendar .fc-content .fc-view-month {
+            max-height: 220px !important;
+        }
+
+
+    </style>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .topwidth {
+            top: 10px;
+            left: 20px;
+        }
+
+        .topoptionwidth {
+            top: 7px;
+            left: 20px;
+            height: 420px;
+        }
+
+        .stylo {
+            font-size: x-large;
+            height: 200px;
+            border-radius: 3px;
+        }
+
+        .stylo2 {
+            top: 10px;
+            background-color: white;
+            border-radius: 3px;
+        }
+
+        .optionsStyle {
+            height: 400px;
+            width: 350px;
+        }
+
+    </style>
+    <style>
+        .nav-left-medium .content .vd_container {
+            margin-left: 0px;
+        }
+
+        .vd_content-section {
+            margin-left: -15px;
+        }
+    </style>
+    <div class="vd_body">
+    <!-- Header Start -->
+    {% include "vendroid/partial/_header.html" %}
+    <!-- Header Ends -->
+    <div class="content">
+    <div class="container">
+        {% include "vendroid/messages/partial/chat_list.html" %}
+        {#                {% include "vendroid/partial/_sidebar.html" %}#}
+
+        <!-- Middle Content Start -->
+
+        <div class="vd_content-wrapper">
+            <div class="vd_container">
+                <div class="vd_content clearfix">
+                    <div class="vd_head-section clearfix">
+                    </div>
+                    <!-- vd_head-section -->
+
+                    <!-- vd_title-section -->
+
+                    <div class="vd_content-section clearfix">
+                        <div class="row">
+
+                            {#<!-- Panel Widget -->               </div>#}
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3 dasboard-boxes">
+                                        <div class="vd_status-widget vd_bg-grey  widget">
+                                            {#    <div class="vd_panel-menu">#}
+                                            {#  <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>#}
+                                            {#</div>#}
+                                            <!-- vd_panel-menu -->
+                                            {% if profile.type == "Professional" %}
+                                                <a class="panel-body" href="/followers/">
+                                                    <div class="clearfix">
+                                                    <span class="menu-icon">
+                                                        <i class="fa fa-group"></i>
+                                                    </span>
+                                                    <span class="menu-value">
+                                                        {{ friends_count|intcomma }}
+                                                    </span>
+                                                    </div>
+                                                    <div class="menu-text clearfix">
+                                                        FOLLOWERS
+                                                    </div>
+                                                </a>
+                                                <div class="boxes-link">
+
+                                                    <div class="pull-left">
+                                                        <a class="color-grey">&nbsp;
+                                                            <i class="fa fa-plus-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a href="/followers/" class="color-grey"> view all</a>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+                                                </div>
+                                            {% else %}
+                                                <a class="panel-body" href="/friends/">
+                                                    <div class="clearfix">
+                                                    <span class="menu-icon">
+                                                        <i class="fa fa-group"></i>
+                                                    </span>
+                                                    <span class="menu-value">
+                                                        {{ friends_count|intcomma }}
+                                                    </span>
+                                                    </div>
+                                                    <div class="menu-text clearfix">
+                                                        PLANNING CIRCLE
+                                                    </div>
+                                                </a>
+                                                <div class="boxes-link">
+
+                                                    <div class="pull-left">
+                                                        <a href="/friends/" class="color-grey">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a href="/friends/" class="color-grey"> view all</a>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+                                                </div>
+                                            {% endif %}
+
+
+                                        </div>
+                                    </div>
+                                    <!--col-xs-6 -->
+                                    <div class="col-md-3">
+                                        {% if profile.type == "Professional" %}
+                                            <div class="vd_status-widget vd_bg-grey widget">
+                                                {#    <div class="vd_panel-menu">#}
+                                                {#  <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>#}
+                                                {#</div>#}
+                                                <!-- vd_panel-menu -->
+                                                <div class="pull-left">
+                                                    <a class="panel-body" href="/market/">
+                                                        <div class="" style="width:auto;">
+                                                        <span class="menu-icon">
+                                                            <i class="fa fa-book"></i>
+                                                        </span>
+                                                        <span class="menu-value">
+                                                            {{ plans_count|intcomma }}
+                                                        </span>
+                                                        </div>
+                                                        <div class="menu-text clearfix">
+                                                            Market Stream
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="pull-right top-boxes-list" style="padding-right: 0px;">
+
+                                                    <ul>
+                                                        <li><a href="/market/">BIDS: {{ bids_count|intcomma }}</a></li>
+                                                        <li><a href="/market/">AWARDED: {{ bids_awarded|intcomma }}</a>
+                                                        </li>
+                                                        {#                                                            <li><a href="#">Dummy text</a> </li>#}
+                                                        {#                                                            <li><a href="#">Dummy text</a> </li>#}
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                                <div class="boxes-link" style="">
+
+                                                    <div class="pull-left">
+                                                        <a href="/market/" class="color-grey">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a href="/market/" class="color-grey"> view all</a>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+                                                </div>
+
+
+                                            </div>
+                                        {% else %}
+                                            <div class="vd_status-widget vd_bg-grey widget">
+                                                {#    <div class="vd_panel-menu">#}
+                                                {#  <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>#}
+                                                {#</div>#}
+                                                <!-- vd_panel-menu -->
+
+                                                <a class="panel-body" href="/plans/">
+                                                    <div class="clearfix">
+            <span class="menu-icon">
+                <i class="fa fa-book"></i>
+            </span>
+            <span class="menu-value">
+                {{ plans_count|intcomma }}
+            </span>
+                                                    </div>
+                                                    <div class="menu-text clearfix">
+                                                        PLANNING BOOK
+                                                    </div>
+                                                </a>
+
+                                                <div class="boxes-link" style>
+
+                                                    <div class="pull-left">
+                                                        <a href="/plans/" class="color-grey">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a href="/plans/" class="color-grey"> view all</a>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+                                                </div>
+
+
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+                                    <!--col-xs-6 -->
+                                    <div class="{% if profile.type == "Groom" or profile.type == "Bride" %}col-md-2{% else %}col-md-3{% endif %}">
+                                        <div class="vd_status-widget vd_bg-grey">
+                                            {#    <div class="vd_panel-menu">#}
+                                            {#  <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>#}
+                                            {#</div>#}
+                                            <!-- vd_panel-menu -->
+
+                                            <a class="panel-body" href="/events/">
+                                                <div class="clearfix">
+            <span class="menu-icon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            <span class="menu-value">
+                {{ events_count|intcomma }}
+            </span>
+                                                </div>
+                                                <div class="menu-text clearfix">EVENTS
+                                                </div>
+                                            </a>
+
+                                            <div class="boxes-link" style>
+
+                                                <div class="pull-left">
+                                                    <a href="/events/" class="color-grey">
+                                                        <i class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a href="/events/" class="color-grey"> view all</a>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!--col-xs-6 -->
+                                    <div class="{% if profile.type == "Groom" or profile.type == "Bride" %}col-md-2{% else %}col-md-3{% endif %}">
+                                        <div class="vd_status-widget vd_bg-grey widget">
+                                            {#    <div class="vd_panel-menu">#}
+                                            {#  <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>#}
+                                            {#</div>#}
+                                            <!-- vd_panel-menu -->
+
+                                            <a class="panel-body" href="/tasks/">
+                                                <div class="clearfix">
+            <span class="menu-icon">
+                <i class="fa fa-tasks"></i>
+            </span>
+            <span class="menu-value">
+                {{ tasks_count|intcomma }}
+            </span>
+                                                </div>
+                                                <div class="menu-text clearfix">
+                                                    TASKS
+                                                </div>
+                                            </a>
+
+                                            <div class="boxes-link" style>
+
+                                                <div class="pull-left">
+                                                    <a href="/tasks/" class="color-grey">
+                                                        <i class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a href="/tasks/" class="color-grey"> view all</a>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {% if profile.type == "Groom" or profile.type == "Bride" %}
+                                        <div class="col-md-2">
+                                            <div class="vd_status-widget vd_bg-grey widget">
+                                                {#    <div class="vd_panel-menu">#}
+                                                {#  <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>#}
+                                                {#</div>#}
+                                                <!-- vd_panel-menu -->
+
+                                                <a class="panel-body" href="/settings/">
+                                                    <div class="clearfix">
+                                                <span class="menu-value" style="margin-left: 0px;">
+                                                    {% if profile.wedding_date %}
+                                                        {{ profile.wedding_date|date:"m/d/y" }}
+                                                        {% else %}
+                                                        N/A
+                                                        {% endif %}
+                                                </span>
+                                                    </div>
+                                                    <div class="menu-text clearfix">
+                                                        Wedding date
+                                                    </div>
+                                                </a>
+
+                                                <div class="boxes-link" style>
+
+                                                    <div class="pull-left">
+                                                        <a href="/settings/" class="color-grey">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a href="/settings/" class="color-grey"> Settings</a>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <!--col-md-xs-6 -->
+                                </div>
+                            </div>
+
+
+
+
+{#                        </div>#}
+                        <!-- .vd_content-section -->
+
+
+                        <div class="col-md-12 mgbt-md-20 mgbt-lg-0">
+                            <div class="row">
+                                 <div class="col-md-7  mgbt-md-20 mgbt-lg-0">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="tabs widget">
+                                            <ul class="nav nav-tabs widget">
+                                                <li class="active">
+                                                    <a data-toggle="tab" href="#home-tab">
+                                                            <span class="menu-icon"><i
+                                                                    class="fa fa-comments"></i></span>
+                                                        Recent Feeds
+                                                            <span class="menu-active"><i
+                                                                    class="fa fa-caret-up"></i></span>
+                                                    </a></li>
+                                                <li>
+                                                    <a data-toggle="tab" href="#yapper-tab">
+                                                            <span class="menu-icon"><i
+                                                                    class="fa fa-bullhorn"></i></span>
+                                                        Yapper
+                                                            <span class="menu-active"><i
+                                                                    class="fa fa-caret-up"></i></span>
+                                                    </a></li>
+                                                <li>
+                                                    <a data-toggle="tab" href="#news-tab">
+                                                            <span class="menu-icon"><i
+                                                                    class="append-icon icon-newspaper"></i></span>
+                                                        News
+                                                            <span class="menu-active"><i
+                                                                    class="fa fa-caret-up"></i></span>
+                                                    </a></li>
+                                                <li>
+                                                    <a data-toggle="tab" href="#photos-tab">
+                                                            <span class="menu-icon"><i
+                                                                    class="fa fa-picture-o"></i></span>
+                                                        Pictures Wall
+                                                            <span class="menu-active"><i
+                                                                    class="fa fa-caret-up"></i></span>
+                                                    </a></li>
+                                                {#          <li>#}
+                                                {#          <a data-toggle="tab" href="#posts-tab">#}
+                                                {#              <span class="menu-icon"><i class="fa fa-rocket"></i></span>#}
+                                                {#              Activities#}
+                                                {#              <span class="menu-active"><i class="fa fa-caret-up"></i></span>#}
+                                                {#          </a></li>#}
+                                                {#          <li>#}
+                                                {#          <a data-toggle="tab" href="#list-tab">#}
+                                                {#              <span class="menu-icon"><i class="fa fa-user"></i></span>#}
+                                                {#              New Users#}
+                                                {#              <span class="menu-active"><i class="fa fa-caret-up"></i></span>#}
+                                                {#          </a></li>#}
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="home-tab" class="tab-pane active">
+                                                    <div class="content-list content-image menu-action-right">
+                                                        <div class="mCustomScrollbar _mCS_6"
+                                                             style="max-height: 385px;overflow: hidden;"
+                                                             data-rel="scroll" data-scrollheight="385">
+                                                            <div class="mCustomScrollBox mCS-light" id="mCSB_6"
+                                                                 style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 100%;">
+                                                                <div class="mCSB_container"
+                                                                     style="position: relative; top: 0px;">
+                                                                    <ul class="list-wrapper pd-lr-15">
+                                                                        {% if userfeed %}
+                                                                            {% for feed in userfeed %}
+{#                                                                                {{ feed.image_url }}<br />#}
+                                                                                {% if feed.type == 'post' %}
+                                                                                    <li>
+                                                                                    <div class="menu-icon"><img
+                                                                                            alt="example image"
+                                                                                            src="{{ feed.image_url }}">
+                                                                                    </div>
+                                                                                    <div class="menu-text">
+                                                                                        {{ feed.text }}
+                                                                                        {#                                                                                            <br />#}
+                                                                                        {#                                                                                            {% if feed.image %}<img src="{{ MEDIA_URL }}{{ feed.image }}" style="height: 100px; width:auto;" />{% endif %}#}
+                                                                                    </div>
+                                                                                    <div class="menu-text">
+                                                                                        <div class="menu-info">
+                                                                                            by
+                                                                                            <a href="{{ feed.url }}">{{ feed.name }}</a>
+                                                                                            -
+
+                                                                                            <span class="menu-date">{{ feed.time|timesince }} Ago </span>
+
+                                                                                            {#                                <span class="menu-rating vd_yellow"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>#}
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                {% elif feed.type == 'task' %}
+                                                                                     <li>
+                                                                                    <div class="menu-icon">
+{#                                                                                        <img#}
+{#                                                                                            alt="example image"#}
+{#                                                                                            src="{{ feed.image_url }}">#}
+                                                                                        <i class="fa fa-tasks"></i>
+                                                                                    </div>
+                                                                                    <div class="menu-text">
+                                                                                        Task: {{ feed.text }}
+                                                                                        {#                                                                                            <br />#}
+                                                                                        {#                                                                                            {% if feed.image %}<img src="{{ MEDIA_URL }}{{ feed.image }}" style="height: 100px; width:auto;" />{% endif %}#}
+                                                                                    </div>
+                                                                                    <div class="menu-text">
+                                                                                        <div class="menu-info">
+                                                                                            by
+                                                                                            <a href="{{ feed.url }}">{{ feed.name }}</a>
+                                                                                            -
+
+                                                                                            <span class="menu-date">{{ feed.time|timesince }} Ago </span>
+
+                                                                                            {#                                <span class="menu-rating vd_yellow"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>#}
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                    {% elif feed.type == 'event' %}
+                                                                                     <li>
+                                                                                    <div class="menu-icon">
+{#                                                                                        <img#}
+{#                                                                                            alt="example image"#}
+{#                                                                                            src="{{ feed.image_url }}">#}
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </div>
+                                                                                    <div class="menu-text">
+                                                                                        Event: {{ feed.text }}
+                                                                                        {#                                                                                            <br />#}
+                                                                                        {#                                                                                            {% if feed.image %}<img src="{{ MEDIA_URL }}{{ feed.image }}" style="height: 100px; width:auto;" />{% endif %}#}
+                                                                                    </div>
+                                                                                    <div class="menu-text">
+                                                                                        <div class="menu-info">
+                                                                                            by
+                                                                                            <a href="{{ feed.url }}">{{ feed.name }}</a>
+                                                                                            -
+
+                                                                                            <span class="menu-date">{{ feed.time|timesince }} Ago </span>
+
+                                                                                            {#                                <span class="menu-rating vd_yellow"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>#}
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        {% else %}
+                                                                            <li>
+                                                                                <div class="text-center"><a
+                                                                                        href="/profile/">Add a wall
+                                                                                    feed</a></div>
+                                                                            </li>
+                                                                        {% endif %}
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="mCSB_scrollTools"
+                                                                     style="position: absolute; display: block; opacity: 0;">
+                                                                    <div class="mCSB_draggerContainer">
+                                                                        <div class="mCSB_dragger"
+                                                                             style="position: absolute; top: 0px; height: 427px;"
+                                                                             oncontextmenu="return false;">
+                                                                            <div class="mCSB_dragger_bar"
+                                                                                 style="position: relative; line-height: 427px;"></div>
+                                                                        </div>
+                                                                        <div class="mCSB_draggerRail"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="closing text-center">
+                                                            <a href="/profile/">View All Feeds <i
+                                                                    class="fa fa-angle-double-right"></i></a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div id="news-tab" class="tab-pane">
+                                                    <div class="content-list content-image menu-action-right">
+                                                        <div class="mCustomScrollbar _mCS_6"
+                                                             style="max-height: 385px;overflow: hidden;"
+                                                             data-rel="scroll" data-scrollheight="385">
+                                                            <div class="mCustomScrollBox mCS-light" id="mCSB_6"
+                                                                 style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 550px;">
+                                                                <div class="mCSB_container"
+                                                                     style="position: relative; top: 0px;">
+                                                                    <ul class="list-wrapper pd-lr-15" id="new-wall-id">
+
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="mCSB_scrollTools"
+                                                                     style="position: absolute; display: block; opacity: 0;">
+                                                                    <div class="mCSB_draggerContainer">
+                                                                        <div class="mCSB_dragger"
+                                                                             style="position: absolute; top: 0px; height: 427px;"
+                                                                             oncontextmenu="return false;">
+                                                                            <div class="mCSB_dragger_bar"
+                                                                                 style="position: relative; line-height: 427px;"></div>
+                                                                        </div>
+                                                                        <div class="mCSB_draggerRail"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="closing text-center">
+                                                            {#                                                                <a href="/profile/">See All Recent Reviews <i#}
+                                                            {#                                                                        class="fa fa-angle-double-right"></i></a>#}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div id="yapper-tab" class="tab-pane">
+                                                    <div class="content-list content-image menu-action-right">
+                                                        <div class="mCustomScrollbar _mCS_6"
+                                                             style="max-height: 385px;overflow: hidden;"
+                                                             data-rel="scroll" data-scrollheight="385">
+                                                            <div class="mCustomScrollBox mCS-light" id="mCSB_6"
+                                                                 style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 550px;">
+                                                                <div class="mCSB_container"
+                                                                     style="position: relative; top: 0px;">
+                                                                    <ul class="list-wrapper pd-lr-15">
+                                                                        {% if topics %}
+                                                                            {% for topic in topics %}
+                                                                                <li>
+                                                                                    <div class="menu-icon">
+                                                                                        {#                                                                                            <i class="fa fa-bullhorn"></i>#}
+                                                                                        <img src="{{ topic.creator.userprofile.get_image_url }}"/>
+
+                                                                                    </div>
+                                                                                    {#                                                                                        <div class="clearfix"></div>#}
+                                                                                    <div class="menu-text">
+                                                                                        <a href="/forum/topic/{{ topic.id }}/">{{ topic.title }}</a>
+                                                                                    </div>
+                                                                                    <div class="menu-text">
+                                                                                        <div class="menu-info">
+                                                                                            at
+
+
+                                                                                            <span class="menu-date">{{ topic.created|timesince }} Ago </span>
+
+                                                                                            {#                                <span class="menu-rating vd_yellow"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>#}
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        {% else %}
+                                                                            <li>
+                                                                                <div class="text-center"><a
+                                                                                        href="/profile/">Add a wall
+                                                                                    feed</a></div>
+                                                                            </li>
+                                                                        {% endif %}
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="mCSB_scrollTools"
+                                                                     style="position: absolute; display: block; opacity: 0;">
+                                                                    <div class="mCSB_draggerContainer">
+                                                                        <div class="mCSB_dragger"
+                                                                             style="position: absolute; top: 0px; height: 427px;"
+                                                                             oncontextmenu="return false;">
+                                                                            <div class="mCSB_dragger_bar"
+                                                                                 style="position: relative; line-height: 427px;"></div>
+                                                                        </div>
+                                                                        <div class="mCSB_draggerRail"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="closing text-center">
+                                                            <a href="/forum/">View All <i class="fa fa-angle-double-right"></i></a>
+                                                        </div>
+                                                        {#                                                            <div class="closing text-center">#}
+                                                        {#                                                                <a href="/profile/">See All Recent Reviews <i#}
+                                                        {#                                                                        class="fa fa-angle-double-right"></i></a>#}
+                                                        {#                                                            </div>#}
+                                                    </div>
+
+                                                </div>
+                                                <div id="photos-tab" class="tab-pane">
+                                                    <div class="content-list content-image menu-action-right">
+                                                        <div class="mCustomScrollbar _mCS_6"
+                                                             style="max-height: 385px;overflow: hidden;"
+                                                             data-rel="scroll" data-scrollheight="385">
+                                                            <div class="mCustomScrollBox mCS-light" id="mCSB_6"
+                                                                 style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 550px;">
+                                                                <div class="mCSB_container"
+                                                                     style="position: relative; top: 0px;">
+                                                                    <div class="pd-20" style="max-height: 385px;">
+                                                                        		<div class="vd_info tr">
+                                                                                    <a  data-toggle="modal" href="#picture-upload" class="btn vd_btn btn-xs vd_bg-yellow">
+                                                                                        <i class="fa fa-plus append-icon"></i> Add Photo </a>
+                                                                                     <hr />
+                                                                                    <div class="clearfix"></div>
+                                                                                </div>
+                                                                    <div class="clearfix"></div>
+
+                                                                        {#        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="fa fa-picture-o mgr-10 profile-icon"></i> PHOTOS</h3>#}
+                                                                        {#        <ul id="filters" class="nav nav-pills">#}
+                                                                        {#          <li class="active"><a href="#photos-1" data-filter="*">All</a></li>#}
+                                                                        {#          <li><a href="#photos-2" data-filter=".filter-1">Photos of You</a></li>#}
+                                                                        {#          <li><a href="#photos-3" data-filter=".filter-2">Scenery</a></li>#}
+                                                                        {#          <li><a href="#photos-4" data-filter=".filter-3">Vacation</a></li>#}
+                                                                        {#        </ul>#}
+                                                                        <br />
+                                                                    <div class="clearfix"></div>
+
+                                                                        <div style="position: relative; height: 1000px;margin-top: 10px;"
+                                                                             class="isotope js-isotope vd_gallery ">
+                                                                            {% for image_wall in picture_wall %}
+                                                                                <div style="position: relative; left: 0px; top: 0px; width: 15%; height: 10%; margin-left: 10px;"
+                                                                                     class="gallery-item tl-post-image filter-1">
+                                                                                    <a class="profile-thumb"
+                                                                                       rel="prettyPhoto[{{ image_wall.id }}]"
+                                                                                       data-rel="prettyPhoto[{{ image_wall.id }}]"
+                                                                                       href="{{ image_wall.get_image_url }}">
+                                                                                        <img alt="Preview"
+                                                                                             src="{{ image_wall.get_image_url }}">
+
+                                                                                        <div class="bg-cover"></div>
+                                                                                        {#                        <div class="submitted-image" style="background-image:url({{ image_wall.get_image_url }})"></div>#}
+                                                                                    </a>
+
+                                                                                    <div class="vd_info">
+                                                                                        <h3 class="mgbt-xs-15">View</h3>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            {% endfor %}
+
+
+                                                                        </div>
+
+                                                                        <div class="clearfix"></div>
+
+                                                                    </div>
+                                                                    <!-- pd-20 -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- tabs-widget -->                  </div>
+                                    <!-- col-md-12 -->
+                                </div>
+                                <!-- row -->
+                            </div>
+                            <!--col-md-7 -->
+                           <div class="col-md-5 mgbt-md-20 mgbt-lg-0 ">
+                                    <div >
+                                     {% if profile.type == "Professional" %}
+                                         <div class="col-md-12 np">
+                                          <div class="panel widget vd_todo-widget light-widget">
+
+                                                    <div class="panel-body" style="min-height: 450px; max-height: 450px;">
+                                                                                                            <h4>Potential Leads</h4>
+                                                        <p class="mgbt-xs-20"><span class="append-icon"> <i
+                                                                class="fa fa-check-circle-o vd_green"></i> </span>
+                                                            <a>Potential Leads</a> <a href="/all_leads/">(Top Leads)</a>
+                                                        </p>
+
+                                                        <div id="map" style="width: 100%; height: 350px;"></div>
+                                                        <script type="text/javascript">
+                                                            $(function () {
+                                                                $("#map").googleMap();
+                                                                {% for sug in suggestions %}
+                                                                    $("#map").addMarker({
+
+                                                                        address: "{{ sug.get_full_map_address }}", // Postale Address
+                                                                        url: '{{ sug.get_profile_url }}', // Link
+                                                                        title: '{{ sug.user.get_full_name }}'
+                                                                    });
+                                                                {% endfor %}
+                                                            })
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                         </div>
+
+                                            {% else %}
+                                        <div class="tabs widget">
+                                            <ul class="nav nav-tabs widget">
+                                                <li class="active">
+                                                    <a data-toggle="tab" href="#pinterest-tab">
+                                                        Pinterest
+                                                    </a></li>
+                                                <li>
+                                                    <a data-toggle="tab"
+{#                                                       href="#instagram-tab"#}
+                                                            >
+                                                        Instagram (Coming Soon)
+                                                    </a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="pinterest-tab" class="tab-pane active">
+                                                   <div id="imagesPinterest">
+                                        <div class="vd_realtime-chart-widget" >
+
+                                                <div class="vd_todo-widget light-widget">
+
+                                                    <div class="panel-body" style="min-height: 418px; max-height: 418px;" id="pinterest_body_frame" hidden="hidden">
+                                                        <p>
+                                                            <span class="append-icon"> <i
+                                                                class="fa fa-check-circle-o vd_green"></i> </span>
+                                                            <a href="#pinterest-dashboard" data-toggle="modal">Manage
+                                                                Dashboard</a>
+{#                                                            <br/><br/>#}
+                                                            <a data-pin-board-width="749" data-pin-do="embedUser"
+                                                               data-pin-board-height="320" data-pin-scale-width="104"
+                                                               data-pin-scale-height="190"
+                                                               href="{{ profile.dashboard_link }}"></a>
+                                                            <!-- Please call pinit.js only once per page -->
+
+                                                        <div class="clearfix"></div>
+                                                        <script async defer
+                                                                src="//assets.pinterest.com/js/pinit.js"></script>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                        </div>
+                                    </div>
+
+                                                </div>
+                                                <div id="instagram-tab" class="tab-pane">
+                                                    <div class="content-list content-image menu-action-right">
+                                                        <div class="mCustomScrollbar _mCS_6"
+                                                             style="max-height: 385px;"
+                                                             data-rel="scroll" data-scrollheight="385">
+                                                            <div class="mCustomScrollBox mCS-light" id="mCSB_6"
+                                                                 style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 550px;">
+                                                                <div class="mCSB_container"
+                                                                     style="position: relative; top: 0px;">
+
+{#{% endif %}#}
+                                                                                <div class="col-md-12">
+                                                                                <br />
+                                                                                 <a href="https://api.instagram.com/oauth/authorize/?client_id=89cbeff80dbb433e8ac79e180bf5a58f&redirect_uri=https://www.yapjoy.com/instagram/&response_type=code">AUTHENTICATE NOW FROM INSTAGRAM</a>
+                                                                                <hr />
+                                                                                {% load instagram_client %}
+                                                                                {% for image in photos %}
+                                                                                    {{ image|safe }}
+                                                                                {% endfor %}
+                                                                                {% for image in popular_media %}
+                                                                                    {{ image|safe }}
+                                                                                {% endfor %}
+                                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+{#                                                        <div class="closing text-center">#}
+                                                            {#                                                                <a href="/profile/">See All Recent Reviews <i#}
+                                                            {#                                                                        class="fa fa-angle-double-right"></i></a>#}
+{#                                                        </div>#}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                             {% endif %}
+                                    <!-- col-md-12 -->
+                                </div>
+                                <!-- .row -->
+
+                            <!-- .col-md-5 -->
+                        </div>
+                            <!-- .col-md-5 -->
+                            </div>
+                        </div>
+                        <div class="col-md-12 mgbt-md-20 mgbt-lg-0">
+                            <div class="row">
+
+
+                            {% if profile.type == "Professional" %}
+                                <div class="col-md-4">
+                                    <div class="panel widget light-widget">
+                                        <div class="panel-heading no-title">
+                                            <i
+                                                    class="fa fa-check-circle-o vd_green"></i> </span>
+                                            <a href="/settings/">Manage Suggestions</a>
+                                        </div>
+
+
+                                        <div class="panel-body" style="min-height: 453px; max-height: 453px;">
+
+                                          <span class="append-icon">
+                                            <h3 class="mgtp--5 mgbt-xs-20">
+
+                                            </h3>
+                                            <div class="content-list content-image">
+                                                <ul class="list-wrapper no-bd-btm">
+                                                    {% for sug in suggestions|slice:":6" %}
+                                                        <li>
+                                                            <a href="{{ sug.get_profile_url }}">
+                                                            <div class="menu-icon"><img src="{{ sug.get_image_url }}"
+                                                                                        alt="example image"></div>
+                                                            <div class="menu-text pd-5">
+                                                                <h5 class="mgbt-xs-0">{{ sug.user.get_full_name }}</h5>
+
+                                                                <div class="menu-info">
+
+                                                                    <div class="menu-date font-xs">{{ sug.looking_for }}
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </a>
+
+                                                        </li>
+                                                    {% endfor %}
+                                                <li><a href="/recommendations/" class="text-center">View all suggestions</a></li>
+
+                                                </ul>
+                                            </div>
+                                          </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+{#                                {% if profile.type == "Bride" or profile.type == "Groom" %}#}
+                                    <div class="{% if profile.type == "Bride" or profile.type == "Groom" %}col-md-3{% else %}col-md-4{% endif %}">
+                                    <div class="panel widget vd_realtime-chart-widget">
+                                        <div class="vd_todo-widget light-widget">
+
+                                            <div class="panel-body" style="min-height: 480px; max-height: 480px;">
+
+                                                <p class="mgbt-xs-20"><span class="append-icon"> <i
+                                                        class="fa fa-check-circle-o vd_green"></i> </span>
+                                                    <a href="/rsvp">Manage RSVP</a>
+
+                                                <h4 class="text-center">RSVP Percentage</h4>
+
+                                                <p class="text-center">Total RSVP: {{ rsvp_count.rsvp_count }}</p>
+
+                                                <p class="text-center">
+                                                    Accepted: {{ rsvp_count.rsvp_accepted_count }}</p>
+
+                                                <div class="progressDiv">
+                                                    <div class="statChartHolder">
+                                                        <div class="progress-pie-chart rsvp_chart" style="right: 18px;"
+                                                             data-percent="{{ rsvp_percentage }}"><!--Pie Chart -->
+                                                            <div class="ppc-progress">
+                                                                <div class="ppc-progress-fill ppc-progress-fill-rsvp"></div>
+                                                            </div>
+                                                            <div class="ppc-percents ppc-percents-rsvp">
+                                                                <div class="pcc-percents-wrapper">
+                                                                    <span>{{ rsvp_percentage }}%</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--End Chart -->
+                                                    </div>
+                                                </div>
+
+                                                </p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+{#                                {% endif %}#}
+                            {% endif %}
+
+
+                            {% if profile.type == "Professional" %}
+                                <div class="col-md-4">
+                                    <div class="panel widget vd_realtime-chart-widget">
+                                        <div class="vd_todo-widget light-widget">
+
+                                            <div class="panel-body">
+                                                <p class="mgbt-xs-20">
+                                                    <span class="append-icon"> <i
+                                                            class="fa fa-check-circle-o vd_green"></i> </span>
+                                                    <a href="/market/">Manage Awarded plans</a>
+
+                                                <div class="block block-drop-shadow bg-wdot40">
+                                                    <div class="content ">
+                                                        <div class="col-md-12" id="growthGraph">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="{% if profile.type == "Bride" or profile.type == "Groom" %}col-md-3{% else %}col-md-4{% endif %}">
+                                    <div class="panel widget vd_realtime-chart-widget">
+                                        <div class="vd_todo-widget light-widget">
+
+                                            <div class="panel-body" style="min-height: 480px; max-height: 480px;">
+                                                <p class="mgbt-xs-20"><span class="append-icon"> <i
+                                                        class="fa fa-check-circle-o vd_green"></i> </span>
+                                                    <a href="/plans">Manage Plans</a>
+
+                                                <div class="block block-drop-shadow bg-wdot40">
+                                                    <div class="content ">
+                                                        <div class="col-md-12" id="growthGraph">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if profile.type == "Professional" %}
+                                <div class="col-md-4">
+                            {% else %}
+                                <div class="{% if profile.type == "Bride" or profile.type == "Groom" %}col-md-3{% else %}col-md-4{% endif %}">
+                            {% endif %}
+                            <div class="panel widget vd_realtime-chart-widget">
+                                <div class="vd_todo-widget light-widget">
+
+                                    <div class="panel-body" style="min-height: 480px; max-height: 480px;">
+
+                                        <p class="mgbt-xs-20"><span class="append-icon"> <i
+                                                class="fa fa-check-circle-o vd_green"></i> </span>
+                                            <a href="/tasks">Manage Task</a>
+
+                                        <h4 class="text-center">Tasks Percentage</h4>
+
+                                        <p class="text-center">Total Tasks:{{ task_count }}</p>
+
+                                        <p class="text-center">Completed Taks:{{ completed_task_count }}</p>
+
+                                        <div class="progressDiv">
+                                            <div class="statChartHolder">
+                                                <div class="progress-pie-chart progress-pie-chart-task"
+                                                     style="right: 18px;"
+                                                     data-percent="{{ tasks_percentage }}"><!--Pie Chart -->
+                                                    <div class="ppc-progress">
+                                                        <div class="ppc-progress-fill"></div>
+                                                    </div>
+                                                    <div class="ppc-percents">
+                                                        <div class="pcc-percents-wrapper">
+                                                            <span>{{ tasks_percentage }}%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--End Chart -->
+                                            </div>
+                                        </div>
+                                        {#                                                <br/>#}
+                                        {#                                                <br/>#}
+
+                                        </p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            {% if not profile.type == "Professional" %}
+                                {% if profile.type == "Bride" or profile.type == "Groom" %}
+                                <div class="col-md-3">
+                                    <div class="panel widget light-widget">
+                                        {#                                          <div class="panel-heading no-title">#}
+                                        {##}
+                                        {#                                          </div>#}
+
+
+                                        <div class="panel-body" style="min-height: 480px; max-height: 480px;">
+                                            <i
+                                                    class="fa fa-check-circle-o vd_green"></i> </span>
+                                            <a href="/settings/">Manage Suggestions</a>
+                                            {#                                          <span class="append-icon">#}
+                                            <h3 class="mgtp--5 mgbt-xs-20">
+{#                                                        asasd#}
+                                            </h3>
+
+                                            <div class="content-list content-image">
+                                            <h4 class="text-center">Suggestions</h4>
+                                                <ul class="list-wrapper no-bd-btm">
+                                                    {% for sug in suggestions|slice:":4" %}
+                                                        <li><a href="{{ sug.get_profile_url }}">
+                                                            <div class="menu-icon"><img src="{{ sug.get_image_url }}"
+                                                                                        alt="example image"/></div>
+                                                            <div class="menu-text pd-5">
+                                                                <h5 class="mgbt-xs-0">{{ sug.user.get_full_name }}</h5>
+
+                                                                <div class="menu-info">
+                                                                    <div class="menu-date font-xs">{{ sug.userprofile_company.name }}</div>
+                                                                    <div class="menu-date font-xs">{{ sug.looking_for }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a></li>
+
+                                                    {% endfor %}
+                                                        <li><a href="/recommendations/" class="text-center">View all suggestions</a></li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% endif %}
+                            {#                                <div class="col-md-4">#}
+                            {#                                    <div class="panel widget vd_realtime-chart-widget">#}
+                            {#                                        <div class="panel widget vd_todo-widget light-widget">#}
+                            {##}
+                            {#                                            <div class="panel-body">#}
+                            {#                                                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>#}
+                            {#                                                <!-- Adsense Ad Size 1 -->#}
+                            {#                                                <ins class="adsbygoogle"#}
+                            {#                                                     style="display:block"#}
+                            {#                                                     data-ad-client="ca-pub-5618965477531129"#}
+                            {#                                                     data-ad-slot="4689036099"#}
+                            {#                                                     data-ad-format="auto"></ins>#}
+                            {#                                                <script>#}
+                            {#                                                (adsbygoogle = window.adsbygoogle || []).push({});#}
+                            {#                                                </script>#}
+                            {##}
+                            {##}
+                            {#                                            </div>#}
+                            {#                                        </div>#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+
+                                    <div class="panel widget light-widget">
+                                        <div >
+
+                                            <div class="panel-body"  style="min-height: 400px !important; max-height: 400px !important;">
+                                                <h2 class="mgbt-xs-20"><span class="append-icon"> <i
+                                                        class="fa fa-check-circle-o vd_green"></i> </span> Task List
+                                                </h2>
+                                            <hr />
+                                                {% if tasks %}
+                                                    <div class="controls">
+
+                                                        {% for task in tasks %}
+                                                            <div class="vd_checkbox checkbox-done">
+                                                                <input data-action="refresh" id="checkbox-{{ task.id }}"
+                                                                       value="1" onclick="completeTask({{ task.id }});"
+                                                                       type="checkbox"
+                                                                       {% if task.complete %}checked="true"{% endif %}>
+                                                                <label for="checkbox-{{ task.id }}"> {{ task.subject }} </label>
+                                                            </div>
+                                                        {% endfor %}
+
+                                                    </div>
+                                                    <div class="row mgtp-15 mgbt-xs-0">
+                                                        <div class="col-xs-6"><a role="button" href="/tasks/"
+                                                                                 class="btn vd_btn vd_bg-green">View
+                                                            All</a></div>
+                                                        {#                                                    <div class="col-xs-6 text-right"> <a role="button" href="#" class="btn vd_btn vd_bg-grey"><i class="icon-trash"></i></a> </div>#}
+                                                    </div>
+                                                {% else %}
+                                                    <div class="row mgtp-15 mgbt-xs-0">
+                                                        <div class="col-xs-6"><a role="button" href="/tasks/"
+                                                                                 class="btn vd_btn vd_bg-green">Add a
+                                                            Task</a></div>
+                                                        {#                                                    <div class="col-xs-6 text-right"> <a role="button" href="#" class="btn vd_btn vd_bg-grey"><i class="icon-trash"></i></a> </div>#}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Panel Widget -->               </div>
+                                <div class="col-md-4">
+
+                                  <div class="col-md-12 np">
+                                        <div class="panel vd_map-widget widget" >
+                                        {% fullcalendar_css %}
+                                        {% fullcalendar_print_css %}
+                                        {% fullcalendar_jquery %}
+                                        {% fullcalendar_jquery_ui %}
+                                        {% fullcalendar_javascript %}
+                                        {% calendar_init calendar_config_options %}
+
+                                            <div class="panel-body calendar-ref" style="min-height: 400px !important; max-height: 400px !important;">
+                                                <h2 class="mgbt-xs-20"><span class="append-icon"> <i class="fa fa-calendar vd_green"></i> </span> Event List
+                                                </h2>
+                                                <hr />
+                                            {% calendar %}
+                                        </div>
+                                    </div>
+                                  </div>
+<!-- Panel Widget -->               </div>
+                            <div class="col-md-4" >
+                                    <div class="panel widget light-widget">
+                                        <div class="panel-heading no-title"></div>
+                                        <div class="panel-body" style="min-height: 372px !important; max-height: 400px !important;">
+                                            {#                                            <h3 class="mgtp--5"> Events List</h3>#}
+
+                                            <div class="content-list content-image">
+                                                {#                                                <ul class="list-wrapper no-bd-btm">#}
+                                                {#                                                    {% if events %}#}
+                                                {#                                                        {% for event in events %}#}
+                                                {#                                                            <li>#}
+                                                {#                                                                <a href="/events/">#}
+                                                {#                                                                    <div class="menu-icon"><i#}
+                                                {#                                                                            class="fa fa-calendar"></i></div>#}
+                                                {#                                                                    <div class="menu-text">{{ event.title }}#}
+                                                {#                                                                        <div class="menu-info">#}
+                                                {#                                                                            <span class="menu-date">{{ event.start }} </span>#}
+                                                {#                                                                        </div>#}
+                                                {#                                                                    </div>#}
+                                                {#                                                                    <div class="menu-badge"><span#}
+                                                {#                                                                            class="badge status vd_bg-green">&nbsp;</span>#}
+                                                {#                                                                    </div>#}
+                                                {#                                                                </a>#}
+                                                {#                                                            </li>#}
+                                                {#                                                        {% endfor %}#}
+                                                {#                                                    {% else %}#}
+                                                {#                                                        <div class="row mgtp-15 mgbt-xs-0">#}
+                                                {#                                                            <div class="col-xs-6"><a role="button" href="/events/"#}
+                                                {#                                                                                     class="btn vd_btn vd_bg-green">Add#}
+                                                {#                                                                a Event</a></div>#}
+                                                {#                                                    <div class="col-xs-6 text-right"> <a role="button" href="#" class="btn vd_btn vd_bg-grey"><i class="icon-trash"></i></a> </div>#}
+                                                {#                                                        </div>#}
+                                                {#                                                    {% endif %}#}
+                                                {#                                                </ul>#}
+
+                                                <script async
+                                                        src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                                <!-- Ad 400x200 -->
+                                                <ins class="adsbygoogle"
+                                                     style="display:inline-block;width:400px;height:200px"
+                                                     data-ad-client="ca-pub-5618965477531129"
+                                                     data-ad-slot="4123628499"></ins>
+                                                <script>
+                                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .content -->
+
+
+
+
+    </div>
+    <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+    </div>
+    </div>
+    </div>
+    <div class="modal fade" id="pinterest-dashboard" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Manage Dashboard</h4>
+                    <hr/>
+                    <form class="form-horizontal" action="." method="post" role="form">
+                        {% csrf_token %}
+                        <div class="alert alert-danger {% if not form.errors %}vd_hidden{% endif %}">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                            {{ form.errors }}
+                        </div>
+                        <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i
+                                    class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>
+                        <div class="alert alert-success vd_hidden">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well
+                            done!</strong>.
+                        </div>
+                        <div class="form-group  mgbt-xs-20">
+                            <div class="col-md-12">
+                                <div class="label-wrapper sr-only">
+                                    <label class="control-label" for="email">Pinterest Dashboard Link</label>
+                                </div>
+                                <p>Enter your own dashboard link of Pinterest or set it to default.</p>
+
+                                <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}"
+                                     id="email-input-wrapper"><span class="menu-icon"> </span>
+
+                                    <input id="dashboardlink" type="url" name="dashboardlink"
+                                           value="{{ profile.dashboard_link }}" class="form-control"/>
+                                    <a class="pull-right" href="#"
+                                       onclick="$('#dashboardlink').val('https://www.pinterest.com/baweddingfairs/');">Set
+                                        Default</a>
+                                </div>
+                                {% if form.username.errors %}
+                                    <div class="vd_red" for="username">{{ form.username.errors }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div id="vd_login-error" class="alert alert-danger hidden"><i
+                                class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 text-center mgbt-xs-5">
+                                <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                {#            <div class="modal-footer">#}
+                {##}
+                {#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="picture-upload" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Upload Image</h4>
+                    <hr/>
+                    <form class="form-horizontal" action="." method="post" role="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="alert alert-danger {% if not pictureWallForm.errors %}vd_hidden{% endif %}">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                            {{ pictureWallForm.errors }}
+                        </div>
+                        <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i
+                                    class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>
+                        <div class="alert alert-success vd_hidden">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                    class="icon-cross"></i></button>
+                            <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well
+                            done!</strong>.
+                        </div>
+                        <div class="form-group  mgbt-xs-20">
+                            <div class="col-md-12">
+                                <div class="label-wrapper sr-only">
+                                    <label class="control-label" for="email">Upload Image</label>
+                                </div>
+                                <p>Select an image file to attach.</p>
+
+                                <div class="vd_input-wrapper {% if pictureWallForm.picture.errors %}vd_bd-red{% endif %}"
+                                     id="email-input-wrapper"><span class="menu-icon"> </span>
+
+                                    {{ pictureWallForm.picture }}
+                                </div>
+                                {% if pictureWallForm.picture.errors %}
+                                    <div class="vd_red"
+                                         for="username">{{ pictureWallForm.picture.errors }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div id="vd_login-error" class="alert alert-danger hidden"><i
+                                class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 text-center mgbt-xs-5">
+                                <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">Add
+                                    Picture
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                {#            <div class="modal-footer">#}
+                {##}
+                {#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="picture-iframe" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">View Image</h4>
+
+                    <img id="picture-iframe-image" src=""/>
+
+                    <div class="clearfix"></div>
+                    <hr/>
+                    <form action="." method="post">
+                        {% csrf_token %}
+                        <input id="image_send" name="image_send" hidden="hidden"/>
+
+                        <div class="col-md-12 text-center mgbt-xs-5">
+                            <button class="btn vd_bg-green vd_white pull-right text-center" type="submit">Add image to
+                                picture wall
+                            </button>
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+
+                </div>
+                {#            <div class="modal-footer">#}
+                {##}
+                {#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    {% if not profile.type == "Professional" %}
+<div class="modal fade" id="registerModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title">Complete your profile</h4>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+{#                 <div class="form-group">#}
+{#                        <div class="col-md-12">#}
+{#                            <div class="label-wrapper">#}
+{#                                <label class="control-label">First Name</label>#}
+{#                            </div>#}
+{#                            <div class="width-100" id="email-input-wrapper">#}
+{#                                {% if profileform.first_name.errors %}#}
+{#                                    {{ profileform.first_name|addcss:"vd_bd-red" }}{% else %}#}
+{#                                    {{ profileform.first_name }}{% endif %}#}
+{#                            </div>#}
+{#                                                    {% if subform.number.errors %}#}
+{#                                <div id="cardError" class="vd_red"#}
+{#                                     for="name">{{ profileform.first_name.errors }}</div>#}
+{#                                                    {% endif %}#}
+{#                        </div>#}
+{#                    </div>#}
+                        <div class="form-row">
+                            <div class="col-md-6 col-xs-6">
+{#                                <input placeholder="First Name" class="form-control" name="User[first_name]" id="User_first_name" type="text" maxlength="100" value="Adeel" />#}
+                                {{ profileform.first_name }}
+                                  {% if profileform.first_name.errors %}<p style="color: red;">{{ profileform.first_name.errors.0 }}</p>{% endif %}
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+{#                                <input placeholder="Last Name" class="form-control" name="User[last_name]" id="User_last_name" type="text" maxlength="100" value="Khan" />#}
+                                {{ profileform.last_name }}
+                                  {% if profileform.last_name.errors %}<p style="color: red;">{{ profileform.last_name.errors.0 }}</p>{% endif %}
+                            </div>
+                        </div>
+                    <br />
+                    <div class="form-row">
+                            <div class="col-md-12">
+                                <h5>Gender</h5>
+                                <div class="checkbox">
+                                    {{ profileform.gender.1 }}
+                                    {{ profileform.gender.0 }}
+                                 </div>
+                            </div>
+
+                        {% if profileform.gender.errors %}<p style="color: red;">{{ profileform.gender.errors.0 }}</p>{% endif %}
+
+                            <div class="col-md-12">
+                                <p>Age</p>
+                                {{ profileform.age|addcss:"form-control" }}
+                                  {% if profileform.age.errors %}<p style="color: red;">{{ profileform.age.errors.0 }}</p>{% endif %}
+                            </div>
+                    <div class="clearfix"></div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    {% if not profile.type == "Other" %}
+                    <div  class="form-row" style="margin-top: 10px;">
+                        <div class="col-md-12">
+                            {{ profileform.wedding_date }}
+                            {% if profileform.wedding_date.errors %}<p style="color: red;">{{ profileform.wedding_date.errors.0 }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <hr>
+
+                    <div class="form-row">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            {{ profileform.street }}
+                          {% if profileform.street.errors %}
+                              <p style="color: red;">{{ profileform.street.errors.0 }}</p>{% endif %}
+                        </div>
+                          <div class="col-md-4" style="margin-top: 10px;">
+{#                              <input placeholder="City" class="form-control" name="UserAddress[city]" id="UserAddress_city" type="text" maxlength="45" />#}
+                              {{ profileform.city }}
+                               {% if profileform.city.errors %}<p style="color: red;">{{ profileform.city.errors.0 }}</p>{% endif %}
+                          </div>
+                           <div class="col-md-4" style="margin-top: 10px;">
+                               {{ profileform.state|addcss:"form-control" }}
+                                 {% if profileform.state.errors %}<p style="color: red;">{{ profileform.state.errors.0 }}</p>{% endif %}
+                           </div>
+                           <div class="col-md-4" style="margin-top: 10px;">
+{#                               <input placeholder="Zip" class="form-control" name="UserAddress[zip_code]" id="UserAddress_zip_code" type="text" maxlength="45" />#}
+                               {{ profileform.zip|addcss:"form-control" }}
+                                {% if profileform.zip.errors %}<p style="color: red;">{{ profileform.zip.errors.0 }}</p>{% endif %}
+                           </div>
+                           <div class="col-md-12"><p class="helper-text"><i class="fa fa-info-circle"></i> Setting up location helps to refine your recommendation</p></div>
+                    </div>
+                    <div class="form-row interest">
+                        <!-- patch3 -->
+                        <div class="col-md-12">
+                            <h5>Looking For... <span style="color: red;">(Required)</span></h5>
+
+{#                            <div style="display: none;">#}
+                            <select required multiple="multiple" class="form-control" data-placeholder="Choose"
+                                    name="assigned_to" id="to">
+                                {% for o in looking_for_selected %}
+                                    <option selected="selected"
+                                            value="{{ o.open_search.id }}">{{ o.open_search.name }}</option>
+                                {% endfor %}
+                                {% for lf in looking_for %}
+
+                                    <option value="{{ lf.id }}">{{ lf.name }}</option>
+
+                                {% endfor %}
+
+                            </select>
+{#                            </div>#}
+{#                               {% if profileform.zip.errors %}<p style="color: red;">{{ profileform.zip.errors.0 }}</p>{% endif %}#}
+
+
+
+                            {#                            {{ profileform.looking_for }}#}
+                            {#                         <div class="red">{{ profileform.image.errors }}</div>#}
+                            {#                        <textarea placeholder="Use tags/keywords which describes your interest" class="form-control" name="UserInterest[interest]" id="UserInterest_interest"></textarea>        #}
+                            <p class="helper-text"><i class="fa fa-info-circle"></i> Use comma to separate interest</p>
+
+{#                            <p class="helper-text"><i class="fa fa-info-circle"></i> Appropriate keywords helps to#}
+{#                                refine your recommendations</p>#}
+                        </div>
+                    <div class="clearfix"></div>
+                    </div>
+{#                    <hr>#}
+                     <div class="clearfix"></div>
+                    <div class="col-md-12" style="margin-bottom: 10px;;">
+                         <input id="profileform" name="profileform" hidden="hidden">
+{#                    <hr>#}
+                    <button type="submit" class="btn btn-blue pull-right btn-success">Update</button>
+                    </div>
+                    <div class="clearfix"></div>
+{#                    <br>#}
+                </form>
+            </div>
+        <div class="clearfix"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{#{% else %}#}
+{#    <div class="modal fade" id="professionalModal" role="dialog" aria-hidden="true">#}
+{#    <div class="modal-dialog">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-body">#}
+{#                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>#}
+{#                <h4 class="modal-title">Company Profile</h4>#}
+{#                <form action="" method="post" enctype="multipart/form-data">#}
+{#                    {% csrf_token %}{{ companyform.errors }}#}
+{#                        <div class="form-row">#}
+{#                            <div class="col-md-12 col-xs-12">#}
+{#                                <input placeholder="First Name" class="form-control" name="User[first_name]" id="User_first_name" type="text" maxlength="100" value="Adeel" />#}
+{#                                {{ companyform.name }}#}
+{#                                  {% if companyform.name.errors %}<p class="red">{{ companyform.name.errors.0 }}</p>{% endif %}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                <div class="clearfix"></div>#}
+{#                    <div class="form-row">#}
+{#                            <div class="col-md-12 margin-top-10">#}
+{#                                    {{ companyform.description }}#}
+{#                                    {% if companyform.description.errors %}<p class="red">{{ companyform.description.errors.0 }}</p>{% endif %}#}
+{#                            </div>#}
+{##}
+{##}
+{#                    </div>#}
+{#                    <div class="clearfix"></div>#}
+{##}
+{#                    <div  class="form-row">#}
+{#                        <div class="col-md-12 margin-top-10">#}
+{#                            {{ companyform.employees|addcss:"form-control" }}#}
+{#                            {% if companyform.employees.errors %}<p class="red">{{ companyform.employees.errors.0 }}</p>{% endif %}#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="clearfix"></div>#}
+{##}
+{#                    <div class="form-row">#}
+{#                        <!-- patch3 -->#}
+{#                         <div class="col-md-12 margin-top-10">#}
+{##}
+{##}
+{##}
+{#                            {{ companyform.payment_terms }}#}
+{#                                  {% if companyform.payment_terms.errors %}<p class="red">{{ companyform.payment_terms.errors.0 }}</p>{% endif %}#}
+{#                        <textarea placeholder="Use tags/keywords which describes your interest" class="form-control" name="UserInterest[interest]" id="UserInterest_interest"></textarea>        #}
+{#                        <p class="helper-text"><i class="fa fa-info-circle"></i>Payment Terms are the mode of payments you can recieve.</p>#}
+{#                    </div>#}
+{#                     <div class="clearfix"></div>#}
+{#                    <div class="col-md-12 margin-top-10 ">#}
+{#                         <input id="comapnyform" name="companyform" hidden="hidden">#}
+{#                    <button type="submit" class="btn btn-blue pull-right margin-bottom-10">Update</button>#}
+{#                    </div>#}
+{#                    <div class="clearfix"></div>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
+{#        <div class="clearfix"></div>#}
+{#        </div>#}
+{#        <!-- /.modal-content -->#}
+{#    </div>#}
+{#    <!-- /.modal-dialog -->#}
+{#</div>#}
+{% endif %}
+{% endblock content %}
+{% block script %}
+    {#    <script src="{% static "js/jquery.min.js" %}"></script>#}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "vendroid/js/jquery.dashboard.js" %}'></script>
+    <script>
+        {% if not profile.type == "Professional" %}
+            $('#imagesPinterest').slideUp();
+            setTimeout(function () {
+                $(document).ready(function () {
+
+                    var getDivId = document.getElementById("imagesPinterest");
+                    var images = getDivId.getElementsByTagName("img");
+                    for (var i = 0; i < images.length; i++) {
+                        //console.log(i)
+                        anc = images[i].parentElement;
+                        $(anc).removeAttr('target');
+                        $(anc).removeAttr('data-pin-href');
+                        $(anc).addClass("image_class");
+
+                        // console.log(anc);
+                    }
+                    $('#pinterest_body_frame').removeAttr('hidden');
+                });
+                $('.image_class').on('click', function (event) {
+                    event.preventDefault();
+                    $("#picture-iframe").modal('show');
+                    img = $(this);
+                    // alert(img.find('img')[0].src);
+                    $('#picture-iframe-image').attr("src", img.find('img')[0].src);
+                    $('#image_send').val(img.find('img')[0].src);
+                });
+            }, 4000);
+            $('#imagesPinterest').slideDown();
+        {% endif %}
+        rsvp = {{ profile.rsvp_count|default_if_none:0 }};
+        invites = {{ profile.invitation_count|default_if_none:0 }};
+        jQuery("#seo-sparkline").sparkline([invites, rsvp], {
+            type: 'pie',
+            height: '25px',
+            sliceColors: ['#2e8258', '#4abc96', '#1FAE66']
+        });
+
+        {% if not profile.type == "Professional" %}
+            {% if not profile.type == "Other" %}
+                {% if not profile.wedding_date or profileform.errors %}
+                    jQuery('#registerModal').modal('show');
+
+                    /*<![CDATA[*/
+                    jQuery(function (jQuery) {
+                        jQuery('#id_wedding_date').datepicker({'showAnim': 'slide', 'dateFormat': 'mm/dd/yy'});
+                    });
+                    /*]]>*/
+                {% endif %}
+            {% else %}
+                {% if profile.gender == "N/A" or profileform.errors %}
+                    jQuery('#registerModal').modal('show');
+
+
+                {% endif %}
+            {% endif %}
+
+        {% elif not company.name %}
+
+            //professionalModal
+            jQuery('#professionalModal').modal('show');
+
+        {% elif company.name and not profile.subscribed %}
+            jQuery.document.ready(function(){
+                jQuery('#subscriptionModal').modal('show');
+                openSubscriptionModal();
+            })
+        {% endif %}
+        if (jQuery("#to").length > 0) {
+            jQuery("#to").chosen();
+        }
+        ;
+
+    </script>
+    {#     <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
+    {#         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>#}
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300italic,400' rel='stylesheet' type='text/css'>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+
+            function openImage(url) {
+                alert(url);
+            }
+
+            $(document).ready(function () {
+                $.support.cors = true;
+                $.ajax({
+                    url: "https://server-yapjoy.herokuapp.com/api/news_feed/", // the endpoint
+                    dataType: 'json',
+                    type: "GET", // http method
+
+                    // handle a successful response
+                    success: function (data, status) {
+                        $.each(data, function (key, val) {
+                            //  alert(val.text); new-wall-id
+                            var news = '<li><div class="menu-icon"><i class="append-icon icon-newspaper"></i></div><div class="menu-text">' + val.text + '</div></li>';
+                            $('#new-wall-id').append(news);
+                        });
+                    },
+
+                    // handle a non-successful response
+                    error: function (xhr, errmsg, err) {
+                        console.log(errmsg)
+                    }
+                });
+            });
+
+
+            $.getJSON("/tasks/taskcompletechart/", function (json) {
+                console.log(json)
+                RenderBarChart('completeTaskGraph', json, ' Tasks Completed with total tasks', 'No of Tasks');
+
+            });
+            $.getJSON("/growthgraph/plans/", function (json) {
+                console.log(json)
+                {% if profile.type == "Professional" %}
+                    RenderPieChart('growthGraph', json, 'Plans Awarded', 'Plans Graph');
+                {% else %}
+                    RenderPieChart('growthGraph', json, 'Your Plans', 'Plans Graph');
+                {% endif %}
+
+            });
+
+
+            function RenderColumnChart(elementId, dataList, title, name) {
+                console.log('RenderBarChart')
+                new Highcharts.Chart({
+                    exporting: {enabled: false},
+                    chart: {
+                        renderTo: elementId,
+                        plotBackgroundColor: null,
+                        plotBorderWidth: 2,
+                        plotShadow: true,
+                        backgroundColor: null
+                    },
+
+                    title: {
+                        text: title,
+                        style: {
+                            color: 'black',
+                            {#                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                        }
+                    },
+                    tooltip: {
+                        useHTML: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 0, '.', ',');
+                            {#                        return this.y;#}
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false,
+                                style: {
+                                    color: 'black',
+                                    {#                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    xAxis: {
+                        categories: [],
+                        {#                    gridLineWidth: 1,#}
+
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '11px Roboto, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '11px Roboto, sans-serif'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+
+                            type: 'column',
+                            name: name,
+                            data: dataList
+                        }
+                    ]
+                });
+                console.log('here compete')
+            };
+
+            function RenderPieChart(elementId, dataList, title, name) {
+                console.log('RenderPieChart')
+                new Highcharts.Chart({
+                    {#                exporting: { enabled: false },#}
+                    credits: false,
+                    chart: {
+                        renderTo: elementId,
+                        plotBackgroundColor: null,
+                        plotBorderWidth: 0,
+                        plotShadow: true,
+                        backgroundColor: null
+                    }, title: {
+                        text: title,
+                        style: {
+                            color: 'black',
+                            {#                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                        }
+                    },
+                    {#                tooltip: {#}
+                    {#                    useHTML: true,#}
+                    {#                    formatter: function () {#}
+                    {#                        return Highcharts.numberFormat(this.y,0, '.', ',');#}
+                    {#                        return this.y;#}
+                    {#                    }#}
+                    {#                },#}
+
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false,
+
+                                style: {
+                                    color: 'black',
+                                    {#                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                                }
+                            }
+
+                        }
+                    },
+                    xAxis: {
+                        categories: [],
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '7px Roboto,sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        labels: {
+                            style: {
+                                color: 'black',
+                                font: '7px Roboto, sans-serif'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            name: name,
+                            data: dataList,
+                        }
+                    ]
+                });
+            };
+        });
+
+        function RenderBarChart(elementId, dataList, title, name) {
+            console.log('RenderBarChart')
+            new Highcharts.Chart({
+                exporting: {enabled: false},
+                chart: {
+                    renderTo: elementId,
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 2,
+                    plotShadow: true,
+                    backgroundColor: null
+                }, title: {
+                    text: title,
+                    style: {
+                        color: 'black',
+                        {#                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                    }
+                },
+                tooltip: {
+                    useHTML: true,
+                    formatter: function () {
+                        return Highcharts.numberFormat(this.y, 0, '.', ',');
+                        {#                    return this.y;#}
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            style: {
+                                color: 'black',
+                                {#                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                            }
+                        },
+                        showInLegend: true
+                    }
+                },
+                xAxis: {
+                    categories: [],
+                    labels: {
+                        style: {
+                            color: 'black',
+                            font: '11px Roboto, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    labels: {
+                        style: {
+                            color: 'black',
+                            font: '11px Roboto, sans-serif'
+                        }
+                    }
+                },
+                series: [
+                    {
+
+                        type: 'bar',
+                        name: name,
+                        data: dataList
+                    }
+                ]
+            });
+            console.log('here compete')
+        }
+        ;
+
+
+        function RenderLineChart(elementId, dataList, title, name) {
+            console.log('RenderBarChart')
+            new Highcharts.Chart({
+                {#            exporting: { enabled: false },#}
+                chart: {
+                    renderTo: elementId,
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 2,
+                    plotShadow: true,
+                    backgroundColor: null
+                },
+                exporting: {
+                    buttons: {
+                        'myButton': {
+                            _id: 'myButton',
+                            symbol: 'diamond',
+                            {#                symbol: 'url(https://s3.amazonaws.com/galtnetworkassets/avatar/john-galt.png)',#}
+                            {#                symbol: '(Users/Admin/Desktop/chess.png)',#}
+                            symbolX: 12,
+                            symbolY: 12,
+                            x: 0,
+                            symbolFill: '#B5C9DF',
+                            hoverSymbolFill: '#779ABF',
+                            onclick: function () {
+                                doFunction();
+                                {#                    alert('click!')#}
+                            }
+                        }
+                    }
+                },
+                title: {
+                    text: title,
+                    style: {
+                        color: 'black',
+                        {#                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'Blue'#}
+                    }
+
+                },
+
+                tooltip: {
+                    useHTML: true,
+                    formatter: function () {
+                        return Highcharts.numberFormat(this.y, 0, '.', ',');
+                        {#                    return this.y;#}
+                    }
+                },
+                plotOptions: {
+                    column: {
+
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            style: {
+                                color: 'black',
+                                {#                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'red'#}
+                            }
+                        },
+
+                        showInLegend: true
+                    }
+                },
+                xAxis: {
+
+                    categories: [],
+                    lineColor: null,
+                    labels: {
+                        style: {
+                            color: 'black',
+                            font: '11px, Roboto, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    valueDecimals: 2,
+
+                    labels: {
+
+                        style: {
+                            color: 'black',
+                            font: '11px Roboto, sans-serif'
+
+                        }
+                    }
+                },
+                series: [
+                    {
+
+                        type: 'line',
+                        name: name,
+                        data: dataList
+                    }
+                ]
+            });
+            console.log('here compete')
+        }
+        ;
+    </script>
+    <script>
+        $.getJSON("data.json", function (json) {
+            options.xAxis.categories = json[0]['data'];
+            {#                options.series[0] = json[1];#}
+            {#                options.series[1] = json[2];#}
+            chart = new Highcharts.Chart(options);
+        });
+    </script>
+    <script>
+        function doFunction() {
+
+            {#       document.getElementById('option_id').size='4'#}
+            var dropdown = document.getElementById('option_id');
+            var event;
+            event = document.createEvent('MouseEvents');
+            event.initMouseEvent('mousedown', true, true);
+            dropdown.dispatchEvent(event);
+
+        }
+        ;
+    </script>
+    <script>
+
+        $(function () {
+            var $ppc = $('.progress-pie-chart-task'),
+                    percent = parseInt($ppc.data('percent')),
+                    deg = 360 * percent / 100;
+            {#        alert(percent)#}
+            if (percent > 50) {
+                $ppc.addClass('gt-50');
+            }
+            $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
+            {#      $('.ppc-percents span').html(percent+'%');#}
+        });
+    </script>
+    <script>
+
+        $(function () {
+            var $ppcrsvp = $('.rsvp_chart'),
+                    percentrsvp = parseInt($ppcrsvp.data('percent')),
+                    degrsvp = 360 * percentrsvp / 100;
+            {#        alert(percent)#}
+            if (percentrsvp > 50) {
+                $ppcrsvp.addClass('gt-50');
+            }
+            $('.ppc-progress-fill-rsvp').css('transform', 'rotate(' + degrsvp + 'deg)');
+            {#      $('.ppc-percents-rsvp span').html(percentrsvp+'%');#}
+        });
+
+        {% if show_dialogue %}
+            $(document).ready(function () {
+{#                event.preventDefault();#}
+                {#            $('#subscriptionModal').modal('hide');#}
+                $('#iframe_sub').attr('src', '/subscribe/');
+                //$('#subscriptionModal').modal('hide');
+{#                $('.modal').removeClass('show');#}
+                $('#subscriptionModal').modal('show');
+            });
+        {% endif %}
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.fc-header-center span h2').css('font-size','06px');
+        });
+    </script>
+{% endblock script %}

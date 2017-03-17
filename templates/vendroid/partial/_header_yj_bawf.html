@@ -1,0 +1,292 @@
+{% load static %}
+{% load humanize %}
+<header class="header-1" id="header">
+            <div class="vd_top-menu-wrapper">
+                <div class="container ">
+                    <div class="vd_top-nav vd_nav-width  ">
+                        <div class="vd_panel-header">
+                            <div class="logo">
+
+                                <a href="/" class="pull-left"><img alt="logo"  src="{% static "images/logo/logo.png" %}"></a>
+                                <div style="margin-top: 17px;" class="vd_panel-menu  hidden-sm hidden-xs pull-left" data-intro="<strong>Minimize Left Navigation</strong><br/>Toggle navigation size to medium or small size. You can set both button or one button only. See full option at documentation." data-step="1">
+            		                {% if not "dashboard" in request.path %}
+            		                {% if not "all_leads" in request.path %}
+                                   <div hidden id="toggle_button_1" class="pull-left"> <span style="background-color: transparent; border: none; color:white !important;" class="nav-medium-button menu" hidden="hidden" data-toggle="tooltip" data-placement="bottom" data-original-title="Medium Nav Toggle" data-action="nav-left-medium">
+	                    <i class="fa fa-bars"></i>
+                    </span></div>
+
+{#                	<div id="toggle_button_2" class="pull-left"><span style="background-color: transparent; border: none; color:white !important;" class="nav-small-button menu pull-left" data-toggle="tooltip" data-placement="bottom" data-original-title="Small Nav Toggle" data-action="nav-left-small">#}
+{#	                    <i class="fa fa-ellipsis-v"></i>#}
+{#                    </span></div>#}
+                                    <div class="clearfix"></div>
+                                    {% endif %}
+                                    {% endif %}
+            </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+{#                            <div class="vd_panel-menu hidden-sm hidden-xs pull-right mg"#}
+{#                                 data-intro="<strong>Expand Control</strong><br/>To expand content page horizontally, vertically, or Both. If you just need one button just simply remove the other button code."#}
+{#                                 data-step="5" data-position="left">#}
+{#                                <div data-action="remove-navbar" data-original-title="Menu"#}
+{#                                     data-toggle="tooltip" data-placement="bottom" class="remove-navbar-button menu"><i#}
+{#                                        class="fa fa-ellipsis-v"></i></div>#}
+{##}
+{#                            </div>#}
+                            <div class="vd_panel-menu left-pos visible-sm visible-xs">
+                                 
+                        <span class="menu" data-action="toggle-navbar-left">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </span>
+
+
+                            </div>
+                            <div class="vd_panel-menu visible-sm visible-xs">
+                	<span class="menu visible-xs" data-action="submenu">
+	                    <i class="fa fa-bars"></i>
+                    </span>        
+                          
+
+
+                            </div>
+                            <!-- vd_panel-menu -->
+                        </div>
+                        <!-- vd_panel-header -->
+
+                    </div>
+                    <div class="vd_container">
+                        <div class="row">
+
+                            <div class="left-menu-icons col-sm-3">
+                                <div class="vd_mega-menu-wrapper">
+                                    <div class="vd_mega-menu">
+
+                                        <ul class="mega-ul">
+{#                                            <li id="top-menu-1" class="one-icon mega-li">#}
+{#                                                <a href="/" class="mega-link">#}
+{#                                                    <span class="mega-icon"><i class="fa fa-home"></i></span>#}
+{##}
+{#                                                </a>#}
+{##}
+{#                                                <!-- vd_mega-menu-content -->#}
+{#                                            </li>#}
+{#                                            <li id="top-menu-2" class="one-icon mega-li">#}
+{#                                                <a href="/profile/" class="mega-link">#}
+{#                                                    <span class="mega-icon"><i class="fa fa-user"></i></span>#}
+{#                                                </a>#}
+{#                                                <!-- vd_mega-menu-content -->#}
+{#                                            </li>#}
+
+
+                                        </ul>
+                                        <!-- Head menu search form ends -->
+                                    </div>
+                                </div>
+                            </div>
+{#                            <div class="col-sm-3 col-xs-12 pull-left">#}
+{#                                <div class="vd_menu-search">#}
+{#                                        <input type="text" name="search" id="searchField" class="vd_menu-search-text width-90"#}
+{#                                               placeholder="Search">#}
+{#                                        <span class="vd_menu-search-submit"><i class="fa fa-search"></i> </span>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="col-sm-6 col-xs-12 pull-right">
+                                <div class="vd_mega-menu-wrapper">
+                                    <div class="vd_mega-menu pull-right">
+                                        <ul class="mega-ul">
+{#                                            <li id="top-menu-1" class="one-icon mega-li">#}
+{#                                                <a href="/" class="mega-link">#}
+{#                                                    <span class="mega-icon"><i class="fa fa-home"></i></span>#}
+{#                                                    <span class="badge vd_bg-red">1</span>#}
+{#                                                </a>#}
+{##}
+{#                                                <!-- vd_mega-menu-content -->#}
+{#                                            </li>#}
+{#                                            <li id="top-menu-2" class="one-icon mega-li">#}
+{#                                                <a href="/notifications/" class="mega-link">#}
+{#                                                    <span class="mega-icon"><i class="fa fa-bell-o"></i></span>#}
+{#                                                    {% if request.user.userprofile.notification_count > 0 %}<span class="badge vd_bg-red">{{ request.user.userprofile.notification_count }}</span>{% endif %}#}
+{#                                                </a>#}
+{##}
+{#                                                <!-- vd_mega-menu-content -->#}
+{#                                            </li>#}
+{#                                            <li id="top-menu-3" class="one-icon mega-li">#}
+{#                                                <a href="/online_message/" class="mega-link" >#}
+{#                                                    <span class="mega-icon"><i class="fa fa-envelope-o"></i></span>#}
+{#                                                    {% if request.user.userprofile.message_count > 0 %}<span class="badge vd_bg-red">{{ request.user.userprofile.message_count }}</span>{% endif %}#}
+{#                                                </a>#}
+{##}
+{#                                                <!-- vd_mega-menu-content -->#}
+{#                                            </li>#}
+{#                                            <li id="top-menu-profile" class="profile mega-li">#}
+{#                                                <a href="/feedback/" class="mega-link">#}
+{##}
+{#                                                <span class="mega-name">#}
+{#                                                    Feedback#}
+{#                                                </span>#}
+{#                                                </a>#}
+{##}
+{##}
+{##}
+{##}
+{#                                            </li>#}
+{#                                            {% if request.user.userprofile.type == "Professional" %}#}
+{#                                                {% if request.user.userprofile.subscribed %}#}
+{#                                                     <li id="top-menu-profile" class="profile mega-li">#}
+{#                                                    <a>#}
+{##}
+{#                                                <span class="mega-name">#}
+{#                                                    <a onclick="openSubscriptionModalCoin();" href="#" class="mega-link"><span class="mega-name">{{ request.user.userprofile.amount|intcomma }} | Buy More</span></a>#}
+{#                                                </span>#}
+{##}
+{#                                                        </a>#}
+{##}
+{##}
+{##}
+{#                                            </li>#}
+{#                                                {% else %}#}
+{#                                                    <li id="top-menu-profile" class="profile mega-li">#}
+{#                                                <a onclick="openSubscriptionModal();"  class="mega-link">#}
+{##}
+{#                                                <span class="mega-name">#}
+{#                                                    Subscribe#}
+{#                                                </span>#}
+{#                                                </a>#}
+{##}
+{##}
+{##}
+{##}
+{#                                            </li>#}
+{#                                                {% endif %}#}
+{##}
+{#                                        {% endif %}#}
+                                           {% if request.user.is_authenticated %}
+                                                <li id="top-menu-profile" class="profile mega-li">
+                                                <a href="#" class="mega-link" data-action="click-trigger">
+                                                <span class="mega-image">
+                                                    <img src="{{ request.user.userprofile.get_image_url }}" alt="profile image"/>
+                                                </span>
+                                                <span class="mega-name">
+                                                    {{ request.user.get_full_name }} <i class="fa fa-caret-down fa-fw"></i>
+                                                </span>
+                                                </a>
+
+                                                <div class="vd_mega-menu-content  width-xs-2  left-xs left-sm"
+                                                     data-action="click-target">
+                                                    <div class="child-menu">
+                                                        <div class="content-list content-menu">
+                                                            <ul class="list-wrapper pd-lr-10">
+{#                                                                <li><a href="/profile/">#}
+{#                                                                    <div class="menu-icon"><i class=" fa fa-user"></i>#}
+{#                                                                    </div>#}
+{#                                                                    <div class="menu-text">Profile</div>#}
+{#                                                                </a></li>#}
+{#                                                                <li><a href="/settings/">#}
+{#                                                                    <div class="menu-icon"><i class=" fa fa-cogs"></i>#}
+{#                                                                    </div>#}
+{#                                                                    <div class="menu-text">Settings</div>#}
+{#                                                                </a></li>#}
+{#                                                                <li><a href="/feedback/">#}
+{#                                                                    <div class="menu-icon"><i class=" fa fa-support"></i>#}
+{#                                                                    </div>#}
+{#                                                                    <div class="menu-text">Support</div>#}
+{#                                                                </a></li>#}
+
+
+                                                                <li class="line"></li>
+
+
+
+                                                                <li><a href="/logout/">
+                                                                    <div class="menu-icon"><i
+                                                                            class=" fa fa-sign-out"></i></div>
+                                                                    <div class="menu-text">Logout</div>
+                                                                </a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+                                            {% endif %}
+
+                                        </ul>
+                                        <!-- Head menu search form ends -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- container -->
+            </div>
+            <!-- vd_primary-menu-wrapper -->
+
+        </header>
+<script src="{% static "vendroid/js/jquery.js" %}"></script>
+<script>
+
+    function openSubscriptionModal(){
+            $('#iframe_sub').attr('src','/subscribeiFrame/');
+            $('#subscriptionModal').modal('show');
+        }
+    function openSubscriptionModalUser(){
+            $('#iframe_sub').attr('src','/subscribe/');
+            $('#subscriptionModal').modal('show');
+        }
+    function openSubscriptionModalCoin(){
+            $('#iframe_sub').attr('src','/subscribeiFrameCoin/');
+            $('#subscriptionModal').modal('show');
+        }
+
+    function showhelp(){
+        $("#getStarted").removeAttr('hidden', 'hidden')
+    }
+            function closeSubscribedModal(){
+            $('#subscriptionModal').modal('hide');
+        }
+
+
+</script>
+<script>
+        $("#searchField").keypress(function (e) {
+        if (e.which == 13) {
+            window.location.href = '/directory/?name=' + $(this).val();
+
+        }
+    });
+
+{#    var user_id = '{{ request.user.id }}';#}
+{#    window.setInterval(function(){#}
+{#        console.log('working');#}
+{#        console.log(user_id);#}
+{#        $.support.cors = true;#}
+{#        $.ajax({#}
+{#                    url: "https://server-yapjoy.herokuapp.com/api/get_news/"+user_id+"/", // the endpoint#}
+{#                    dataType: 'json',#}
+{#                    type: "GET", // http method#}
+{##}
+{#                    // handle a successful response#}
+{#                    success: function (data, status) {#}
+{#                          $.each( data, function( key, val ) {#}
+{#                              notification("topright", "info", "fa fa-info-circle vd_blue", "YapJoy News", val.text);#}
+{#                          });#}
+{#                    },#}
+{##}
+{#                    // handle a non-successful response#}
+{#                    error: function (xhr, errmsg, err) {#}
+{#                        console.log(errmsg)#}
+{#                    }#}
+{#                });#}
+{#    }, 15000);#}
+
+    $('#toggle_button_2').on('click',function(){
+        $('#toggle_button_1').removeAttr('hidden')
+        $(this).attr('hidden','hidden')
+    })
+    $('#toggle_button_1').on('click',function(){
+        $('#toggle_button_2').removeAttr('hidden')
+        $(this).attr('hidden','hidden')
+    })
+</script>

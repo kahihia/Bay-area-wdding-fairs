@@ -1,0 +1,32 @@
+{% load instagram_client %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+{#{% if request.user.userprofile.instagram_access_token %}#}
+{##}
+{#<h1>Instagram media wall</h1>#}
+{#{% instagram_recent_media_wall %}#}
+{##}
+{#<h1>Instagram sliding box</h1>#}
+{#{% instagram_recent_media_box %}#}
+{#{% else %}#}
+    <a href="https://api.instagram.com/oauth/authorize/?client_id=89cbeff80dbb433e8ac79e180bf5a58f&redirect_uri=https://www.yapjoy.com/instagram/&response_type=code">AUTHENTICATE NOW FROM INSTAGRAM</a>
+{#{% endif %}#}
+
+<hr />
+{% load instagram_client %}
+{% for image in photos %}
+    {{ image|safe }}
+{% endfor %}
+{#{% for image in popular_media %}#}
+{#    {{ image|safe }}#}
+{#{% endfor %}#}
+
+</div>
+</body>
+</html>

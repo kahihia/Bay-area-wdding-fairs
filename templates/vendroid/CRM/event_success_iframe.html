@@ -1,0 +1,168 @@
+{% extends "base_bawf_blank.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+        $(function () {
+            $('#id_wedding_date').datepicker();
+            {#            $("#id_wedding_date").datetimepicker({#}
+            {#             'showTimepicker': false,#}
+            {#            });#}
+{#            parent.iframesmall();#}
+{#            document.getElementById('iframewedding').style.height = '274px';#}
+        });
+    </script>
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 80px;
+        }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+{#        {% include "vendroid/partial/_header.html" %}#}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="">
+{#                {% include "vendroid/CRM/partial/_sidebar.html" %}#}
+            <div class="clearfix"></div>
+
+                <!-- Middle Content Start -->
+
+                <div class="">
+                    <div class="">
+                        <div class=" clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="clearfix">
+
+                                <!-- vd_title-section -->
+
+                                <div class="clearfix" style="margin-bottom: 0px; padding-bottom: 0px;">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget" style="margin:0px;">
+                                                <div class="panel-body" style="min-height: 1056px;">
+                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                                                    {#                    <ul class="nav nav-tabs">#}
+                                                    {##}
+                                                    {##}
+                                                    {#                    </ul>#}
+                                                    <br>
+
+                                                    <div class="tab-content mgbt-xs-20">
+
+                                                        {% if successMessage %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-success">{{ successMessage }}</div>
+                                                            </div>
+                                                        {% endif %}
+                                                        {% if error_message %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-danger">{{ error_message }}</div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+{#                                                                <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"#}
+{#                                                                     width="20%"/><br/>#}
+
+                                                                <div class="clearfix"></div>
+                                                                <br/>
+
+                                                                <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png" style="margin-bottom: 40px;" />
+                                                                <h2 style="color: rgb(185, 76, 112)">Thank you for registering with Bay Area Wedding Fairs.</h2>
+                                                                <hr/>
+                                                                <h4>We will get back to you soon. In the meantime, if you have any questions, please email at info@bayareaweddingfairs.com</h4>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+{#                                                <br><br>#}
+
+
+                                            </div>
+                                        </div>
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+
+        <!-- .content -->
+
+{#        <!-- Footer Start -->#}
+{#        <footer class="footer-1" id="footer">#}
+{#            <div class="vd_bottom ">#}
+{#                <div class="container">#}
+{#                    <div class="row">#}
+{#                        <div class=" col-xs-12">#}
+{#                            <div class="copyright">#}
+{#                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <!-- row -->#}
+{#                </div>#}
+{#                <!-- container -->#}
+{#            </div>#}
+{#        </footer>#}
+{#        <!-- Footer END -->#}
+
+
+    </div>
+
+
+
+
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

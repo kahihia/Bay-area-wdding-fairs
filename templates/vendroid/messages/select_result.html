@@ -1,0 +1,40 @@
+{#<div class="search_result_modal" id="search_result" >#}
+{#    <div class="panel-body">#}
+
+<ul class="friends-search-wrap" id="search_result_inner">
+    {#        {% if userprofiles != None %}#}
+    {#        <li>Please Choose the friend you want to chat with</li>#}
+    {% for userprofile in userprofiles %}
+        {#          <div class="content-list content-image">#}
+        {#            <ul class="list-wrapper pd-lr-10">#}
+        <li>
+            <a onclick="find_friend_message('{{ userprofile.user.id }}')" data-toggle="modal"
+               data-target="search_result_modal" style="cursor:pointer;">
+                <div class="pull-left col-md-3">
+                    <div class="menu-icon round" id="id_profile_url">
+{#                        <img src="static{{ userprofile.get_image_url }}" alt="N/A">#}
+                         <img src="/static/vendroid//img/avatar/avatar.jpg" alt="N/A">
+                    </div>
+                </div>
+                <div class="pull-left col-md-9" style="line-height: 15px;">
+                    <div class="menu-text" id="id_profile_name">
+                        <strong>{{ userprofile.user.get_full_name }}</strong>
+                    </div>
+                        <div class="menu-info" id="id_profile_type">
+                            <span class="menu-date">{{ userprofile.type }}</span>
+                        </div>
+
+
+                </div>
+                <div class="clearfix"></div>
+
+            </a>
+        </li>
+        {#            </ul>#}
+        {#          </div>#}
+        <!-- content-list -->
+    {% endfor %}
+    {#        {% endif %}#}
+</ul>
+{#    </div>#}
+{#</div>#}

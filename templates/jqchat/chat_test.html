@@ -1,0 +1,91 @@
+{% load url from future %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+{#    {% cache 5000 base_head %}#}
+    <meta charset="utf-8">
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    {% if not jquery_min %}
+        <script type="text/javascript"  src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.yapjoy.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pager.css' %}"/>
+    {% block tags %}{% endblock tags %}
+    <script type="text/javascript" src="{% static 'js/jquery.ba-bbq.js' %}"></script>
+    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>
+    <!-- patch1 -->
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png" sizes="32x32">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- patch4 -->
+    <meta name="description" content="An Intelligent Way to Plan Stress Free Wedding online">
+    <meta name="keywords"
+          content="Wedding,bride,groom,wedding planners,venues,caterers,yapjoy,bayareawedding,wedding fairs">
+    <meta name="author" content="yapjoy">
+
+    <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    <!-- patch4 -->
+
+    <link rel="stylesheet" type="text/css" href="{% static "font-awesome-4.4.0/css/font-awesome.min.css" %}" media="all">
+    <link href={% static "css/styles.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static 'css/chosen.css' %}" rel="stylesheet" type="text/css" media="all"/>
+{#    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="all"/>#}
+{#    {% endcache base_head %}#}
+    {% block header_tags %}{% endblock header_tags %}
+    <!-- Load the JS for the chat window and start retrieving messages. -->
+<script type="text/javascript" src="{% static "jqchat/jqchat.js" %}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		InitChatWindow("{% url 'jqchat_ajax' room.id %}", null);
+	});
+</script>
+<style type="text/css">
+	/* Example styling for the chat window */
+   #chatwindow {
+     height: 280px;
+     width: 100%;
+{#     border: 1px solid;#}
+{#     padding: 5px;#}
+{#     margin: 10px 0;#}
+     overflow: auto;
+     background-color: white;
+     float: left;
+   }
+  #memberswindow {
+     height: 250px;
+     width: 100px;
+     border: 1px solid;
+     padding: 5px;
+     margin: 10px 0;
+     overflow: auto;
+     background-color: white;
+     float: left;
+   }
+ .clear{
+     clear: both;
+   }
+</style>
+</head>
+<body >
+    <div class="col-md-12" style="padding: 0px;">
+{#        <h2>Room name: {{ room }}</h2>#}
+
+        <div id="chatwindow"><span id="loading">Loading...</span></div>
+        {#<div id="memberswindow"></div>#}
+        <div class="clear"></div>
+        <form id="chatform">
+{#            <label for="msg">Message:</label>#}
+            <input class="form-control" type="text" id="msg" />
+            <input type="submit" hidden value="Send message" /><br />
+        </form>
+
+        <script type="text/javascript">
+        document.getElementById("msg").focus();
+        </script>
+    </div>
+
+
+
+</body>

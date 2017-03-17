@@ -1,0 +1,257 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+{#    <script>#}
+{#    $(function () {#}
+{#            $('#id_wedding_date').datepicker();#}
+{#            $("#id_wedding_date").datetimepicker({#}
+{#             'showTimepicker': false,#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+    .red {
+        color: red;
+    }
+    textarea {
+        height: 80px;
+    }
+    .btn-brown {
+        background-color: #ba8c00 !important;
+    }
+    </style>
+
+    <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+{#    <script type="text/javascript">#}
+{##}
+{#        if($("#to").length > 0){#}
+{#            $("#to").chosen();#}
+{#        }#}
+{#    </script>#}
+    <script>
+{#        $(function(){#}
+
+            function openModalPurchase(id){
+{#                alert(id);#}
+                $('#purchase').modal('show');
+                var url = '/crm/databuy/'+id+'/';
+{#                alert(url);#}
+                $('#iframe_purchase').attr('src',url);
+            };
+
+
+{#        });#}
+    </script>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+      <div class="vd_container">
+        <div class="vd_content clearfix">
+
+          <!-- vd_head-section -->
+
+          <div class="clearfix">
+
+          <!-- vd_title-section -->
+
+          <div class="vd_content-section clearfix">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-body">
+{#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+{#                    <ul class="nav nav-tabs">#}
+{##}
+{##}
+{#                    </ul>#}
+                    <br>
+                    <div class="tab-content mgbt-xs-20">
+                         {% if successMessage %}
+                    <div class="flashes">
+                        <div class="alert alert-success">{{ successMessage }}</div>
+                    </div>
+                    {% endif %}
+                      <div class="tab-pane active" id="privacy">
+                          <div class="col-md-12 text-center">
+                              <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png" width="20%" /><br />
+                              <div class="clearfix"></div>
+                              <br />
+                              <h3 style="color: #ba8c00;">AVAILABLE CSV's</h3>
+{#                              <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"  />#}
+                              <hr />
+
+                          </div>
+                          <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-12">
+                                      <div class="panel-heading vd_bg-grey">
+                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Available CSV's</h3>
+                                      </div>
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+                                                      <th>CSV No</th>
+                                                      <th>Name</th>
+                                                      <th>Price</th>
+                                                      <th>Created At</th>
+                                                      <th>Purchase</th>
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  {% for csv in events_purchased %}
+                                                      <tr role="row" class="gradeA even">
+                                                          <td>{{ csv.csv.id }}</td>
+                                                          <td>{{ csv.csv.name }}</td>
+                                                          <td>${{ csv.csv.amount|intcomma }}</td>
+                                                          <td>{{ csv.csv.created_at }}</td>
+                                                          <td><a href="{% url "invoicesdataview_list" csv.csv.id %}" class="btn vd_btn vd_bg-green">View List</a></td>
+                                                      </tr>
+                                                  {% endfor %}
+                                                  {% for csv in events %}
+                                                      <tr role="row" class="gradeA odd">
+                                                          <td>{{ csv.id }}</td>
+                                                          <td>{{ csv.name }}</td>
+                                                          <td>${{ csv.amount|intcomma }}</td>
+                                                          <td>{{ csv.created_at }}</td>
+                                                          <td><a onclick="openModalPurchase('{{ csv.id }}');" class="btn vd_btn btn-brown">Buy Now</a></td>
+                                                      </tr>
+                                                  {% endfor %}
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          </div>
+
+                      </div>
+                    </div>
+                    <br><br>
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-6 -->
+
+            </div>
+            <!-- row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+        </div>
+        <!-- .vd_content -->
+      </div>
+      <!-- .vd_container -->
+    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-labelledby="Purchase" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header vd_bg-blue vd_white">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+                            class="fa fa-times"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">Buy CSV</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe src="" width="100%" height="500" id="iframe_purchase" name="iframe_purchase" />
+                </div>
+                <div class="modal-footer background-login">
+                    <button type="button" class="btn vd_btn vd_bg-grey" data-dismiss="modal">Close</button>
+{#                    <button type="button" class="btn vd_btn vd_bg-green" data-dismiss="modal">I Agree</button>#}
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+
+
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

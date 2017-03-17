@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load comments %}
+{% block header_tags %}{{ form.media }}{% endblock header_tags %}
+{% block content %}
+    <section class="profile-section ">
+        <div class="col-md-8 col-md-offset-1 main-wrap">
+            <!-- <section class="main-header"
+                     style="background-image:url(/images/tempBg.jpg)"> -->
+            <!-- seth -->
+            <section class="main-header"
+                     style="background-image:url({{ professional.get_cover_url }})">
+
+
+                <!-- seth -->
+                <!-- Old Code -->
+
+
+            </section>
+            <section class="profile-info">
+            <span class="profile-thumb profile-lg"
+                  style="background-image: url({{ professional.get_image_url }})">
+              </span>
+
+                <div class="menu">
+                    <span class="user-name">{{ professional.user.get_full_name }}</span>
+                <span class="pull-right">
+
+                                {% if not request.user == professional.user %}
+                                    {% if not is_following %}
+                                        <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input id="follow" name="follow" hidden="hidden">
+                                            <button class="btn btn-blue add-friend pull-right"><i
+                                                    class="fa fa-plus"></i>
+                                                {#                                        <i class="fa fa-user">asd</i>#}
+                                                Follow
+                                            </button>
+                                        </form>
+
+                                    {% else %}
+                                         <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input id="unfollow" name="unfollow" hidden="hidden">
+                                            <button class="btn btn-red add-friend pull-right"></i>
+                                                {#                                        <i class="fa fa-user">asd</i>#}
+                                                Unfollow
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+
+
+                    <div class="flashes"></div>
+                </span>
+
+                    <p class="gender"></p>
+
+                    <p class="title">
+                        {{ professional.type }}                 </p>
+
+                    <!-- patch3 -->
+                    <p>{{ professional.looking_for }}</p>
+                </div>
+            </section>
+            <section class="main-content">
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#activity" aria-controls="activity" role="tab"
+                                                                  data-toggle="tab">Activity</a></li>
+                        <!--       <li role="presentation"><a href="#about" aria-controls="about" role="tab"
+                                                          data-toggle="tab">About</a></li> -->
+{#                        <li role="presentation"><a href="#friends" aria-controls="friendss" role="tab"#}
+{#                                                   data-toggle="tab">Yapper</a>#}
+{#                        </li>#}
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="activity">
+                            <div class="wall-posting">
+                                {% include "partial/_feed_public_professional.html" %}
+                            </div>
+                            <!-- end wall -->
+                        </div>
+                        <!-- end activity -->
+                        <div role="tabpanel" class="tab-pane" id="about">about</div>
+                        <div role="tabpanel" class="tab-pane" id="friends">
+
+                            <div id="friend-list-detailed" class="list-view">
+                                <div class="items">
+
+                                </div>
+                                <div class="keys" style="display:none"
+                                     title="/profile/1618de78ebf04696a9d4649f25e43bc3">
+                                    <span>284</span><span>293</span><span>297</span><span>301</span><span>317</span><span>334</span><span>338</span><span>349</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end tab panel -->
+            </section>
+            <!-- end main-content -->
+        </div>
+        <!-- end col -->
+        <div class="col-md-3">
+
+            <section class="widget wedding-pro">
+                <h1>Wedding Professional</h1>
+                <section class="content">
+                    <section class="contact-info">
+                        <small>Company</small>
+                        <h2>{{ company.name }}</h2>
+                        <small>Contact</small>
+                        <h5>{{ professional.user.get_full_name }}</h5>
+                        {% if professional.subscribed == True %}
+
+                        <p class="location">{{ professional.get_full_address }}</p>
+
+                        <p class="phone"><i class="fa fa-phone"></i> {{ professional.phone }}</p>
+
+                        <p class="email"><i class="fa fa-envelope-o"></i> {{ professional.user.email }}</p>
+                        {% else %}
+                            <p class="email">Professional contact details are not visible.</p>
+                        {% endif %}
+                    </section>
+                    <section class="description">
+                        <h5 class="info-title">Description</h5>
+
+                        <p>{{ company.description }}</p>
+                    </section>
+                    <section class="company">
+                        <h5 class="info-title">Company Information</h5>
+
+                        <p>Employees: {{ company.employees }}</p>
+                        <p>Bids: {{ professional.bids_count }}</p>
+                        {% if professional.subscribed == True %}
+                        <p>Payment: {{ company.payment_terms }}</p>
+                        {% else %}
+                            <p class="email">Professional payment terms are not visible.</p>
+                        {% endif %}
+                    </section>
+                    <section class="wedding-pro-interest">
+                        <!-- patch3 -->
+                        <h5 class="info-title">Services & Products</h5>
+
+                        <p>{{ professional.looking_for }}</p>
+                    </section>
+
+                </section>
+
+            </section>
+
+
+            <!-- make task invisible to other users -->
+            <!-- patch1 -->
+
+            <!-- make task invisible to other users -->
+
+            <!-- make event invisible to other users -->
+            <!-- patch1 -->
+
+
+        </div>
+        <!-- end col -->
+    </section>
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "static/js/jquery.form.js" %}"></script>
+    <script type="text/javascript" src="{% static "static/js/jquery.profile.js" %}"></script>
+    <script type="text/javascript" src="{% static "static/js/bootbox.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "static/js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+{#        jQuery(function ($) {#}
+{#            jQuery('#post-list').yiiListView({#}
+{#                'ajaxUpdate': ['post-list'],#}
+{#                'ajaxVar': 'ajax',#}
+{#                'pagerClass': 'pager',#}
+{#                'loadingClass': 'list-view-loading',#}
+{#                'sorterClass': 'sorter',#}
+{#                'enableHistory': false#}
+{#            });#}
+{#            jQuery('#friend-list-detailed').yiiListView({#}
+{#                'ajaxUpdate': ['friend-list-detailed'],#}
+{#                'ajaxVar': 'ajax',#}
+{#                'pagerClass': 'pager',#}
+{#                'loadingClass': 'list-view-loading',#}
+{#                'sorterClass': 'sorter',#}
+{#                'enableHistory': false#}
+{#            });#}
+{#            jQuery('#friend-list').yiiListView({#}
+{#                'ajaxUpdate': ['friend-list'],#}
+{#                'ajaxVar': 'ajax',#}
+{#                'pagerClass': 'pager',#}
+{#                'loadingClass': 'list-view-loading',#}
+{#                'sorterClass': 'sorter',#}
+{#                'enableHistory': false#}
+{#            });#}
+{#        });#}
+        /*]]>*/
+    </script>
+{% endblock jquery %}

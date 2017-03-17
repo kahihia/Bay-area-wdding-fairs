@@ -1,0 +1,183 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+
+                        <div class="vd_content clearfix">
+                        <div class="vd_head-section clearfix">
+                         <div class="vd_panel-header">
+              <ul class="breadcrumb">
+                <li><a href="/forum/">Yapper</a>  </li>
+                <li class="active" >{{ topics.0.forum.title }}</li>
+                  <a  href="/forum/topic/{{ topic.id }}"></a>
+              </ul>
+            </div>
+                        </div>
+
+
+
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-subtitle">#}
+{#                                    <br/>#}
+{#                                    <h1 class="pull-left">Yapper</h1>#}
+{#                                    <a id="new_topic" class="btn vd_btn vd_bg-green vd_white pull-right margin-right-30" href="{% url 'new-topic' pk %}">Start New Topic</a>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+
+
+
+                                    {#                                    <div class="col-sm-12">#}
+{#                                        <input name="searchtopic" id="searchtopic" class="form-control"#}
+{#                                               placeholder="Search topics in yapper" type="text"/>#}
+{#                                <br/>#}
+{##}
+{#                                        <div class="panel widget light-widget">#}
+{#                                            <div class="panel-body">#}
+{#                                                <div class="tl-item">#}
+{##}
+{#                                    <div>#}
+{#                                    <div class="col-md-4"><h4>Topics</h4></div>#}
+{#                                    <div class="col-md-2"><h4>Replies</h4></div>#}
+{#                                    <div class="col-md-4"><h4>Last post</h4></div>#}
+{#                                    <div class="col-md-2"><h4>View</h4></div>#}
+{#                                    </div>#}
+{#                                                        <div>#}
+{#                                                    {% for topic in topics.object_list %}#}
+{#                                            <h4></h4>#}
+{#                                    <div class="col-md-4"><a href="{% url 'topic-detail' topic.pk %}">{{ topic.title }}</a></div>#}
+{#                                    <div class="col-md-2">{{ topic.num_replies }}</div>#}
+{#                                    <div class="col-md-4">{{ topic.last_post.short|safe }}</div>#}
+{#                                    <div class="col-md-2"><a class="button" href="{% url 'topic-detail' topic.pk %}">VIEW</a></div>#}
+{#                                                    <!-- panel-body -->#}
+{#                                                {% endfor %}#}
+{#                                                </div>#}
+{#                                                    </div>#}
+{#                                                    </div>#}
+{#                                                <!-- panel -->#}
+{#                                            </div>#}
+{##}
+{#                                        </div>#}
+                                <div class="col-md-12">
+                <div class="panel widget light-widget">
+                  <div class="panel-heading no-title"> </div>
+                  <div class="panel-body">
+                    <h3 class="mgtp--5 pull-left"> Topics
+
+
+
+                    </h3>
+                  <a id="new_topic" class="pull-right margin-right-30" href="{% url 'new-topic' pk %}">Start New Topic</a>
+                  <div class="clearfix"></div>
+                    <div class="content-list">
+                      <ul class="list-wrapper">
+                          {% for topic in topics.object_list %}
+                        <li> <a href="{% url 'topic-detail' topic.pk %}">
+{#                          <div class="menu-icon vd_green">#}
+{#                              <i class="fa fa-bullhorn"></i>#}
+{#                          </div>#}
+                          <div class="menu-text"> {{ topic.title }} (Replies: {{ topic.num_posts }})
+                            <div class="menu-info"><span class="menu-date">{{ topic.last_post.short|safe }}</span></div>
+                          </div>
+                          </a> </li>
+                          {% endfor %}
+                      </ul>
+                    </div>
+                   {% if topics.object_list and topics.paginator.num_pages > 1 %}
+<div class="pagination">
+    <span class="step-links">
+        {% if topics.has_previous %}
+            <a href= "?page={{ topics.previous_page_number }}">previous &lt;&lt; </a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp;Page {{ topics.number }} of {{ topics.paginator.num_pages }}
+        </span>
+
+        {% if topics.has_next %}
+            <a href="?page={{ topics.next_page_number }}"> &gt;&gt; next</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+                  </div>
+
+                </div>
+                <!-- Panel Widget -->
+
+
+              </div>
+
+
+
+                                    </div>
+                                    <!-- col-md-x -->
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+
+
+
+        <script>
+
+        $('#searchtopic').keypress(function (e) {
+            if (e.which == 13) {
+                window.location.href = '/forum/search/?topic=' + $('#searchtopic').val();
+            }
+        });
+    </script>
+{% endblock script %}

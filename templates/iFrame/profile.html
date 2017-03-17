@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load comments %}
+{% load static %}
+{% block content %}
+    <section class="profile-section ">
+        <div class="col-md-8 col-md-offset-1 main-wrap">
+            <!-- <section class="main-header"
+                     style="background-image:url(/images/tempBg.jpg)"> -->
+            <!-- seth -->
+            <section class="main-header"
+                     style="background-image: url({{ profile.get_cover_url }})">
+
+
+                <!-- seth -->
+                <!-- Old Code -->
+
+
+            </section>
+            <section class="profile-info">
+            <span class="profile-thumb profile-lg" style="background-image: url({{ profile.get_image_url }})">
+              </span>
+
+                <div class="menu">
+                    <span class="user-name">{{ user.get_full_name }}</span>
+                <span class="pull-right">
+
+
+{#                                    <p class="friends-already">Friend</p>#}
+
+
+                <div class="flashes"></div>
+                </span>
+
+                    <p class="gender"></p>
+
+                    <p class="title">
+                        {{ profile.type }}</p>
+                    <p class="title">
+                        {{ profile.looking_for }}                 </p>
+
+                    <!-- patch3 -->
+                    <p></p>
+                </div>
+            </section>
+            <section class="main-content">
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#activity" aria-controls="activity" role="tab"
+                                                                  data-toggle="tab">Activity</a></li>
+                        <!--       <li role="presentation"><a href="#about" aria-controls="about" role="tab"
+                                                          data-toggle="tab">About</a></li> -->
+                        <li role="presentation"><a href="#friends" aria-controls="friendss" role="tab"
+                                                   data-toggle="tab">Friends</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="activity">
+                            <div class="wall-posting">
+
+                                {% include 'partial/_feed.html' %}
+
+                            </div>
+                            <!-- end wall -->
+                        </div>
+                        <!-- end activity -->
+                        <div role="tabpanel" class="tab-pane" id="about">about</div>
+                        <div role="tabpanel" class="tab-pane" id="friends">
+
+                            <div id="friend-list-detailed" class="list-view">
+                                <div class="items">
+                                    <!-- patch2 -->
+                                    <!-- patch2 -->
+
+                                    <!-- patch2 -->
+                                    <!-- patch2 -->
+                                    {% for friend in friends %}
+                                        <div class="col-md-6">
+                                            <div class="media ">
+                                                <div class="media-left"><span class="profile-thumb profile-md"
+                                                                              style="background-image: url({{ friend.userprofile.get_image_url }})"></span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <!--
+                                                    <span class="invite"><a href="#" class="btn btn-gray">Invite</a></span>
+                                                    -->
+
+                                                    <h4 class="media-heading user-name">{{ friend.get_full_name }}</h4>
+
+                                                    <p class="descript"></p>
+
+
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <!-- patch2 -->
+                                </div>
+                                <div class="keys" style="display:none"
+                                     title="/profile/79545a89497f4755aaa28947665fb61d">
+                                    <span>347</span><span>348</span><span>350</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end tab panel -->
+            </section>
+            <!-- end main-content -->
+        </div>
+        <!-- end col -->
+        <div class="col-md-3">
+
+
+            <!-- make task invisible to other users -->
+            <!-- patch1 -->
+            <section class="widget tasks">
+                <h4>Tasks</h4>
+                <ul class="list-unstyled">
+                    {% for task in tasks %}
+                        <div id="task-list" class="list-view">
+                            <div class="items">
+                                <li class="">
+                                    <a onclick="completeTask('{{ task.id }}');"><i id="complete_task_{{ task.id }}"
+                                                                                   class="{% if task.complete %}fa fa-check fa-lg success_green{% else %}fa fa-circle-o fa-lg{% endif %}"></i></a>
+
+                                    <p><a {% if task.complete %}class="success_green"{% endif %}
+                                          id="task_subject_{{ task.id }}" href="/tasks">{{ task.subject }}</a></p>
+
+                                </li>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </ul>
+                <a href="/tasks" class="view-all">View all</a>
+            </section>
+
+
+            <!-- make task invisible to other users -->
+
+            <!-- make event invisible to other users -->
+            <!-- patch1 -->
+            <section class="widget events">
+                <h4>Events</h4>
+                {% for event in events %}
+                    <div id="event-list" class="list-view">
+                        <div class="items">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="fa fa-calendar fa-3x"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-heading"><a href="/events/">{{ event.title }}</a></h5>
+
+                                    <p class="event-descript"></p>
+
+                                    <p class="event-time">{{ event.start }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <a href="/events" class="view-all">View all</a>
+            </section>
+
+
+            <section class="widget recommendations">
+                <h4>Friends</h4>
+                <ul class="list-inline">
+                    <div id="friend-list" class="list-view">
+                        <div class="items">
+                            <!-- patch2 -->
+                            <!-- patch2 -->
+                            <li>
+
+                            </li>
+
+
+                            <!-- patch2 -->
+                            <!-- patch2 -->
+                            <li>
+
+                            </li>
+                            {% for friend in friends %}
+                                {% if friend.user == request.user %}
+                                <div class="media">
+                                    <div class="media-left">
+                                        <span class="profile-thumb profile-md"
+                                              style="background-image: url({{ friend.friends.user.userprofile.get_image_url }})"></span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><a
+                                                href="/profile/{{ friend.friends.user.userprofile.id }}">{{ friend.friends.user.get_full_name }}</a>
+                                        </h5>
+
+                                        <p class="descript">{{ friend.friends.user.useruserprofile.type }}</p>
+
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="media">
+                                    <div class="media-left">
+                                        <span class="profile-thumb profile-md"
+                                              style="background-image: url({{ friend.user.userprofile.get_image_url }})"></span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><a
+                                                href="/profile/{{ friend.user.userprofile.id }}">{{ friend.user.get_full_name }}</a>
+                                        </h5>
+
+                                        <p class="descript">{{ friend.user.useruserprofile.type }}</p>
+
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- patch2 -->
+                        </div>
+                        <div class="keys" style="display:none" title="/profile/79545a89497f4755aaa28947665fb61d"><span>347</span><span>348</span><span>350</span>
+                        </div>
+                    </div>
+                </ul>
+
+                <!--   <a href="#friends" class="view-all" aria-controls="friends" role="tab" aria-expanded="true" data-toggle="tab">View all</a> -->
+            </section>
+        </div>
+        <!-- end col -->
+    </section>
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/static/js/bootbox.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.profile.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.yiilistview.js"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#post-list').yiiListView({
+                'ajaxUpdate': ['post-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#friend-list-detailed').yiiListView({
+                'ajaxUpdate': ['friend-list-detailed'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#task-list').yiiListView({
+                'ajaxUpdate': ['task-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#event-list').yiiListView({
+                'ajaxUpdate': ['event-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#friend-list').yiiListView({
+                'ajaxUpdate': ['friend-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+        });
+        /*]]>*/
+        function completeTask(id) {
+            //  alert(id);
+
+            $.ajax({
+                url: '/tasks/complete/', // the endpoint
+                type: 'post', // http method
+                data: {id: id}, // data sent with the post request
+
+                // handle a successful response
+                success: function (response) {
+                    //alert("success"); // another sanity check
+                    if (response == "success") {
+                        var task_id = '#complete_task_' + id;
+                        $(task_id).removeClass('fa fa-circle-o fa-lg')
+                                .attr('class', 'fa fa-check fa-lg')
+                                .addClass('success_green');
+                        {#                                $('#delete_bin_'+id).addClass('success_green');#}
+                        $('#task_subject_' + id).addClass('success_green');
+                    }
+                    if (response == "successFalse") {
+                        var task_id = '#complete_task_' + id;
+                        $(task_id).removeClass('fa fa-check fa-lg')
+                                .attr('class', 'fa fa-circle-o fa-lg')
+                                .removeClass('success_green');
+                        {#                                $('#delete_bin_'+id).removeClass('success_green');#}
+                        $('#task_subject_' + id).removeClass('success_green');
+                    }
+
+
+                },
+
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+                    {#                            alert(err, errmsg);#}
+                }
+            });
+
+        }
+    </script>
+{% endblock jquery %}

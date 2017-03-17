@@ -1,0 +1,34 @@
+<div class="col-md-2 col-md-offset-1 left-col">
+    <section class="messages-nav">
+        <h3 class="section-title">Messages
+        </h3>
+        <a href="/messages/compose/" class="add-btn "><span>Compose</span></a>
+
+        <div class="messages-filter">
+            <ul class="list-inline">
+                <li class="descript"><p><a href="/messages/">Inbox</a></p></li>
+                <li id="rcount"></li>
+            </ul>
+        </div>
+        <div class="messages-filter">
+            <ul class="list-inline">
+                <li class="descript"><p><a href="/messages/sent">Sent</a></p></li>
+                {#                        <li id="scount">2</li>#}
+            </ul>
+        </div>
+        <div class="messages-filter">
+            <ul class="list-inline">
+                <li class="descript"><p><a href="/messages/draft">Draft</a></p></li>
+                <li id="draftcount"></li>
+            </ul>
+        </div>
+        <!-- patch3 -->
+        <div style="display:none" class="messages-filter">
+            <ul class="list-inline">
+                <li class="descript"><p><a href="/messages/deleted">Deleted</a></p></li>
+                <li id="dcount">1</li>
+            </ul>
+        </div>
+
+    </section>
+</div>

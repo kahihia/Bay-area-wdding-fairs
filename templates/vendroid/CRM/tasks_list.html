@@ -1,0 +1,251 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{#{% load myfilterstags %}#}
+{% load humanize %}
+{% block content %}
+    <style>
+        {#  th{#}
+        {#    font-size: 15px;#}
+        {#  }#}
+        {#  td{#}
+        {#    font-size: 10px;#}
+        {#    word-break: break-all;#}
+        {#  }#}
+
+        .pagination{
+            font-size:15px;
+        }
+
+        .dataTables_wrapper{
+        {#    width: 200px !important;#}
+        {#    max-width:200px;#}
+            overflow-x: scroll;
+        }
+    </style>
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    {#    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+    {#    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+    {#    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>#}
+    {#    <script>#}
+    {#    $(function () {#}
+    {#            $('#id_wedding_date').datepicker();#}
+    {#            $("#id_wedding_date").datetimepicker({#}
+    {#             'showTimepicker': false,#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    {#<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
+    <style>
+        .red {
+            color: red;
+        }
+        textarea {
+            height: 80px;
+        }
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+{#    .dataTables_filter pull-right{#}
+{#        margin-top: -80px;#}
+{#    }#}
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="clearfix">
+
+                                <!-- vd_title-section -->
+
+                                <div class="vd_content-section clearfix">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget">
+                                                <div class="panel-body">
+
+                                                    <br>
+                                                    <div class="tab-content mgbt-xs-20">
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+                                                                {% include "vendroid/CRM/partial/_header_inside.html" %}
+
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+
+{#                                                                         <form method="post" id="searchForm">#}
+{#                                                                            {% csrf_token %}#}
+                                                                            <div class="col-md-4" style="padding: 0px;">
+
+{#                                                                                <input id="task" class="form-control" name="task" type="text" placeholder="Search" />#}
+                                                                                <select name="task" id="task" style="margin-bottom:15px;">
+                                                                                    {% for sale in sales %}
+                                                                                    <option value="{{ sale.id }}">{{ sale.get_full_name }} - {{ sale.email }}</option>
+                                                                                    {% endfor %}
+                                                                                </select>
+                                                                            <br />
+
+                                                                            </div>
+                                                                             <div class="col-md-6" id="searching">
+{#                                                                                 <a id="btn_search" class="btn vd_btn btn-brown pull-left" style="margin-left: 10px;" name="btn_search" >SEARCH </a>#}
+                                                                             </div>
+{#                                                                            <div class="col-md-6"><button class="btn vd_btn btn-brown pull-left" style="margin-left: 10px;" id="search-btn" type="submit" style="margin-bottom: 20px;">SEARCH</button></div>#}
+                                                                            <br />
+{#                                                                        </form>#}
+                                                                    </div>
+                                                                    <div class="col-md-6">
+
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="panel-heading vd_bg-grey">
+                                                                            <h3 class="panel-title text-center"> <span class="menu-icon">  </span> TASKS LIST</h3>
+                                                                        </div>
+                                                                        <div id="grid_table">
+{#                                                                                        {% autopaginate tasks 10 %}#}
+                                                                            {% include "vendroid/CRM/partial/_sales_search.html" %}
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br><br>
+                                            </div>
+                                        </div>
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2016 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+    {#  <script src="{% static "js/chosen.jquery.min.js" %}"></script>#}
+    {##}
+    {#    <script type="text/javascript">#}
+    {##}
+    {#        if($("#to").length > 0){#}
+    {#            $("#to").chosen();#}
+    {#        }#}
+    {#    </script>#}
+
+
+{% endblock content %}
+{% block script %}
+     <script src="{% static "vendroid/plugins/dataTables/table2CSV.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+
+            $("#task").change(function () {
+                var task = $("#task").val();
+                console.log("tas: ", task);
+                setTimeout(ajax_search(task),2000)
+            });
+
+            $("#btn_search").click(function () {
+                var task = $("#task").val();
+                console.log("tas: ", task);
+                ajax_search(task);
+            });
+
+            function ajax_search(task)
+            {
+                $('#searching').html('Searching...')
+                $.ajax({
+                    url: "/crm/taskslist/",
+                    type: "POST",
+                    data: {
+                        'task': task
+                    },
+                    success: function (data) {
+                        $("#grid_table").html(data);
+                        $('#searching').html('')
+
+                    },
+
+                    error: function(error) {
+                        console.log("error: "+error.message);
+                        $('#searching').html('')
+
+                    }
+                });
+            }
+
+        } );
+        $('#data-tables').dataTable();
+    </script>
+
+
+{% endblock script %}

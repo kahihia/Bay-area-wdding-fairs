@@ -1,0 +1,66 @@
+{% load humanize %}
+{% for package in packages %}
+    <div id="view_package_{{ package.id }}">
+{#        <a onclick="$('#view_package_{{ package.id }}').toggle('hidden');$('#edit_package_{{ package.id }}').toggle('hidden');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><br></a>#}
+        <b>{{ package.title }}</b> ${{ package.price|intcomma }}<br />
+        <p>{{ package.description }}</p>
+{#        <hr />#}
+    <br />
+    </div>
+{#    <div id="edit_package_{{ package.id }}" hidden >#}
+{#        <span>Price</span><br>#}
+{#        <input class="form-control" id="ID_price_{{ package.id }}" value="{{ package.price }}">#}
+{#        <br>#}
+{##}
+{#        <span>Title</span><br>#}
+{#        <input class="form-control" id="ID_title_{{ package.id }}" value="{{ package.title }}">#}
+{#        <br>#}
+{##}
+{#        <span>Description</span><br>#}
+{#        <input class="form-control" id="ID_description_{{ package.id }}" value="{{ package.description }}">#}
+{#        <br>#}
+{#        <a class="btn pull-left" onclick="savePackage({{ package.id }})">Save</a>#}
+{#        <a class="btn pull-left" onclick="deletePackage({{ package.id }})">Delete</a>#}
+{#        <a class="btn pull-left" onclick="$('#view_package_{{ package.id }}').toggle('hidden');$('#edit_package_{{ package.id }}').toggle('hidden');">Cancel</a>#}
+{#        <br><br>#}
+{#    </div>#}
+    <div class="clearfix"></div>
+{% endfor %}
+{#<div class="text-left">#}
+{#    <a style="width:320px;color: black;cursor: pointer;" id="ID_newPackage">+ new package deal</a><br>#}
+{#</div>#}
+{#<div id="ID_addNew" hidden>#}
+{#    <span>Price</span>#}
+{#    <br>#}
+{#    <input class="form-control" id="ID_price_0">#}
+{#    <br>#}
+{##}
+{#    <span>Title</span><br>#}
+{#    <input class="form-control" id="ID_title_0">#}
+{#    <br>#}
+{##}
+{#    <span>Description</span><br>#}
+{#    <input class="form-control" id="ID_description_0">#}
+{#    <br>#}
+{#    <a class="btn pull-left" onclick="savePackage(0)">Save</a>#}
+{#    <a class="btn pull-left" id="cancel_create_package">Cancel</a>#}
+{#    <br>#}
+{#</div>#}
+
+{#<script>#}
+{#    var j = 0;#}
+{#    $("#ID_newPackage").on('click',function(){#}
+{#        $("#ID_newPackage").toggle('hidden');#}
+{#        if (j == 0){#}
+{#            $("#ID_addNew").slideDown();#}
+{#            j = 1;#}
+{#        } else {#}
+{#            $("#ID_addNew").slideUp();#}
+{#            j = 0#}
+{#        }#}
+{#    });#}
+{#    $('#cancel_create_package').on('click',function(){#}
+{#        $("#ID_newPackage").toggle('hidden');#}
+{#         $("#ID_addNew").slideUp();#}
+{#    })#}
+{#</script>#}

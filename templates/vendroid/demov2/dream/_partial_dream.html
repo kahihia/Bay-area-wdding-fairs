@@ -1,0 +1,74 @@
+{% load static %}
+<div class="image-tiles">
+{% if product.dashboard_link %}
+    <div class="images_dream col-md-4 col-xs-4">
+        <div class=" text-center" id="image_containing_div_{{ d.id }}">
+{#           <a class="pull-right" style="cursor: pointer;" onclick="deleteImage('{{ d.id }}');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>#}
+            <a href="{{ product.dashboard_link }}" target="_blank"><img style="width:100%;" alt="example image" src="{% static "images/dreams/Pinterest.png" %}"></a>
+{#            <a class="pull-right" id="image_desc_edit_button_{{ d.id }}" #}
+{#               style="cursor: pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>#}
+{#            <p id="description-edit_two_{{ d.id }}" style="margin-top: 20px;">{{ d.description }}</p>#}
+{#            <form action="" method="post" class="image-desc-edit-form" id="image_desc_edit_{{ d.id }}" hidden>#}
+{#                <textarea  id="description-edit_{{ d.id }}" name="description-edit" style="width: 100%;margin-top: 15px;">{{ d.description }}</textarea>#}
+{#                <input hidden value="{{ d.id }}" name="image-desc-edit" id="image-desc-edit" />#}
+{#            <a onclick="submit_desc_edit_form('{{ d.id }}')" class="btn btn-sm pull-right">Save</a>#}
+{#                <div class="clearfix"></div>#}
+{#            </form>#}
+        </div>
+    </div>
+{% endif %}
+    <div class="images_dream col-md-4 col-xs-4">{% for d in list1 %}
+        <div class=" text-center" id="image_containing_div_{{ d.id }}">
+           <a class="pull-right" style="cursor: pointer;" onclick="deleteImage('{{ d.id }}');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            <img style="width:100%;" alt="example image" src="{{ d.image.url }}">
+            <a class="pull-right" id="image_desc_edit_button_{{ d.id }}" onclick="$('#image_desc_edit_{{ d.id }}').toggle('hidden');
+                    $('#image_desc_edit_button_{{ d.id }}').toggle('hidden');
+                    $('#description-edit_two_{{ d.id }}').toggle('hidden');
+                    "
+               style="cursor: pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <p id="description-edit_two_{{ d.id }}" style="margin-top: 20px;">{{ d.description }}</p>
+            <form action="" method="post" class="image-desc-edit-form" id="image_desc_edit_{{ d.id }}" hidden>
+                <textarea  id="description-edit_{{ d.id }}" name="description-edit" style="width: 100%;margin-top: 15px;">{{ d.description }}</textarea>
+                <input hidden value="{{ d.id }}" name="image-desc-edit" id="image-desc-edit" />
+            <a onclick="submit_desc_edit_form('{{ d.id }}')" class="btn btn-sm pull-right">Save</a>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    {% endfor %}</div>
+    <div class="images_dream col-md-4 col-xs-4">{% for d in list2 %}
+        <div class=" text-center" id="image_containing_div_{{ d.id }}">
+           <a class="pull-right" style="cursor: pointer;" onclick="deleteImage('{{ d.id }}');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            <img style="width:100%;" alt="example image" src="{{ d.image.url }}">
+            <a class="pull-right" id="image_desc_edit_button_{{ d.id }}" onclick="$('#image_desc_edit_{{ d.id }}').toggle('hidden');
+                    $('#image_desc_edit_button_{{ d.id }}').toggle('hidden');
+                    $('#description-edit_two_{{ d.id }}').toggle('hidden');
+                    "
+               style="cursor: pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <p id="description-edit_two_{{ d.id }}" style="margin-top: 20px;">{{ d.description }}</p>
+            <form action="" method="post" class="image-desc-edit-form" id="image_desc_edit_{{ d.id }}" hidden>
+                <textarea  id="description-edit_{{ d.id }}" name="description-edit" style="width: 100%;margin-top: 15px;">{{ d.description }}</textarea>
+                <input hidden value="{{ d.id }}" name="image-desc-edit" id="image-desc-edit" />
+            <a onclick="submit_desc_edit_form('{{ d.id }}')" class="btn btn-sm pull-right">Save</a>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    {% endfor %}</div>
+    <div class="images_dream col-md-4 col-xs-4">{% for d in list3 %}
+        <div class="text-center" id="image_containing_div_{{ d.id }}">
+            <a class="pull-right" style="cursor: pointer;" onclick="deleteImage('{{ d.id }}');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            <img style="width:100%;" alt="example image" src="{{ d.image.url }}">
+            <a class="pull-right" id="image_desc_edit_button_{{ d.id }}" onclick="$('#image_desc_edit_{{ d.id }}').toggle('hidden');
+                    $('#image_desc_edit_button_{{ d.id }}').toggle('hidden');
+                    $('#description-edit_two_{{ d.id }}').toggle('hidden');
+                    "
+               style="cursor: pointer;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <p id="description-edit_two_{{ d.id }}" style="margin-top: 20px;">{{ d.description }}</p>
+            <form action="" method="post" class="image-desc-edit-form" id="image_desc_edit_{{ d.id }}" hidden>
+                <textarea  id="description-edit_{{ d.id }}" name="description-edit" style="width: 100%;margin-top: 15px;">{{ d.description }}</textarea>
+                <input hidden value="{{ d.id }}" name="image-desc-edit" id="image-desc-edit" />
+            <a onclick="submit_desc_edit_form('{{ d.id }}')" class="btn btn-sm pull-right">Save</a>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    {% endfor %}</div>
+</div>

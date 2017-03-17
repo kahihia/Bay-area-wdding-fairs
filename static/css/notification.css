@@ -1,0 +1,21 @@
+.modal-header{
+    background: #ffffff none repeat scroll 0 0;
+    padding-bottom: 28px;
+}
+.modal-footer{
+    background: #ffffff none repeat scroll 0 0;
+}
+.modal-body{
+    padding-bottom:300px;
+}
+.modal-dialog{
+    width:800px;
+}
+#notify-modal{
+    padding-bottom:1px;
+}
+#notify-dialog{
+    width:500px;
+    margin-right: 9px;
+    top:-18px;
+}

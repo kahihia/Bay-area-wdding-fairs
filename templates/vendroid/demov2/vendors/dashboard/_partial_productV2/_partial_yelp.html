@@ -1,0 +1,23 @@
+<div class="panel-heading vd_bg-green vd_bd-green">
+    <h4 class="panel-title"> <a data-toggle="collapse" href="#collapseTwo"> {% if up.get_yelp_image  %}
+        <img src="{{ up.get_yelp_image }}" class="profileImg">
+    {% else %}
+        No Yelp Rating available
+    {% endif %} </a> </h4>
+</div>
+<div id="collapseTwo" class="panel collapse in" >
+    <div class="panel-body" style="padding:0px;">
+        <div class="col-md-8 col-md-offset-2 col-xs-12 text-center">
+            {#                                                            <form action="" method="POST">#}{% if not yelp_description %}
+                {#                                                            {% csrf_token %}#}
+                <h2 style="margin-top:15px;" class="red yelp-heading"><b>Connect Reviews from Yelp for Business Owners</b></h2>
+            {% endif %}
+            {#                                                                <input hidden id="YelpName" name="YelpName" />#}
+            {#                                                        {{ yelp_form.yelp_location_zip }}#}
+            {#                                                        {{ yelp_form.yelp_name }}#}
+            {% include "vendroid/demov2/vendors/profile/_partial_reviews.html" %}
+            {#                                                            <button  class="btn btn-block" style="background-color: red;color:white">CONNECT</button>#}
+            {#                                                        </form>#}
+        </div>
+    </div>
+</div>

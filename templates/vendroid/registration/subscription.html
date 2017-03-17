@@ -1,0 +1,477 @@
+{% load static %}
+{% load myfilters %}
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html><!--<![endif]-->
+
+<!-- Specific Page Data -->
+
+<!-- End of Data -->
+
+<head>
+    <meta charset="utf-8"/>
+    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>
+    <meta name="keywords" content="HTML5 Template, CSS3, All Purpose Admin Template, Vendroid"/>
+    <meta name="description" content="Login Pages - Responsive Admin HTML Template">
+    <meta name="author" content="Venmond">
+
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="{% static "vendroid/img/ico/apple-touch-icon-144-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="{% static "vendroid/img/ico/apple-touch-icon-114-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="{% static "vendroid/img/ico/apple-touch-icon-72-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static "vendroid/img/ico/apple-touch-icon-57-precomposed.png" %}">
+    <link rel="shortcut icon" href="{% static "images/favicon.png" %}">
+
+
+    <!-- CSS -->
+
+    <!-- Bootstrap & FontAwesome & Entypo CSS -->
+    <link href="{% static "vendroid/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static "vendroid/css/font-awesome-ie7.min.css" %}">
+    <![endif]-->
+    <link href="{% static "vendroid/css/font-entypo.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Fonts CSS -->
+    <link href="{% static "vendroid/css/fonts.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/prettyPhoto-plugin/css/prettyPhoto.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/isotope/css/isotope.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/pnotify/css/jquery.pnotify.css" %}" media="screen" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/google-code-prettify/prettify.css" %}" rel="stylesheet" type="text/css">
+
+
+    <link href="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Specific CSS -->
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+
+    <!-- Theme CSS -->
+    <link href="{% static "vendroid/css/theme.min.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE]> <link href="{% static "vendroid/css/ie.css" %}" rel="stylesheet" > <![endif]-->
+    <link href="{% static "vendroid/css/chrome.css" %}" rel="stylesheet" type="text/chrome">
+    <!-- chrome only css -->
+
+
+    <!-- Responsive CSS -->
+    <link href="{% static "vendroid/css/theme-responsive.min.css" %}" rel="stylesheet" type="text/css">
+
+
+    <!-- for specific page in style css -->
+
+    <!-- for specific page responsive in style css -->
+
+
+    <!-- Custom CSS -->
+    <link href="{% static "vendroid/custom/custom.css" %}" rel="stylesheet" type="text/css">
+
+
+    <!-- Head SCRIPTS -->
+    <script type="text/javascript" src="{% static "vendroid/js/modernizr.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect-modernizr.js" %}"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="{% static "vendroid/js/html5shiv.js" %}"></script>
+      <script type="text/javascript" src="{% static "vendroid/js/respond.min.js" %}"></script>
+    <![endif]-->
+
+</head>
+{% include "vendroid/loader/waiting_loader_jqueryfix.html" %}
+<body id="pages"
+      class="full-layout no-nav-left no-nav-right  nav-top-fixed background-login     responsive remove-navbar login-layout   clearfix"
+      data-active="pages " data-smooth-scrolling="1">
+<div class="vd_body">
+    <!-- Header Start -->
+
+    <!-- Header Ends -->
+    <div class="content">
+        <div class="container">
+
+            <!-- Middle Content Start -->
+
+            <div class="vd_content-wrapper">
+                <div class="vd_container">
+                    <div class="vd_content clearfix">
+                        <div class="vd_content-section clearfix">
+                            <div class="vd_register-page">
+{#                                <div class="heading clearfix">#}
+{#                                    <div class="logo">#}
+{#                                        <h2 class="mgbt-xs-5"><img src="{% static "images/unnamed_2.png" %}" class="width-40" alt="logo">#}
+{#                                        </h2>#}
+{#                                    </div>#}
+{#                                    <hr />#}
+{##}
+{#                                </div>#}
+                                <div class="panel widget"><h4 class="text-center font-semibold vd_grey">SUBSCRIBE MEMBERSHIP</h4>
+                                    <div class="panel-body">
+                                        <!--                  <div id="register-success" class="alert alert-success" style="display:none;"><i class="fa fa-exclamation-circle fa-fw"></i> Registration confirmation has been sent to your email </div>
+                                                          <div id="register-passerror" class="alert alert-danger" style="display:none;"><i class="fa fa-exclamation-circle fa-fw"></i> Your password and Confirm password are not same </div>-->
+                                        <form class="form-horizontal" action="." method="POST" role="form"
+                                              id="subscription-form">
+                                            {% csrf_token %}
+                                            <div class="alert alert-warning translatable-field lang-1" style="display: block;">
+                        {{ message|safe }}
+                    </div>
+                                            <div id="stripe-error-message" class="text-center" style="color: red;">
+                                                    {{ form.errors }}
+                                                     {% if InvalidDetails %}{{ InvalidDetails }}{% endif %}
+                                            </div>
+                                            <div class="alert alert-warning vd_hidden">
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                        aria-hidden="true"><i class="icon-cross"></i></button>
+                                                <span class="vd_alert-icon"><i
+                                                        class="fa fa-exclamation-circle vd_red"></i></span>Your password
+                                                and Confirm password are not same
+                                            </div>
+                                            <div class="alert alert-success vd_hidden">
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                        aria-hidden="true"><i class="icon-cross"></i></button>
+                                                <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span>Registration
+                                                confirmation has been sent to your email.
+                                            </div>
+                                        <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <div class="label-wrapper">
+                                                        <label class="control-label">Card Number <span class="vd_red">*</span></label>
+                                                    </div>
+                                                    <div class="width-100" id="email-input-wrapper">
+                                                        {% if subform.number.errors %}
+                                                            {{ subform.number|addcss:"vd_bd-red" }}{% else %}
+                                                            {{ subform.number }}{% endif %}
+                                                    </div>
+{#                                                    {% if subform.number.errors %}#}
+                                                        <div id="cardError" class="vd_red"
+                                                             for="name">{{ subform.number.errors }}</div>
+{#                                                    {% endif %}#}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="col-md-6">
+                                                    <div class="label-wrapper">
+                                                        <label class="control-label">Expiry Month <span
+                                                                class="vd_red">*</span></label>
+                                                    </div>
+                                                    <div class="width-100" id="first-name-input-wrapper">
+                                                        {% if subform.month.errors %}
+                                                            {{ subform.month|addcss:"vd_bd-red" }}{% else %}
+                                                            {{ subform.month }}{% endif %}
+                                                    </div>
+{#                                                    {% if subform.month.errors %}#}
+                                                        <div id="expMonthError" class="vd_red"
+                                                             for="name">{{ subform.month.errors }}</div>
+{#                                                    {% endif %}#}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="label-wrapper">
+                                                        <label class="control-label">Expiry Year <span
+                                                                class="vd_red">*</span></label>
+                                                    </div>
+                                                    <div class="width-100" id="last-name-input-wrapper">
+                                                        {% if subform.year.errors %}
+                                                            {{ subform.year|addcss:"vd_bd-red" }}{% else %}
+                                                            {{ subform.year }}{% endif %}
+                                                    </div>
+{#                                                    {% if subform.year.errors %}#}
+                                                        <div class="vd_red"
+                                                             for="name">{{ subform.year.errors }}</div>
+{#                                                    {% endif %}#}
+                                                </div>
+                                            </div>
+
+                                            <div id="vd_login-error" class="alert alert-danger hidden"><i
+                                                    class="fa fa-exclamation-circle fa-fw"></i> Please fill the
+                                                necessary field
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-12 text-center mgbt-xs-5">
+                                                    <button class="btn vd_bg-green vd_white width-100" type="submit"
+                                                            id="submit-subscription" name="submit-subscription">Subscribe Now
+                                                    </button>
+                                                    <input hidden id="stripe_token" name="stripe_token" />
+                                                </div>
+
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Panel Widget -->
+{#                                <div class="register-panel text-center font-semibold"> Already Have an Account? <br/>#}
+{#                                    <a href="/login/">LOGIN<span class="menu-icon"><i#}
+{#                                            class="fa fa-angle-double-right fa-fw"></i></span></a></div>#}
+                            </div>
+                            <!-- vd_login-page -->
+
+                        </div>
+                        <!-- .vd_content-section -->
+
+                    </div>
+                    <!-- .vd_content -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+    </div>
+    <!-- .content -->
+
+    <!-- Footer Start -->
+    <footer class="footer-2" id="footer">
+        <div class="vd_bottom ">
+            <div class="container">
+                <div class="row">
+                    <div class=" col-xs-12">
+                        <div class="copyright text-center">
+                            Copyright &copy;2014 Venmond Inc. All Rights Reserved
+                        </div>
+                    </div>
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+    </footer>
+    <!-- Footer END -->
+
+</div>
+
+<!-- .vd_body END  -->
+{#<a id="back-top" href="#" data-action="backtop" class="vd_back-top visible"> <i class="fa  fa-angle-up"> </i> </a>#}
+<!--
+<a class="back-top" href="#" id="back-top"> <i class="icon-chevron-up icon-white"> </i> </a> -->
+
+<!-- Javascript =============================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<!--[if lt IE 9]>
+  <script type="text/javascript" src="{% static "vendroid/js/excanvas.js" %}"></script>
+<![endif]-->
+{#<script type="text/javascript" src="{% static "vendroid/js/bootstrap.min.js" %}"></script>#}
+<script type="text/javascript" src='{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}'></script>
+<script type="text/javascript"
+        src="{% static "vendroid/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/js/caroufredsel.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/js/plugins.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/plugins/breakpoints/breakpoints.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/dataTables/jquery.dataTables.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "vendroid/plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js" %}"></script>
+
+<script type="text/javascript"
+        src="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/blockUI/jquery.blockUI.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/pnotify/js/jquery.pnotify.min.js" %}"></script>
+
+{#<script type="text/javascript" src="{% static "vendroid/js/theme.js" %}"></script>#}
+<script type="text/javascript" src="{% static "vendroid/custom/custom.js" %}"></script>
+
+<!-- Specific Page Scripts Put Here -->
+{#<script type="text/javascript">#}
+{#$(document).ready(function() {#}
+{##}
+{#		"use strict";#}
+{##}
+{#        var form_register_2 = $('#login-form');#}
+{#        var error_register_2 = $('.alert-danger', form_register_2);#}
+{#        var success_register_2 = $('.alert-success', form_register_2);#}
+{##}
+{#        form_register_2.validate({#}
+{#            errorElement: 'div', //default input error message container#}
+{#            errorClass: 'vd_red', // default input error message class#}
+{#            focusInvalid: false, // do not focus the last invalid input#}
+{#            ignore: "",#}
+{#            rules: {#}
+{##}
+{#                email: {#}
+{#                    required: true,#}
+{#                    email: true#}
+{#                },#}
+{#                password: {#}
+{#                    required: true,#}
+{#					minlength: 6#}
+{#                },#}
+{##}
+{#            },#}
+{##}
+{#			errorPlacement: function(error, element) {#}
+{#				if (element.parent().hasClass("vd_checkbox") || element.parent().hasClass("vd_radio")){#}
+{#					element.parent().append(error);#}
+{#				} else if (element.parent().hasClass("vd_input-wrapper")){#}
+{#					error.insertAfter(element.parent());#}
+{#				}else {#}
+{#					error.insertAfter(element);#}
+{#				}#}
+{#			},#}
+{##}
+{#            invalidHandler: function (event, validator) { //display error alert on form submit#}
+{#                success_register_2.hide();#}
+{#                error_register_2.show();#}
+{##}
+{##}
+{#            },#}
+{##}
+{#            highlight: function (element) { // hightlight error inputs#}
+{##}
+{#				$(element).addClass('vd_bd-red');#}
+{#				$(element).parent().siblings('.help-inline').removeClass('help-inline hidden');#}
+{#				if ($(element).parent().hasClass("vd_checkbox") || $(element).parent().hasClass("vd_radio")) {#}
+{#					$(element).siblings('.help-inline').removeClass('help-inline hidden');#}
+{#				}#}
+{##}
+{#            },#}
+{##}
+{#            unhighlight: function (element) { // revert the change dony by hightlight#}
+{#                $(element)#}
+{#                    .closest('.control-group').removeClass('error'); // set error class to the control group#}
+{#            },#}
+{##}
+{#            success: function (label, element) {#}
+{#                label#}
+{#                    .addClass('valid').addClass('help-inline hidden') // mark the current input as valid and display OK icon#}
+{#                	.closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group#}
+{#				$(element).removeClass('vd_bd-red');#}
+{##}
+{##}
+{#            },#}
+{##}
+{#            submitHandler: function (form) {#}
+{#				$(form).find('#login-submit').prepend('<i class="fa fa-spinner fa-spin mgr-10"></i>')/*.addClass('disabled').attr('disabled')*/;#}
+{#                success_register_2.show();#}
+{#                error_register_2.hide();#}
+{#				setTimeout(function(){window.location.href = "index.html"},2000)	 ;#}
+{#            }#}
+{#        });#}
+{#	#}
+{#	#}
+{# });#}
+{#</script>#}
+<!-- Specific Page Scripts END -->
+
+
+<!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information. -->
+<script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+<script>
+
+
+{#     {% if not is_customer %}#}
+        // alert('working');
+        Stripe.setPublishableKey('pk_live_Hxwa4UrkwLn3bhUqx6sjbQTF');
+        $("#subscription-form").submit(function () {
+            $('#submit-subscription').attr('disabled', true);
+            //alert('submit');
+            if ($("#id_number").length == 1) {
+                // alert('inside');
+                var form = this;
+                var card = {
+                    number: $("#id_number").val(),
+                    expMonth: $("#id_month").val(),
+                    expYear: $("#id_year").val(),
+{#                    cvc: $("#id_verification_value").val()#}
+                };
+                //console.log(card);
+                Stripe.card.createToken(card, function (status, response) {
+                    if (status === 200) {
+                        console.log(status, response);
+                        //jQuery("#credit-card-errors").hide();
+                        //jQuery("#last_4_digits").val(response.card.last4);
+                        $("#stripe_token").val(response.id);
+                        //jQuery('#setupPayment').prop('disabled', false);
+                        form.submit();
+                    } else {
+                        console.log(response.error);
+                        console.log(response.error.param);
+                        if(response.error.param=='number'){
+                            $("#cardError").html(response.error.message);
+                            $("#expMonthError").html('');
+{#                            jQuery("#cardError").css('color','#cb5a5e');#}
+{#                            jQuery("#id_number").addClass('edited');#}
+                            $("#stripe-error-message").text('');
+                        }else if(response.error.param=='exp_month'){
+                            $("#expMonthError").html(response.error.message);
+                            $("#cardError").html('');
+{#                            jQuery("#expMonthError").css('color','#cb5a5e');#}
+{#                            jQuery("#cardError").html('Enter Card Number');#}
+{#                            jQuery("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text('');
+                        }
+                        else if(response.error.param=='cvc'){
+                            $("#cvcError").html(response.error.message);
+{#                            jQuery("#cvcError").css('color','#cb5a5e');#}
+{#                            jQuery("#id_verification_value").addClass('edited');#}
+                            $("#expMonthError").html('Enter Expiration Month');
+{#                            jQuery("#expMonthError").css('color','#999');#}
+                            $("#cardError").html('Enter Card Number');
+{#                            jQuery("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text('');
+                        }
+                        else{
+{#                            jQuery("#cvcError").html(response.error.message);#}
+{#                            jQuery("#cvcError").css('color','#999');#}
+{#                            jQuery("#expMonthError").html('Enter Expiration Month');#}
+{#                            jQuery("#expMonthError").css('color','#999');#}
+{#                            jQuery("#cardError").html('Enter Card Number');#}
+{#                            jQuery("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text(response.error.message);
+                        }
+
+{#                        jQuery("#paymentBlock").attr('style','border: 4px solid red');#}
+                        //jQuery("#credit-card-errors").show();
+                        //jQuery("#user_submit").attr("disabled", false);
+{#                        $(this).children('button[type=submit]').prop('disabled', false);#}
+                        $('#submit-subscription').removeAttr('disabled');
+                    }
+                });
+                return false;
+            }
+            return true;
+        });
+{#        {% endif %}#}
+    {% if redirect %}
+        parent.window.location.href = '/dashboard/';
+    {% endif %}
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68785620-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

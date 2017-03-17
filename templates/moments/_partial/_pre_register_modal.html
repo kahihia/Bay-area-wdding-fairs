@@ -1,0 +1,110 @@
+{% load static %}
+{% load myfilters %}
+<div class="modal fade" id="registermodal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <form class="form-horizontal" action="." method="post" role="form">
+                    <div class="col-md-12 text-center" style="margin-bottom: 40px;margin-top:40px;">
+                        <img src="{% static "images/logo/yapjoy-logo-blue-hd.png" %}" />
+                    </div>
+                    {% csrf_token %}
+                <div class="clearfix"></div>
+                    <div class="alert alert-danger {% if not InvalidDetails %}vd_hidden{% endif %}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                        {{ InvalidDetails }}
+                    </div>
+                    <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        {#                        <span class="vd_alert-icon"><i#}
+                        {#                                class="fa fa-exclamation-circle vd_red"></i></span>#}
+                        {{ error_message }}</div>
+                    <div class="alert alert-success vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well
+                        done!</strong>.
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="form-group">
+
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+                                    <span class="menu-icon"> <i class="fa fa-user"></i> </span>
+
+                                    {{ registerform.name|addcss:"required" }}
+
+
+                                </div>
+                                {% if registerform.name.errors %}
+                                    <div class="vd_red" for="username">{{ registerform.name.errors.0 }}</div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+                                    <span class="menu-icon"> <i class="fa fa-envelope" aria-hidden="true"></i> </span>
+
+                                    {{ registerform.email|addcss:"required" }}
+
+
+                                </div>
+                                {% if registerform.email.errors %}
+                                    <div class="vd_red" for="password">{{ registerform.email.errors.0 }}</div>
+                                {% endif %}
+
+                            </div>
+                        </div><div class="form-group">
+
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+                                    <span class="menu-icon"> <i class="fa fa-lock" aria-hidden="true"></i> </span>
+
+                                    {{ registerform.password|addcss:"required" }}
+
+
+                                </div>
+                                {% if registerform.password.errors %}
+                                    <div class="vd_red" for="password">{{ registerform.password.errors.0 }}</div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 controls">
+                                <input hidden id="register" name="register" />
+                                <button class="btn btn-primary btn-block btn-blue" type="submit" id="login-submit">SETUP MY TEAM
+                                </button>
+                            </div>
+{#                            <div class="col-md-12">#}
+{#                                <div class="row">#}
+{#                                    <div class="col-xs-6">#}
+{#                                        <div class="vd_checkbox pink">#}
+{#                                            <input type="checkbox" id="checkbox-1" value="1">#}
+{#                                            <label for="checkbox-1"> Remember me</label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            {#            <div class="modal-footer">#}
+            {##}
+            {#                </div>#}
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

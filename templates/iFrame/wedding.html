@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <section class="wedding-pros-section">
+{#    <div class="col-md-2 col-md-offset-1 left-col">#}
+{#        <section class="wedding-pros-nav">#}
+{#            <form id="filterForm" action="/professionals">#}
+{#                <h3 class="section-title">Filters <small><a href="/professionals">Clear</a></small></h3>#}
+{#                <div class="wedding-pros-filter">#}
+{#                    <ul class="list-inline">#}
+{#                        <li class="descript"><p><a href="#">Distance </a></p></li>#}
+{#                        <li class="descript"><input type="checkbox" name="distance" value="5"> within 5 mi</li>#}
+{#                        <li class="descript"><input type="checkbox" name="distance" value="10"> within 10 mi</li>#}
+{#                        <li class="descript"><input type="checkbox" name="distance" value="25"> 25+ miles</li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <!--#}
+{#                <div class="wedding-pros-filter">#}
+{#                    <ul class="list-inline">#}
+{#                        <li class="descript"><p><a href="#">Interests </a></p></li>#}
+{#                        <li class="descript"><input type="checkbox" name="interests[]" value="sports"> Sports</li>#}
+{#                        <li class="descript"><input type="checkbox" name="interests[]" value="dance"> Dance</li>#}
+{#                        <li class="descript"><input type="checkbox" name="interests[]" value="photography"> Photography</li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            -->#}
+{#            </form>#}
+{#        </section>#}
+{#    </div>#}
+
+    <div class="col-md-11 col-md-offset-1 wedding-pros-list">
+{#        <ul class="list-inline sorting">#}
+{#            <li>Sort by:</li>                                    #}
+{#            <li><a href="/professionals?sort=rating">Highest Rating</a></li>#}
+{#            <li><a href="/professionals?sort=views">Most views</a></li>#}
+{#        </ul>#}
+        <h3 class="section-title">Wedding Professionals </h3>
+        <div id="pro-list" class="list-view">
+<div class="items">
+    {% for professional in professionals_list %}
+<div class="media ">
+    <div class="media-left"> <span class="profile-thumb profile-md" style="background-image: url({{ professional.get_image_url }})"></span></div>
+
+    <div class="media-body">
+{#        <span class="views"><i class="fa fa-eye"></i> 43</span>#}
+        <h4 class="media-heading user-name"><a href="/professional/profile/{{ professional.id }}/">{{ professional.user.get_full_name }}{% if professional.subscribed == True %} - <small style="color: #ff9800;">Featured</small>{% endif %}</a></h4>
+        <p class="descript">{{ professional.looking_for }}</p>
+        <!-- hide distance  -->
+       <!--  <p class="distance">Unknown Location </p> -->
+     
+<!-- for rating -->
+       
+{#       <p class="rating">#}
+{#                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star-o"></i>#}
+{#                                    </p> #}
+
+
+    </div>
+</div>
+    {% endfor %}
+</div><div class="keys" style="display:none" title="/professionals"><span>156</span><span>159</span><span>161</span><span>166</span><span>185</span></div>
+</div></div>
+</section>        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+{% block jquery %}
+    <script type="text/javascript">
+{#        /*<![CDATA[*/#}
+{#        jQuery(function($) {#}
+{#        jQuery('#pro-list').yiiListView({'ajaxUpdate':['pro-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+{#        });#}
+{#        /*]]>*/#}
+    </script>
+{% endblock %}

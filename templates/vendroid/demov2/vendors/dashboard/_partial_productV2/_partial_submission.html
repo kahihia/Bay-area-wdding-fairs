@@ -1,0 +1,9 @@
+{% load static %}
+{% if profile.is_approved %}
+    <br />
+    <a class="btn blue-button" style="margin-bottom: 15px;padding-top:15px;background-color: #07A6C3;" href="{% url "vendors__storelisting" %}">Congratulations, Your storefront is approved, View Listings.</a>
+{% else %}
+<img src="{% static "images/checklist/check_two.png" %}" class="progress-img" />
+<br />
+<button disabled class="btn blue-button" style="margin-bottom: 15px;background-color: grey;">Storefront is under review</button>
+{% endif %}

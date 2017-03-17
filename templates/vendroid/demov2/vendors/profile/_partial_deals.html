@@ -1,0 +1,87 @@
+<div class="container">
+    <div style="padding:0px;">
+        <div>
+            <div class=" clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12" style="padding:0px;">
+{#                    {% if packages %}#}
+                    <div id="ID_hasPackages">
+                    {% include "vendroid/demov2/vendors/profile/_partial_hasPackages.html" %}
+                    </div>
+
+{#                {% endif %}#}
+{#                    <div id="new_package">#}
+{#                        <span>Price</span><br>#}
+{#                    <input id="ID_price_0"><br>#}
+{##}
+{#                    <span>Title</span><br>#}
+{#                    <input id="ID_title_0"><br>#}
+{##}
+{#                    <span>Description</span><br>#}
+{#                    <input id="ID_description_0"><br>#}
+{#                    <a class="btn pull-left" onclick="savePackage(0)">Save</a><br>#}
+{#                    </div>#}
+{#                {% endif %}#}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function savePackage(id){
+         var price = $('#ID_price_'+id).val();
+         var title = $('#ID_title_'+id).val();
+         var description = $('#ID_description_'+id).val();
+
+         console.log("Price", price, id);
+         if (parseInt(price) > 0){
+            console.log("package.....");
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: {
+                    'packageID': id,
+                    'packageprice': parseInt(price),
+                    'packagetitle': title,
+                    'packagedescription': description
+                },
+
+                success: function (response) {
+                    $('#ID_hasPackages').html(response);
+                    //alert("change package successfull");
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("change package failed");
+                }
+            });
+         } else {
+             alert("Please enter positive integer on price field");
+         }
+    }
+
+    function deletePackage(id){
+        console.log("package.....", id);
+        $.ajax({
+            url: "",
+            type: "POST",
+            data: {
+                'deletePackageID': id
+            },
+
+            success: function (response) {
+                $('#ID_hasPackages').html(response);
+                alert("delete package successfull");
+            },
+
+            error: function (xhr, errmsg, err) {
+                alert("delete package failed");
+            }
+        });
+
+    }
+</script>
+

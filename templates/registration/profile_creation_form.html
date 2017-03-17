@@ -1,0 +1,93 @@
+{% extends 'vendroid/base.html' %}
+{% load static %}
+{% load myfilters %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <h1>Invite Users</h1>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="vd_content-section example-icon clearfix">
+                                <div class="row">
+<section class="home-section">
+    <div class="overlay"></div>
+    <div id="bgvid"></div>
+    <div class="]">
+        <div class="]">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <!-- sticky landing page -->
+                        <div>
+                            <section class="login-form">
+                                <h3>Complete your profile</h3>
+                                {% if InvalidDetails %}
+                                    <div class="flashes">
+                                        <div class="alert alert-danger">{{ InvalidDetails }}</div>
+                                    </div>
+                                {% endif %}
+                                <form action="." method="post">
+                                    {% csrf_token %}
+                                    <input value="" name="LoginForm[return]" id="LoginForm_return" type="hidden">
+{#                                    <div class="form-group">#}
+{#                                        <input value="{{ user.username }}" class="form-control" readonly="True" disabled="disabled" />#}
+{#                                    </div>#}
+                                    <div class="form-group">
+                                        <label style="color: white;;">First name</label><br />
+                                        {{ form.first_name|addcss:"form-control" }}
+                                        {% if form.first_name.errors %}<div class="red">{{ form.first_name.errors }}</div>{% endif %}
+{#                                        {{ form.email }}#}
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: white;;">Last name</label><br />
+                                        {{ form.last_name|addcss:"form-control" }}
+                                        {% if form.last_name.errors %}<div class="red">{{ form.last_name.errors }}</div>{% endif %}
+{#                                        {{ form.email }}#}
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: white;;">Email</label><br />
+                                        {{ form.email|addcss:"form-control" }}
+                                        {% if form.email.errors %}<div class="red">{{ form.email.errors }}</div>{% endif %}
+{#                                        {{ form.email }}#}
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: white;;">Password</label><br />
+                                        {{ form.password|addcss:"form-control" }}
+                                        {% if form.password.errors %}<div class="red">{{ form.password.errors }}</div>{% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: white;;">Account Type</label><br />
+                                        {{ form.type|addcss:"form-control" }}
+                                        {% if form.type.errors %}<div class="red">{{ form.type.errors }}</div>{% endif %}
+                                    </div>
+                                    <button type="submit" class="btn btn-blue log-in-btn">Complete</button>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        </div>
+        <!-- end container -->
+</section>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+{% endblock content %}

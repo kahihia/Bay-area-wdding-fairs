@@ -1,0 +1,545 @@
+{% load static %}
+<style>
+    .nav-right-hide .vd_navbar-right {
+        margin-right: 0px;
+    }
+    .chat-item{
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+    .content-image .menu-text {
+        margin-left:0px;
+        color: white;
+    }
+</style>
+<div class="vd_navbar vd_nav-width vd_navbar-chat vd_bg-black-80 vd_navbar-right ypjoy-chat-sidebar">
+    <div class="yp-chat-bar-top">
+        <div class="yp-sidebar-username">
+            <div class="info">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+            </div>
+            <div class="username" id="current_event_name"><h2>No event available</h2></div>
+            <div class="user-drop-icon">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="yp-event-notification">
+            <div class="event-notify-header">
+                <div class="title"><a href="#" onclick="get_create_event()"><h2>My Events &nbsp; <i class="fa fa-external-link" aria-hidden="true" style="color: #000;font-size: 16px;"></i></h2></a></div>
+                <div class="notify-drop-icon">
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="event-notification-list">
+                <ul id="events_list">
+                    {#                    <li>#}
+                    {#                        <a href="">#}
+                    {#                            <div class="event-list">#}
+                    {#                                <div class="event">#}
+                    {#                                    <h2 class="title">Jane and jhonson wedding</h2>#}
+                    {#                                    <h2 class="date">May 13 2017</h2>#}
+                    {#                                </div>#}
+                    {#                                <div class="event-status">#}
+                    {#                                    <i class="fa fa-circle" aria-hidden="true"></i>#}
+                    {#                                </div>#}
+                    {#                                <div class="clearfix"></div>#}
+                    {#                            </div>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="">#}
+                    {#                            <div class="event-list">#}
+                    {#                                <div class="event">#}
+                    {#                                    <h2 class="title">Jane and jhonson wedding</h2>#}
+                    {#                                    <h2 class="date">May 13 2017</h2>#}
+                    {#                                </div>#}
+                    {#                                <div class="event-status">#}
+                    {##}
+                    {#                                </div>#}
+                    {#                                <div class="clearfix"></div>#}
+                    {#                            </div>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+
+                </ul>
+            </div>
+            <div class="logout-link-noti">
+                <a href="{% url "logout__vendor" %}">Logout</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="chat-actions">
+        <a onclick="invite_users()" href="#"><img src="{% static "vendroid/img/chat-action-1.png" %}"/></a>
+        <img src="{% static "vendroid/img/chat-action-2.png" %}"/>
+        <img src="{% static "vendroid/img/chat-action-3.png" %}"/>
+    </div>
+    {#    <div class="navbar-tabs-menu clearfix" style="margin:0px;background: transparent;">#}
+    {#			<span class="expand-menu" data-action="expand-navbar-tabs-menu">#}
+    {#            	<span class="menu-icon menu-icon-left">#}
+    {#            		<i class="fa fa-ellipsis-h"></i>#}
+    {#                    <span class="badge vd_bg-red">#}
+    {#                        20#}
+    {#                    </span>#}
+    {#                </span>#}
+    {#            	<span class="menu-icon menu-icon-right">#}
+    {#            		<i class="fa fa-ellipsis-h"></i>#}
+    {#                    <span class="badge vd_bg-red">#}
+    {#                        20#}
+    {#                    </span>#}
+    {#                </span>#}
+    {#            </span>#}
+    {#        <div class="menu-container">#}
+    {#            <div class="navbar-search-wrapper" id="events_list">#}
+    {#                <div class="navbar-search vd_bg-black-30">#}
+    {#                    <span class="append-icon"><i class="fa fa-search"></i></span>#}
+    {#                    <input type="text" placeholder="Search" class="vd_menu-search-text no-bg no-bd vd_white width-70" name="search">#}
+    {#                    <div class="pull-right search-config">#}
+    {#                        <a data-toggle="dropdown" href="javascript:void(0);" class="dropdown-toggle"><span class="prepend-icon vd_grey"><i class="fa fa-cog"></i></span></a>#}
+    {#                        <ul role="menu" class="dropdown-menu">#}
+    {#                            <li><a href="#">Action</a></li>#}
+    {#                            <li><a href="#">Another action</a></li>#}
+    {#                            <li><a href="#">Something else here</a></li>#}
+    {#                            <li class="divider"></li>#}
+    {#                            <li><a href="#">Separated link</a></li>#}
+    {#                        </ul>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <select class="form-control">#}
+    {#                    <option>Option A</option>#}
+    {#                    <option>Option B</option>#}
+    {#                    <option>Option C</option>#}
+    {#                </select>#}
+    {#            </div>#}
+    {#        </div>#}
+    {##}
+    {#    </div>#}
+    {#    <div class="clearfix"></div>#}
+    <div class="navbar-menu clearfix yp-friend-chanel-list" style="margin-top: 0px;">
+        <div class="content-list content-image content-chat">
+            <ul class="list-wrapper no-bd-btm" >
+                <li class="group-heading vd_bg-black-20">Friends <a class="pull-right" id="add_friends" onclick="direct_message_start()" ><i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+
+                {#                <li>#}
+                {#                    <a href="#">#}
+                {#                        <div class="menu-icon"><img src="img/avatar/avatar-3.jpg" alt="example image"></div>#}
+                {#                        <div class="menu-text">Theresia Minoque#}
+                {#                            <div class="menu-info">#}
+                {#                                <span class="menu-date">Engineering </span>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                        <div class="menu-badge"><span class="badge status vd_bg-green">&nbsp;</span></div>#}
+                {#                    </a>#}
+                {#                </li>#}
+                <div id="friends_list"></div>
+                <li class="group-heading vd_bg-black-20">Channels <a class="pull-right" id="add_channels" onclick="get_all_channels()"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+                {#                <li>#}
+                {#                    <a href="#">#}
+                {#                        <div class="menu-icon"><img src="img/avatar/avatar-4.jpg" alt="example image"></div>#}
+                {#                        <div class="menu-text">Greg Grog#}
+                {#                            <div class="menu-info">#}
+                {#                                <span class="menu-date">Developer </span>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                        <div class="menu-badge"><span class="badge status vd_bg-grey">&nbsp;</span></div>#}
+                {#                    </a>#}
+                {#                </li>#}
+                <div id="channel_list"></div>
+
+
+            </ul>
+        </div>
+
+
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+</div>
+<script src="{% static "pusher/pusher.min.js" %}"></script>
+<script>
+    $(document).ready(function(){
+        $('.user-drop-icon').click(function(){
+            $('.yp-sidebar-username').hide();
+            $('.yp-event-notification').show();
+        });
+        $('.notify-drop-icon').click(function(){
+            $('.yp-event-notification').hide();
+            $('.yp-sidebar-username').show();
+        });
+    });
+</script>
+<script>
+    var user_id = '{{ request.user.id }}'
+    var profile_image = '{{ request.user.userprofile.get_image_url }}'
+    var reciever_image = ""
+    get_all_events()
+    var pusher = new Pusher('ad53ba68297c735fc8fc', { encrypted: true });
+    function show_center_console(){
+        $('#vd_content_id').show()
+        $('#chat_box').hide()
+    }
+    function get_create_event(){
+        show_center_console()
+        $.ajax({
+            url: "{% url "eventmanager" %}",
+            type: "POST",
+            data: {
+                'create_event':'True',
+            },
+            success: function (response) {
+                $('#vd_content_id').html(response)
+            }
+
+
+
+        });
+    }
+    function get_all_channels(){
+        show_center_console()
+        $.ajax({
+            url: "{% url "eventmanager" %}",
+            type: "POST",
+            data: {
+                'get_channels':selected_value,
+            },
+            success: function (response) {
+                $('#vd_content_id').html(response)
+            }
+
+
+
+        });
+    }
+    var selected_value = "";
+    var current_event_name = "";
+
+    function add_selection(id, name){
+        {#        $('.open_chat_list').on('click',function(){#}
+        {#            alert('owkring',selected_value)#}
+        selected_value = id;
+        $('#current_event_name h2').html(name);
+        $('.yp-sidebar-username').css('display','block');
+        $('.yp-event-notification').css('display','none');
+        {#            alert(selected_value)#}
+        get_chat_list_available(selected_value);
+        {#        })#}
+    }
+    function get_event_team(){
+        show_center_console()
+        var selected_value_pac = selected_value;
+        if(selected_value_pac){
+            $.ajax({
+                url: "{% url "eventmanager" %}",
+                type: "POST",
+                data: {
+                    'get_team':selected_value_pac,
+                },
+                success: function (response) {
+                    $('#vd_content_id').html(response)
+                }
+
+
+
+            });
+        }
+
+    }
+    function get_change_event(id){
+        show_center_console()
+        $.ajax({
+            url: "{% url "eventmanager" %}",
+            type: "POST",
+            data: {
+                'change_event':id,
+            },
+            success: function (response) {
+                $('#vd_content_id').html(response)
+            }
+
+
+
+        });
+    }
+
+    function get_all_events(){
+        $('#events_list').html('')
+        show_center_console()
+        $.ajax({
+            url: "{% url "teamschat_event" %}",
+            type: "GET",
+
+            success: function (response) {
+                {#                var append_html = "<a href='#' onclick='get_create_event()'>My Events</a> | <a href='#' onclick='get_event_team()'><i class='fa fa-info'></i></a><select id='events_list_select' class='form-control'>"#}
+                {#                var append_html = "<li><a onclick="get_create_event()"><div class="event-list"><div class="event"><h2 class="title">Jane and jhonson wedding</h2><h2 class="date">May 13 2017</h2></div><div class="event-status"><i class="fa fa-circle" aria-hidden="true"></i></div><div class="clearfix"></div></div></a></li>"#}
+                if(response){
+                       console.log(response)
+                for (var i = 0, len = response.length; i < len; ++i){
+                    console.log(response[i])
+                    var data = response[i]
+                    {#                    append_html = append_html+"<option value='"+data.id+"'>"+data.name+"</option><div class='clearfix'></div>"#}
+                    event_name = data.name
+                    append_html = '<li ><a href="#" onclick="add_selection('+data.id+',\''+event_name+'\')" class="open_chat_list" value="'+data.id+'"><div class="event-list"><div class="event"><h2 class="title">'+data.name+'</h2><h2 class="date">May 13 2017</h2></div><div class="event-status"><i class="fa fa-circle" aria-hidden="true"></i></div><div class="clearfix"></div></div></a></li>'
+                    $('#events_list').append(append_html)
+                }
+                selected_value = response[0].id;
+                current_event_name = response[0].name;
+                {#                append_html = append_html//+"</select>"#}
+                {#                $('#events_list').html(append_html)#}
+                {#                get_chat_list_available($('#events_list_select').val());#}
+                add_selection(selected_value,current_event_name);
+                {#                get_chat_list_available(selected_value);#}
+                }
+
+            },
+
+            error: function (xhr, errmsg, err) {
+                alert("Api not working");
+            }
+        });
+    }
+    function add_channels(){
+        show_center_console()
+        $.ajax({
+            url: "{% url "eventmanager" %}",
+            type: "POST",
+            data: {
+                'add_channel':true,
+                {#                'event_id':$('#events_list_select').val(),#}
+                'event_id':selected_value,
+            },
+            success: function (response) {
+                $('#vd_content_id').html(response)
+            }
+
+
+
+        });
+    }
+    function invite_users(){
+        show_center_console()
+        $.ajax({
+            url: "{% url "eventmanager" %}",
+            type: "POST",
+            data: {
+                'invite_user':selected_value,
+                {#                'invite_user':$('#events_list_select').val(),#}
+            },
+            success: function (response) {
+                $('#vd_content_id').html(response)
+            }
+
+
+
+        });
+    }
+    function direct_message_start(){
+        show_center_console()
+        $.ajax({
+            url: "{% url "eventmanager" %}",
+            type: "POST",
+            data: {
+                'direct_message':selected_value,
+                {#                'invite_user':$('#events_list_select').val(),#}
+            },
+            success: function (response) {
+                $('#vd_content_id').html(response)
+            }
+
+
+
+        });
+    }
+{#    $('#create_event').on('click',function(){#}
+{#        alert('create_event')#}
+{#    })#}
+    function create_event(){
+
+        show_center_console()
+        $.ajax({
+            url: "{% url "eventmanager" %}",
+            type: "POST",
+            data: {
+                'setup_event':true,
+                {#                'invite_user':$('#events_list_select').val(),#}
+            },
+            success: function (response) {
+{#                alert('create_event')#}
+                $('#vd_content_id').html(response)
+            }
+
+
+
+        });
+    }
+
+    $(document.body).on('change',"#events_list_select",function (e){
+        //  alert('change')
+        {#        get_chat_list_available($('#events_list_select').val());#}
+        get_chat_list_available(selected_value);
+    })
+    function get_chat_list_available(event_id){
+        $('#friends_list').html('')
+        $('#channel_list').html('')
+        if(event_id){
+            $.ajax({
+                url: "/pusher/list/chat/"+event_id+"/",
+                type: "GET",
+
+                success: function (response) {
+                    for (var i = 0, len = response['friends'].length; i < len; ++i)
+                    {
+                        var x = response['friends'][i];
+{#                        var append_html = '<li><a href="#" data-name="'+x.name+'" data-event="'+x.event+'" data-channel="'+x.channel+'" data-type="friend" data-image="'+x.image+'" class="chat_open"><div class="menu-icon"><img src="'+x.image+'" alt="example image"></div><div class="menu-text">'+x.name+'<div class="menu-info"><span class="menu-date">Friend </span></div></div></a></li>'#}
+                        var append_html = '<li class="chat-item"><a href="#" data-name="'+x.name+'" data-event="'+x.event+'" data-channel="'+x.channel+'" data-type="channel" class="chat_open"><div class="menu-text">'+x.name+'</div></a></li>'
+                        $('#friends_list').append(append_html)
+                    }
+                    for (var i = 0, len = response['channels'].length; i < len; ++i)
+                    {
+                        var x = response['channels'][i];
+                        var append_html = '<li class="chat-item"><a href="#" data-name="'+x.name+'" data-event="'+x.event+'" data-channel="'+x.channel+'" data-type="channel" class="chat_open"><div class="menu-text">'+x.name+'</div></a></li>'
+                        {#                    var append_html = '<li><a href="#" data-name="'+x.name+'" data-event="'+x.event+'" data-channel="'+x.channel+'" data-type="channel" class="chat_open"><div class="menu-icon"><img src="{% static "images/teamChat/group-icon.png" %}" alt="example image"></div><div class="menu-text">'+x.name+'<div class="menu-info"><span class="menu-date">Channel </span></div></div></a></li>'#}
+                        $('#channel_list').append(append_html)
+                    }
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("Api not working");
+                }
+            });
+
+        }
+
+    }
+    $(document).ready(function(){
+
+        update_scroller()
+        //     get_chat_list_available();
+
+    });
+    function update_scroller(){
+        var element = document.getElementById("chat_box_append");
+        element.scrollTop = element.scrollHeight;
+    }
+
+    function get_history(channel){
+        $.ajax({
+                url: "/pusher/messages/history/"+channel+"/",
+                type: "GET",
+
+                success: function (response) {
+                    for (var i = 0, len = response.length; i < len; ++i)
+                    {
+                        var data = response[i]
+                        var append_reciever = '<div class="chat-list"><div class="col-md-2"><div class="chat-img"><img src="'+response[i].picture+'"></div></div><div class="col-md-10"><div class="chat-content"><h2 class="name">'+data.name+'</h2><p class="description">'+data.message+'</p></div></div><div class="clearfix"></div></div>'
+                        $('#chat_box_append').append(append_reciever)
+                        update_scroller();
+{#                          var out = document.getElementById("chat_box_append");#}
+{#                            // allow 1px inaccuracy by adding 1#}
+{#                            var isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;#}
+{#                            var $target = $('#chat_box_append');#}
+{#                $target.animate({scrollTop: $target.height()}, 9999999);#}
+                    }
+
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("Api not working");
+                }
+            });
+    }
+
+    $(document).on('click', '.chat_open', function () {
+        $('chat_sending_text').attr('disabled','disabled')
+        pusher.disconnect()
+        $('#vd_content_id').hide()
+        var name = $(this).attr('data-name');
+        var event = $(this).attr('data-event');
+        var channel = $(this).attr('data-channel');
+        var type = $(this).attr('data-type');
+        var image = $(this).attr('data-image');
+        reciever_image = image
+        $('#chat_box').css('display','block')
+        $('#chat_name').html(name)
+        $('#chat_type').html('('+type+')')
+        $('#chat-data-event').val(event)
+        $('#chat-data-channel').val(channel)
+        console.log(name, event, channel, type, image)
+        pusher = new Pusher('ad53ba68297c735fc8fc', { encrypted: true });
+
+
+        var channel = pusher.subscribe(channel);
+        var channel = pusher.channel(channel);
+
+        get_history($(this).attr('data-channel'));
+        $('chat_sending_text').removeAttr('disabled')
+        var callback = function(data) {
+            //$('#data').append(data.message+'<br />')
+            //alert(data);
+            if(data.id != user_id){
+                console.log(data);
+                {#            var append_reciever = '<li> <a href="#"><div class="menu-icon"><img alt="example image" src="'+reciever_image+'"></div><div class="menu-text"><a>'+data.user+':</a> '+data.message+'<div class="menu-info"><span class="menu-date">0 Minutes Ago </span></div></div></a> </li>'#}
+                var append_reciever = '<div class="chat-list"><div class="col-md-2"><div class="chat-img"><img src="'+data.image+'"></div></div><div class="col-md-10"><div class="chat-content"><h2 class="name">'+data.user+'</h2><p class="description">'+data.message+'</p></div></div><div class="clearfix"></div></div>'
+                $('#chat_box_append').append(append_reciever)
+                update_scroller()
+{#                var $target = $('.mCustomScrollBox');#}
+{#                $target.animate({scrollTop: $target.height()}, 9999999);#}
+            }else{
+                {#                 var append_sender = '<li class="align-right"> <a href="#"><div class="menu-icon"><img alt="example image" src="'+profile_image+'"></div><div class="menu-text"> '+data.message+'<div class="menu-info"><span class="menu-date">0 Minutes Ago </span></div></div></a> </li>'#}
+                var append_sender = '<div class="chat-list"><div class="col-md-2"><div class="chat-img"><img src="'+profile_image+'"></div></div><div class="col-md-10"><div class="chat-content"><h2 class="name">'+data.user+'</h2><p class="description">'+data.message+'</p></div></div><div class="clearfix"></div></div>'
+                $('#chat_box_append').append(append_sender)
+                update_scroller()
+{#                var $target = $('.mCustomScrollBox');#}
+{#                $target.animate({scrollTop: $target.height()}, 9999999);#}
+            }
+
+        };
+        pusher.bind(event, callback);
+        $('#chat_box_append').html('')
+
+
+    })
+        $(document).ready(function(){
+            $('#chat_sending_text').keyup(function(e){
+
+          //  e.preventDefault();
+            if (e.keyCode === 10 || e.keyCode === 13){
+                e.preventDefault();
+
+{#                alert('sending request')#}
+                // $('#chat-data-channel').val(channel)
+                $.ajax({
+                    url: "{% url "send_message" %}",
+                    type: "POST",
+                    data: {
+                        'channel_id':$('#chat-data-channel').val(),
+                        'event':$('#chat-data-event').val(),
+                        'message':$('#chat_sending_text').val(),
+                    },
+                    success: function (response) {
+
+
+                        {#                   var append_sender = '<li class="align-right"> <a href="#"><div class="menu-icon"><img alt="example image" src="'+profile_image+'"></div><div class="menu-text"> '+response.message+'<div class="menu-info"><span class="menu-date">0 Minutes Ago </span></div></div></a> </li>'#}
+                        {#            $('#chat_box_append').append(append_sender)#}
+                        $('#chat_sending_text').val('')
+{#                        var $target = $('.mCustomScrollBox');#}
+{#                        $target.animate({scrollTop: $target.height()}, 9999999);#}
+                        return false
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        alert("Api not working");
+                    }
+                });
+
+            }
+            else{
+                return false
+            }
+        });
+        })
+
+</script>

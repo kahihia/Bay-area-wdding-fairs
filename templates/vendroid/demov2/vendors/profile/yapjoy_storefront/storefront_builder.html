@@ -1,0 +1,950 @@
+{% extends "vendroid/demo/base_vendor.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% block header_tags %}
+    {{ video_upload_s3_form.media }}
+{% endblock header_tags %}
+{% block content %}
+    <style>
+
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+        {#                div.panel-heading.vd_bg-green.vd_bd-green {#}
+        {#                    background-color: white !important;#}
+        {#                    color: black !important;#}
+        {#                    border: 1px grey solid !important;#}
+        {#                }#}
+        {#                div.panel-heading.vd_bg-green.vd_bd-green a{#}
+        {#                    color: grey !important;#}
+        {#                }#}
+        .yelpSaveButton {
+            margin-bottom:15px;
+        }
+        .image-cropper {
+            max-width: 110px;
+            min-width: 110px;
+            max-height: 110px;
+            min-height: 110px;
+        {#            position: relative;#}
+        {#            overflow: hidden;#}
+        {#            border-radius: 50%;#}
+        {#            background: #eee no-repeat center;#}
+        {#            background-size: cover;#}
+        {#            border-color: darkgray;#}
+        }
+        #profile-image-id img:hover {
+            content: url('{% static "images/vendorProfile/Stock_Profile_Picture.png" %}');
+            cursor: pointer;
+        {#             position:absolute;#}
+        {#               left:50% ;#}
+        {#             right: 50% ;#}
+        {#            opacity:0.5;#}
+        {#             margin-top:    -111px;#}
+        {#             margin-left: -106px;#}
+        {#            z-index:15;#}
+        }
+        .images-mobile {
+            width: 120px;
+            min-width: 120px;
+            max-height: 120px;
+            min-height: 120px;
+            /* overflow: hidden; */
+            /* position: relative; */
+            max-width: 120px;
+        }
+        .panel {
+            border:none !important;
+            border-radius:none !important;
+        }
+        .blue-button {
+            background-color: #07A6C3;
+            color: white;
+        {#            border-radius: 20px;#}
+            margin-top: 10px;
+            width: 80%;
+            height: 60px;
+            line-height: 26px;
+        }
+        {#        ul.tab {#}
+        {#            list-style-type: none;#}
+        {#            margin: 0;#}
+        {#            padding: 0;#}
+        {#            overflow: hidden;#}
+        {#            border: 1px solid #ccc;#}
+        {#            background-color: #f1f1f1;#}
+        {#        }#}
+        {##}
+        {#        /* Float the list items side by side */#}
+        {#        ul.tab li {float: left;}#}
+        {##}
+        {#        /* Style the links inside the list items */#}
+        {#        ul.tab li a {#}
+        {#            display: inline-block;#}
+        {#            color: black;#}
+        {#            text-align: center;#}
+        {#            padding: 14px 16px;#}
+        {#            text-decoration: none;#}
+        {#            transition: 0.3s;#}
+        {#            font-size: 17px;#}
+        {#        }#}
+        {##}
+        {#        /* Change background color of links on hover */#}
+        {#        ul.tab li a:hover {#}
+        {#            background-color: #ddd;#}
+        {#        }#}
+        {##}
+        {#        /* Create an active/current tablink class */#}
+        {#        ul.tab li a:focus, .active {#}
+        {#            background-color: #ccc;#}
+        {#        }#}
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        {#        .social_icons_style {#}
+        {#                width: 20%;#}
+        {#                padding:0px;#}
+        {#                display: inline;#}
+        {#                margin-top:15px;#}
+        {#                align:center;#}
+        {#                width: 60% !important;#}
+        {#                align: center;#}
+        {#            }#}
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+        .form-wizard .nav > li.active .menu-icon {
+            background: #07A6C3;
+        }
+        .panel-group .panel+.panel {
+            margin-top:0px;
+        }
+        .progress-img {
+            width: 50%;
+        }
+        .modal {
+            width: 98%;
+        }
+        @media only screen and (max-width: 500px) {
+            .yelpSaveButton {
+                margin-bottom:0px;
+            }
+            .blue-button {
+                background-color: #07A6C3;
+                color: white;
+            {#            border-radius: 20px;#}
+                margin-top: 10px;
+                width: 300px;
+                height: 60px;
+                line-height: 26px;
+            }
+            .images-mobile {
+                width:100%;
+                max-width:100%;
+                max-height:120px;
+                min-height:120px;
+            {#            height:auto;#}
+                overflow: hidden;
+                position: relative;
+            }
+            .progress-img {
+                width: 100%;
+            }
+            .mb-panel-col-md-8 {
+                padding-left:0px;
+                padding-right:0px;
+            }
+            .panel{
+            {#                border:none !important;#}
+            }
+
+            .mb-content-wrapper-child {
+                margin-top:0px;
+            }
+            .mb-panel-body{
+                padding:0px !important;
+            }
+            .mb-row {
+                margin-left: -17px !important;
+                margin-right: -17px !important;
+
+            }
+            .nav-justified {
+                width: 100%;
+            }
+            .nav-justified > li {
+            {#  float: left;#}
+                display: table-cell;
+            }
+            .yelp-heading {
+                font-size: 18px;
+            }
+            .mb-col-xs-12 {
+                padding:0px;
+            }
+            .image-cropper {
+                width: 70px;
+                height: 70px;
+                max-height: 70px;
+                min-height: 70px;
+                max-width:70px;
+                min-width:70px;
+            {#            position: relative;#}
+            {#            overflow: hidden;#}
+            {#            border-radius: 50%;#}
+            {#            background: #eee no-repeat center;#}
+            {#            background-size: cover;#}
+            {#            border-color: darkgray;#}
+            }
+            .company__fonts {
+                font-size: 16px;
+            }
+            .social_icons_style {
+                width: 20%;
+                padding:0px;
+                display: inline;
+                margin-top:15px;
+            }
+
+
+
+        }
+
+        {#   ul.experiences li {#}
+        {#    padding-left: 33px;#}
+        {#    margin-bottom: 2.5em;#}
+        {#    list-style: none;#}
+        {#    background: url('../img/misc/list-bullet-darkgray.png') no-repeat;#}
+        {#    border-left: 1px solid #yourcolor;#}
+        {# } #}
+        {#    @import "compass/css3";#}
+
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+        {% include "vendroid/demo/_partial/_header_yapjoy_theme_vendor.html" %}
+
+        <div class="content">
+            <div class="container">
+
+                {% include "vendroid/demov2/vendors/teamChat/_chatbar.html" %}
+
+                <div class="vd_content-wrapper yp-content-wrap" id="vd_content_id" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                            <div class="wrap-store-front">
+                                <div class="store-left-side">
+                                    <div class="panel yp-panel-video" style="margin-bottom: 0px;">
+                                        <div class="wrap-action-btns">
+                                            <div class="yp-action-btn btn-yp-info">
+                                                <a href="javacript:void(0);">
+                                                    <i class="fa fa-question" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="yp-action-btn btn-yp-upload-img">
+                                                <a href="javacript:void(0);" onclick="$('#videoForms').toggle('hidden');$('#ID_VideoShow').toggle('hidden');">
+                                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                    </div><!--end panel-->
+                                    <div class="panel yp-panel-video">
+                                        {#                                        <img src="{% static "vendroid/img/video.png" %}">#}
+                                        {#                                         <div class="col-md-12 col-xs-12" id="uploadVideoDiv" hidden>#}
+                                        {#                                                                    <form action="" method="post" enctype="multipart/form-data" id="videoUploaderForm">#}
+                                        {#                                                                        <p>An Opportunity to introduce your team to engaged couples.</p>#}
+                                        {#                                                                        <p>Get your whole team behind one camera and tell couples why you do what you do.</p>#}
+                                        {#                                                                        <p><b>Guidelines</b>#}
+                                        {#                                                                            <br />90 seconds or less<br />#}
+                                        {#                                                                            One continuous shot<br />#}
+                                        {#                                                                            No after effects</p>#}
+                                        {#                                                                        <p><b>Tips</b><br />#}
+                                        {#                                                                            Use your phone to record and upload. <br />Ensure that your voice sounds clear</p>#}
+                                        {#                                                                        <p><b>File format</b><br />#}
+                                        {#                                                                            Widescreen 16:9<br />.mp4, .avi or .mov</p>#}
+                                        {#                                                                        {{ videoForm.as_p }}#}
+                                        {#                                                                    {{ videoUrl }}#}
+                                        {#                                                                        <input name="uploadVideo" id="uploadVideo" hidden />#}
+                                        {#                                                                        <div class="text-center" id="teamVideoUploader">#}
+                                        {#                                                                            <div class="col-md-12">#}
+                                        {#                                                                            <img id="uploading_image" src="" />#}
+                                        {#                                                                            </div>#}
+                                        {#                                                                            <button class="btn blue-button" type="submit" id="videoUploadbutton" style="margin-bottom: 20px;">Upload Team Video</button>#}
+                                        {#                                                                        </div>#}
+                                        {#                                                                    </form>#}
+                                        {#                                                                </div>#}
+                                        <div id="ID_VideoShow">
+                                            {% include "vendroid/demov2/vendors/profile/_partial_video.html" %}
+
+
+                                        </div>
+                                        <div id="videoForms" hidden>
+                                            <div class="panel">
+                                                <div class="panel-body" style="min-height: 220px;">
+                                                    <input type="file" id="file_input" />
+                                            <p id="status">Please select a file</p>
+{#                                            <img id="preview" src="/static/default.png" />#}
+                                            <div class="progress" hidden>
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                                                     aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                                    0%
+                                                </div>
+                                            </div>
+                                                </div>
+                                            </div>
+
+{#                                            <div class="clearfix"></div>#}
+                                        </div>
+{#                                        <div class="clearfix"></div>#}
+
+                                        {#                                        <div class="yp-action-btn btn-yp-info">#}
+                                        {#                                            <a href=""></a>#}
+                                        {#                                        </div>#}
+
+                                        {#                                        <div class="yp-action-btn btn-yp-upload-img">#}
+                                        {#                                            <a href="" onclick="$('#uploadVideoDiv').toggle('hidden');$('#ID_VideoShow').toggle('hidden');"></a>#}
+                                        {#                                        </div>#}
+                                    </div><!--end panel-->
+                                    <div class="clearfix"></div>
+
+                                    <div class="panel yp-panel-about">
+                                        <div class="panel-body">
+                                            <div class="info-wrap">
+                                                <div class="img-wrap" id="profile-image-id">
+                                                    <img src="{{ up.get_image_url }}" id="profile_image_update">
+                                                </div>
+                                                <div class="info-content">
+                                                    <h2 class="title" class="company__fonts" id="company__name__id">{{ up.user.get_full_name }} <span id="company__name__icon" hidden><i  class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true"></i></span></h2>
+                                                    <h2 class="tagline" class="company__fonts" id="company__location__id">{{ up.profession }}&nbsp;&nbsp;<span id="company__location__icon" hidden><i style="cursor: pointer;" class="fa fa-pencil" hidden aria-hidden="true"></i></span></h2>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="text-right">
+                                                <button class="btn store-front-btn" id="company__phone__id">{{ up.phone }} &nbsp;&nbsp;<span id="company__phone__icon" hidden><i  class="fa fa-pencil" style="cursor: pointer;" hidden aria-hidden="true"></i></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="about-footer">
+                                            <a href="https://www.yapjoy.com/vendor/profile/view/{{ up.id }}/" target="_blank"><i class="fa fa-link" aria-hidden="true"></i> &nbsp;https://www.yapjoy.com/vendor/profile/view/{{ up.id }}/</a>
+                                        </div>
+                                    </div><!--End Panel-->
+
+                                    <div class="panel yp-panel-link">
+                                        <div class="yp-action-btn btn-yp-link">
+                                            <a href="javacript:void(0);" onclick="social_media_links_action();"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                            {#                                            <a href="#" onclick="social_media_links_action();"></a>#}
+                                        </div>
+                                        {% include "vendroid/demov2/vendors/profilev2/_social_media.html" %}
+                                        <div class="link-step-3" id="social_media_links_three">
+                                            {% include "vendroid/demov2/vendors/profilev2/_social_media_icons.html" %}
+                                        </div><!--End link step-3-->
+
+
+
+                                    </div>
+
+                                    <div class="panel yp-panel-map">
+                                        <div id="set_my_location_div">
+                                            {% include "vendroid/demov2/vendors/profilev2/_location.html" %}
+                                        </div>
+
+                                        <div class="map-details">
+                                            <div class="overlay"></div>
+                                            <div class="details">
+                                                <h2 class="title">LOCATION</h2>
+                                                <input type="text" name="map"  id="set_my_location_value" placeholder="Your workplace address, or hometown" value="{{ up.street }}">
+                                                <a style="cursor: pointer" id="set_my_location">SET MY LOCATION</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    {#<form method="POST" action="">#}
+                                    {#  <input id="avatar-url" name="avatar-url" value="/static/default.png">#}
+                                    {#  <input type="text" name="username" placeholder="Username">#}
+                                    {#  <input type="text" name="full-name" placeholder="Full name">#}
+                                    {#  <input type="submit" value="Update profile">#}
+                                    {#</form>#}
+
+                                </div>
+                                <div class="store-right-side">
+
+                                    <div class="panel yp-panel-publish">
+                                        <h4>Optimize storefront</h4>
+                                        <div class="text-center">
+                                            <img src="{% static "vendroid/img/icon-publish.png" %} ">
+                                        </div>
+                                        <div class="publish-text">
+                                            <h2>UPLOAD YOUR</h2>
+                                            <h3>Storefront Selfie</h3>
+                                            <h3>Social Media Links</h3>
+                                            <h3>Location</h3>
+
+                                            <button class="btn store-front-btn btn-block" style="margin-top: 20px;">Publish</button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+        {% include "vendroid/demov2/vendors/profile/_partial_modals.html" %}
+        {% include "vendroid/demov2/vendors/teamChat/_chatbox.html" %}
+
+    </div>
+
+{% endblock content %}
+{% block footer %}
+{#    {% include "vendroid/demov2/vendors/teamChat/_footer.html" %}#}
+
+{% endblock footer %}
+{% block script %}
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCCvqBKpmwqyEtpSs86C1h9JhMDreJALm0"></script>
+    <script src="{% static "geocomplete/jquery.geocomplete.min.js" %}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#nav').children('li').first().children('a').addClass('active')
+                .next().addClass('is-open').show();
+
+            $('#nav').on('click', 'li > a', function() {
+
+                if (!$(this).hasClass('active')) {
+
+                    $('#nav .is-open').removeClass('is-open').hide();
+                    $(this).next().toggleClass('is-open').toggle();
+
+                    $('#nav').find('.active').removeClass('active');
+                    $(this).addClass('active');
+                } else {
+                    $('#nav .is-open').removeClass('is-open').hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+        //Video upload url
+        var i = 0;
+        $("#ID_btnVideo").click(function(){
+            if (i == 0){
+                $("#ID_videoUrl").show();
+                i = 1;
+            } else {
+                $("#ID_videoUrl").hide();
+                i = 0
+            }
+        });
+
+        function saveVideoUrl(obj){
+            var url = obj.value;
+            console.log("url is ", url);
+            $("#ID_videoUrl").hide();
+
+            if (url.length == 0){
+                alert("Please enter something if you would like to upload the video")
+            } else {
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {'videoUrl': url},
+
+                    success: function (response) {
+                        $("#ID_VideoShow").html(response);
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        alert("change video failed");
+                    }
+                });
+            }
+        }
+
+
+        //Tab 1
+        $("#defaultOpen").click();
+        function openTopTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = $(".tabcontent");
+
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = $(".tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            {#            evt.currentTarget.className += " active";#}
+        }
+
+        //Tab 2
+        $("#defaultOpenBottomTab").click();
+        function openBottomTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = $(".tabcontentBtm");
+
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = $(".tablinksBtm");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            {#            evt.currentTarget.className += " active";#}
+        }
+        {#        $.ajax({#}
+        {#          xhr: function() {#}
+        {#            var xhr = new window.XMLHttpRequest();#}
+        {##}
+        {#            xhr.upload.addEventListener("progress", function(evt) {#}
+        {#              if (evt.lengthComputable) {#}
+        {#                var percentComplete = evt.loaded / evt.total;#}
+        {#                percentComplete = parseInt(percentComplete * 100);#}
+        {#                console.log(percentComplete);#}
+        {##}
+        {#                if (percentComplete === 100) {#}
+        {##}
+        {#                }#}
+        {##}
+        {#              }#}
+        {#            }, false);#}
+        {##}
+        {#            return xhr;#}
+        {#          },#}
+        {#          url: posturlfile,#}
+        {#          type: "POST",#}
+        {#          data: JSON.stringify(fileuploaddata),#}
+        {#          contentType: "application/json",#}
+        {#          dataType: "json",#}
+        {#          success: function(result) {#}
+        {#            console.log(result);#}
+        {#          }});#}
+        $('#profile-image-id').on('click',function(){
+            $('#EditProfileImage').modal('show');
+        });
+        $('#profile_complete_form').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#directory_access_button').attr('disabled','disabled')
+            $('#directory_access_button').html('Requesting, Please wait.')
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: $(this).serialize(),
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#directory_access_button_success').toggle('hidden')
+                    $('#profile_complete_form').toggle('hidden')
+                    $('#directory_access_button').html('')
+                    $('#DirectoryRequestDiv').html(response)
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+
+        $('#profile_image_form').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#update_image_button').attr('disabled','disabled')
+            $('#update_image_button').html('Uploading, Please wait.')
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#update_image_button').html('Upload')
+                    $('#EditProfileImage').modal('hide')
+                    $('#profile_image_update').attr('src',response)
+                    $('#update_image_button').removeAttr('disabled')
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+        $('#AlbumPictureRemoveForm').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            {#            $('#update_image_button').attr('disabled','disabled')#}
+            {#            $('#update_image_button').html('Uploading, Please wait.')#}
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    {#                    $('#update_image_button').html('Upload')#}
+                    {#                    $('#EditProfileImage').modal('hide')#}
+                    $('#all_images').html(response);
+                    $('#AlbumPictureView').modal('hide');
+                    {#                    $('#update_image_button').removeAttr('disabled')#}
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+
+        $('#videoUploaderForm').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#videoUploadbutton').attr('disabled','disabled')
+            $('#uploading_image').attr('src', '{% static "images/vendorProfile/dots64.gif" %}')
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#ID_VideoShow').html(response);
+                    $('#videoUploadbutton').removeAttr('disabled')
+                    $('#uploading_image').attr('hidden', 'hidden')
+                    $('#uploadVideoDiv').toggle('hidden')
+                    {#                        $('#EditProfileImage').modal('hide')#}
+                    {#                        $('#profile_image_update').attr('src',response)#}
+                    {#                        $('#update_image_button').removeAttr('disabled')#}
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    {#                        $('#directory_access_button').removeAttr('I am ready. Apply!')#}
+                }
+            });
+
+        })
+        function updateYelp(){
+            var name = $('#ID_yelpName').val().trim();
+            var zip = $('#ID_yelpZip').val().trim();
+            console.log("txt is ", name, zip);
+
+            if ((name.length == 0) || (zip.length == 0)) {
+                alert("Please fill up all the fields")
+            } else {
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {'YelpName': name,
+                        'YelpZip': zip
+                    },
+                    success: function (response) {
+                        $("#yelpPanel").html(response);
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        alert("change description failed");
+                    }
+                });
+            }
+        }
+        {#        $('#company__name__id').mouseover(function() {#}
+        {#            $('#company__name__icon').show();#}
+        {#        });#}
+        {#        $('#company__location__id').mouseover(function() {#}
+        {#            $('#company__location__icon').show();#}
+        {#        });#}
+        $("#company__name__id").on("mouseenter", function() {
+            $("#company__name__icon").show();
+        }).on("mouseleave", function() {
+            $("#company__name__icon").hide();
+        });
+        $("#company__location__id").on("mouseenter", function() {
+            $("#company__location__icon").show();
+        }).on("mouseleave", function() {
+            $("#company__location__icon").hide();
+        });
+        $("#company__name__id,#company__location__id,#company__phone__id").on('click',function(){
+            window.location.href = "{% url "vendors__storefrontEdit" %}";
+        })
+        $("#company__phone__id").on("mouseenter", function() {
+            $("#company__phone__icon").show();
+        }).on("mouseleave", function() {
+            $("#company__phone__icon").hide();
+        });
+        function social_media_links_action(){
+            $('#social_media_links_one').toggle('hidden');
+            $('#social_media_links_two').toggle('hidden');
+            $('#social_media_links_three').toggle('hidden');
+        }
+        $('#set_my_location').on('click',function(){
+            var set_my_location_val = $('#set_my_location_value').val()
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: {'set_my_location_val': set_my_location_val,
+                },
+                success: function (response) {
+                   // $("#set_my_location_div").html(response);
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("Zip binding failed");
+                }
+            });
+        })
+    </script>
+    {#    <script>#}
+    {#        window.fbAsyncInit = function() {#}
+    {#            FB.init({#}
+    {#                appId      : '1842808665943919',#}
+    {#                xfbml      : true,#}
+    {#                version    : 'v2.8'#}
+    {#            });#}
+    {#            FB.AppEvents.logPageView();#}
+    {#        };#}
+    {##}
+    {#        (function(d, s, id){#}
+    {#            var js, fjs = d.getElementsByTagName(s)[0];#}
+    {#            if (d.getElementById(id)) {return;}#}
+    {#            js = d.createElement(s); js.id = id;#}
+    {#            js.src = "//connect.facebook.net/en_US/sdk.js";#}
+    {#            fjs.parentNode.insertBefore(js, fjs);#}
+    {#        }(document, 'script', 'facebook-jssdk'));#}
+    {##}
+    {#    </script>#}
+    <script>
+        (function() {
+            document.getElementById("file_input").onchange = function(){
+                var files = document.getElementById("file_input").files;
+                var file = files[0];
+                if(!file){
+                    return alert("No file selected.");
+                }
+                get_signed_request(file);
+            };
+        })();
+
+        function get_signed_request(file) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/vendors/sign_s3?file_name=" + file.name + "&file_type=" + file.type);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if(response.error) {
+                            //   document.getElementById("loading-header").innerHTML = ''
+                            return alert(response.error+ " Please choose image (jpg/png)")
+                        }
+                        uploadFile(file, response.data, response.url);
+                    }
+                    else if (xhr.status === 400) {
+                        //   document.getElementById("loading-header").innerHTML = ''
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response)
+                    }
+                    else {
+                        //   document.getElementById("loading-header").innerHTML = ''
+                        alert("Could not get signed URL.");
+                    }
+                }
+            };
+
+            {#    document.getElementById("loading-header").innerHTML = "<img src='https://givvor.s3.amazonaws.com/static/Staticv3/assets/globals/img/go.gif' />";#}
+
+            xhr.send();
+        }
+
+        {#function uploadFile(file, s3Data, url){#}
+        {#  var xhr = new XMLHttpRequest();#}
+        {#  xhr.open("POST", s3Data.url);#}
+        {##}
+        {#  var postData = new FormData();#}
+        {##}
+        {#  for(key in s3Data.fields){#}
+        {#    //  alert(s3Data.fields[key])#}
+        {#    postData.append(key, s3Data.fields[key]);#}
+        {#  }#}
+        {#  postData.append('file', file);#}
+        {#  console.log(file)#}
+        {##}
+        {#  xhr.onreadystatechange = function() {#}
+        {#    if(xhr.readyState === 4){#}
+        {#      if(xhr.status === 200 || xhr.status === 204 || xhr.status == 400){#}
+        {#        document.getElementById("preview").src = url;#}
+        {#        document.getElementById("avatar-url").value = url;#}
+        {#      }#}
+        {#      else{#}
+        {#          alert(xhr)#}
+        {#          alert(xhr.status)#}
+        {#        alert("Could not upload file.");#}
+        {#      }#}
+        {#   }#}
+        {#  };#}
+        {#  xhr.send(postData);#}
+        {# }#}
+        function uploadFile(file, s3Data, url){
+            $('.progress').toggle('hidden')
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", s3Data.url);
+
+            var postData = new FormData();
+            for(key in s3Data.fields){
+                postData.append(key, s3Data.fields[key]);
+            }
+            postData.append('file', file);
+
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200 || xhr.status === 204 || xhr.status === 0){
+                        {#                 document.getElementById("preview").src = url;#}
+                        {#                document.getElementById("avatar-url").value = url;#}
+                        $.ajax({
+                            url: "",
+                            type: "POST",
+                            data: {'video_new_url': url,
+                            },
+                            success: function (response) {
+                                $("#ID_VideoShow").html(response);
+                                $('#videoForms').toggle('hidden');
+                                $('#ID_VideoShow').toggle('hidden');
+                            },
+
+                            error: function (xhr, errmsg, err) {
+                                alert("Zip binding failed");
+                            }
+                        });
+                    }
+                    else {
+                        // document.getElementById("loading-logo").innerHTML = '';
+                        alert("Could not upload file.");
+                    }
+                }
+            };
+            // Upload progress
+            xhr.upload.addEventListener("progress", function(evt){
+                if (evt.lengthComputable) {
+                    var percentComplete = (evt.loaded / evt.total)*100;
+                    //Do something with upload progress
+                    console.log(percentComplete);
+                    $('.progress-bar').css('width',percentComplete.toFixed(0)+'%')
+                    $('.progress-bar').html(percentComplete.toFixed(0)+'%')
+                }
+            }, false);
+            xhr.send(postData);
+        }
+
+
+
+    </script>
+    <script>
+
+      $(function(){
+
+        var options = {
+          map: ".map_canvas"
+        };
+
+        $("#set_my_location_value").geocomplete(options)
+          .bind("geocode:result", function(event, result){
+{#            $.log("Result: " + result.formatted_address);#}
+          })
+          .bind("geocode:error", function(event, status){
+{#            $.log("ERROR: " + status);#}
+          })
+          .bind("geocode:multiple", function(event, results){
+{#            $.log("Multiple: " + results.length + " results found");#}
+          });
+
+{#        $("#find").click(function(){#}
+{#          $("#set_my_location_value").trigger("geocode");#}
+{#        });#}
+{##}
+{#        $("#examples a").click(function(){#}
+{#          $("#set_my_location_value").val('Juliusstraße 25, Germany').trigger("geocode");#}
+{#          return false;#}
+{#        });#}
+
+      });
+      $(document).ready(function(){
+{#          var val_current = $("#set_my_location_value").val()#}
+{#            $("#set_my_location_value").val('')#}
+{#            $("#set_my_location_value").val(val_current)#}
+          $("#set_my_location_value").val($('#set_my_location_value').val()).trigger("geocode");
+        })
+    </script>
+{% endblock script %}

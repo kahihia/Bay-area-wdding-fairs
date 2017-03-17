@@ -1,0 +1,58 @@
+{% load static %}
+<div class="panel-body" id="id_panel_body" style="width: 500px;">
+    <div class="event-list-wrap">
+        <div class="col-md-12">
+            <div >
+                <!-- event name -->
+                <h2><a class="col-md-4 col-md-offset-4">{{ event.name }}</a></h2>
+                <br />
+                <br />
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-sm-12 col-md-offset-1">
+                    {% for usr in u %}
+                        <h4 >Join as: {{ usr.email }}</h4>
+                        <input type="hidden" id="id_email" value="{{ usr.email }}" name="email" />
+                    {% endfor %}
+                </div>
+
+                <br />
+                <br />
+                <br />
+                <label style="font-size: 15px;">Password</label>
+
+                <br />
+                <input type="password" placeholder="Password" class="form-control" id="id_password" name="password"/>
+                <small id="id_error" class="form-text error"></small><br/>
+                {#                <a href="#" class="center-block" id="id_forget_password" >Forget Password</a>#}
+                <br />
+                <button class="btn btn-yapjoy-blue" class="center-block" id="id_login">Join Team</button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+<script>
+    $('#id_login').on('click',function(e){
+        if ($("#id_password").val() == ''){
+            $("#id_error").html('Password is required')
+            e.PreventDefault();
+        }else{
+
+            var data = {
+                'password':$('#id_password').val(),
+                'email': $("#id_email").val(),
+                'action':'login_invite'
+            }
+            ajax_call('/family_share_link/'+ '{{ event.family_ref_code }}' +'/', "POST", data).done(function( data ) {
+
+            $("#id_card").html(data);
+        });
+    }
+    })
+</script>

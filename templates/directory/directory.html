@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+            <section class="wedding-pros-directory-section">
+    <div class="col-md-2 col-md-offset-1 left-col">
+        <section class="wedding-pros-nav">
+            <form id="filterForm">
+                <h3 class="section-title">Filters <small><a href="/directory/">All</a></small>
+
+                </h3>
+                <div class="wedding-pros-filter">
+                    <ul class="list-inline">
+                        <li class="descript"><p>Status</p></li>
+                        <li class="descript"><a href="/directory/?bride=1">Bride</a></li>
+                        <li class="descript"><a href="/directory/?groom=1">Groom</a></li>
+                        <li class="descript"><a href="/directory/?weddingprofessional=1">Wedding professional</a></li>
+                    </ul>
+                </div>
+{#                <div class="wedding-pros-filter">#}
+{#                    <ul class="list-inline">#}
+{#                        <li class="descript"><p>Miles</p></li>#}
+{#                        <li class="descript"><input type="checkbox" name="distance" value="5"> within 5 mi</li>#}
+{#                        <li class="descript"><input type="checkbox" name="distance" value="10"> within 10 mi</li>#}
+{#                        <li class="descript"><input type="checkbox" name="distance" value="25"> 25+ miles</li>#}
+{#                    </ul>#}
+{#                </div>#}
+                <!--
+                <div class="wedding-pros-filter">
+                    <ul class="list-inline">
+                        <li class="descript"><p><a href="#">Interests </a></p></li>
+                        <li class="descript"><input type="checkbox"  onclick="window.location.href='/professionals?interests[]=sports'"> Sports</li>
+                        <li class="descript"><input type="checkbox"  onclick="window.location.href='/professionals?interests[]=dance'"> Dance</li>
+                        <li class="descript"><input type="checkbox"  onclick="window.location.href='/professionals?interests[]=photography'"> Photography</li>
+                    </ul>
+                </div>
+                -->
+            </form>
+        </section>
+    </div>
+    <div class="col-md-9 wedding-pros-list">
+{#        <ul class="list-inline sorting">#}
+{#            <li>Sort by:</li>#}
+{#            <li><a href="http://www.yapjoy.com/directory?sort=views">Most views</a></li>#}
+{#        </ul>#}
+        <div class="search-bar margin-top-10">
+{#            <i class="fa fa-search fa-2x"></i>#}
+            <input name="search" id="searchField1" class="form-control"
+                   placeholder="Search Friend, professional or Interest" type="text">
+        </div>
+    <div class="clearfix"></div>
+        <h3 class="section-title">Directory</h3>
+
+        <div id="user-list" class="list-view">
+{# <h3 class="section-title"><small><div class="summary">Displaying 1-10 of 51 results.</div></small></h3><div class="items">#}
+{% for userprofile in userprofiles %}
+<div class="media ">
+    <div class="media-left"> <span class="profile-thumb profile-md" style="background-image: url({{ userprofile.get_image_url }})"></span></div>
+    <div class="media-body">
+{#        <span class="views"><i class="fa fa-eye"></i> </span>#}
+        <h4 class="media-heading user-name"><a href="{% if userprofile.type == "Professional" %}/professional/profile/{{ userprofile.id }}/{% else %}/profile/{{ userprofile.id }}/{% endif %}">{{ userprofile.user.get_full_name }}{% if userprofile.subscribed == True %} - <small style="color: #ff9800;">Featured</small>{% endif %}</a></h4>
+{#        <p class="descript"></p>#}
+{#        <p class="distance">Distance: Unknown</p>#}
+        <p class="status">
+            {{ userprofile.type }}        </p>
+    </div>
+</div>
+            {% endfor %}
+        </div><div class="keys" style="display:none" title="/directory"><span>155</span><span>156</span><span>157</span><span>158</span><span>159</span><span>160</span><span>161</span><span>162</span><span>163</span><span>165</span></div>
+</div>    </div>
+
+</section>
+{% endblock content %}
+{% block jquery %}
+
+<script type="text/javascript" src="{% static "js/jquery.directory.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}s"></script>
+{#<script type="text/javascript">#}
+{#/*<![CDATA[*/#}
+{#jQuery(function($) {#}
+{#jQuery('#user-list').yiiListView({'ajaxUpdate':['user-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+{#});#}
+{#/*]]>*/#}
+{#</script>#}
+
+<script>
+var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+var imgCount = 0;
+function startTime() {
+    if(imgCount == imgArray.length) {
+        imgCount = 0;
+    }
+    document.getElementById("ad").src = imgArray[imgCount];
+    imgCount++;
+    setTimeout("startTime()", 5000);
+}
+
+{#$('#searchField').keypress(function(e) {#}
+{#    if(e.which == 13) {#}
+{#        parent.location.href = '/directory/?name='+$(this).val();#}
+{#    }#}
+{#});#}
+$('#searchField1').on('keypress', function (event) {
+         if(event.which === 13){
+
+            //Disable textbox to prevent multiple submit
+           parent.window.location.href = '/directory/?name='+ $('#searchField1').val()
+
+            //Do Stuff, submit, etc..
+         }
+   });
+</script>
+
+
+{% endblock jquery %}

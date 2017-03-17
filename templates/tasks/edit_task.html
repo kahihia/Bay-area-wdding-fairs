@@ -1,0 +1,94 @@
+{% extends "base_blank_iframe.html" %}
+{% load myfilters %}
+{% load static %}
+{% block header_tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script>
+        $(function() {
+            $( "#id_due" ).datepicker();
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    <link href={% static "css/jquery.timepicker.min.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <br />
+
+    <form action="." method="POST" style="margin-right: 20px; margin-left: 20px;">
+        {% csrf_token %}
+
+        <!-- seth -->
+        <div class="form-group">
+
+
+            <label>Task:</label>
+
+            {{ task_form.subject }}
+            <div class="red">{{ task_form.subject.errors }}</div>
+
+        </div>
+        <div class="form-group due">
+
+            <label>Due:</label>
+            <i class="fa fa-calendar"></i>
+            {{ task_form.due|addcss:"form-control" }}
+            <div class="red">{{ task_form.due.errors }}</div>
+        </div>
+        {% if not profile.type == "Professional" %}
+            <div class="form-group">
+
+                <!-- patch4 -->
+                <!-- getFriendDropdownTask -->
+            <label>Assign:</label>
+                 <select multiple="multiple" class="form-control" data-placeholder="Choose"
+                                            name="assigned_to" id="to">
+                                {% for o in friends_assigned %}
+                                    <option  selected="selected" value="{{ o.id }}">{{ o.get_full_name }}</option>
+                                {% endfor %}
+                                        {% for friend in friends %}
+
+                                        {% if friend.user == request.user %}
+                                            <option value="{{ friend.friends.user.id }}">{{ friend.friends.user.get_full_name }}</option>
+                                        {% else %}
+                                            <option value="{{ friend.user.id }}">{{ friend.user.get_full_name }}</option>
+                                        {% endif %}
+
+
+                                        {% endfor %}
+                                    </select>
+
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label>Notes:</label>
+            {{ task_form.notes }}
+            <div class="red">{{ task_form.notes.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12 margin-top-10 " style="margin-bottom: 90px;">
+                <button type="submit" class="btn btn-blue pull-right">Update</button>
+
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </form>
+    <script type="text/javascript" src="{% static "js/jquery.tasks.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+{#    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>#}
+    <script>
+            if($("#to").length > 0){
+            $("#to").chosen();
+        }
+{#    $('#id_due').datepicker({'showAnim': 'slide', 'dateFormat': 'mm/dd/yy'});#}
+        {% if edited %}
+            parent.location.href = "/tasks/";
+        {% endif %}
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+      <div class="vd_container">
+        <div class="vd_content clearfix">
+
+          <!-- vd_head-section -->
+
+          <div class="clearfix">
+
+          <!-- vd_title-section -->
+
+          <div class="vd_content-section clearfix">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+{#                  <div class="panel-heading vd_bg-green">#}
+{#                    <h3 class="panel-title"> Delete Account request </h3>#}
+{#                  </div>#}
+                  <div class="panel-body">
+{#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                    <br>
+                    <div class="tab-content mgbt-xs-20">
+                         {% if successMessage %}
+                    <div class="flashes">
+                        <div class="alert alert-success">{{ successMessage }}</div>
+                    </div>
+                    {% endif %}
+                      <div  id="account">
+
+                          <div class="col-sm-12">
+                              <h3 class="mgbt-xs-15">Delete account request</h3>
+                          <p>To confirm delete your account, kindly confirm your account password.</p>
+                          <p>YapJoy does not hold any reformation regarding an account once it is deleted. Kindly make sure you want to delete your account.</p>
+                              <p>Note: This operation is undoable. kidnly make sure before deleting your account.</p>
+                              <form class="form-horizontal" action="." method="post" enctype="multipart/form-data" role="form">
+                  {% csrf_token %}
+
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">Confirm Password</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-6">
+                                  {{ form.password }}
+                                    {% if form.errors %}<p style="color: red;">{{ form.password.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-12 -->
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+
+                                  <div class="pd-20">
+                        <input type="hidden" name="DeactivateAccount" value="1" />
+                        <input name="passwordformSignal" hidden />
+                        <button type="submit" class="btn vd_btn vd_bg-red pull-right">Confirm and Delete Account</button>
+                    </div>
+
+                          <!-- form-group -->
+                        </form>
+
+                          </div>
+
+
+                      </div>
+
+                    </div>
+                    <br><br>
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-6 -->
+
+            </div>
+            <!-- row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+        </div>
+        <!-- .vd_content -->
+      </div>
+      <!-- .vd_container -->
+    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    {#    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {#    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>#}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".#id_wedding_date").datepicker({
+                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true
+
+            });
+        });
+        if($("#to").length > 0){
+            $("#to").chosen();
+        }
+    </script>
+
+
+{% endblock script %}

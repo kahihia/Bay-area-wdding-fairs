@@ -1,0 +1,197 @@
+{% load static %}
+<div class="link-step-1" id="social_media_links_one" hidden>
+    <a href=""> Link your social media</a>
+</div> <!--End Step- 1-->
+
+<div class="link-step-2" id="social_media_links_two" hidden>
+    <h2 class="title">Social Bar</h2>
+{#    <div class="social-link-form">#}
+{#        <div class="row-wrap-link">#}
+{#            <div class="icons">#}
+{#                                                            <span>#}
+{#                                                                <i class="fa fa-question" aria-hidden="true"></i>#}
+{#                                                            </span>#}
+{#            </div>#}
+{#            <div class="link-inputs">#}
+{#                <input type="text" placeholder="your website">#}
+{#                <button class="btn btn-verify">Verify <img class="verified-img" src="{% static "vendroid/img/verify.png" %}"><img class="verified-img-hover" src="{% static "vendroid/img/verify-hover.png" %}"></button>#}
+{#            </div>#}
+{#            <div class="clearfix"></div>#}
+{#        </div>#}
+{#    </div>#}
+
+    <div class="social-link-form">
+        <div class="row-wrap-link">
+            <div class="icons">
+                                                            <span>
+                                                                <img src="{% static "vendroid/img/facebook-icon.png" %}">
+                                                            </span>
+            </div>
+            <div class="link-inputs">
+                <input type="text" placeholder="facebook" id="ID_FacebookUrl" value="{% if up.facebook_url %}{{ up.facebook_url }}{% endif %}">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="social-link-form">
+        <div class="row-wrap-link">
+            <div class="icons">
+                                                            <span>
+                                                                <img src="{% static "vendroid/img/twitter-icon.png" %}">
+                                                            </span>
+            </div>
+            <div class="link-inputs">
+                <input type="text" placeholder="Twitter" id="ID_TwitterUrl" value="{% if up.twitter_url %}{{ up.twitter_url }}{% endif %}">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="social-link-form">
+        <div class="row-wrap-link">
+            <div class="icons">
+                                                            <span>
+                                                                <img src="{% static "vendroid/img/pintrest-icon.png" %}">
+                                                            </span>
+            </div>
+            <div class="link-inputs">
+                <input type="text" placeholder="pintrest" id="ID_PinterestUrl" value="{% if up.pinterest_url %}{{ up.pinterest_url }}{% endif %}">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="social-link-form">
+        <div class="row-wrap-link">
+            <div class="icons">
+                                                            <span>
+                                                                <img src="{% static "vendroid/img/youtube-icon.png" %}">
+                                                            </span>
+            </div>
+            <div class="link-inputs">
+                <input type="text" placeholder="youtube" id="ID_YouTubeUrl" value="{% if up.youtube_url %}{{ up.youtube_url }}{% endif %}">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="social-link-form">
+        <div class="row-wrap-link">
+            <div class="icons">
+                                                            <span>
+                                                                <img src="{% static "vendroid/img/instagram-icon.png" %}">
+                                                            </span>
+            </div>
+            <div class="link-inputs">
+                <input type="text" placeholder="instagram" id="ID_InstagramUrl" value="{% if up.instagram_url %}{{ up.instagram_url }}{% endif %}">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="social-link-form">
+        <div class="row-wrap-link">
+            <div class="icons">
+                                                            <span>
+                                                                <img src="{% static "vendroid/img/yelp-icon.png" %}">
+                                                            </span>
+            </div>
+            <div class="link-inputs">
+                <input type="text" id="ID_YelpUrl" placeholder="yelp" value="{% if up.instagram_url %}{{ up.instagram_url }}{% endif %}">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{#<div class="clearfix"></div>#}
+<button class="pull-right btn" id="save_links" style="margin-top:10px; margin-bottom: 10px;">Save</button>
+<div class="clearfix"></div>
+
+{#    <div class="social-link-form">#}
+{#        <div class="row-wrap-link">#}
+{#            <div class="icons">#}
+{#                                                            <span>#}
+{#                                                                <img src="{% static "vendroid/img/knot-icon.png" %}">#}
+{#                                                            </span>#}
+{#            </div>#}
+{#            <div class="link-inputs">#}
+{#                <input type="text" placeholder="The Knot">#}
+{#            </div>#}
+{#            <div class="clearfix"></div>#}
+{#        </div>#}
+{#    </div>#}
+
+{#    <div class="social-link-form">#}
+{#        <div class="row-wrap-link">#}
+{#            <div class="icons">#}
+{#                                                            <span>#}
+{#                                                                <img src="{% static "vendroid/img/wedding-icon.png" %}">#}
+{#                                                            </span>#}
+{#            </div>#}
+{#            <div class="link-inputs">#}
+{#                <input type="text" placeholder="Wedding Wire">#}
+{#            </div>#}
+{#            <div class="clearfix"></div>#}
+{#        </div>#}
+{#    </div>#}
+
+{#    <div class="social-link-form">#}
+{#        <div class="row-wrap-link">#}
+{#            <div class="icons">#}
+{#                                                            <span>#}
+{#                                                                <img src="{% static "vendroid/img/tumbler-icon.png" %}">#}
+{#                                                            </span>#}
+{#            </div>#}
+{#            <div class="link-inputs">#}
+{#                <input type="text" placeholder="tumblr">#}
+{#            </div>#}
+{#            <div class="clearfix"></div>#}
+{#        </div>#}
+{#    </div>#}
+
+{#    <div class="social-link-form">#}
+{#        <div class="row-wrap-link">#}
+{#            <div class="icons">#}
+{#                                                            <span>#}
+{#                                                                <img src="{% static "vendroid/img/snapchat-icon.png" %}">#}
+{#                                                            </span>#}
+{#            </div>#}
+{#            <div class="link-inputs">#}
+{#                <input type="text" placeholder="Snapchat">#}
+{#            </div>#}
+{#            <div class="clearfix"></div>#}
+{#        </div>#}
+{#    </div>#}
+</div> <!--Link Step 2-->
+<script>
+{#    $('#ID_FacebookUrl,#ID_TwitterUrl,#ID_PinterestUrl,#ID_YouTubeUrl,#ID_InstagramUrl,#ID_YelpUrl').on('change',function(){#}
+    $('#save_links').on('click',function(){
+{#        alert('changed')#}
+        saveSocialUrl()
+    })
+    function saveSocialUrl(){
+        $.ajax({
+            url: "",
+            type: "POST",
+            data: {'facebook_url':  $('#ID_FacebookUrl').val(),
+                'twitter_url': $('#ID_TwitterUrl').val(),
+                'pinterest_url': $('#ID_PinterestUrl').val(),
+                'youtube_url': $('#ID_YouTubeUrl').val(),
+                'instagram_url': $('#ID_InstagramUrl').val(),
+                'yelp_url': $('#ID_YelpUrl').val(),
+            },
+
+            success: function (response) {
+                $('#openAboutMeEdit').toggle('hidden');
+                    //$('#displayAboutMeEdit').toggle('hidden');
+                    social_media_links_action()
+                    $('#social_media_links_three').html(response);
+{#                alert("change social urls successfull");#}
+            },
+
+            error: function (xhr, errmsg, err) {
+                alert("change social urls failed");
+            }
+        });
+    }
+</script>

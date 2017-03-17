@@ -1,0 +1,85 @@
+{% load static %}
+<div class="mb-content-wrapper-child" >
+    <div class="vd_content clearfix"></div>
+    <!--Main panel-->
+    <div class="row mb-row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-vendor-register">
+                <div class="panel-title">
+                    <h4>My Team</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="event-list-wrap">
+                    {% if final_list.bg %}<h4>Family</h4>{% endif %}
+                        {% for bg in final_list.bg %}
+                        <div class="my-event-list" style="border: none;" >
+                        <div class="col-md-2">
+                            <img style="border-radius: 20px;" src="{{ bg.userprofile.get_image_url }}" />
+                        </div>
+                            <div class="col-md-10">
+                                <h3 class="my-event-title">{{ bg.get_full_name }}</h3>
+                            <h3 class="my-event-date">{{ bg.userprofile.profession }}</h3>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div><!--End my Event List-->
+                        {% endfor %}
+                    {% if final_list.vendors %}<h4>Vendors</h4>{% endif %}
+                        {% for vendors in final_list.vendors %}
+                        <div class="my-event-list" style="border: none;" >
+                        <div class="col-md-2">
+                            <img style="border-radius: 20px;" src="{{ vendors.userprofile.get_image_url }}" />
+                        </div>
+                            <div class="col-md-10">
+                                <h3 class="my-event-title">{{ vendors.get_full_name }}</h3>
+                            <h3 class="my-event-date">{{ vendors.userprofile.profession }}</h3>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div><!--End my Event List-->
+                        {% endfor %}
+
+{#                        <div class="my-event-list">#}
+{#                            <h2 class="my-event-title">Jen and jhonson Wedding</h2>#}
+{#                            <h3 class="my-event-date">April 4th 2015</h3>#}
+{#                            <div class="dropdown text-right pull-right">#}
+{#                                <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>#}
+{#                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{#                        </div><!--End my Event List-->#}
+{##}
+{#                        <div class="my-event-list">#}
+{#                            <h2 class="my-event-title">Jen and jhonson Wedding</h2>#}
+{#                            <h3 class="my-event-date">April 4th 2015</h3>#}
+{#                            <div class="dropdown text-right pull-right">#}
+{#                                <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>#}
+{#                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{#                        </div><!--End my Event List-->#}
+{##}
+{#                        <div class="my-event-list">#}
+{#                            <h2 class="my-event-title">Jen and jhonson Wedding</h2>#}
+{#                            <h3 class="my-event-date">April 4th 2015</h3>#}
+{#                            <div class="dropdown text-right pull-right">#}
+{#                                <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>#}
+{#                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{#                        </div><!--End my Event List-->#}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--vd_content-wrapper-->

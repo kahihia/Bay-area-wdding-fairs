@@ -1,0 +1,6 @@
+{% for photo in photos %}
+    <div class="col-md-3 col-xs-4"  style="padding:0px;cursor:pointer;" onclick="$('#AlbumPictureView').modal('show');$('#AlbumPictureViewImage').attr('src','https://yapjoy-static.s3.amazonaws.com/media/{{photo.image}}');$('#AlbumPictureID').attr('value','{{ photo.id }}');">
+        <img style="padding:0px;" class="images-mobile" src="https://yapjoy-static.s3.amazonaws.com/media/{{photo.image}}">
+        {#                <a class="btn pull-left" onclick="deletePhoto({{ photo.id }})">Delete</a>#}
+    </div>
+{% endfor %}

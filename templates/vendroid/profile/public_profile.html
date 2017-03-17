@@ -1,0 +1,1143 @@
+{% extends "vendroid/base.html" %}
+{% load comments %}
+{% load humanize %}
+{% load static %}
+{#{% load fullcalendar_tags %}#}
+{% block tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+{% endblock %}
+{% block content %}
+    {#   <script type="text/javascript" src="{% static 'js/jquery.events.js' %}"></script>#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static "css/jquery.datetimepicker.css" %}"/>#}
+    {#    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>#}
+    {#    <script type="text/javascript" src="{% static "js/chosen.jquery.min.js" %}"></script>#}
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+
+    <script>
+        {% if request.user.userprofile.subscribed %}
+            function sendMessage() {
+
+                $('#messageModal').modal('show');
+            }
+
+        {% else %}
+            {#    function sendMessage() {#}
+            {#        bootbox.confirm("<h3>Only subscribed members can message, click ok to subscribe.</h3>", function (result) {#}
+            {#                if (!result) {#}
+            {##}
+            {#                }#}
+            {##}
+            {#                else {#}
+            {#                    //openSubscriptionModal();#}
+            {#                }#}
+            {#                });#}
+            {#        };#}
+            {#    openSubscriptionModal();#}
+            $('#iframe_sub').attr('src', '/subscribeiFrame');
+            $('#subscriptionModal').modal('show');
+        {% endif %}
+        $(document).ready(function(){
+            {% if form.errors  %}
+                $('#messageModal').modal('show');
+            {% endif %}
+{#            {% if message_success  %}#}
+{#                $('#messageModal').modal('show');#}
+{#            {% endif %}#}
+        {% if message_success %}
+            $(document).ready(function(){
+                $('#messageModalSuccess').modal('show');
+            })
+        {% endif %}
+        })
+
+    </script>
+
+    <script>
+        var u = {{ request.user.id }};
+        var n = '{{ request.user.get_full_name }}';
+        var u2 = {{ profile.user.id }};
+        var n2 = '{{ profile.user.get_full_name }}';
+    </script>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                {% include "vendroid/messages/partial/chat_list.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <h1>Profile</h1>#}
+                                    {#                                    <small class="subtitle">Profile for User</small>#}
+                                    {#                                    <div class="vd_panel-menu hidden-sm hidden-xs" data-intro="<strong>Expand Control</strong><br/>To expand content page horizontally, vertically, or Both. If you just need one button just simply remove the other button code." data-step=5  data-position="left">#}
+                                    {#                                        <div data-action="remove-navbar" data-original-title="Remove Navigation Bar Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-navbar-button menu"> <i class="fa fa-arrows-h"></i> </div>#}
+                                    {#                                        <div data-action="remove-header" data-original-title="Remove Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-header-button menu"> <i class="fa fa-arrows-v"></i> </div>#}
+                                    {#                                        <div data-action="fullscreen" data-original-title="Remove Navigation Bar and Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="fullscreen-button menu"> <i class="glyphicon glyphicon-fullscreen"></i> </div>#}
+                                    {#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                    {% if message_success_text %}
+                                        <div class="col-md-12">
+                                        <div class="flashes">
+                                            <div class="alert alert-success">{{ message_success_text|safe }}</div>
+                                        </div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="col-sm-3">
+                                        <!--(1) profile summary(image, name...) -->
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-heading no-title"></div>
+                                            <div class="panel-body">
+                                                <div class="text-center vd_info-parent"><img alt="Profile image"
+                                                                                             src={{ profile.get_image_url }}>
+                                                </div>
+                                                <div class="row">
+                                                    {#                                              <div class="col-xs-12"> <a class="btn vd_btn vd_bg-green btn-xs btn-block no-br"><i class="fa fa-check-circle append-icon" ></i>Friends</a> </div>#}
+                                                    <div class="col-xs-12">
+
+                                                        {#                                              {% if userprofile.type == "Professional" %}#}
+                                                        {##}
+                                                        {#                                                  <a class="btn vd_btn vd_bg-grey btn-xs btn-block no-br" onclick="sendMessage();"><i class="fa fa-envelope append-icon"></i>Send Message</a>#}
+                                                        {#                                                {% endif %}#}
+                                                        {% if not userprofile.type == "Professional" %}
+                                                            {% if profile.type == "Unknown" %}
+                                                                 <form action="." method="post">
+                                                                    {% csrf_token %}
+                                                                    <input id="invite_user" name="invite_user" hidden="hidden" />
+                                                                 <button type="submit"
+                                                                            class="btn vd_btn vd_bg-green btn-xs btn-block no-br">
+                                                                        Invite user
+                                                                    </button>
+                                                                </form>
+                                                                {% else %}
+                                                                {% if is_friend_sent %}
+                                                                <form action="." method="post">
+                                                                    {% csrf_token %}
+                                                                    <input id="remove_friend" name="remove_friend"
+                                                                           value="{{ user.id }}" hidden="hidden"/>
+                                                                    <button type="submit"
+                                                                            class="btn vd_btn vd_bg-red btn-xs btn-block no-br">
+                                                                        Unfriend
+                                                                    </button>
+                                                                    <a href="/online_message/?message_open=True&friend_id={{ user.id }}"
+                                                                            class="btn vd_btn vd_bg-blue btn-xs btn-block no-br">
+                                                                        <i class="fa fa-video-camera append-icon"></i>Video Call
+                                                                    </a>
+                                                                </form>
+                                                            {% else %}
+                                                                <form action="." method="post">
+                                                                    {% csrf_token %}
+                                                                    <input id="add_friend" name="add_friend"
+                                                                           value="{{ user.id }}" hidden="hidden"/>
+                                                                    <button type="submit"
+                                                                            class="btn vd_btn vd_bg-green btn-xs btn-block no-br">
+                                                                        Add as Friend
+                                                                    </button>
+                                                                </form>
+                                                            {% endif %}
+                                                                {% endif %}
+                                                        {% else %}
+                                                            {% if userprofile.subscribed %}
+                                                                <p class="btn vd_btn vd_bg-green btn-xs btn-block no-br" id="profileStatus" data-id="{{ profile.user.id }}">Offline</p>
+                                                                <a onclick="sendMessage();"><p
+                                                                        class="btn vd_btn vd_bg-grey btn-xs btn-block no-br">
+                                                                    Message</p></a>
+                                                                    <p class="btn vd_btn vd_bg-green btn-xs btn-block no-br" id="videoCallBtn">Video Call</p>
+                                                            {% else %}
+                                                                <a onclick="openSubscriptionModal();"><p
+                                                                        class="btn vd_btn vd_bg-grey btn-xs btn-block no-br">
+                                                                    Message</p></a>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <h2 class="font-semibold mgbt-xs-5">{{ user.get_full_name }}</h2>
+                                                <h4>{{ profile.type }}</h4>
+                                                <!----fix me --->
+                                                <h4><i class="fa fa-search"></i> {{ profile.looking_for }}</h4>
+                                                {#                                            <p>fill profile describtion here???fix me????</p>#}
+                                                <div class="mgtp-20">
+                                                    <table class="table table-striped table-hover"><!----fix me --->
+                                                        <tbody>
+                                                        {#                                                  <tr>#}
+                                                        {#                                                    <td style="width:60%;">Status</td>#}
+                                                        {#                                                    <td><span class="label label-success">Active</span></td>#}
+                                                        {#                                                  </tr>#}
+                                                        {#                                                  <tr>#}
+                                                        {#                                                    <td>User Rating</td>#}
+                                                        {#                                                    <td><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i></td>#}
+                                                        {#                                                  </tr>#}
+                                                        <tr>
+                                                            <td>Member Since</td>
+                                                            <td>{{ profile.created_at|date:"M-j Y" }}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- (2)friends under profile summary-->
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-body-list">
+                                                <h3 class="pd-20 mgbt-xs-0"><i class="fa fa-users mgr-10"></i>Friends
+                                                </h3>
+
+                                                <div class="content-grid column-xs-2 column-sm-3 height-xs-auto mgbt-xs-20">
+                                                    {% if friends %}
+                                                        {% for friend in friends %}
+                                                        <div id="friend-list-detailed">
+                                                            <ul class="list-wrapper"><!----fix me --->
+                                                                {% if friend.user == request.user %}
+                                                                    {# <li> <a href="#"> <span class="menu-icon"><img alt="example image" src="img/avatar/avatar.jpg"></span> </a> </li>#}
+                                                                    <li>
+                                                                        <a href="/profile/{{ friend.friends.user.userprofile.id }}"><span
+                                                                                class="menu-icon"><img
+                                                                                alt="friend image"
+                                                                                src="{{ friend.friends.user.userprofile.get_image_url }}"></span>
+                                                                        </a></li>
+                                                                {% else %}
+                                                                    <li>
+                                                                        <a href="/profile/{{ friend.user.userprofile.id }}"><span
+                                                                                class="menu-icon"><img
+                                                                                alt="friend image"
+                                                                                src="{{ friend.user.get_image_url }}"></span>
+                                                                        </a></li>
+                                                                {% endif %}
+                                                            </ul>
+                                                        </div>
+                                                    {% endfor %}
+                                                    {% else %}
+                                                         <div class="col-md-12"><h4>No friends available</h4></div>
+                                                    {% endif %}
+                                                </div>
+                                                <!--fix me fix the friends link-->
+                                                {#                                            <div class="closing text-center" style=""> <a href="/friends">See All Friends<i class="fa fa-angle-double-right prepend-icon"></i></a> </div>#}
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- (3)Main panel -->
+
+                                    <div class="col-sm-5">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-body text-center">
+                                                <div>
+                                                    <div class="menu">
+                                                        <form method="post" action="." enctype="multipart/form-data"
+                                                              id="form_post_id">
+                                                            {% csrf_token %}
+<style>
+                                                                .inputWrapper {
+                                                                    height: 32px;
+                                                                    width: 64px;
+                                                                    overflow: hidden;
+                                                                    position: relative;
+                                                                    cursor: pointer;
+                                                                    margin-top: 5px;
+                                                                    /*Using a background color, but you can use a background image to represent a button*/
+                                                                {#    background-color: ;#}
+                                                                }
+
+                                                                .fileInput {
+                                                                    cursor: pointer;
+                                                                    height: 100%;
+                                                                    position: absolute;
+                                                                    top: 0;
+                                                                    right: 0;
+                                                                    z-index: 99;
+                                                                    /*This makes the button huge. If you want a bigger button, increase the font size*/
+                                                                    font-size: 50px;
+                                                                    /*Opacity settings for all browsers*/
+                                                                    opacity: 0;
+                                                                    -moz-opacity: 0;
+                                                                    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0)
+                                                                }
+                                                            </style>
+                                                            <textarea name="Post_comment" id="Post_comment"
+                                                                      class="no-bd" rows="3"
+                                                                      placeholder="What are you doing?"></textarea>
+
+                                                            <div class="vd_textarea-menu vd_bg-yellow vd_bd-yellow">
+                                                                <ul class="nav nav-pills ">
+                                                                                                                                    <li class="one-icon inputWrapper">
+                                                                    <input name="image" class="fileInput" type="file">
+                                                                        <span class="menu-icon">
+
+                                                                            <i class="fa fa-camera fa-fw"></i>
+                                                                        </span>
+                                                                    </input>
+                                                                </li>
+                                                                    <li class="pull-right">
+                                                                        <a onclick="document.getElementById('form_post_id').submit(); return false;"
+                                                                           id="form_button_submit" type="submit"
+                                                                           style="border-left:1px solid rgba(255,255,255,.3)">
+                                                                        <span class="menu-icon">
+                                                                            <i class="fa fa-check fa-fw"></i>
+                                                                        </span>
+                                                                        <span class="menu-text">
+                                                                            Post
+                                                                        </span>
+                                                                        </a>
+                                                                    </li>
+
+                                                                </ul>
+
+                                                            </div>
+                                                        </form>
+                                                        <script>
+                                                            function submitTheForm() {
+
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                    <!-- child-menu -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <div class="content-list">
+                                                <div data-rel="">
+                                                    <ul class="list-wrapper">
+                                                        {#                                                                <li> <span class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></span> <span class="menu-text"> Someone has give you a surprise <span class="menu-info"><span class="menu-date"> ~ 12 Minutes Ago</span></span> </span>  </li>#}
+                                                        {#                                                                <li> <span class="menu-icon vd_blue"><i class=" fa fa-user"></i></span> <span class="menu-text"> Change your user profile details <span class="menu-info"><span class="menu-date"> ~ 1 Hour 20 Minutes Ago</span></span> </span> </li>#}
+                                                        {#                                                                <li> <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span></li>#}
+                                                        {#                                                                <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span>  </li>#}
+                                                        {#                                                                <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span> </li>#}
+                                                        {#                                                                <li>  <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span>  </li>#}
+                                                        {#                                                                <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span> </li>#}
+                                                        {#                                                                <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span>  </li>#}
+                                                        {% if is_friend %}
+                                                            {% include 'vendroid/partial/_user_public_feed.html' %}
+                                                        {% else %}
+                                                            <h4 class="text-center "{% if error_message %}style="color: red;"{% endif %}>
+                                                                {% if error_message %}{{ error_message }}{% else %}Not Available, Only Friends Can View Activities{% endif %}</h4>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                                {#                                                            <div class="closing text-center" style=""> <a href="#">See All Activities <i class="fa fa-angle-double-right"></i></a> </div>#}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-body">
+                                                <div class="pd-20">
+                                                    {#                                                      <!---fix me edit button-->#}
+                                                    {#                                                    <div class="vd_info tr"> <a href="/settings/" class="btn vd_btn btn-xs vd_bg-yellow"> <i class="fa fa-pencil append-icon"></i> Edit </a> </div>#}
+                                                    {#                                                    <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="icon-user mgr-10 profile-icon"></i> ABOUT</h3>#}
+                                                    {#                                                    <div class="row">#}
+                                                    {#                                                        <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Email:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">{{ profile.user.email }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Name:</label>#}
+                                                    {#                                                            <!--fix me-->#}
+                                                    {#                                                          <div class="col-xs-7 controls">{{ profile.user.get_full_name }}</div>#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-6">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Last Name:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">Caraiban</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">User Name:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">{{ profile.user }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {##}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Street:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">{{ profile.street }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">City:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">{{ profile.city }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">State:</label>#}
+                                                    {#                                                            <!--fix me-->#}
+                                                    {#                                                          <div class="col-xs-7 controls"> {{ profile.state }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Zip Code:</label>#}
+                                                    {#                                                            <!--fix me-->#}
+                                                    {#                                                          <div class="col-xs-7 controls"> {{ profile.zip }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Country:</label>#}
+                                                    {#                                                            <!--fix me-->#}
+                                                    {#                                                          <div class="col-xs-7 controls">United States</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Wedding Date:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">{{ profile.wedding_date }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-6">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Interests:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">Basketball, Web, Design, etc.</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-6">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Website:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls"><a href="http://Vendroid.venmond.com">fix me!???</a></div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                      <div class="col-sm-12">#}
+                                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                                    {#                                                          <label class="col-xs-5 control-label">Phone:</label>#}
+                                                    {#                                                          <div class="col-xs-7 controls">{{ profile.phone }}</div>#}
+                                                    {#                                                          <!-- col-sm-10 -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                      </div>#}
+                                                    {#                                                    </div>#}
+                                                    {#                                                    <hr class="pd-10"  />#}
+
+                                                    <!--(5) Profile Events-->
+                                                    {#                                                    <div class="row">#}
+                                                    {#                                                      <div class="col-sm-6 mgbt-xs-20">#}
+
+                                                    <h3 class="mgbt-xs-15 font-semibold"><i
+                                                            class="fa fa-file-text-o mgr-10 profile-icon"></i> EVENTS
+                                                    </h3>
+
+                                                    <div class="content-list content-menu">
+                                                        <ul class="list-wrapper">
+                                                            {#                                                            <li class="mgbt-xs-10"> <span class="menu-icon vd_green"><i class="fa  fa-circle-o"></i></span> <span class="menu-text"> <a href="http://www.venmond.com">Owner</a> at <a href="http://www.venmond.com">Vendroid Ltd.</a> <span class="menu-info"><span class="menu-date"> March 2013 ~ Now</span></span> </span> </li>#}
+                                                            {% if not is_friend %}
+                                                                <li class="mgbt-xs-10">
+                                                                    <span class="menu-icon vd_grey"><i
+                                                                            class=" fa fa-circle-o fa-sm"></i></span>
+                                                                    <span class="menu-text">Only Friends Can View The Events</span>
+                                                                </li>
+                                                            {% else %}
+                                                                {% for event in events %}
+                                                                    <li class="mgbt-xs-10">
+                                                                        <span class="menu-icon vd_grey"><i
+                                                                                class=" fa fa-calendar"></i></span>
+                                                                        <span class="menu-text"> <a
+                                                                                href="/events/">{{ event.title }}</a> at
+                                                                            <span class="menu-info"><span
+                                                                                    class="menu-date"> {{ event.start }} </span> </span>
+                                                                        </span>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </ul>
+                                                    </div>
+                                                    <!--(6) Profile Tasks-->
+                                                    {#                                                      <div class="col-sm-6 pd-20">#}
+                                                    <br><br/>
+
+                                                    <h3 class="mgbt-xs-15 font-semibold"><i
+                                                            class="glyphicon glyphicon-tags mgr-10 profile-icon"></i>
+                                                        TASKS</h3>
+
+                                                    <div class="content-list content-menu">
+                                                        <ul class="list-wrapper">
+                                                            {% if not is_friend %}
+                                                                <li class="mgbt-xs-10">
+                                                                    <span class="menu-icon vd_grey"><i
+                                                                            class=" fa fa-circle-o fa-sm"></i></span>
+                                                                    <span class="menu-text">Only Friends Can View The Tasks</span>
+                                                                </li>
+                                                            {% else %}
+                                                                {% for task in tasks %}
+                                                                    <li class="mgbt-xs-10">
+                                                                        <span class="menu-icon">
+                                                                            <!--fixe me icon flip-->
+                                                                            <a onclick="completeTask('{{ task.id }}');">
+                                                                                <i id="complete_task_{{ task.id }}"
+                                                                                   class="{% if task.complete %}fa fa-check fa-lg success_green{% else %}fa fa-circle-o fa-lg{% endif %}"> </i>
+                                                                            </a>
+                                                                        </span>
+                                                                        <span class="menu-text">
+                                                                            <p>
+                                                                                <a {% if task.complete %}class="success_green"{% endif %}
+                                                                                   id="task_subject_{{ task.id }}"
+                                                                                   href="/tasks">{{ task.subject }}</a>
+                                                                            </p>
+        {#                                                                  <span class="menu-info"><span class="menu-date"> August 2003 ~ July 2008</span></span>#}
+                                                                        </span>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </ul>
+                                                    </div>
+                                                    {#                                                      </div>#}
+                                                    {#                                                    </div>#}
+                                                    <!--(7) Profile activity-->
+                                                    {#                                                    <hr class="pd-10"  />#}
+
+                                                    <!-- row -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {#                                    <div class="col-sm-5">#}
+                                    {#                                        <div class="tabs widget">#}
+                                    {#                                            <!--header-->#}
+                                    {#                                            <ul class="nav nav-tabs widget">#}
+                                    {#                                                <li class="active"> <a data-toggle="tab" href="#profile-tab"> Profile <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                    {#                                                <li> <a data-toggle="tab" href="#plans-tab"> Plans <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                    {#                                                <li> <a data-toggle="tab" href="#events-tab"> Events <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                    {#                                                <li> <a data-toggle="tab" href="#tasks-tab"> Tasks <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                    {#                                                <li> <a data-toggle="tab" href="#friends-tab"> Friends <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                    {#                                <li> <a data-toggle="tab" href="#groups-tab"> Groups <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                    {#                                            </ul>#}
+                                    {##}
+                                    {#                                            <div class="tab-content">#}
+                                    {#                                                <!--(4) Profile Tab-->#}
+                                    {#                                                <div id="profile-tab" class="tab-pane active">#}
+                                    {#                                                  <div class="pd-20">#}
+                                    {#                                                      <!---fix me edit button-->#}
+                                    {#                                                    <div class="vd_info tr"> <a href="/settings/" class="btn vd_btn btn-xs vd_bg-yellow"> <i class="fa fa-pencil append-icon"></i> Edit </a> </div>#}
+                                    {#                                                    <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="icon-user mgr-10 profile-icon"></i> ABOUT</h3>#}
+                                    {#                                                    <div class="row">#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Name:</label>#}
+                                    {#                                                            <!--fix me-->#}
+                                    {#                                                          <div class="col-xs-7 controls">{{ profile.user.get_full_name }}</div>#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Last Name:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">Caraiban</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">User Name:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">{{ profile.user }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Email:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">{{ profile.user.email }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Street:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">{{ profile.street }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">City:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">{{ profile.city }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">State:</label>#}
+                                    {#                                                            <!--fix me-->#}
+                                    {#                                                          <div class="col-xs-7 controls"> {{ profile.state }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Zip Code:</label>#}
+                                    {#                                                            <!--fix me-->#}
+                                    {#                                                          <div class="col-xs-7 controls"> {{ profile.zip }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Country:</label>#}
+                                    {#                                                            <!--fix me-->#}
+                                    {#                                                          <div class="col-xs-7 controls">United States</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Birthday:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">{{ profile.date_of_birth }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Interests:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">Basketball, Web, Design, etc.</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Website:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls"><a href="http://Vendroid.venmond.com">fix me!???</a></div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <div class="row mgbt-xs-0">#}
+                                    {#                                                          <label class="col-xs-5 control-label">Phone:</label>#}
+                                    {#                                                          <div class="col-xs-7 controls">{{ profile.phone }}</div>#}
+                                    {#                                                          <!-- col-sm-10 -->#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                    </div>#}
+                                    {#                                                    <hr class="pd-10"  />#}
+                                    {##}
+                                    {#                                                      <!--(5) Profile Events-->#}
+                                    {#                                                    <div class="row">#}
+                                    {#                                                      <div class="col-sm-6 mgbt-xs-20">#}
+                                    {#                                                        <h3 class="mgbt-xs-15 font-semibold"><i class="fa fa-file-text-o mgr-10 profile-icon"></i> EVENT</h3>#}
+                                    {#                                                        <div class="content-list content-menu">#}
+                                    {#                                                          <ul class="list-wrapper">#}
+                                    {#                                                            <li class="mgbt-xs-10"> <span class="menu-icon vd_green"><i class="fa  fa-circle-o"></i></span> <span class="menu-text"> <a href="http://www.venmond.com">Owner</a> at <a href="http://www.venmond.com">Vendroid Ltd.</a> <span class="menu-info"><span class="menu-date"> March 2013 ~ Now</span></span> </span> </li>#}
+                                    {#                                                            {% for event in events %}#}
+                                    {#                                                                <li class="mgbt-xs-10">#}
+                                    {#                                                                    <span class="menu-icon vd_grey"><i class=" fa fa-calendar"></i></span>#}
+                                    {#                                                                    <span class="menu-text"> <a href="/events/">{{ event.title }}</a> at#}
+                                    {#                                                                        <span class="menu-info"><span class="menu-date"> {{ event.start }} </span> </span>#}
+                                    {#                                                                    </span>#}
+                                    {#                                                                </li>#}
+                                    {#                                                            {% endfor %}#}
+                                    {#                                                          </ul>#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                        <!--(6) Profile Tasks-->#}
+                                    {#                                                      <div class="col-sm-6">#}
+                                    {#                                                        <h3 class="mgbt-xs-15 font-semibold"><i class="glyphicon glyphicon-tags mgr-10 profile-icon"></i> TASK</h3>#}
+                                    {#                                                        <div class="content-list content-menu">#}
+                                    {#                                                          <ul class="list-wrapper">#}
+                                    {#                                                            {% for task in tasks %}#}
+                                    {#                                                                <li class="mgbt-xs-10">#}
+                                    {#                                                                    <span class="menu-icon">#}
+                                    {#                                                                        <!--fixe me icon flip-->#}
+                                    {#                                                                        <a onclick="completeTask('{{ task.id }}');">#}
+                                    {#                                                                            <i id="complete_task_{{ task.id }}" class="{% if task.complete %}fa fa-check fa-lg success_green{% else %}fa fa-circle-o fa-lg{% endif %}"> </i>#}
+                                    {#                                                                        </a>#}
+                                    {#                                                                    </span>#}
+                                    {#                                                                    <span class="menu-text">#}
+                                    {#                                                                        <p><a {% if task.complete %}class="success_green"{% endif %} id="task_subject_{{ task.id }}" href="/tasks">{{ task.subject }}</a></p>#}
+                                    {#                                                                  <span class="menu-info"><span class="menu-date"> August 2003 ~ July 2008</span></span>#}
+                                    {#                                                                    </span>#}
+                                    {#                                                                </li>#}
+                                    {#                                                            {% endfor %}#}
+                                    {#                                                          </ul>#}
+                                    {#                                                        </div>#}
+                                    {#                                                      </div>#}
+                                    {#                                                    </div>#}
+                                    {#                                                    <!--(7) Profile activity-->#}
+                                    {#                                                    <hr class="pd-10"  />#}
+                                    {##}
+                                    {#                                                    <!-- row -->#}
+                                    {#                                                  </div>#}
+                                    {#                                                  <!-- pd-20 -->#}
+                                    {#                                                </div>#}
+                                    {##}
+                                    {#                                                <!-- (9) Plans Tab-->#}
+                                    {#                                                <div id="plans-tab" class="tab-pane">#}
+                                    {#                                                    <div class="pd-20">#}
+                                    {#                                                        <div class="vd_info tr"> <a class="btn vd_btn btn-xs vd_bg-yellow" href="/plansV2"> <i class="fa fa-plus append-icon"></i> Add Plans </a> </div>#}
+                                    {#                                                        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="fa fa-suitcase mgr-10 profile-icon"></i> Plans</h3>#}
+                                    {#                                                        <table class="table table-striped table-hover">#}
+                                    {#                                                            <thead>#}
+                                    {#                                                            <tr>#}
+                                    {#                                                                <th>#</th>#}
+                                    {#                                                                <th>Title</th>#}
+                                    {#                                                                <th>Publisher</th>#}
+                                    {#                                                                <th>Start Date</th>#}
+                                    {#                                                                <th>Status</th>#}
+                                    {#                                                                <th>Budget</th>#}
+                                    {#                                                                <th>Bid</th>#}
+                                    {#                                                                <th>Action</th>#}
+                                    {#                                                            </tr>#}
+                                    {#                                                            </thead>#}
+                                    {#                                                            <tbody>#}
+                                    {#                                                            {% for product in products %}#}
+                                    {#                                                                <tr>#}
+                                    {#                                                                    <td>{{ forloop.counter0 }}</td>#}
+                                    {#                                                <td><img height="80" src="img/avatar/avatar.jpg" alt="example image">#}
+                                    {#                                                </td>#}
+                                    {#                                                                    <td class="center">{{ product.title }}</td>#}
+                                    {#                                                                    <td class="center">{{ product.user.get_full_name }}</td>#}
+                                    {##}
+                                    {#                                                                    <td class="center">{{ product.created_at|date:"M-j, Y"}}</td>#}
+                                    {#                                                                    <td class="center">#}
+                                    {#                                                                        {% if product.is_completed %}#}
+                                    {#                                                                            <span class="label vd_bg-yellow">Finish</span>#}
+                                    {#                                                                        {% else %}#}
+                                    {#                                                                            <span class="label vd_bg-green">Open</span>#}
+                                    {#                                                                        {% endif %}#}
+                                    {#                                                                    </td>#}
+                                    {#                                                                    <td class="center"><strong>$ {{ product.amount }}</strong></td>#}
+                                    {#                                                                    <td class="center"><strong>{{ product.amount_min }}</strong></td>#}
+                                    {#                                                                    <td class="menu-action rounded-btn">#}
+                                    {#                                                                        <a href = "/plansV2/{{ product.id }}" class="btn menu-icon vd_bg-blue" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="view">#}
+                                    {#                                                                            <i class="fa fa-eye"></i>#}
+                                    {#                                                                        </a>#}
+                                    {#                                                                        <a href = "/marketV2/{{ product.id }}" class="btn menu-icon vd_bg-red" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="bid">#}
+                                    {#                                                                           <i class="append-icon glyphicon glyphicon-hand-up"></i>#}
+                                    {#                                                        <i class="fa fa-pencil"></i>#}
+                                    {#                                                                        </a>#}
+                                    {#                                                    <a class="btn menu-icon vd_bg-red" data-placement="top"#}
+                                    {#                                                       data-toggle="tooltip" data-original-title="delete">#}
+                                    {#                                                        <i class="fa fa-times"></i>#}
+                                    {#                                                    </a>#}
+                                    {##}
+                                    {#                                                                    </td>#}
+                                    {#                                                                </tr>#}
+                                    {#                                                            {% endfor %}#}
+                                    {#                                                            </tbody>#}
+                                    {#                                                        </table>#}
+                                    {#                                                    </div>#}
+                                    {#                                                </div>#}
+                                    {##}
+                                    {#                                                <!-- (10) Events Tab-->#}
+                                    {#                                                <div id="events-tab" class="tab-pane">#}
+                                    {#                                                    <div class="pd-20">#}
+                                    {#                                                        <div class="vd_info tr"> <a class="btn vd_btn btn-xs vd_bg-yellow" href="/eventsV2"> <i class="fa fa-plus append-icon"></i> Add Events </a> </div>#}
+                                    {#                                                        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="fa fa-calendar mgr-10 profile-icon"></i> Events</h3>#}
+                                    {#                                                        <table class="table table-striped table-hover">#}
+                                    {#                                                            <thead>#}
+                                    {#                                                            <tr>#}
+                                    {#                                                                <th>#</th>#}
+                                    {#                                                                <th>Title</th>#}
+                                    {#                                                                <th>Start Date</th>#}
+                                    {#                                                                <th>End Date</th>#}
+                                    {#                                                                <th>Status</th>#}
+                                    {#                                                                <th>Friends Include</th>#}
+                                    {#                                                                <th>Action</th>#}
+                                    {#                                                            </tr>#}
+                                    {#                                                            </thead>#}
+                                    {#                                                            <tbody>#}
+                                    {#                                                            {% for event in events %}#}
+                                    {#                                                                <tr>#}
+                                    {#                                                                    <td>{{ forloop.counter0 }}</td>#}
+                                    {#                                                <td><img height="80" src="img/avatar/avatar.jpg" alt="example image">#}
+                                    {#                                                </td>#}
+                                    {#                                                                    <td class="center">{{ event.title }}</td>#}
+                                    {##}
+                                    {#                                                                    <td class="center">{{ event.start}}</td>#}
+                                    {#                                                                    <td class="center">{{ event.end}}</td>#}
+                                    {#                                                                    <td class="center">#}
+                                    {#                                                                        {% if event.is_completed %}#}
+                                    {#                                                                            <span class="label vd_bg-yellow">Complete</span>#}
+                                    {#                                                                        {% else %}#}
+                                    {#                                                                            <span class="label vd_bg-green">Open</span>#}
+                                    {#                                                                        {% endif %}#}
+                                    {#                                                                    </td>#}
+                                    {#                                                                    {% for friend in friends %}#}
+                                    {#                                                                        {% if friend.user == request.user %}#}
+                                    {#                                                                            <td class="center"><strong>{{ friend.friends.user.get_full_name }}</strong></td>#}
+                                    {#                                                                        {% else %}#}
+                                    {#                                                                            <td class="center"><strong>{{ friend.user.get_full_name }}</strong></td>#}
+                                    {#                                                                        {% endif %}#}
+                                    {#                                                                    {% endfor %}#}
+                                    {#                                                                    <td class="menu-action rounded-btn">#}
+                                    {#                                                                        <a href = "/eventsV2/{{ event.id }}" class="btn menu-icon vd_bg-blue" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="view">#}
+                                    {#                                                                            <i class="fa fa-eye"></i>#}
+                                    {#                                                                        </a>#}
+                                    {#                                                                        <a href = "/eventsV2/{{ event.id }}" class="btn menu-icon vd_bg-red" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="edit">#}
+                                    {#                                                                            <i class="fa fa-pencil"></i>#}
+                                    {#                                                                        </a>#}
+                                    {#                                                                        <a href = "/eventsV2/{{ event.id }}" class="btn menu-icon vd_bg-red" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="delete">#}
+                                    {#                                                                            <i class="fa fa-times"></i>#}
+                                    {#                                                                        </a>#}
+                                    {##}
+                                    {#                                                                    </td>#}
+                                    {#                                                                </tr>#}
+                                    {#                                                            {% endfor %}#}
+                                    {#                                                            </tbody>#}
+                                    {#                                                        </table>#}
+                                    {#                                                    </div>#}
+                                    {#                                                </div>#}
+                                    {##}
+                                    {#                                                <!-- (11) Tasks Tab-->#}
+                                    {#                                                <div id="tasks-tab" class="tab-pane">#}
+                                    {#                                                    <div class="pd-20">#}
+                                    {#                                                        <!--fix me-->#}
+                                    {#                                                        <div class="vd_info tr"> <a class="btn vd_btn btn-xs vd_bg-yellow" href="/tasksV2"> <i class="fa fa-plus append-icon"></i> Add Tasks </a> </div>#}
+                                    {#                                                        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="glyphicon glyphicon-tags mgr-10 profile-icon"></i> Tasks</h3>#}
+                                    {#                                                        <table class="table table-striped table-hover">#}
+                                    {#                                                            <thead>#}
+                                    {#                                                            <tr>#}
+                                    {#                                                                <th>#</th>#}
+                                    {#                                                                <th>Subject</th>#}
+                                    {#                                                                <th>Due day</th>#}
+                                    {#                                                                <th>Assign to</th>#}
+                                    {#                                                                <th>Note</th>#}
+                                    {#                                                                <th>Status</th>#}
+                                    {#                                                                <th>Action</th>#}
+                                    {#                                                            </tr>#}
+                                    {#                                                            </thead>#}
+                                    {#                                                            <tbody>#}
+                                    {#                                                            {% for task in tasks %}#}
+                                    {#                                                                <tr>#}
+                                    {#                                                                    <td>{{ forloop.counter0 }}</td>#}
+                                    {#                                                <td><img height="80" src="img/avatar/avatar.jpg" alt="example image">#}
+                                    {#                                                </td>#}
+                                    {#                                                                    <td class="center">{{ task.subject }}</td>#}
+                                    {#                                                                    <td class="center">{{ task.due}}</td>#}
+                                    {#                                                                    <td class="center">fix assignee!!!!!</td>#}
+                                    {#                                                                    {% for assignee in friends_assigned %}#}
+                                    {#                                                                        <td class="center"><strong>{{assignee.get_full_name }}</strong></td>#}
+                                    {#                                                                    {% endfor %}#}
+                                    {#                                                                    <td class="center">{{ task.notes}}</td>#}
+                                    {#                                                                    <td class="center">#}
+                                    {#                                                                        {% if task.complete %}#}
+                                    {#                                                                            <span class="label vd_bg-yellow">Complete</span>#}
+                                    {#                                                                        {% else %}#}
+                                    {#                                                                            <span class="label vd_bg-green">Open</span>#}
+                                    {#                                                                        {% endif %}#}
+                                    {#                                                                    </td>#}
+                                    {##}
+                                    {#                                                                    <td class="menu-action rounded-btn">#}
+                                    {#                                                                        <a href = "/tasksV2/{{ task.id }}" class="btn menu-icon vd_bg-blue" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="view">#}
+                                    {#                                                                            <i class="fa fa-eye"></i>#}
+                                    {#                                                                        </a>#}
+                                    {#                                                                        <a href = "/tasksV2/{{ task.id }}" class="btn menu-icon vd_bg-red" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="edit">#}
+                                    {#                                                                            <i class="fa fa-pencil"></i>#}
+                                    {#                                                                        </a>#}
+                                    {#                                                                        <a href = "/tasksV2/{{ task.id }}" class="btn menu-icon vd_bg-red" data-placement="top"#}
+                                    {#                                                                           data-toggle="tooltip" data-original-title="delete">#}
+                                    {#                                                                            <i class="fa fa-times"></i>#}
+                                    {#                                                                        </a>#}
+                                    {##}
+                                    {#                                                                    </td>#}
+                                    {#                                                                </tr>#}
+                                    {#                                                            {% endfor %}#}
+                                    {#                                                            </tbody>#}
+                                    {#                                                        </table>#}
+                                    {#                                                    </div>#}
+                                    {#                                                </div>#}
+                                    {##}
+                                    {#                                                <!-- (12) Friends Tab-->#}
+                                    {#                                                <div id="friends-tab" class="tab-pane">#}
+                                    {#                                                    <div class="pd-20">#}
+                                    {#                                                        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="fa fa-users mgr-10 profile-icon"></i> FRIENDS</h3>#}
+                                    {#                                                        <ul class="nav nav-pills">#}
+                                    {#                                                          <li class="active"><a href="#photos-1" data-toggle="tab">Friends</a></li>#}
+                                    {#                                                          <li><a href="#photos-2" data-toggle="tab">Pending Request</a></li>#}
+                                    {#                                                          <li><a href="#photos-3" data-toggle="tab">Blacklisted</a></li>#}
+                                    {#                                                        </ul>#}
+                                    {#                                                        <div class="content-grid column-xs-3 column-sm-4 column-md-4 column-lg-6 height-xs-4 mgbt-xs-20">#}
+                                    {#                                                            <div>#}
+                                    {#                                                                <ul class="list-wrapper">#}
+                                    {#                                                                    {% for friend in friends %}#}
+                                    {#                                                                    <li>#}
+                                    {#                                                                        {% if friend.user == request.user %}#}
+                                    {#                                                                            <a href="/profile/{{ friend.friends.user.userprofile.id }}">#}
+                                    {#                                                                                <span class="menu-icon"><img src="{{ friend.friends.user.userprofile.get_image_url }}" ></span>#}
+                                    {#                                                                             </a>#}
+                                    {#                                                                            <span class="menu-text user-name">{{friend.friends.user.get_full_name}}#}
+                                    {#                                                                        {% else %}#}
+                                    {#                                                                            <a href="/profile/{{ friend.user.userprofile.id }}">#}
+                                    {#                                                                            <span class="menu-icon"><img src="{{ friend.user.userprofile.get_image_url }}" ></span>#}
+                                    {#                                                                            </a>#}
+                                    {#                                                                            <span class="menu-text user-name">{{friend.user.get_full_name}}#}
+                                    {#                                                                        {% endif %}#}
+                                    {#                                                                            <span class="menu-info">#}
+                                    {#                                                                                <span class="menu-date">{{ friend.userprofile.city}}</span>#}
+                                    {#                                                                                <span class="menu-action">#}
+                                    {#                                                                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+                                    {#                                                                                        <i class="fa fa-check"></i>#}
+                                    {#                                                                                    </span>#}
+                                    {#                                                                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+                                    {#                                                                                        <i class="fa fa-times"></i>#}
+                                    {#                                                                                    </span>#}
+                                    {#                                                                                </span>#}
+                                    {#                                                                            </span>#}
+                                    {#                                                                        </span>#}
+                                    {#                                                                    </li>#}
+                                    {#                                                                    {% endfor %}#}
+                                    {#                                                                </ul>#}
+                                    {#                                                            </div>#}
+                                    {#                                                        </div>#}
+                                    {#                                                    </div>#}
+                                    {#                                                </div>#}
+                                    {#                                            </div><!--tab-content-->#}
+                                    {#                                        </div>#}
+                                    {#                                    </div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--vd_content-wrapper-->
+            </div>
+            <!--sidebar -->
+        </div>
+        <!--content-->
+
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 Yapjoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+    </div><!--vd_body-->
+
+
+    <div class="modal fade" id="messageModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Send a message</h4>
+                <p>Credit Remaining: <span id="remCredits">{{ userprofile.amount|intcomma }}</span></p>
+{#                    {% if message_success %}#}
+{#                        <h3 class="success_green text-center">{{ message_success }}</h3>#}
+{#                        <br/>#}
+{#                        <br/>#}
+{#                    {% else %}#}
+                        <form action="." method="POST" style="margin-left: 10px; margin-right: 10px;" id="msgForm">
+                            {% csrf_token %}
+                            <!-- seth -->
+{#                            <div class="form-group">#}
+{#                                {% if error %}<p class="red text-center">{{ error }}</p>{% endif %}#}
+{##}
+{#                                <label>Subject:</label>#}
+{##}
+{#                                {{ form.subject }}#}
+{#                                <div class="red">{{ form.subject.errors }}</div>#}
+{##}
+{#                            </div>#}
+                            <div class="form-group due">
+
+                                <label>Message:</label>
+                                {{ form.message }}
+                                <div class="red">{{ form.message.errors }}</div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-12 margin-top-10 margin-bottom-10">
+                                    <input hidden="hidden" name="messageSend" id="messageSend"/>
+                                    <button type="submit" class="btn btn-blue pull-right">Send</button>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="clearfix"></div>
+                        </form>
+{#                    {% endif %}#}
+
+                </div>
+
+            </div>
+
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+     {% if message_success %}
+    <div class="modal fade" id="messageModalSuccess" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Message sent successfully.</h4>
+                <p>Credit Remaining: {{ userprofile.amount|intcomma }}</p>
+                    {% if message_success %}
+                        <h3 class="success_green text-center">{{ message_success }}</h3>
+                        <br/>
+                        <br/>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    {% endif %}
+
+    <script src='{% static 'js/profile_message.js' %}'></script>
+
+    <script>
+        function UserStatus() {
+            $.ajax({
+                url: '/is_online/?user=' + $('#profileStatus').attr('data-id'),
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (response) {
+                if (response['is_online']) {
+                    $('#profileStatus').text('Online');
+                }
+                else {
+                    $('#profileStatus').text('Offline');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            UserStatus();
+            setInterval(UserStatus, 45000);
+        });
+    </script>
+{% endblock content %}
+
+{% block jquery %}
+
+    <script type="text/javascript">
+        /*<![CDATA[*/
+
+
+        jQuery(function ($) {
+            jQuery('#post-list').yiiListView({
+                'ajaxUpdate': ['post-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#friend-list-detailed').yiiListView({
+                'ajaxUpdate': ['friend-list-detailed'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#task-list').yiiListView({
+                'ajaxUpdate': ['task-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#event-list').yiiListView({
+                'ajaxUpdate': ['event-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#friend-list').yiiListView({
+                'ajaxUpdate': ['friend-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+        });
+        /*]]>*/
+        function completeTask(id) {
+            //  alert(id);
+
+            $.ajax({
+                url: '/tasks/complete/', // the endpoint
+                type: 'post', // http method
+                data: {id: id}, // data sent with the post request
+
+                // handle a successful response
+                success: function (response) {
+                    //alert("success"); // another sanity check
+                    if (response == "success") {
+                        var task_id = '#complete_task_' + id;
+                        $(task_id).removeClass('fa fa-circle-o fa-lg')
+                                .attr('class', 'fa fa-check fa-lg')
+                                .addClass('success_green');
+                        {#                                $('#delete_bin_'+id).addClass('success_green');#}
+                        $('#task_subject_' + id).addClass('success_green');
+                    }
+                    if (response == "successFalse") {
+                        var task_id = '#complete_task_' + id;
+                        $(task_id).removeClass('fa fa-check fa-lg')
+                                .attr('class', 'fa fa-circle-o fa-lg')
+                                .removeClass('success_green');
+                        {#                                $('#delete_bin_'+id).removeClass('success_green');#}
+                        $('#task_subject_' + id).removeClass('success_green');
+                    }
+
+
+                },
+
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+                    {#                            alert(err, errmsg);#}
+                }
+            });
+
+        }
+
+
+    </script>
+{% endblock jquery %}

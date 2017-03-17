@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="col-md-4 col-md-offset-1 help-content">
+        <h3 class="section-title">Leave Feedback</h3>
+
+        <div class="flashes">
+            {% if success %}
+            <div class="alert alert-success">Thank you for your feedback! We will be reviewing your submission
+                shortly.
+            </div>
+            {% endif %}
+        </div>
+        <form action="." method="post">
+            {% csrf_token %}
+            <div class="form-group">
+
+                <label>Subject</label>
+                {#        <input placeholder="Subject" class="form-control" required="required" name="SupportRequest[subject]" id="SupportRequest_subject" type="text" maxlength="200" />   #}
+                {{ form.subject }}
+                <p style="color: red;">{{ form.subject.errors.0 }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Feedback</label>
+                {#        <textarea placeholder="Leave Feedback" class="form-control" rows="7" required="required" name="SupportRequest[description]" id="SupportRequest_description"></textarea>#}
+                {{ form.message }}
+                <p style="color: red;">{{ form.message.errors.0 }}</p>
+            </div>
+            <button type="cancel" class="btn btn-gray">Cancel</button>
+            <button type="submit" class="btn btn-blue">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}

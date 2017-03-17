@@ -1,0 +1,16 @@
+<div class="col-md-9" id="refreshConversation_friend">
+    <h4><em id="get_friend profile mega-li">
+        <span class="mega-image">
+        <img width="10%" src="{{ friend.userprofile.get_image_url }}" alt="example image"> {{ friend.get_full_name}}
+        </span>
+        </em>
+    </h4>
+</div>
+<script>
+    var user = '{{ user.id }}';
+    var user2 = '{{ friend.id }}';
+    var username = '{{ user.username }}';
+    var username2 = '{{ friend.username }}';
+    var name = '{{ user.get_full_name }}';
+    var name2 = '{{ friend.get_full_name }}';
+</script>

@@ -1,0 +1,31 @@
+{% load static %}
+<div style="padding:10px" class="col-md-12 col-xs-12 panel-body mb-panel-body" id="displayAboutMeEdit">
+    <div class="col-md-12 col-xs-12">
+        <a  onclick="$('#openAboutMeEdit').toggle('hidden');$('#displayAboutMeEdit').toggle('hidden');">
+            {#        <br />#}
+            <i style="margin-top:10px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <br /></a>
+        {% if description %}{{ descriptio|safe }}{% endif %}
+        <br />
+        <br />
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 social_icons_style" id="social_icons">
+        {% if up.facebook_url %}
+            <a href="{{ up.facebook_url }}" target="_blank"><img class="pull-left" style="width:20%;padding:0px !important;" src="{% static "images/vendorProfile/FB.png" %}" /></a>
+        {% endif %}
+        {% if up.twitter_url %}
+            <a href="{{ up.twitter_url }}" target="_blank"><img class="pull-left" style="width:20%;padding:0px !important;" src="{% static "images/vendorProfile/Twitter.png" %}" /></a>
+        {% endif %}
+        {% if up.instagram_url %}
+           <a href="{{ up.instagram_url }}" target="_blank"> <img class="pull-left" style="width:20%" src="{% static "images/vendorProfile/Instagram.png" %}" /></a>
+        {% endif %}
+        {% if up.youtube_url %}
+           <a href="{{ up.youtube_url }}" target="_blank"> <img class="pull-left" style="width:20%" src="{% static "images/vendorProfile/YouTube.png" %}" /></a>
+        {% endif %}
+        {% if up.pinterest_url %}
+           <a href="{{ up.pinterest_url }}" target="_blank"> <img class="pull-left" style="width:20%" src="{% static "images/vendorProfile/Pinterest.png" %}" /></a>
+        {% endif %}
+    </div>
+
+</div>

@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static "vendroid/css/theme-responsive.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static "vendroid/css/font-awesome-ie7.min.css" %}"><![endif]-->
+    <link href="{% static "vendroid/css/font-entypo.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/fonts.css" %}"  rel="stylesheet" type="text/css">
+    <style>
+        a{
+{#            background-color: #ba8c00;#}
+{#            padding: 6px 15px;#}
+{#            display: inline-block;#}
+{#            margin-bottom: 0px;#}
+{#            font-size: 14px;#}
+{#            font-weight: 400;#}
+{#            line-height: 1.42857;#}
+{#            text-align: center;#}
+{#            white-space: nowrap;#}
+{#            vertical-align: middle;#}
+{#            cursor: pointer;#}
+{#            -moz-user-select: none;#}
+{#            background-image: none;#}
+{#            border: 1px solid transparent;#}
+{#            border-radius: 4px;#}
+            color: mediumpurple !important;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
+    <tr>
+        <td align="center" bgcolor="#896F22" style="padding: 40px 0 40px 0;">
+            <img src="https://yapjoy-static.s3.amazonaws.com/static/images/logo/logo.png" alt="YapJoy"
+                 style="display: block; width: 20%;"/>
+        </td>
+    </tr>
+    <tr>
+
+        <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+            <center><b><img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png" width="30%" style="padding-bottom: 15px;" /></b></center>
+            <p style="color: #153643; font-family: Arial, sans-serif; font-size: 15px;">{{ title|safe }}</p>
+
+            <p style="color: #153643; font-family: Arial, sans-serif; font-size: 13px;">{{ message|safe }}
+            </p>
+
+
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#A88526" style="padding: 30px 30px 30px 30px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+
+                    <td style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;">
+                            <a href="https://www.yapjoy.com/" style="padding-right: 0px;">© YapJoy</a> - All Rights Reserved
+                    </td>
+                    <td align="right">
+                        <a href="https://www.yapjoy.com/" target="_blank"
+                           style="color: #ffffff;text-decoration: none;"><font color="#ffffff">About</font></a>
+                        <font color="#ffffff">|</font>
+                        <a href="https://www.yapjoy.com/" target="_blank"
+                           style="color: #ffffff;text-decoration: none;"><font color="#ffffff">Contact</font></a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

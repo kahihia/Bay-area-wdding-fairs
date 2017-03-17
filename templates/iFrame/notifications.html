@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+            <section class="notifications-section">
+    <div class="col-md-2 col-md-offset-1 left-col">
+        <section class="notifications-nav">
+
+            <!-- patch4 -->
+            <!-- <h3 class="section-title">Notifications<small><a href="/notification">All</a></small></h3> -->
+            <h3 class="section-title">Notifications</h3>
+{#            <div class="notifications-filter">#}
+{#                <ul class="list-inline">#}
+{#                    <li class="descript"><p><a href="/notification/unread">Unread</a></p></li>#}
+{#                    <li>1</li>#}
+{#                </ul>#}
+{#            </div>#}
+            <div class="notifications-filter">
+                <ul class="list-inline">
+                    <li class="descript"><p><a href="/notifications/">All Notifications</a></p></li>
+{#                    <li>4</li>#}
+                </ul>
+            </div>
+
+        </section>
+    </div>
+    <div class="col-md-9">
+        <ul class=" list-unstyled notifications-list">
+            <li>
+{#                <form id="clearallform" method="post">#}
+{#                    <input type="hidden" name="markall" value="1">#}
+{#                    <a href="#" class="add-btn mark-all" onclick="$('#clearallform').submit()"><span>Mark all as read</span></a>#}
+{#                </form>#}
+            </li>
+                <!-- hide show all -->
+                <!-- patch4 -->
+             <!-- <h4 class="section-title"><small><a href="/notification">Show All</a></small></h4> --><!-- patch3 -->
+
+            <div id="notify-list" class="list-view">
+<div class="items">
+<li class="">
+    <br />
+    {% if notifications %}
+        {% for notification in notifications %}
+            <span class="notifications">
+                <a class="check" ><i class="fa fa-check fa-lg"></i></a>
+                <p class="user"><a href="">{{ notification.userprofile.user.get_full_name }}</a> <span class="time-stamp">{{ notification.created_at|timesince }} ago</span></p>
+                <p class="content">{{ notification.message }}</p>
+            </span>
+        {% endfor %}
+    {% else %}
+            <span class="notifications">
+{#        <a href="#!" class="check notifiyListener" data-id="343"><i class="fa fa-check fa-lg"></i></a>#}
+{#        <p class="user"><a href="#!">Adeel Khan</a> </p>#}
+        <p class="content text-center">No Notifications</p>
+    </span>
+    {% endif %}
+</li></div><div class="keys" style="display:none" title="/notification"><span>343</span></div>
+</div>        </ul>
+    </div>        </div>
+    </div>
+</section>
+
+
+
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.notifications.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript">
+/*<![CDATA[*/
+jQuery(function($) {
+jQuery('#notify-list').yiiListView({'ajaxUpdate':['notify-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+});
+/*]]>*/
+</script>
+{% endblock jquery %}

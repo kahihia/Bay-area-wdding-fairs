@@ -1,0 +1,748 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+
+{% block content %}
+<style>
+    .circle-online {
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #a1a1a1;
+        border-radius: 25px;
+        background-color: green;
+        position: absolute;
+        top: 20px;
+        left: 7px;
+        z-index:99;
+    }
+    .circle-offline {
+        border: 1px solid #a1a1a1;
+        border-radius: 25px;
+        background-color: grey;
+        left: 7px;
+        margin: 5px;
+        padding: 5px;
+        position: absolute;
+        top: 20px;
+        z-index:99;
+    }
+    .white-bg {
+        background-color: #FFF;
+    }
+
+</style>
+
+    <script>
+        var source = '{{ source }}';
+        var videoCallInit = '{{ video_call_init }}';
+        var chatPage = true;
+    </script>
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <link href="{% static 'css/video_chat.css' %}" rel="stylesheet" type="text/css">
+    {# {% include "vendroid/messages/partial/video_modal.html" %}#}
+    {# {% include "vendroid/messages/partial/notification.html" %}#}
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+               {# {% include "vendroid/partial/_sidebar.html" %}#}
+
+            {% include "vendroid/partial/_sidebar.html" %}
+            {% include "vendroid/messages/partial/chat_list.html" %}
+            <div class="vd_content-wrapper" style="min-height: 931px;">
+                    <div class="vd_container" style="min-height: 931px;">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-menu">
+                                    <h1>Messages</h1>
+                                </div>
+                            </div>
+
+                            <div class="vd_content-section vd_chattheme clearfix">
+                                <div class="row">
+
+                                    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 firstColumn">
+                                    <div class="panel widget light-widget">
+                                    <div class="panel-body">
+                                        <div class="container np" style="width:100%;">
+                            <h2>
+{#                                                        <span class="append-icon icon-users vd_yellow" ></span>#}
+                                <span class="menu-text">Friends</span>
+                            </h2>
+                            <div>
+{#                                                       <i>Find a friend to chat in friends list or Searching by the name</i>#}
+                                <div class="chat_search">
+                                    <!--<div class="col-md-9 np">
+                                      <input type="text" name="search" id="searchField_local" class="vd_menu-search-text width-90 vd_bg-white vd-white " style="width: 100% !important;" placeholder="Search by Name">
+                                      <div class="results_to_hide" id="search_result">
+                                        {% include "vendroid/messages/select_result.html" %}
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3 text-right npr">
+                                      <span class="vd_menu-search-submit vd_bg-blue btn btn-default" id="button_search"><i class="fa fa-search vd-white" style="color: #fff;"></i></span>
+                                  </div>-->
+                                    <div class="col-md-12 np">
+                                        <input class=
+                                        "vd_menu-search-text width-90 vd_bg-white vd-white" id=
+                                        "searchField_local" name="search" placeholder="Search by Name"
+                                        style="width: 100% !important;" type="text"><span class=
+                                        "vd_menu-search-submit vd_bg-blue btn btn-default" id=
+                                        "button_search"><i class="fa fa-search vd-white" style=
+                                        "color: #fff;"></i></span>
+                                        <div class="results_to_hide" id="search_result">
+                                            <ul class="friends-search-wrap" id="search_result_inner"></ul>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+
+                                </div>
+                            </div>
+
+                            <div id="posts-tab" class="tab-pane sidebar-widget" style="margin-top:10px;">
+                               <div class="content-list">
+                                   <div data-rel="scroll">
+                                   <ul  class="list-wrapper chat-friend-listings">
+                                        {% if not all_threads %}
+                                            <h5><em style="padding-left:15px;">Please <a href="/friends/">Add Your Friends</a> to Start Chat</em></h5>
+                                        {% endif %}
+
+                                        {% for thread in all_threads %}
+                                            {% if thread == request.user %}
+                                        <li>
+                                            <span class="text-right onlineStatus" id="friend{{ friends.friends.user.id}}" data-id="{{ friends.friends.user.id }}"></span>
+                                            <div class="chat-enter-list">
+                                                <div class="msg-profile-img pull-left col-md-3 npl">
+                                                    <a href="{{ friends.friends.user.userprofile.get_profile_url }}">
+
+                                                            <img src="{{ friends.friends.user.userprofile.get_image_url }}" alt="example image">
+
+                                                    </a>
+                                                </div>
+                                                <div class="msg-profile-text col-md-9 npr">
+                                                    <a type="button" class="btn btn-default vd_bg-blue btn-block" id="{{ forloop.counter }}" onclick="find_friend_message('{{ friends.friends.user.id}}')">
+                                                        <div class="unread_alert">
+                                                            {% if unread_messages|get_at_index:forloop.counter0 > 0 %}<span class="badge vd_bg-red">{{ unread_messages|get_at_index:forloop.counter0 }}</span>{% endif %}
+                                                        </div>
+
+                                                        <div class="text-center">
+                                                            <div class="block">
+                                                                {{ friends.friends.user.get_full_name}}
+                                                            </div>
+                                                            <div class="block">
+                                                                {{ friends.friends.user.userprofile.type }}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </li>
+                                            {% else %}
+                                                <li>
+                                                    <span class="text-right onlineStatus" id="friend{{ thread.id}}" data-id="{{ thread.id }}"></span>
+                                            <div class="chat-enter-list" id="chat{{ thread.id}}">
+                                                <div class="msg-profile-img pull-left col-md-3 npl">
+                                                    <a href="{{ thread.userprofile.get_profile_url }}">
+
+                                                            <img src="{{ thread.userprofile.get_image_url }}">
+
+                                                    </a>
+                                                </div>
+                                                <div class="msg-profile-text col-md-9 npr">
+                                                    <a type="button" class="btn btn-default vd_bg-blue btn-block" id="{{ forloop.counter }}" onclick="find_friend_message('{{ thread.id}}')">
+
+                                                        <div class="text-center">
+                                                            <div class="block">
+                                                                {{ thread.get_full_name}}
+                                                            </div>
+                                                            <div class="block">
+                                                                {{ thread.userprofile.type }}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </li>
+                                            {% endif %}
+                                       {% endfor %}
+{#                                                                <li> <a href="#">#}
+{#                                                                        <div class="menu-icon vd_red"><i class=" fa fa-cogs"></i></div>#}
+{#                                                                        <div class="menu-text">  Your setting is updated#}
+{#                                                                            <div class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></div>#}
+{#                                                                        </div>#}
+{#                                                                </a> </li>#}
+
+                                   </ul>
+                                   </div>
+                                    {% if all_friends != None %}
+                                    <div class="text text-center" style="padding-top:10px">
+                                        <h5><a href="/friends/" class="vd_bg-white">View All Friends
+{#                                                                    <i class="fa fa-angle-double-right"></i>#}
+                                        </a></h5>
+                                    </div>
+                                    {% endif %}
+                               </div>
+                            </div>
+                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="middleColumn">
+                                          <!--(1) profile summary(image, name...) -->
+                                        <div class="panel widget light-widget">
+{#                                          <div class="panel-heading no-title"> </div>#}
+                                          <div class="panel-body">
+                                           <div class="container np">
+{#                                                    <h2>#}
+{#                                                        <span class="append-icon icon-users vd_yellow" style="padding-left:15px"></span>#}
+{#                                                        <span class="menu-text">Conversation</span>#}
+{#                                                    </h2>#}
+
+                                                    {% if not all_threads %}
+                                                        <h4><em style="padding-left:20px;">No Conversations. Start Chatting With Your Friends Now!</em></h4>
+                                                    {% else %}
+                                                        <div id="">
+                                                            <br>
+                                                            <div class="span4 collapse-group" id="conversation_board">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        {% include "vendroid/messages/partial/chat_friend.html" %}
+                                                                        <div class="col-md-3 npr text-right">
+{#                                                                            <a type="button" class="btn btn-default vd_bg-blue vd-white" data-toggle="collapse" data-parent="#conversation_board" href="#collapseOne"><em style="color: #fff;">Show/Hide Chat</em></a>#}
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div class="col-md-12 conversation_board-body collapse in " id="collapseOne">
+                                                                        <div class="tab-content">
+                                                                            <div id="home-tab" class="tab-pane active">
+                                                                                <div class="content-list content-image menu-action-right">
+                                                                                    <div class="mCustomScrollbar _mCS_6" data-rel="scroll" id="scrollbar_begins">
+                                                                                    <div class="mCustomScrollBox mCS-light" id="mCSB_6" style="position: relative; height: 100%; overflow: hidden; max-width: 100%;">
+                                                                                            <div class="mCSB_container" style="position: relative; top: 0px;" id="sliderContainer">
+                                                                                               {#  {% include "vendroid/messages/conversation.html" %} #}
+                                                                    <div id="refreshConversation">
+                                                                        <ul class="list-wrapper pd-lr-15 list-unstyled" id="chatBox">
+                                                                        </ul>
+                                                                    </div>
+
+                                                                                            </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12" id="for_loop_pending">
+                                                                    </div>
+
+                                                    {#                <div class="col-md-12 text-center">#}
+                                                    {##}
+                                                    {#                    {% paginate %}#}
+                                                    {#                </div>#}
+                                                                    <div class="mCSB_scrollTools"
+                                                                         style="position: absolute; display: block; opacity: 0;">
+                                                                        <div class="mCSB_draggerContainer">
+                                                                            <div class="mCSB_dragger"
+                                                                                 style="position: absolute; top: 0px; height: 800px;"
+                                                                                 oncontextmenu="return false;" id="slider">
+                                                                                <div class="mCSB_dragger_bar"
+                                                                                     style="position: relative; line-height: 800px;"></div>
+                                                                            </div>
+                                                                            <div class="mCSB_draggerRail"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                           <div class="container np">
+                                                    <form class="form-horizontal" method="post" id="composeForm" action="." >
+                                                        {% csrf_token %}
+                                                            <!--alternatively you can let user choose sender-->
+{#                                                        <div class="form-group clearfix">#}
+{#                                                            <label class="col-sm-2 control-label">To</label>#}
+
+{#                                                            <div class="col-sm-12 controls">#}
+{#                                                            <input onclick="showselect()" id="email-input" type="text" class="input-border-btm" placeholder="someone@example.com">#}
+{#                                                                <p><em>Please select the receiver from your fiend list. If they are not in the list, please <a href="/friends/" class="text vd_green"><b>add your friends</b></a></em></p>#}
+{#                                                                <select multiple="multiple" class="form-control" data-placeholder="To" name="to_users" id="to" style="height:70px;">#}
+{#                                                                    {% for friend in all_friends %}#}
+{#                                                                        {% if friend.user == request.user %}#}
+{#                                                                            <option value="{{ friend.friends.user.id }}">{{ friend.friends.user.get_full_name }}</option>#}
+{#                                                                        {% else %}#}
+{#                                                                            <option value="{{ friend.user.id }}">{{ friend.user.get_full_name }}</option>#}
+{#                                                                        {% endif %}#}
+{#                                                                    {% endfor %}#}
+{#                                                                </select>#}
+{##}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                        <div class="form-group  clearfix">#}
+{#                                                            <label class="col-sm-2 control-label">Subject</label>#}
+{#                                                            <div class="col-sm-10 controls">#}
+{#                                                            {{ form.subject|addcss:'input-border-btm'}}#}
+{#                                                            <p style="color: red;">{{ form.subject.errors.0 }}</p>#}
+                                    {#                          <input type="text" id="subject-input" class="input-border-btm" placeholder="Subject Title">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+
+                                                        <div class="clearfix">
+                                                            {% if all_threads %}<form class="send_message_form" method="post" id="id_send_message_form">
+                                                                {% csrf_token %}
+{#                                                                <a class="btn btn-default" data-wysihtml5-command="insertImage" title="Attach a Photo" unselectable="on" data-toggle="modal" data-target="#attach_file"><i class="fa fa-picture-o"></i>#}
+{#                                                                </a>#}
+{#                                                                <input data-action="refresh" id="chooseEnter" type="checkbox"><em>Press &lt; Enter &gt;  to send</em></button>#}
+{#                                                                <a class="btn btn-default" data-wysihtml5-command="insertImage" title="Post a Sticker" href="javascript:;" unselectable="on"><i class="fa fa-wechat"></i>#}
+{#                                                                   {{form.sticker}}#}
+{#                                                                </a>#}
+                                                                <div class="col-sm-8 controls type_msg_box">
+                                                                    <div class="col-sm-8 controls type_msg_box">
+                                                                        <textarea id="chatMsg" class="form-control" rows="10" placeholder="Write your message here" name="message" maxlength="1500" cols="40" required="required"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 controls" id="send_btn">
+                                                                    <a class="btn vd_btn vd_bg-blue vd_white pull-right " id="startVideoCall" onclick="openVideoCallModal(reciever='')" style="margin-left: 15px;"><i class="fa fa-video-camera append-icon"></i>Video Call</a>
+                                                                    <a class="btn vd_btn vd_bg-blue vd_white pull-right " id="chatBtn"><i class="fa fa-envelope append-icon"></i>Send</a>
+
+                                                                </div>
+        {#                                                          <ul class="wysihtml5-toolbar"><li class="dropdown"><a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-font"></i>&nbsp;<span class="current-font">Normal text</span>&nbsp;<b class="caret"></b></a><ul class="dropdown-menu"><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="div" href="javascript:;" unselectable="on">Normal text</a></li><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" href="javascript:;" unselectable="on">Heading 1</a></li><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" href="javascript:;" unselectable="on">Heading 2</a></li><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" href="javascript:;" unselectable="on">Heading 3</a></li></ul></li><li><div class="btn-group"><a class="btn btn-default" data-wysihtml5-command="bold" title="CTRL+B" href="javascript:;" unselectable="on">Bold</a><a class="btn btn-default" data-wysihtml5-command="italic" title="CTRL+I" href="javascript:;" unselectable="on">Italic</a><a class="btn btn-default" data-wysihtml5-command="underline" title="CTRL+U" href="javascript:;" unselectable="on">Underline</a></div></li><li><div class="btn-group"><a class="btn btn-default" data-wysihtml5-command="insertUnorderedList" title="Unordered list" href="javascript:;" unselectable="on"><i class="fa fa-list"></i></a><a class="btn btn-default" data-wysihtml5-command="insertOrderedList" title="Ordered list" href="javascript:;" unselectable="on"><i class="fa fa-th-list"></i></a><a class="btn btn-default" data-wysihtml5-command="Outdent" title="Outdent" href="javascript:;" unselectable="on"><i class="fa fa-dedent"></i></a><a class="btn btn-default" data-wysihtml5-command="Indent" title="Indent" href="javascript:;" unselectable="on"><i class="fa fa-indent"></i></a></div></li><li><div class="bootstrap-wysihtml5-insert-link-modal modal  fade"><div class="modal-dialog"> <div class="modal-content"><div class="modal-header vd_bg-green vd_white"><button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-times"></i></button><h4 id="myModalLabel" class="modal-title">Insert link</h4></div><div class="modal-body"><input value="http://" class="bootstrap-wysihtml5-insert-link-url input-border-btm input-lg width-100"></div><div class="modal-footer background-login"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="#" class="btn vd_btn vd_bg-blue" data-dismiss="modal">Insert link</a></div></div> </div></div><a class="btn btn-default" data-wysihtml5-command="createLink" title="Insert link" href="javascript:;" unselectable="on"><i class="fa fa-share"></i></a></li><li><div class="bootstrap-wysihtml5-insert-image-modal modal fade"><div class="modal-dialog"> <div class="modal-content"><div class="modal-header vd_bg-green vd_white"><button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-times"></i></button><h4 id="myModalLabel" class="modal-title">Insert image</h4></div><div class="modal-body"><input value="http://" class="bootstrap-wysihtml5-insert-image-url input-border-btm input-lg width-100"></div><div class="modal-footer background-login"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="#" class="btn vd_btn vd_bg-blue" data-dismiss="modal">Insert image</a></div></div> </div></div><a class="btn btn-default" data-wysihtml5-command="insertImage" title="Insert image" href="javascript:;" unselectable="on"><i class="fa fa-picture-o"></i></a></li></ul><textarea id="message" class="width-100 form-control" rows="15" placeholder="Write your message here" style="display: none;"></textarea><input type="hidden" name="_wysihtml5_mode" value="1"><iframe class="wysihtml5-sandbox" security="restricted" allowtransparency="true" frameborder="0" width="0" height="0" marginwidth="0" marginheight="0" style="border-collapse: separate; border: 1px solid rgb(204, 204, 204); clear: none; display: block; float: none; margin: 0px; outline: rgb(85, 85, 85) none 0px; outline-offset: 0px; padding: 6px 12px; position: static; z-index: auto; vertical-align: baseline; text-align: start; box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; border-radius: 4px; width: 749.234px; height: 314px; top: auto; left: auto; right: auto; bottom: auto; background-color: rgb(255, 255, 255);"></iframe>#}
+                                                            </form>{% endif %}
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                          </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <!-- (3)Main panel -->
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="lastColumn">
+                                        <div id="videos">
+                                            <div id="subscriber"></div>
+                                            <div id="publisher"></div>
+                                        </div>
+                                        <button type="button" class="btn btn-danger" id="videoCloseBtn">End Call</button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--vd_content-wrapper-->
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+        </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+    <!--attach file popup box-->
+    <div id="attach_file" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+			  <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title text text-center"><em>Attach File</em></h4>
+                    {{ form.images }}
+                  <button type="button" class="btn btn-default vd_bg-yellow vd-white pull-right" data-dismiss="modal">Attach</button>
+			  </div>
+			</div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="videoCall" tabindex="-1" role="dialog" aria-labelledby="Agreement" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header vd_bg-blue vd_white">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+                            class="fa fa-times"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">YapJoy Video Call</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe width="100%" height="500px" src="" id="video_call_modal" />
+                </div>
+                <div class="modal-footer background-login">
+{#                    <button type="button" class="btn vd_btn vd_bg-grey" data-dismiss="modal">Close</button>#}
+                    <button type="button" class="btn vd_btn vd_bg-green" data-dismiss="modal">I Agree</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    {# <script src='https://static.opentok.com/v2/js/opentok.min.js'></script>#}
+    {# <script src="{% static 'js/notification.js' %}"></script>#}
+    <script src="{% static 'js/text_chat.js' %}"></script>
+    <script src="{% static 'js/video_chat.js' %}"></script>
+    <script type="text/javascript">
+{#    $('#scrollbar_begins').mCustomScrollbar("scrollTo", "300px");#}
+    var send_friend_id = 0;
+    var video_url;
+    function openVideoCallModalURL(url){
+
+          //  alert( "Data Loaded: " + data );
+       // alert(url);
+                    $('#videoCall').modal('show');
+                    $('#video_call_modal').attr('src',url);
+
+
+    }
+    function openVideoCallModal(){
+        $( "#lastColumn" ).slideToggle({duration: '1000', queue: false})
+        $('#middleColumn').addClass('col-md-4').removeClass('col-md-8');
+        $('#middleColumn').addClass('col-lg-4').removeClass('col-lg-8');
+        $('#middleColumn').addClass('col-sm-4').removeClass('col-sm-8');
+        $('#middleColumn').addClass('col-xs-4').removeClass('col-xs-8');
+        initVideoChat();
+        notify_session.signal(
+            {
+                data: {
+                    notification: name + ' is making a video call',
+                    origin: 'video',
+                    target: '/online_message/?source=' + user,
+                    sender: user,
+                    senderName: name,
+                    receiver: user2
+                }
+            },
+            function (error) {
+
+            }
+        );
+        $('#startVideoCall').attr('disabled', 'disabled');
+
+//         $.post( "/video/", { create_session: "True", send_friend_id:send_friend_id })
+//           .done(function( dataUrl ) {
+//             var response = JSON.parse(dataUrl);
+//                     video_url = response.link;
+// {#           alert( "Data Loaded: " + response.link );#}
+// {#           alert( "Data Loaded: " + response.message );#}
+//                         var message = 'You have a video call request http://127.0.0.1:8008/online_message/?url='+dataUrl
+// {#                        message.encodeHTML();#}
+//                     $.ajax({
+//                         url: '/online_message/',
+//                         type: 'post', // http method
+//         {#                data: {id_message: msg, id_image:img},#}
+//                         data: {id_message: response.message, friend_id:send_friend_id},
+//
+//                         success: function (data, statusText) {
+//                             console.log("response success!");
+//
+//                             $('#refreshConversation').html(data);
+//
+//                             {#              var obj = $.parseJSON(data);#}
+//
+//         {#                    console.log("response  " + data.message);#}
+//         {#                    var output = "";#}
+//         {#                    output += '<div class="col-md-6 clearfix"></div><div class="col-md-6 npr" id="sender_send_message"> <div class="vd_bg-blue chat-wrap"> <div class="col-sm-7"> <p class="messages-content vd_white" id="id_user_message">';#}
+//         {#                    output += data.message;#}
+//         {#                    output += '</p> </div><div class="clearfix"></div> </div> </div>';#}
+//         {#                    $("#for_loop_pending").append(output);#}
+//
+//                             $('textarea#id_message').val("");
+//                             $('#videoCall').modal('show');
+//                             $('#video_call_modal').attr('src',response.link);
+//                         },
+//                         error: function (xhr, errmsg, err) {
+//                             console.log("fail sending message");
+//                         }
+//                     });
+//
+//
+//           });
+//
+    }
+    //choose from friend list
+    function  find_friend_message(id) {
+        get_friend_name(id);
+
+        $('.chat-enter-list').each(function(i, obj) {
+            $(obj).attr('style', 'background-color: #FFF;');
+            $('#chat' + id).removeAttr('style');
+        });
+
+//         send_friend_id = id;
+//
+// {#      console.log(id);#}
+//         toggle_results();
+//         $.ajax({
+//             url: '/online_message/',
+//             type: 'post', // http method
+//             data: {find_friend_message: id},
+//
+//             success: function (conversation) {
+// {#                var obj = $.parseJSON(conversation);#}
+//                 console.log("accept success");
+//
+//                 $('#refreshConversation').html(conversation);
+//                 $('.unread_alert').hide();
+// {#                $('#refreshConversation_friend').html(friends);#}
+//             },
+//
+//             error: function (xhr, errmsg, err) {
+//                console.log("fail accept conversation "+errmsg+" "+err);
+//             }
+//         });
+    }
+
+     function  get_friend_name(id) {
+{#        console.log(id);#}
+        // toggle_results();
+        $.ajax({
+            url: '/online_message/',
+            type: 'post', // http method
+            data: {get_friend_name: id},
+
+            success: function (friend) {
+                console.log("accept success");
+                $('#refreshConversation_friend').html(friend);
+                initOpentok();
+            },
+
+            error: function (xhr, errmsg, err) {
+               console.log("fail accept friend "+errmsg+" "+err);
+            }
+        });
+    }
+
+    $(".btn-group > .btn").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+
+    //(1)make both button search and Enter key search works
+    $('#button_search').click(function(){
+        var search = $('#searchField_local').val();
+        //will call search query of friend name
+        $.ajax({
+            url: '/online_message/',
+            type: 'post', // http method
+            data: {friend_name_search: search},
+            success: function (data) {
+                $("#search_result").show();
+                $("#search_result").html(data);
+                $(".results_to_hide").show();
+{#                var myData = JSON.parse(data);#}
+{#                for(var i in data)#}
+{#                {#}
+{#                    console.log("id is  "+i + " = " + data[i].pk);#}
+{#                    console.log("id is  "+i + " = " + data[i].fields.image);#}
+{#                    console.log("id is  "+i + " = " + data[i].fields.type);#}
+{#                }#}
+{##}
+{#                var output = "";#}
+{#                for(var i in data){#}
+{#                    output+='<li><a onclick="select_receiver(';#}
+{#                    output+=data[i].pk;#}
+{#                    output+='\')" data-toggle="modal" data-target="search_result_modal" style="cursor:pointer;"><div class=" menu - icon" id="id_profile_url"><img src="';#}
+{#                    output+=data[i].fields.image;#}
+{#                    output+='\" alt="N/A"></div> <div class=" menu - text" id="id_profile_name"> <strong>';#}
+{#                    output+=""; //add full name fix me!!!!#}
+{#                    output+='</strong> <div class="menu-info" id="id_profile_type"> <span class="menu-date">';#}
+{#                    output+=data[i].fields.type;#}
+{#                    output+='</span></div></div></a></li>';#}
+{#                }#}
+{#                $("#search_result").html(output);#}
+            },
+
+            //deal with the scenario of no matching results
+            error: function (xhr, textStatus,err) {
+                console.log("fail accept friend  "+err);
+{#                    console.log(xhr);#}
+                $('#search_result').html('<h4 class="panel-body"><i styple="padding-left:20px;">Sorry, there is no matching friend. Please <a href="/friends/">add you friend</a> or search again.</i></h4>');
+            }
+        });
+    })
+
+    //(2)make both button search and Enter key search works
+    $("#searchField_local").keyup(function (e) {
+        if (e.keyCode == 13) {
+            $('#button_search').click();
+            $(".results_to_hide").show();
+        }
+    });
+
+
+    //(3)after user select receiver, he can toggle results
+    function toggle_results(){
+        var click_counter = 0;
+        $(".results_to_hide").hide();
+        //toggle the search results list when clicking
+        $("#searchField_local").click(function (e) {
+            if(click_counter == 1){
+                $(".results_to_hide").show();
+                click_counter = 0;
+            }
+            else{
+                $(".results_to_hide").hide();
+                click_counter += 1;
+            }
+        });
+    }
+
+{#    //(4)select receiver part#}
+{#    function  select_receiver(id) {#}
+{#        console.log(id);#}
+{#        toggle_results();#}
+{##}
+{#        $.ajax({#}
+{#            url: '/online_message/', // request send to#}
+{#            type: 'post', // http method#}
+{#            data: {select_receiver: id}, // data sent with the post request#}
+{##}
+{#            // handle a successful response#}
+{#            success: function (conversation) {#}
+{#                console.log("accept success");#}
+{#                $('#refreshConversation').html(conversation);#}
+{##}
+{#            },#}
+{##}
+{#            error: function (xhr, errmsg, err) {#}
+{#               console.log("fail select friend");#}
+{#            }#}
+{#        });#}
+{##}
+{#    }#}
+
+//     //(5)Send message
+//     function send_form(){
+//         console.log("friend id is"+send_friend_id);
+//
+//         var msg = $('#id_message').val();
+// {#        var img = $('#id_image').val();#}
+//         console.log("enter message is "+msg);
+//
+//         //if it is empty just refresh the page
+// {#        if ((!msg) && (!img)){#}
+//         if (!msg){
+//             alert("Please enter text!");
+// {#          location.reload();#}
+//         }
+//         else {
+//             $.ajax({
+//                 url: '/online_message/',
+//                 type: 'post', // http method
+// {#                data: {id_message: msg, id_image:img},#}
+//                 data: {id_message: msg, friend_id:send_friend_id},
+//
+//                 success: function (data, statusText) {
+//                     console.log("response success!");
+//
+//                     $('#refreshConversation').html(data);
+//
+//                     {#              var obj = $.parseJSON(data);#}
+//
+// {#                    console.log("response  " + data.message);#}
+// {#                    var output = "";#}
+// {#                    output += '<div class="col-md-6 clearfix"></div><div class="col-md-6 npr" id="sender_send_message"> <div class="vd_bg-blue chat-wrap"> <div class="col-sm-7"> <p class="messages-content vd_white" id="id_user_message">';#}
+// {#                    output += data.message;#}
+// {#                    output += '</p> </div><div class="clearfix"></div> </div> </div>';#}
+// {#                    $("#for_loop_pending").append(output);#}
+//
+//                     $('textarea#id_message').val("");
+//                 },
+//                 error: function (xhr, errmsg, err) {
+//                     console.log("fail sending message");
+//                 }
+//             });
+//         }
+//     }
+
+    // //(6)Enter to send or Send button function
+    // $('#chooseEnter').on('change', function(){
+    //     //Enter Key
+    //     if(this.checked){
+    //         $('#send_btn').hide();
+    //         $("#id_message").keyup(function (e){
+    //            if(e.keyCode == 13) {
+    //                send_form();
+    //            }
+    //         });
+    //     }
+    //     //Send Button
+    //     else{
+    //         $('#send_btn').show();
+    //     }
+    // });
+
+
+
+    </script>
+
+    <script>
+        function loadUsersStatus() {
+            $('.onlineStatus').each(function (i, obj) {
+                $.ajax({
+                    url: '/is_online/?user=' + $(this).attr('data-id'),
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (response) {
+                    if (response['is_online']) {
+                        $(obj).addClass('circle-online').removeClass('circle-offline');
+                    }
+                    else {
+                        $(obj).addClass('circle-offline').removeClass('circle-online');
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function () {
+            loadUsersStatus();
+            setInterval(loadUsersStatus, 45000);
+            find_friend_message('{{ friend.id}}');
+            $('#top-menu-settings').remove();
+
+            $('#searchField_local').on('input', function () {
+                $('#button_search').trigger('click');
+                // var e = jQuery.event('keypress');
+                // e.which = 13;
+                // e.keyCode = 13;
+                // $('#button_search').trigger(e);
+            });
+        })
+    </script>
+
+{% endblock script %}

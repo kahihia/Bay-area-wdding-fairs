@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+{% load myfilters %}
+{% block content %}
+
+    <section class="settings-section">
+        <div class="col-md-2 col-md-offset-1 left-col">
+            <section class="profile-nav">
+                <h3 class="section-title">Settings</h3>
+                <!-- Nav tabs -->
+                <ul class="nav" role="tablist">
+                    <li class="active"><a href="/company/settings#info" aria-controls="info" role="tab"
+                                          data-toggle="tab" aria-expanded="false">Profile Info <i
+                            class="fa fa-chevron-right"></i></a></li>
+                    <li class=""><a href="/company/settings#company-info" aria-controls="info" role="tab"
+                                    data-toggle="tab" aria-expanded="true">Company Info <i
+                            class="fa fa-chevron-right"></i></a></li>
+                    <li class=""><a href="/company/settings#account" aria-controls="account" role="tab"
+                                    data-toggle="tab">Account <i class="fa fa-chevron-right"></i></a></li>
+                                <li class=""> <a href="/company/settings#notifications" aria-controls="notifications" role="tab" data-toggle="tab">Privacy <i class="fa fa-chevron-right"></i></a></li>
+                </ul>
+            </section>
+        </div>
+        <div class="col-md-5 profile-content">
+            <div role="tabpanel">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    {% if successMessage %}
+                        <div class="flashes">
+                            <div class="alert alert-success">{{ successMessage }}</div>
+                        </div>
+                    {% endif %}
+                    <div role="tabpanel"
+                         class="tab-pane {% if not emailformSubmit and not companyFormSubmit %}active{% endif %}"
+                         id="info">
+                        <div class="flashes"></div>
+                        <p class="helper-text"><i class="fa fa-info-circle"></i> Size of image should be less than 5MB
+                        </p>
+
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ profileform.errors }}
+                            <section class="form-row info">
+                                <ul class="list-inline">
+                                    <li>
+
+                                        <!-- Seth profile image upload -->
+                                        <div class="img-upload">
+                                            <span class="profile-thumb profile-md"
+                                                  style="background-image: url({{ profile.get_image_url }})"></span>
+                                            {#                                    <input id="ytUser_image_url" type="hidden" value="" name="User[image_url]" /><input name="User[image_url]" id="User_image_url" type="file" />                               #}
+                                            <input id="id_image" name="image" type="file">
+                                            {% if profileform.image.errors %}
+                                                <p style="color: red;">{{ profileform.image.errors.0 }}</p>{% endif %}
+                                        </div>
+
+                                        <!-- one -->
+                                        <br>
+
+                                        <div class="img-upload">
+                                            <span class="profile-thumb profile-md"
+                                                  style="background-image: url({{ profile.get_cover_url }})"></span>
+                                            {#                                    <input id="ytUser_image_url_canvas" type="hidden" value="" name="User[image_url_canvas]" /><input name="User[image_url_canvas]" id="User_image_url_canvas" type="file" />                                #}
+                                            <input id="id_cover_image" name="cover_image" type="file">
+                                            {% if profileform.cover_image.errors %}
+                                                <p style="color: red;">{{ profileform.cover_image.errors.0 }}</p>{% endif %}
+                                        </div>
+                                        <div>
+                                        </div>
+
+                                    </li>
+                                    <br>
+                                    <br>
+
+                                </ul>
+                                <section class="form-row interest">
+                                    {#                                <input placeholder="First Name" class="form-control" name="User[first_name]" id="User_first_name" type="text" maxlength="100" value="Adeel" />#}
+                                    {{ profileform.first_name }}
+                                    {% if profileform.first_name.errors %}
+                                        <p style="color: red;">{{ profileform.first_name.errors.0 }}</p>{% endif %}
+                                </section>
+                                <br/>
+                                <section class="form-row interest">
+                                    {#                                <input placeholder="Last Name" class="form-control" name="User[last_name]" id="User_last_name" type="text" maxlength="100" value="Khan" />#}
+                                    {{ profileform.last_name }}
+                                    {% if profileform.last_name.errors %}
+                                        <p style="color: red;">{{ profileform.last_name.errors.0 }}</p>{% endif %}
+                                </section>
+                            </section>
+                            <hr>
+                            <section class="form-row status">
+
+                                <ul class="list-inline">
+                                    {% for choice in profileform.gender %}
+                                        <li>
+                                            {% if forloop.counter == 1 %}
+                                                <h5>Gender</h5>
+                                            {% endif %}
+
+                                            <div class="checkbox">
+                                                <label>
+
+                                                    {{ choice.tag }} {{ choice.choice_label }}
+
+
+                                                    {#                                        <input value="2" disabled="disabled" checked="checked" type="checkbox" name="User[gender_id]" id="User_gender_id" /> female#}
+                                                </label>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                    {% if profileform.gender.errors %}
+                                        <p style="color: red;">{{ profileform.gender.errors.0 }}</p>{% endif %}
+
+                                    <li><h5>Age</h5>
+                                        {{ profileform.age }}
+                                        {% if profileform.age.errors %}
+                                            <p style="color: red;">{{ profileform.age.errors.0 }}</p>{% endif %}
+                                    </li>
+                                </ul>
+                            </section>
+
+
+                            <hr>
+
+
+                            <section class="form-row interest">
+                                <!-- patch3 -->
+                                <h5>Services & Products</h5>
+
+                                <select multiple="multiple" class="form-control" data-placeholder="Choose"
+                                        name="assigned_to" id="to">
+                                    {% for o in looking_for_selected %}
+                                        <option selected="selected"
+                                                value="{{ o.open_search.id }}">{{ o.open_search.name }}</option>
+                                    {% endfor %}
+                                    {% for lf in looking_for %}
+
+                                        <option value="{{ lf.id }}">{{ lf.name }}</option>
+
+                                    {% endfor %}
+                                </select>
+
+                                {#                            {{ profileform.looking_for }}#}
+                                {#                         <div class="red">{{ profileform.image.errors }}</div>#}
+                                {#                        <textarea placeholder="Use tags/keywords which describes your interest" class="form-control" name="UserInterest[interest]" id="UserInterest_interest"></textarea>        #}
+
+                                <p class="helper-text"><i class="fa fa-info-circle"></i> Appropriate keywords helps to
+                                    refine your recommendations</p>
+                            </section>
+                            <hr>
+                            <!-- patch3 -->
+                            <section style="display:none" class="form-row looking-for">
+
+                                <h5>What describes you</h5>
+                                <textarea placeholder="Example: Photography, wedding planner" class="form-control"
+                                          name="User[looking_for]" id="User_looking_for"></textarea>
+
+                                <p class="helper-text"><i class="fa fa-info-circle"></i> Use comma to separate keywords
+                                </p>
+                            </section>
+                            <input id="profileform" name="profileform" hidden="hidden">
+                            <hr>
+                            <button type="submit" class="btn btn-blue pull-right">Save</button>
+                        </form>
+                    </div>
+                    <!-- end panel -->
+                    <div role="tabpanel" class="tab-pane {% if companyFormSubmit %}active{% endif %}" id="company-info">
+                        <form method="post" action=".">
+                            {% csrf_token %}
+
+                            <h5>Company name</h5>
+
+                            <div class="form-group">
+                                {{ company_form.name }}
+                                {% if company_form.name.errors %}
+                                    <p style="color: red;">{{ company_form.name.errors.0 }}</p>{% endif %}
+                            </div>
+                            <hr>
+                            <h5>Phone</h5>
+
+                            <div class="form-group">
+                                {{ company_form.phone|addcss:"form-control" }}
+                                {% if company_form.phone.errors %}
+                                    <p style="color: red;">{{ company_form.phone.errors.0 }}</p>{% endif %}</div>
+                            <hr>
+                            <section class="form-row address">
+                                <h5>Address</h5>
+                                {{ company_form.street }}
+                                {% if company_form.street.errors %}
+                                    <p style="color: red;">{{ company_form.street.errors.0 }}</p>{% endif %}
+                                <div>
+                                    <div class="col-md-4" style="padding-left: 0px;">  {{ company_form.city }}
+                                        {% if company_form.city.errors %}
+                                            <p style="color: red;">{{ company_form.city.errors.0 }}</p>{% endif %}</div>
+                                    <div class="col-md-4"> {{ company_form.state|addcss:"form-control" }}
+                                        {% if company_form.state.errors %}
+                                            <p style="color: red;">{{ company_form.state.errors.0 }}</p>{% endif %}
+                                    </div>
+                                    <div class="col-md-4"
+                                         style="padding-right: 0px;"> {{ company_form.zip|addcss:"form-control" }}
+                                        {% if company_form.zip.errors %}
+                                            <p style="color: red;">{{ company_form.zip.errors.0 }}</p>{% endif %}</div>
+                                </div>
+                            </section>
+                            <hr>
+                            <h5>Description</h5>
+
+                            <div class="form-group">
+                                {{ company_form.description }}
+                                {% if company_form.description.errors %}
+                                    <p style="color: red;">{{ company_form.description.errors.0 }}</p>{% endif %}</div>
+                            <hr>
+                            <h5>Payment terms</h5>
+
+                            <div class="form-group">
+                                {{ company_form.payment_terms }}
+                                {% if company_form.payment_terms.errors %}
+                                    <p style="color: red;">{{ company_form.payment_terms.errors.0 }}</p>{% endif %}
+                            </div>
+                            <hr>
+                            <h5>Employees</h5>
+
+                            <div class="form-group">
+                                {{ company_form.employees|addcss:"form-control" }}
+                                {% if company_form.employees.errors %}
+                                    <p style="color: red;">{{ company_form.employees.errors.0 }}</p>{% endif %}</div>
+
+
+                            <hr>
+                            <input name="companyForm_tag" id="companyForm_tag" hidden="hidden"/>
+                            <button type="submit" class="btn btn-blue pull-right">Save</button>
+                        </form>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div role="tabpanel" class="tab-pane {% if emailformSubmit %}active{% endif %}" id="account">
+                        <form method="post" action=".">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <h5>Email address</h5>
+
+                                <div class="form-group">
+                                    {#                            <input placeholder="Change Email Address" class="form-control" required="required" type="email" value="adeelpkpk@gmail.com" name="ChangeEmail" id="ChangeEmail" />      #}
+                                    {{ emailform.email }}
+                                    {% if emailform.errors %}
+                                        <p style="color: red;">{{ emailform.email.errors.0 }}</p>{% endif %}
+                                </div>
+                            </div>
+                            <input name="emailformSignal" hidden>
+                            <button type="submit" class="btn btn-blue">Change Email Address</button>
+                        </form>
+                        <hr>
+                        <form method="post" action=".">
+                            {% csrf_token %}
+                            <h5>Password </h5>
+
+                            <div class="form-group">
+                                {#                        <input placeholder="Password" class="form-control" required="required" name="BasicResetPasswordForm[password]" id="BasicResetPasswordForm_password" type="password" />                   #}
+                                {{ passwordform.password }}
+                                {% if passwordform.errors %}
+                                    <p style="color: red;">{{ passwordform.password.errors.0 }}</p>{% endif %}
+                            </div>
+                            <div class="form-group">
+                                {#                        <input placeholder="Confirm Password" class="form-control" required="required" name="BasicResetPasswordForm[cpassword]" id="BasicResetPasswordForm_cpassword" type="password" />                    #}
+                                {{ passwordform.confirm_password }}
+                                {% if passwordform.errors %}
+                                    <p style="color: red;">{{ passwordform.confirm_password.errors.0 }}</p>{% endif %}
+                            </div>
+                            <input name="passwordformSignal" hidden>
+                            <button type="submit" class="btn btn-blue">Reset Password</button>
+                        </form>
+                        <hr>
+                        <form method="post" action="/settings">
+                            <div class="form-group">
+                                <h5>Deactivate Account</h5>
+                                <input type="hidden" name="DeactivateAccount" value="1">
+                                <button type="submit" class="btn btn-red">Deactivate Account</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- end panel -->
+
+                    <!-- end company-info -->
+                    <div role="tabpanel" class="tab-pane {% if privacyformSubmit %}active{% endif %}" id="notifications">
+
+                <form method="POST" action="." >
+                    {% csrf_token %}
+                    <h5>Notifications</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Email</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Events</td>
+                                <td>{{ privacyform.notification_events }}</td>
+
+                            </tr>
+                            <tr>
+                                <td>Tasks assigned to you</td>
+                                <td>{{ privacyform.notification_tasks }}</td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <input id="notification_sig" name="notification_sig" hidden="hidden" />
+{#                    <h5>Permissions</h5>#}
+{#                    <table class="table">#}
+{##}
+{#                        <tbody>#}
+{#                            <tr>#}
+{#                                <td>Who can see your posts?</td>#}
+{#                                <td>#}
+{#                                    <select class="form-control" required="required" name="User[post_visibility_id]" id="User_post_visibility_id">#}
+{#<option value="1" selected="selected">Anyone</option>#}
+{#<option value="3">Only You</option>#}
+{#<option value="2">Your Friends</option>#}
+{#</select>                                </td>#}
+{##}
+{#                            </tr>#}
+{#                          <tr>#}
+{#                                <td>Who can comment on your posts?</td>#}
+{#                                <td>#}
+{#                                    <select class="form-control" required="required" name="User[comment_level_id]" id="User_comment_level_id">#}
+{#<option value="1" selected="selected">Anyone</option>#}
+{#<option value="3">Only You</option>#}
+{#<option value="2">Your Friends</option>#}
+{#</select>                                </td>#}
+{##}
+{#                            </tr>#}
+{#                        </tbody>#}
+{#                    </table>#}
+                    <!-- end notifications -->
+                    <button type="submit" class="btn btn-blue pull-right">Save</button>
+                </form>
+            </div>
+                    <!-- end notifications -->
+                </div>
+            </div>
+            <!-- end tabs -->
+        </div>
+
+
+    </section>
+{% endblock content %}
+{% block jquery %}
+
+    <script>
+        if($("#to").length > 0){
+            $("#to").chosen();
+        }
+        var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png", "https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png", "https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+        var imgCount = 0;
+        function startTime() {
+            if (imgCount == imgArray.length) {
+                imgCount = 0;
+            }
+            document.getElementById("ad").src = imgArray[imgCount];
+            imgCount++;
+            setTimeout("startTime()", 5000);
+        }
+    </script>
+
+{% endblock jquery %}

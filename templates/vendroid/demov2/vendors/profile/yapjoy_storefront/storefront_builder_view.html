@@ -1,0 +1,321 @@
+{% extends "vendroid/demo/base_vendor.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% block header_tags %}
+    {{ video_upload_s3_form.media }}
+{% endblock header_tags %}
+{% block content %}
+    <style>
+
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+        .yelpSaveButton {
+            margin-bottom:15px;
+        }
+        .image-cropper {
+            max-width: 110px;
+            min-width: 110px;
+            max-height: 110px;
+            min-height: 110px;
+        }
+        #profile-image-id img:hover {
+            content: url('{% static "images/vendorProfile/Stock_Profile_Picture.png" %}');
+            cursor: pointer;
+        }
+        .images-mobile {
+            width: 120px;
+            min-width: 120px;
+            max-height: 120px;
+            min-height: 120px;
+            /* overflow: hidden; */
+            /* position: relative; */
+            max-width: 120px;
+        }
+        .panel {
+            border:none !important;
+            border-radius:none !important;
+        }
+        .blue-button {
+            background-color: #07A6C3;
+            color: white;
+        {#            border-radius: 20px;#}
+            margin-top: 10px;
+            width: 80%;
+            height: 60px;
+            line-height: 26px;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+        .form-wizard .nav > li.active .menu-icon {
+            background: #07A6C3;
+        }
+        .panel-group .panel+.panel {
+            margin-top:0px;
+        }
+        .progress-img {
+            width: 50%;
+        }
+        .modal {
+            width: 98%;
+        }
+        @media only screen and (max-width: 500px) {
+            .yelpSaveButton {
+                margin-bottom:0px;
+            }
+            .blue-button {
+                background-color: #07A6C3;
+                color: white;
+            {#            border-radius: 20px;#}
+                margin-top: 10px;
+                width: 300px;
+                height: 60px;
+                line-height: 26px;
+            }
+            .images-mobile {
+                width:100%;
+                max-width:100%;
+                max-height:120px;
+                min-height:120px;
+            {#            height:auto;#}
+                overflow: hidden;
+                position: relative;
+            }
+            .progress-img {
+                width: 100%;
+            }
+            .mb-panel-col-md-8 {
+                padding-left:0px;
+                padding-right:0px;
+            }
+            .panel{
+            {#                border:none !important;#}
+            }
+
+            .mb-content-wrapper-child {
+                margin-top:0px;
+            }
+            .mb-panel-body{
+                padding:0px !important;
+            }
+            .mb-row {
+                margin-left: -17px !important;
+                margin-right: -17px !important;
+
+            }
+            .nav-justified {
+                width: 100%;
+            }
+            .nav-justified > li {
+            {#  float: left;#}
+                display: table-cell;
+            }
+            .yelp-heading {
+                font-size: 18px;
+            }
+            .mb-col-xs-12 {
+                padding:0px;
+            }
+            .image-cropper {
+                width: 70px;
+                height: 70px;
+                max-height: 70px;
+                min-height: 70px;
+                max-width:70px;
+                min-width:70px;
+            {#            position: relative;#}
+            {#            overflow: hidden;#}
+            {#            border-radius: 50%;#}
+            {#            background: #eee no-repeat center;#}
+            {#            background-size: cover;#}
+            {#            border-color: darkgray;#}
+            }
+            .company__fonts {
+                font-size: 16px;
+            }
+            .social_icons_style {
+                width: 20%;
+                padding:0px;
+                display: inline;
+                margin-top:15px;
+            }
+
+
+
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+
+        <div class="content">
+            <div class="container">
+
+
+                <div class="vd_content-wrapper yp-content-wrap" id="vd_content_id" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                            <div class="col-md-4 col-md-offset-4" style="width: 450px;">
+                                <div class="store-left-side">
+{#                                    <div class="panel yp-panel-video" style="margin-bottom: 0px;">#}
+{#                                        <div class="wrap-action-btns">#}
+{#                                            <div class="yp-action-btn btn-yp-info">#}
+{#                                                <a href="javacript:void(0);">#}
+{#                                                    <i class="fa fa-question" aria-hidden="true"></i>#}
+{#                                                </a>#}
+{#                                            </div>#}
+{#                                            <div class="yp-action-btn btn-yp-upload-img">#}
+{#                                                <a href="javacript:void(0);" onclick="$('#videoForms').toggle('hidden');$('#ID_VideoShow').toggle('hidden');">#}
+{#                                                    <i class="fa fa-upload" aria-hidden="true"></i>#}
+{#                                                </a>#}
+{#                                            </div>#}
+{#                                            <div class="clearfix"></div>#}
+{#                                        </div>#}
+{##}
+{#                                    </div><!--end panel-->#}
+                                    <div class="panel yp-panel-video">
+                                        {#                                        <img src="{% static "vendroid/img/video.png" %}">#}
+                                        {#                                         <div class="col-md-12 col-xs-12" id="uploadVideoDiv" hidden>#}
+                                        {#                                                                    <form action="" method="post" enctype="multipart/form-data" id="videoUploaderForm">#}
+                                        {#                                                                        <p>An Opportunity to introduce your team to engaged couples.</p>#}
+                                        {#                                                                        <p>Get your whole team behind one camera and tell couples why you do what you do.</p>#}
+                                        {#                                                                        <p><b>Guidelines</b>#}
+                                        {#                                                                            <br />90 seconds or less<br />#}
+                                        {#                                                                            One continuous shot<br />#}
+                                        {#                                                                            No after effects</p>#}
+                                        {#                                                                        <p><b>Tips</b><br />#}
+                                        {#                                                                            Use your phone to record and upload. <br />Ensure that your voice sounds clear</p>#}
+                                        {#                                                                        <p><b>File format</b><br />#}
+                                        {#                                                                            Widescreen 16:9<br />.mp4, .avi or .mov</p>#}
+                                        {#                                                                        {{ videoForm.as_p }}#}
+                                        {#                                                                    {{ videoUrl }}#}
+                                        {#                                                                        <input name="uploadVideo" id="uploadVideo" hidden />#}
+                                        {#                                                                        <div class="text-center" id="teamVideoUploader">#}
+                                        {#                                                                            <div class="col-md-12">#}
+                                        {#                                                                            <img id="uploading_image" src="" />#}
+                                        {#                                                                            </div>#}
+                                        {#                                                                            <button class="btn blue-button" type="submit" id="videoUploadbutton" style="margin-bottom: 20px;">Upload Team Video</button>#}
+                                        {#                                                                        </div>#}
+                                        {#                                                                    </form>#}
+                                        {#                                                                </div>#}
+                                        <div id="ID_VideoShow">
+                                            {% include "vendroid/demov2/vendors/profile/_partial_video.html" %}
+
+
+                                        </div>
+                                    </div><!--end panel-->
+                                    <div class="clearfix"></div>
+
+                                    <div class="panel yp-panel-about">
+                                        <div class="panel-body">
+                                            <div class="info-wrap">
+                                                <div class="img-wrap">
+                                                    <img src="{{ up.get_image_url }}" >
+                                                </div>
+                                                <div class="info-content">
+                                                    <h2 class="title" class="company__fonts" id="company__name__id">{{ up.user.get_full_name }} <span id="company__name__icon" hidden><i  class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true"></i></span></h2>
+                                                    <h2 class="tagline" class="company__fonts" id="company__location__id">{{ up.profession }}&nbsp;&nbsp;<span id="company__location__icon" hidden><i style="cursor: pointer;" class="fa fa-pencil" hidden aria-hidden="true"></i></span></h2>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="text-right">
+                                                <button class="btn store-front-btn" id="company__phone__id">{{ up.phone }} &nbsp;&nbsp;<span id="company__phone__icon" hidden><i  class="fa fa-pencil" style="cursor: pointer;" hidden aria-hidden="true"></i></span></button>
+                                            </div>
+                                        </div>
+                                    </div><!--End Panel-->
+
+                                    <div class="panel yp-panel-link">
+                                        <div class="link-step-3" id="social_media_links_three">
+                                            {% include "vendroid/demov2/vendors/profilev2/_social_media_icons.html" %}
+                                        </div><!--End link step-3-->
+
+
+
+                                    </div>
+
+                                    <div class="panel yp-panel-map">
+                                        <div id="set_my_location_div">
+                                            {% include "vendroid/demov2/vendors/profilev2/_location.html" %}
+                                        </div>
+
+                                        <div class="map-details">
+                                            <div class="overlay"></div>
+                                            <div class="details">
+                                                <h2 class="title">LOCATION</h2>
+                                                <input hidden type="text" hidden name="map"  id="set_my_location_value" placeholder="Your workplace address, or hometown" value="{{ up.street }}">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    {#<form method="POST" action="">#}
+                                    {#  <input id="avatar-url" name="avatar-url" value="/static/default.png">#}
+                                    {#  <input type="text" name="username" placeholder="Username">#}
+                                    {#  <input type="text" name="full-name" placeholder="Full name">#}
+                                    {#  <input type="submit" value="Update profile">#}
+                                    {#</form>#}
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCCvqBKpmwqyEtpSs86C1h9JhMDreJALm0"></script>
+    <script src="{% static "geocomplete/jquery.geocomplete.min.js" %}"></script>
+    <script>
+
+      $(function(){
+
+        var options = {
+          map: ".map_canvas"
+        };
+
+        $("#set_my_location_value").geocomplete(options)
+          .bind("geocode:result", function(event, result){
+          })
+          .bind("geocode:error", function(event, status){
+          })
+          .bind("geocode:multiple", function(event, results){
+          });
+
+
+      });
+      $(document).ready(function(){
+          $("#set_my_location_value").val($('#set_my_location_value').val()).trigger("geocode");
+        })
+    </script>
+{% endblock %}

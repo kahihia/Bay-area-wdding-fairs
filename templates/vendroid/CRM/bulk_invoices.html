@@ -1,0 +1,240 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+    $(function () {
+            $('#id_wedding_date').datepicker();
+{#            $("#id_wedding_date").datetimepicker({#}
+{#             'showTimepicker': false,#}
+{#            });#}
+        });
+    </script>
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+    .red {
+        color: red;
+    }
+    textarea {
+        height: 80px;
+    }
+    .btn-brown {
+        background-color: #ba8c00 !important;
+    }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+      <div class="vd_container">
+        <div class="vd_content clearfix">
+
+          <!-- vd_head-section -->
+
+          <div class="clearfix">
+
+          <!-- vd_title-section -->
+
+          <div class="vd_content-section clearfix">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-body">
+{#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+{#                    <ul class="nav nav-tabs">#}
+{##}
+{##}
+{#                    </ul>#}
+                    <br>
+                    <div class="tab-content mgbt-xs-20">
+                         {% if successMessage %}
+                    <div class="flashes">
+                        <div class="alert alert-success">{{ successMessage }}</div>
+                    </div>
+                    {% endif %}
+                      <div class="tab-pane active" id="privacy">
+                          <div class="col-md-12 text-center">
+                              <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png" width="20%" /><br />
+                              <div class="clearfix"></div>
+                              <br />
+                              <h3 style="color: #ba8c00;">BULK INVOICES</h3>
+{#                              <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"  />#}
+                              <hr />
+
+                          </div>
+                          <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <a class="btn vd_btn pull-right btn-brown" href="{% url "event_invoice_bulk_create" %}" style="margin-bottom: 20px;">Add bulk invoice</a>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="panel-heading vd_bg-grey">
+                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Event Invoices</h3>
+                                      </div>
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                          {% if invoices %}
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+                                                      <th>Invoice ID
+                                                      </th>
+                                                      <th>Email
+                                                      </th>
+                                                      <th>
+                                                          Status
+                                                      </th>
+                                                      <th>
+                                                          Event Date
+                                                      </th>
+                                                      <th>
+                                                          Registration Date
+                                                      </th>
+
+                                                      <th>
+                                                          Email Sent
+                                                      </th>
+                                                      <th>
+                                                          Amount
+                                                      </th> <th>
+                                                          View Invoice
+                                                      </th>
+
+
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+
+                                                  {% for invoice in invoices %}
+                                                      <tr role="row" class="gradeA odd">
+                                                          <td>{{ invoice.id }}</td>
+                                                          <td>{{ invoice.email }}</td>
+                                                          <td>{{ invoice.status }}</td>
+                                                          <td>{{ invoice.payment_date }}</td>
+                                                          <td>{{ invoice.created_at }}</td>
+                                                          <td>{{ invoice.is_sent }}</td>
+                                                          <td>${{ invoice.amount|intcomma }}</td>
+{#                                                          <td><a href="{% url "event_invoice_edit_detail" invoice.id  %}" class="btn vd_btn btn-brown">Edit Invoice</a></td>#}
+                                                          <td><a href="{% url "event_invoice_pay_bulk" invoice.id %}" class="btn vd_btn btn-brown">View Invoice</a></td>
+                                                      </tr>
+                                                  {% endfor %}
+
+                                                  </tbody>
+                                              </table>
+                                          {% else %}
+                                                      <p class="text-center">NO INVOICES AVAILABLE</p>
+                                                  {% endif %}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          </div>
+
+                      </div>
+                    </div>
+                    <br><br>
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-6 -->
+
+            </div>
+            <!-- row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+        </div>
+        <!-- .vd_content -->
+      </div>
+      <!-- .vd_container -->
+    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+  <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+    <script type="text/javascript">
+
+        if($("#to").length > 0){
+            $("#to").chosen();
+        }
+    </script>
+
+
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

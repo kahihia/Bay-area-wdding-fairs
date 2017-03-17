@@ -1,0 +1,128 @@
+{% extends "base_blank_iframe.html" %}
+{% load myfilters %}
+{% load static %}
+{% block tags %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui-timepicker-addon.css" %}" />
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.custom.min.js" %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <br />
+
+    <form class="form-horizontal" action="." method="post">
+                        {% csrf_token %}
+    <input placeholder="Name" class="form-control" name="CalendarEvent[id]" id="CalendarEvent_id" value="169" type="hidden">
+    <div class="form-group">
+        <label for="first-name" class="col-sm-4 control-label">Name</label>
+        <div class="col-sm-7">
+            {{ events_form.subject }}    <div class="red">{{ events_form.subject.errors }}</div>    </div>
+
+    </div>
+    <div class="form-group">
+        <label for="first-name" class="col-sm-4 control-label">Start Time</label>
+        <div class="col-sm-7">
+            {{ events_form.start|addcss:"form-control startpicker" }}
+                                <div class="red">{{ events_form.start.errors }}</div>        </div>
+    </div>
+    <div class="form-group">
+        <label for="first-name" class="col-sm-4 control-label">End Time</label>
+        <div class="col-sm-7">
+            {{ events_form.end|addcss:"form-control endpicker" }}
+                                <div class="red">{{ events_form.end.errors }}</div>        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="first-name" class="col-sm-4 control-label">All Day?</label>
+        <div class="col-sm-7">
+            {{ events_form.all_day }}
+                                <div class="red">{{ events_form.all_day.errors }}</div>        </div>
+    </div>
+                        {% if not profile.type == "Professional" %}
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Include Friends:</label>
+
+                            <div class="col-sm-7">
+
+
+{#                                Assigned: {% for o in friends_assigned %}<a target="_blank" href="{{ o.userprofile.get_profile_url }}">{{ o.get_full_name }}</a> {% endfor %}#}
+
+                                <select multiple="multiple" class="form-control" data-placeholder="Choose"
+                                            name="assigned_to" id="to">
+                                {% for o in friends_assigned %}
+                                    <option  selected="selected" value="{{ o.id }}">{{ o.get_full_name }}</option>
+                                {% endfor %}
+                                        {% for friend in friends %}
+
+                                         {% if friend.user == request.user %}
+                                            <option value="{{ friend.friends.user.id }}">{{ friend.friends.user.get_full_name }}</option>
+                                        {% else %}
+                                            <option value="{{ friend.user.id }}">{{ friend.user.get_full_name }}</option>
+                                        {% endif %}
+
+                                        {% endfor %}
+                                    </select>
+
+
+                                <div class="clearfix"></div>
+
+{#                                <div id="assigned_to_chosen" title="" style="width: 0px;"#}
+{#                                     class="chosen-container chosen-container-multi">#}
+{#                                    <ul class="chosen-choices">#}
+{#                                        <li class="search-field"><input value="Choose" class="default"#}
+{#                                                                        autocomplete="off" style="width: 70px;"#}
+{#                                                                        type="text"></li>#}
+{#                                    </ul>#}
+{#                                    <div class="chosen-drop">#}
+{#                                        <ul class="chosen-results">#}
+{#                                            <li data-option-array-index="0" style="" class="active-result">Shazli#}
+{#                                                Khan-Bawf#}
+{#                                            </li>#}
+{#                                            <li data-option-array-index="1" style="" class="active-result">Wasim Khan#}
+{#                                            </li>#}
+{#                                            <li data-option-array-index="2" style="" class="active-result">Piyush Seth#}
+{#                                            </li>#}
+{#                                        </ul>#}
+{#                                    </div>#}
+{#                                </div>#}
+                                <!-- <span class="helper-text"><i class="fa fa-info-circle"></i> CTRL click to select multiple choices</span> -->
+                            </div>
+
+                        </div>
+                        {% endif %}
+
+    <div class="form-group" >
+{#        <label class="col-sm-4 control-label">Include Friends:</label>#}
+        <div class="col-sm-12">
+{#            <select style="display: none;" multiple="multiple" class="form-control" data-placeholder="Choose" name="assigned_to_edit[]" id="assigned_to_edit">#}
+{#</select><div id="assigned_to_edit_chosen" title="" style="width: 0px;" class="chosen-container chosen-container-multi"><ul class="chosen-choices"><li class="search-field"><input value="Choose" class="default" autocomplete="off" style="width: 70px;" type="text"></li></ul><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>       <!-- <span class="helper-text"><i class="fa fa-info-circle"></i> CTRL click to select multiple choices</span> -->#}
+        <button type="submit" class="btn btn-blue pull-right" style="margin-right: 53px;">Update</button>
+{#        <button type="cancel" class="btn btn-gray pull-right" data-dismiss="modal" style="margin-right: 30px;">Cancel</button>#}
+        </div>
+    </div>
+
+
+
+                        <div class="clearfix"></div>
+    </form>
+    <script type="text/javascript" src="{% static 'js/jquery.events.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui-i18n.min.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui-timepicker-addon.js" %}"></script>
+    <script type="text/javascript">
+{#    $('#id_due').datepicker({'showAnim': 'slide', 'dateFormat': 'mm/dd/yy'});#}
+     jQuery('.startpicker').datetimepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional[''], {'dateFormat':'yy-mm-dd','timeFormat':'hh:mm:ss'}));
+    jQuery('.endpicker').datetimepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional[''], {'dateFormat':'yy-mm-dd','timeFormat':'hh:mm:ss'}));
+        if($("#to").length > 0){
+            $("#to").chosen();
+        }
+        {% if edited %}
+            parent.location.href = "/events/";
+        {% endif %}
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,214 @@
+<div class="vd_navbar vd_nav-width vd_navbar-tabs-menu vd_navbar-left" style="background-color: #ba8c00 !important;">
+    <div class="navbar-menu clearfix">
+        <div class="vd_menu">
+            <ul>
+{#            <li>#}
+{#                        <a class="open" href="javascript:void(0);" data-action="click-trigger">#}
+{#                            <span class="menu-icon"><i class="fa fa-circle-o-notch"></i></span>#}
+{#                            <span class="menu-text">Dashboard</span>#}
+{#                            <span class="menu-badge"><span class="badge vd_bg-black-30"><i class="fa fa-angle-down"></i></span></span>#}
+{#                        </a>#}
+{#                        <div class="child-menu" data-action="clic qk-target">#}
+{#                            <ul>#}
+{#                                <li>#}
+{#                                    <a href="/crm/bridegroom/reg/">#}
+{#                                        <span class="menu-text">ADD BRIDE</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="/crm/invoices/add/">#}
+{#                                        <span class="menu-text">ADD LAS VAGAS</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="/crm/invoices/add/">#}
+{#                                        <span class="menu-text">ADD EXHIBATOR</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{##}
+{#                                <li>#}
+{#                                    <a href="index-analytics.php">#}
+{#                                        <span class="menu-text">Analytics Dashboard</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="index-blogging.php">#}
+{#                                        <span class="menu-text">Blogging Dashboard</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="index-event-management.php">#}
+{#                                        <span class="menu-text">Event Management Dashboard</span>#}
+{#                                        <span class="menu-badge"><span class="badge vd_bg-yellow">NEW</span></span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                <div class="clearfix"></div>#}
+{#                    </li>#}
+{#                <li {% if '/crm/invoices/add/' in request.path %}class="active"{% endif %} >#}
+{#                    <a href="/crm/invoices/add/">#}
+{#                        <span class="menu-icon"><i class="fa fa-circle-o-notch"></i></span>#}
+{#                        <span class="menu-text">ADD EXHIBITOR</span>#}
+{#                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li {% if '/crm/invoices/' in request.path and not '/crm/invoices/add/' in request.path and not '/crm/invoices/bulk/' in request.path %}class="active"{% endif %} >#}
+{#                    <a href="/crm/invoices/">#}
+{#                        <span class="menu-icon"><i class="fa fa-file-text-o"></i></span>#}
+{#                        <span class="menu-text">EXHIBITOR LIST</span>#}
+{#                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>#}
+{#                    </a>#}
+{#                </li>#}
+            <li {% if '/crm/bridegroom/list/' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser and not request.user.email == "jenessa@bayareaweddingfairs.com" %}hidden{% endif %}>
+                    <a href="/crm/bridegroom/list/">
+                        <span class="menu-icon"><i class="fa fa-female"></i></span>
+                        <span class="menu-text">REGISTERED BRIDES</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if '/crm/invoices/eventsbg/' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser and not request.user.email == "jenessa@bayareaweddingfairs.com" %}hidden{% endif %}>
+                    <a href="/crm/invoices/eventsbg/">
+                        <span class="menu-icon"><i class="fa fa-list"></i></span>
+                        <span class="menu-text">BRIDES LIST</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+
+                <li {% if '/crm/mediakit/' in request.path %}class="active"{% endif %} >
+                    <a href="/crm/mediakit/">
+                        <span class="menu-icon"><i class="fa fa-file-video-o"></i></span>
+                        <span class="menu-text">MEDIA KIT</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li
+{#                        {% if not request.user.is_superuser %}hidden{% endif %}#}
+                    {% if '/crm/invoices/interested/' in request.path  %}class="active"{% elif '/crm/invoices/interested_detail' in request.path %}class="active"{% endif %} >
+                    <a href="/crm/invoices/interested/">
+                        <span class="menu-icon"><i class="fa fa-file-text-o"></i></span>
+                        <span class="menu-text">INTERESTED EXHIBITOR</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+
+                <li {% if not request.user.is_superuser %}hidden{% endif %} {% if '/crm/invoices/contracted/' in request.path and not '/crm/invoices/interested/' in request.path %}class="active"{% elif '/crm/invoices/contracted_detail' in request.path %}class="active"{% endif %} >
+                    <a href="/crm/invoices/contracted/">
+                        <span class="menu-icon"><i class="fa fa-file-text"></i></span>
+                        <span class="menu-text">CONTRACTED EXHIBITOR</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+            <li {% if not request.user.email == "jenessa@bayareaweddingfairs.com" %}hidden{% endif %} {% if '/crm/invoices/contracted/' in request.path and not '/crm/invoices/interested/' in request.path %}class="active"{% elif '/crm/invoices/contracted_detail' in request.path %}class="active"{% endif %} >
+                    <a href="/crm/invoices/contracted/">
+                        <span class="menu-icon"><i class="fa fa-file-text"></i></span>
+                        <span class="menu-text">CONTRACTED EXHIBITOR</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+{#                <li {% if '/crm/invoices/bulk/' in request.path and not '/crm/invoices/add/' in request.path  %}class="active"{% endif %} >#}
+{#                    <a href="{% url "event_invoice_bulk" %}">#}
+{#                        <span class="menu-icon"><i class="fa fa-link"></i></span>#}
+{#                        <span class="menu-text">MULTIPLE INVOICES</span>#}
+{#                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>#}
+{#                    </a>#}
+{#                </li>#}
+            <li {% if not request.user.is_superuser %}hidden{% endif %} {% if '/crm/invoices/bulk/create/' in request.path and not '/crm/invoices/add/' in request.path  %}class="active"{% endif %} >
+                    <a href="{% url "event_invoice_bulk_create" %}">
+                        <span class="menu-icon"><i class="fa fa-link"></i></span>
+                        <span class="menu-text">INVOICES & AGREEMENTS</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if not request.user.is_superuser %}{% if request.user.email == "a.masody@BayAreaWeddingFairs.com" %}{% else %}hidden{% endif %}{% endif %} {% if '/crm/invoices/events/' in request.path %}class="active"{% endif %}>
+                    <a href="{% url "events_based_list" %}">
+                        <span class="menu-icon"><i class="fa fa-folder-o"></i></span>
+                        <span class="menu-text">EVENTS EXHIBITOR</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if not request.user.is_superuser %}hidden{% endif %} {% if '/crm/invoices/commission/' in request.path %}class="active"{% endif %}>
+                    <a href="{% url "commission" %}">
+                        <span class="menu-icon"><i class="fa fa-usd"></i></span>
+                        <span class="menu-text">SALES COMMISSION</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if not request.user.is_superuser %}hidden{% endif %} {% if '/crm/data/' in request.path %}class="active"{% endif %}>
+                    <a href="{% url "invoices_data" %}">
+                        <span class="menu-icon"><i class="fa fa-file-zip-o"></i></span>
+                        <span class="menu-text">UPLOAD CSV</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+            <li {% if '/crm/bridegroom/bg/list' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser %}hidden{% endif %}>
+                    <a href="/crm/bridegroom/bg/list">
+                        <span class="menu-icon"><i class="fa fa-female"></i></span>
+                        <span class="menu-text">BRIDE/GROOM TICKETS </span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if '/crm/bridegroom/bg/promolist' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser %}hidden{% endif %}>
+                    <a href="{% url 'promocode_bg' %}">
+                        <span class="menu-icon"><i class="fa fa-female"></i></span>
+                        <span class="menu-text"> PROMOCODE TICKETS </span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if '/crm/taskslist/' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser %}hidden{% endif %}>
+                    <a href="{% url 'tasks_list' %}">
+                        <span class="menu-icon"><i class="fa fa-female"></i></span>
+                        <span class="menu-text"> TASKS LIST </span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+
+                <li {% if '/crm/invoices/ticketing/' in request.path %}class="active"{% endif %}>
+                    <a href="/crm/invoices/ticketing/">
+                        <span class="menu-icon"><i class="glyphicon glyphicon-list-alt"></i></span>
+                        <span class="menu-text">TICKET MANAGEMENT</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+
+{#                <li {% if '/crm/LasVegasReg/' in request.path %}class="active"{% endif %}>#}
+{#                    <a href="/crm/LasVegasReg/">#}
+{#                        <span class="menu-icon"><i class="icon icon-ticket"></i></span>#}
+{#                        <span class="menu-text">Las Vegas Register</span>#}
+{#                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>#}
+{#                    </a>#}
+{#                </li>#}
+            </ul>
+            <!-- Head menu search form ends -->
+        </div>
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+    <div class="navbar-spacing clearfix" style="margin-top: 400px;">
+    </div>
+    <div class="vd_menu vd_navbar-bottom-widget">
+        <ul>
+            <li>
+                <a href="/logout/">
+                    <span class="menu-icon"><i class="fa fa-sign-out"></i></span>
+                    <span class="menu-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<style>
+    .vd_content-section {
+         margin-bottom: 400px;
+    }
+    #footer .vd_bottom {
+        background-color: #816100 !important;
+    }
+    .vd_top-menu-wrapper{
+        background-color: #816100 !important;
+    }
+    .vd_menu-search-submit {
+        background-color: black !important;
+    }
+</style>

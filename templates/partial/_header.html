@@ -1,0 +1,102 @@
+{% load humanize %}
+{% load static %}
+
+<section class="top-nav navbar-fixed-top internal">
+
+    <nav class="navbar">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo" href="/dashboard/"><img src="{% static "images/unnamed.png" %}"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav main-links">
+                    <li><a href="/dashboard/" class=""><i class="fa fa-home fa-2x"></i></a></li>
+            <!--        <li><a href="/chat"><i class="fa fa-comments-o fa-2x"></i></a></li> -->
+                    <li>
+                                                   {% if request.user.userprofile.notification_count > 0 %}<span class="counter" id="unread-counter">{{ request.user.userprofile.notification_count }}</span>{% endif %}
+                                                <a href="/notifications/" class="">
+                            <i class="fa fa-bell-o fa-2x"></i>
+                        </a>
+                    </li>
+                    <li>
+
+                                                   {% if request.user.userprofile.message_count > 0 %}<span class="counter" id="unread-counter-mail">{{ request.user.userprofile.message_count }}</span>{% endif %}
+                        
+                        <a href="/online_message/" class=""><i class="fa fa-envelope-o fa-2x"></i></a>
+                    </li>
+
+                </ul>
+                <div class="navbar-form navbar-left search" >
+                    <div class="form-group">
+                        <i class="fa fa-search"></i>
+                        <input id="searchField" type="text" name="name" class="form-control" placeholder="Search">
+{#                        <a href="#" class="advance-search">advanced</a>#}
+                    </div>
+
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+{#                    <li><a onclick="showhelp();" class="feedback-link ">Help</a></li>#}
+{#                    <li><a href="/feedback/" class="feedback-link ">Feedback</a></li>#}
+                    {% if request.user.userprofile.type == 'Professional' and not request.user.userprofile.subscribed %}<li><a onclick="openSubscriptionModal();" class="subscribe">Subscribe<br />Credit: {{ request.user.userprofile.amount }}</a></li>
+                    {% elif request.user.userprofile.type == 'Professional' and request.user.userprofile.subscribed %}<li><a class="feedback-link ">Subscribed</a></li>{% endif %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="profile-thumb profile-sm" style="background-image: url({{ request.user.userprofile.get_image_url }})"></span>
+                            {{ request.user.get_full_name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                                                            <li><a href="/profile/">Profile</a></li>
+                            
+                            
+
+                            <li><a href="{% if request.user.userprofile.type == "Professional" %}/company/settings/{% else %}/settings/{% endif %}">Settings</a></li>
+{#                            <li><a href="/account/">Account</a></li>#}
+                            <li><a href="/logout/">Logout</a></li>
+                        </ul>
+                    </li>
+                <div class="clearfix"></div>
+                </ul>
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</section>
+<script>
+    function openSubscriptionModal(){
+            $('#iframe_sub').attr('src','/subscribeiFrame');
+            $('#subscriptionModal').modal('show');
+        }
+    function openSubscriptionForUser(){
+            $('#iframe_sub').attr('src','/subscribe/');
+            $('#subscriptionModal').modal('show');
+        }
+{#    $("#getStarted").click(function(){#}
+{#                $("#getStarted").attr('hidden');#}
+{#                $("#newUserModal").modal('show');#}
+{#            });#}
+    function showhelp(){
+        $("#getStarted").removeAttr('hidden', 'hidden')
+    }
+            function closeSubscribedModal(){
+            $('#subscriptionModal').modal('hide');
+        }
+
+
+</script>
+<script>
+        $("#searchField").keypress(function (e) {
+        if (e.which == 13) {
+            window.location.href = '/directory/?name=' + $(this).val();
+
+        }
+    });
+   </script>

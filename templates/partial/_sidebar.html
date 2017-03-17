@@ -1,0 +1,29 @@
+<ul class="list-unstyled">
+    {% if not request.user.userprofile.type == 'Professional' %}
+        <li><a href="/friends/" {% if '/friends/' in request.path %}class="active"{% endif %}><i class="fa fa-group"></i><span>Friends/Groups</span></a></li>
+        {% if not request.user.userprofile.type == 'Other' %}
+            <li><a href="/plans/" {% if '/plans/' in request.path %}class="active"{% endif %}><i class="fa fa-book"></i><span>My Planner</span></a></li>
+        {% endif %}
+    {% else %}
+        <li><a href="/market/" {% if '/market/' in request.path %}class="active"{% endif %}><i class="fa fa-building"></i><span>Market</span></a></li>
+    {% endif %}
+        <li><a href="/forum/" {% if '/forum/' in request.path %}class="active"{% endif %}><i class="fa fa-bullhorn"></i><span>Yapper</span></a></li>
+    {% if not request.user.userprofile.type == "Professional" %}
+
+
+    <li><a href="/professionals/" {% if '/professionals/' in request.path %}class="active"{% endif %}><i class="glyphicon glyphicon-list-alt"></i><span>Wedding Professionals</span></a>
+    </li>
+    {% else %}
+    <li><a href="/directory/" {% if '/directory/' in request.path %}class="active"{% endif %}><i class="glyphicon glyphicon-list-alt"></i><span>Directory</span></a></li>
+    {% endif %}
+    <li><a href="/events/" {% if '/events/' in request.path %}class="active"{% endif %}><i class="fa fa-calendar"></i><span>Events</span></a></li>
+    <li><a href="/tasks/" {% if '/tasks/' in request.path %}class="active"{% endif %}><i class="fa fa-tasks"></i><span>Tasks</span></a></li>
+    <li><a href="/recommendations/" {% if '/recommendations/' in request.path %}class="active"{% endif %}><i class="glyphicon glyphicon-thumbs-up"></i><span>Recommendations</span></a>
+    </li>
+    {% if not request.user.userprofile.type == "Professional" %}
+    <li><a href="/seatingCharts/" {% if '/seatingCharts/' in request.path %}class="active"{% endif %}><i
+            class="fa fa-tasks"></i><span>Seating Charts</span></a></li>
+    {% endif %}
+{#    <li><a href="/credit/" {% if '/credit/' in request.path %}class="active"{% endif %}>#}
+{#        <i class="fa fa-usd"></i><span>Credit</span></a></li>#}
+</ul>

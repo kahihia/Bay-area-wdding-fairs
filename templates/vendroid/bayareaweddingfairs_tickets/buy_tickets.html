@@ -1,0 +1,464 @@
+{% extends "vendroid/bayareaweddingfairs_tickets/base_bawf_tickets.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <style>
+        @page {
+            size: A4;
+        {#  margin: 0;#}
+        }
+
+        @media print {
+            html, body {
+                width: 340mm;
+                height: 550mm;
+            }
+
+            h3 {
+                font-size: 15px !important;
+            }
+
+            /* ... the rest of the rules ... */
+        }
+        .image-bawf {
+            background-image: url({% static "images/bawf/banner-large.jpg" %});
+            min-height: 800px;
+        {#            width:100%;#}
+            background-repeat:no-repeat;
+            background-size: cover;
+            background-position: center;
+        {#            background-position: top 0 buttom 0 left 0 right 0;#}
+            position:relative;
+        }
+    </style>
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+        $(function () {
+            $('#id_wedding_date').datepicker();
+            {#            $("#id_wedding_date").datetimepicker({#}
+            {#             'showTimepicker': false,#}
+            {#            });#}
+        });
+    </script>
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    {#<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 40px;
+        }
+
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+    </style>
+    <style>
+        .vd_content-section {
+            margin-bottom: 5px;
+        }
+
+        #footer .vd_bottom {
+            background-color: #816100 !important;
+        }
+
+        .vd_top-menu-wrapper {
+            background-color: #816100 !important;
+        }
+
+        .vd_menu-search-submit {
+            background-color: black !important;
+        }
+        .event-choose:hover {
+            background-color: gainsboro;
+        }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/bayareaweddingfairs_tickets/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="clearfix pd-20">
+                <div class="container">
+                    <div class="vd_content clearfix">
+                        <div class="row mgtp-20">
+                            <div class="col-md-12">
+                                <div class="panel widget light-widget">
+                                    {#              <div class="panel-heading no-title"> </div>#}
+                                    <div class="panel-body">
+                                        <div class="col-md-5 np image-bawf">
+                                        </div>
+                                        <div class="col-md-7 np">
+                                            <div class="col-md-10 col-md-offset-1" style="padding-top: 40px;">
+                                                <div class="col-md-12">
+                                                    <h1 class="mgtp--5 font-bold">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</h1>
+                                                    <p class="vd_soft-grey">Bay Area Wedding Fairs</p>
+                                                    <div class="row blog-info">
+                                                        <div class="col-sm-12 blog-date font-sm"><i class="icon-clock  append-icon"></i><span class="vd_soft-grey"> {{ event.date|date:"D, M d Y" }}</span></div>
+                                                        <hr />
+                                                         <form method="post" action="" id="payment-form">
+                                                                    {% csrf_token %}
+                                                        <div class="col-md-12">
+                                                            <div class="panel widget">
+                                                                <div class="panel-heading" style="background-color: #ba8c00;">
+                                                                    <h3 class="panel-title" style="color: white;">  Tickets </h3>
+                                                                </div>
+                                                                <div class="panel-body table-responsive">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            {#                          <th>#</th>#}
+                                                                            <th>EVENT</th>
+                                                                            <th>TICKET TYPE</th>
+                                                                            <th>TICKETS</th>
+                                                                            <th>QTY</th>
+                                                                            {#                          <th>Status</th>#}
+                                                                            {#                          <th>Action</th>#}
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            {#                          <td>1</td>#}
+                                                                            <td>{{ event.name }} - {{ event.date|date:"D, M d Y" }}</td>
+                                                                            <td>Bride / Groom</td>
+                                                                            <td class="center">{{ event.amount }}</td>
+                                                                            <td class="center">
+                                                                                <select class="form-control" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
+                                                                                    <option value="0" selected="selected">0</option>
+                                                                                    <option value="1">1</option>
+                                                                                    <option value="2">2</option>
+                                                                                    <option value="3">3</option>
+                                                                                    <option value="4">4</option>
+                                                                                    <option value="5">5</option>
+                                                                                    <option value="6">6</option>
+                                                                                    <option value="7">7</option>
+                                                                                    <option value="8">8</option>
+                                                                                    <option value="9">9</option>
+                                                                                    <option value="10">10</option>
+                                                                                    <option value="11">11</option>
+                                                                                    <option value="12">12</option>
+                                                                                    <option value="13">13</option>
+                                                                                    <option value="14">14</option>
+                                                                                    <option value="15">15</option>
+                                                                                    <option value="16">16</option>
+                                                                                    <option value="17">17</option>
+                                                                                    <option value="18">18</option>
+                                                                                    <option value="19">19</option>
+                                                                                    <option value="20">20</option>
+                                                                                </select></td>
+                                                                        </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                    {#                      <br />#}
+
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <input style="width: 75%" type="text" id="promocode" class="form-control pull-left" maxlength="255" name="promocode" placeholder="Apply for Promocode" />
+                                                                    <div id="error_promotion" style="color: red"></div>
+                                                                    <div id="success_promotion" style="color: green"></div>
+                                                                    <input type="button" class="btn vd_btn btn-brown pull-right"   id="apply_promocode" name="apply_promocode" value="Apply" />
+
+                                                                </div>
+                                                                <div class="col-md-6 ">
+                                                                    <div class="col-md-9 text-right" >
+                                                                        <h4>                            Total:
+                                                                        </h4>                        </div>
+                                                                    <div class="col-md-3 text-left">
+                                                                        <p id="total_ticket_price">$xx</p>
+
+                                                                    </div>
+
+                                                                    <input  type="hidden" name="hidden_total" value="$xx" id="hidden_total"/>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- Panel Widget -->
+
+                                                            <div class="panel widget">
+
+
+                                                                    {{ form.as_p  }}
+
+                                                                    {#                                                                <input type="hidden" name="stripe_token" id="stripe_token">#}
+                                                                    <input type="hidden" name="total_amount" id="total_amount" />
+                                                                    <input type="hidden" name="stripe_token" id="stripe_token" />
+                                                                    <div id="error_email" style="color:red"></div>
+                                                                    <input type="submit" class="btn vd_btn btn-brown" value="SUBMIT PAYMENT" id="submit-form" />
+
+                                                            </div>
+
+                                                        </div>
+                                                              </form>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <p style="margin-top: 35px;">EVENTS POWERED BY</p>
+                                            <a href="https://www.yapjoy.com/" target="_blank"><img style="width: 10%;" src="{% static "images/logo/logo-lg.png" %}" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Panel Widget -->
+
+                            </div>
+                            <!-- col-md-12 -->
+
+
+                        </div>
+                        <!--row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#    <script src="{% static "js/chosen.jquery.min.js" %}"></script>#}
+
+    </div>
+{% endblock content %}
+{% block script %}
+    <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $("#id_email").resetForm();
+            var total = $('#total_ticket_price');
+            var hidden_total = $('#hidden_total');
+            console.log('total ready: ', total.text(), hidden_total.val());
+            $('#error_email').html('');
+
+
+            $("#id_form-0-quantity").change(function () {
+                var quantity = $('#id_form-0-quantity :selected').text();
+                var amount = {{ event.amount }};
+                console.log('quantity: ', quantity, amount, (quantity * amount));
+                var total_value = (quantity * amount).toFixed(2);
+                $('input[name="hidden_total"]').val(total_value);
+                console.log('total: ',hidden_total.val());
+                total.text(total_value);
+                console.log("Q change: ",total);
+            });
+
+            $('#apply_promocode').click(function () {
+
+                $('#success_promotion').html('');
+                $('#error_promotion').html('');
+
+                var promotion = $("#promocode").val();
+
+                if (total.text() != '$xx'){
+                    if(promotion != ''){
+
+                        $.ajax({
+                            url: "/bayareaweddingfairs/tickets/promocode/",
+                            type: "GET",
+                            data: {
+                                'promocode': promotion,
+                                'total_text':total.text(),
+                                'quantity': $('#id_form-0-quantity :selected').text(),
+
+                            },
+
+                            success: function (data) {
+                                console.log('in error promo ajax: ', data);
+                                if (data['response'] == 'error'){
+
+                                    console.log('in error promo ajax');
+                                    $('#error_promotion').html('Promotion Code is not Valid');
+
+                                }
+                                if(data['response'] == 'success'){
+                                    console.log('in success promo ajax');
+                                    $('#success_promotion').html('Promotion Code Applied Successfully Now total is: '+ (data['discount']).toFixed(2));
+                                    total.text((data['discount']).toFixed(2));
+                                    $(this).prop('disabled', true);
+                                }
+                            },
+
+                            error: function(error) {
+                                console.log("error: "+error.message);
+
+                            }
+                        })
+                    }
+                    else{
+                        $('#error_promotion').html('Please Enter the Promotion Code');
+                    }
+                }
+                else {
+                    $('#error_promotion').html('Please first select the quantity ');
+                }
+
+            });
+
+            $('#submit-form').click(function(event) {
+{#                event.preventDefault();#}
+                //Stripe.setPublishableKey('pk_test_tZdpLY6bm1aDvhy9tBdfyMeV');
+                var email = $('#id_email').val();
+                var phone = $('#id_phone').val();
+                var number = $('#id_number').val();
+
+                if((email == '')) {
+                    event.preventDefault();
+{#                    $('#id_email').prop('required',true);#}
+                    $('#error_email').html('Email is required');
+                    return false
+                }
+                if((number == '')) {
+                    event.preventDefault();
+{#                    $('#id_number').prop('required',true);#}
+                    $('#error_email').html('Card Number is required');
+                    return false
+                }
+                if((phone == '')) {
+
+{#                    $('#id_phone').prop('required',true);#}
+                    $('#error_email').html('Phone is required');
+                    return false
+                }
+                if(total.text() == '$xx'){
+                    event.preventDefault();
+                    $('#error_email').html('Please Select the Quantity ');
+                    return false
+                }
+                else {
+                    $("#stripe-error-message").html("");
+                    if ($("#id_number").length == 1) {
+                        var key = '{{ pub_key }}';
+                        Stripe.setPublishableKey(key);
+{#                        $('#submit-form').attr('disabled','disabled');#}
+                        // alert('inside');
+                        var form = this;
+                        var card = {
+                            number: $("#id_number").val(),
+                            expMonth: $("#id_month").val(),
+                            expYear: $("#id_year").val(),
+                            {#                    cvc: $("#id_verification_value").val()#}
+                        };
+
+                        Stripe.card.createToken(card, function (status, response) {
+
+{#                            alert(response);#}
+                            if (status === 200) {
+                                console.log(status, response);
+                                //jQuery("#credit-card-errors").hide();
+                                //jQuery("#last_4_digits").val(response.card.last4);
+                                $("#stripe_token").val(response.id);
+                                //jQuery('#setupPayment').prop('disabled', false);
+                                {#                        $('#submit-invoice').removeAttr('disabled');#}
+{#                                return#}
+                                $("#payment-form").submit();
+                            } else {
+                                alert(response.error.message)
+                                console.log(response.error);
+                                console.log(response.error.param);
+                                $("#error_email").text(response.error.message);
+{#                                $('#submit-form').removeAttr('disabled');#}
+                            }
+                        });
+                        return false;
+                    }else{
+                        alert('in else')
+                    }
+                }
+
+                $('#error_email').html('Your Ticket is reserved you will get the Email on provided email address');
+                $('#error_email').css("color",'green')
+
+            });
+
+        });
+
+
+    </script>
+{% endblock script %}
+
+
+
+{##}
+{#<script>#}
+{##}
+{##}
+{#     {% if not is_customer %}#}
+{#    // alert('working');#}
+{#    {% if event_invoice__object.is_manual %}#}
+{#        var key = '{{ key }}';#}
+{#        Stripe.setPublishableKey(key);#}
+{#        $('#submit-invoice').on('click', function (event) {#}
+{#            event.preventDefault();#}
+{#            $('#submit-invoice').attr('disabled', true);#}
+{#            //alert('submit');#}
+{#            $("#stripe-error-message").html("");#}
+{#            if ($("#id_number").length == 1) {#}
+{#                // alert('inside');#}
+{#                var form = this;#}
+{#                var card = {#}
+{#                    number: $("#id_number").val(),#}
+{#                    expMonth: $("#id_month").val(),#}
+{#                    expYear: $("#id_year").val(),#}
+{#                    cvc: $("#id_verification_value").val()#}
+{#                };#}
+{#                //console.log(card);#}
+{#                Stripe.card.createToken(card, function (status, response) {#}
+{#                    if (status === 200) {#}
+{#                        console.log(status, response);#}
+{#                        //jQuery("#credit-card-errors").hide();#}
+{#                        //jQuery("#last_4_digits").val(response.card.last4);#}
+{#                        $("#stripe_token").val(response.id);#}
+{#                        //jQuery('#setupPayment').prop('disabled', false);#}
+{#                        $('#submit-invoice').removeAttr('disabled');#}
+{#                        $('#invoice-form').submit();#}
+{#                    } else {#}
+{#                        console.log(response.error);#}
+{#                        console.log(response.error.param);#}
+{#                        $("#stripe-error-message").text(response.error.message);#}
+{#                        $('#submit-invoice').removeAttr('disabled');#}
+{#                    }#}
+{#                });#}
+{#                return false;#}
+{#            }#}
+{#            return true;#}
+{#        });#}
+{#    {% endif %}#}
+{#        {% endif %}#}
+{#    {% if redirect %}#}
+{#        parent.window.location.href = '/dashboard/';#}
+{#    {% endif %}#}
+{##}
+{#    (function (i, s, o, g, r, a, m) {#}
+{#        i['GoogleAnalyticsObject'] = r;#}
+{#        i[r] = i[r] || function () {#}
+{#                (i[r].q = i[r].q || []).push(arguments)#}
+{#            }, i[r].l = 1 * new Date();#}
+{#        a = s.createElement(o),#}
+{#            m = s.getElementsByTagName(o)[0];#}
+{#        a.async = 1;#}
+{#        a.src = g;#}
+{#        m.parentNode.insertBefore(a, m)#}
+{#    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');#}
+{##}
+{#    ga('create', 'UA-68785620-1', 'auto');#}
+{#    ga('send', 'pageview');#}

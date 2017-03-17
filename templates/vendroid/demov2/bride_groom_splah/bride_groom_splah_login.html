@@ -1,0 +1,145 @@
+{% extends "vendroid/demo/base_yp_bride_groom_splash.html" %}
+{% load static %}
+{% block title %} Splash Login{% endblock title %}
+{% block css_script %}
+
+    <style type="text/css">
+
+    .slider {
+{#        width: 50%;#}
+        margin: 100px auto;
+    }
+
+    .slick-slide {
+      margin: 0px 20px;
+    }
+
+    .slick-slide img {
+      width: 100%;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        color: #C7C7C7;
+    }
+  </style>
+{% endblock css_script %}
+
+{% block content %}
+
+    <div class="container">
+
+                <section class="regular slider">
+                <div>
+                  <div class="yap-bride-groom-slide">
+                      <h2 class="title">Meet a new</h2>
+                      <h3 class="designation-title">Photographer</h3>
+                      <h2 class="location">From the bay Area</h2>
+                      <a href="/vendors/profile/view/2/" class="btn btn-yapjoy-blue" style=" padding: 6px 20px;">GO  <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="yap-bride-groom-slide">
+                      <h2 class="title">Meet a new</h2>
+                      <h3 class="designation-title">Florist</h3>
+                      <h2 class="location">From the bay Area</h2>
+                      <a href="/vendors/profile/view/2/" class="btn btn-yapjoy-blue" style=" padding: 6px 20px;">GO  <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+
+              </section>
+
+              <div class="offer-event-service">
+                  <div class="offer-holder">
+                      <div class="offer-text">
+                      <a href="{% url "login_professional" %}"> i Offer an Event<br/>
+                        service</a>
+                  </div>
+                  <div class="offer-arrow">
+                      <i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </div>
+                  <div class="clearfix"></div>
+                  </div>
+
+              </div>
+
+            </div>
+          {% include "moments/_partial/_login_modal.html" %}
+{#    {% if not pre_register %}#}
+{#        {% include "moments/_partial/_register_modal.html" %}#}
+{#    {% else %}#}
+{#        {% include "moments/_partial/_pre_register_modal.html" %}#}
+{% endblock content %}
+
+
+{% block script_links %}
+    <script type="text/javascript" src="{% static "vendroid/plugins/backstretch/backstretch.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/slick/slick.min.js" %}" charset="utf-8"></script>
+
+{% endblock script_links %}
+
+{% block script %}
+<script type="text/javascript">
+        $(document).ready(function(){
+
+
+            $(".regular").slick({
+                dots: false,
+                infinite: false,
+                slidesToShow: 1,
+                slidesToScroll: 1
+              });
+
+            $.backstretch("{% static "vendroid/img/photograph-1.png" %}", {transitionDuration: 500});
+
+            $(".slick-next").click(function (e) {
+              e.preventDefault();
+              $.backstretch("{% static "vendroid/img/florist.png" %}");
+            });
+
+            $(".slick-prev").click(function (e) {
+              e.preventDefault();
+              $.backstretch("{% static "vendroid/img/photograph-1.png" %}");
+            });
+
+        });
+    </script>
+    <script>
+        {% if form.errors or InvalidDetails %}
+            $(document).ready(function(){
+                jQuery('#loginmodal').modal('show');
+            })
+        {% endif %}
+        {% if req_form.errors %}
+            $(document).ready(function(){
+            $('#registermodal').modal('show');
+            });
+        {% endif %}
+        {% if registerform.errors %}
+            $(document).ready(function(){
+                $('#registermodal').modal('show');
+            });
+        {% endif %}
+        {#        $('#id_wedding_date').datepicker();#}
+        {% if request_success_form %}
+            notification("topright","success","fa fa-check-circle vd_green","Registeration Successful","Your request has been successfully submitted.");
+        {% endif %}
+        function modelGetStartedOpen(){
+            $('#registermodal').modal('show');
+        }
+        function modelLoginOpen(){
+            jQuery('#loginmodal').modal('show');
+        }
+        $('#req_button').on('click',function(){
+            {#        alert('working')#}
+            $('#registermodal').modal('show');
+        })
+        $('.mark-blue').on('click',function(){
+            $('.mark-blue').removeClass('selected')
+            $(this).attr('class','col-md-12 mark-blue selected')
+        })
+        $('.step_text').hide();
+        $('#no_1').show();
+    </script>
+{% endblock script %}

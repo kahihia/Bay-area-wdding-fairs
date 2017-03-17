@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <style>
+    .red {
+        color: red;
+    }
+    </style>
+            <div class="col-md-1 side-nav">
+                {% include 'partial/_sidebar.html' %}
+            </div>
+
+<!-- patch3 -->
+<section class="settings-section">
+<div class="col-md-4 col-md-offset-1 left-col">
+    <section class="profile-nav">
+        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>
+        <!-- Nav tabs -->
+
+
+        <div class="col-md-12">
+
+                        <section class="widget tasks">
+                            <h4>{{ credit.title }}</h4>
+                            <ul class="list-unstyled">
+                                <div style="color: #3397a5">
+                                    <div class="items">
+                                        <li class="text-center">
+                                            <br />
+                                            <h3 style="margin-bottom: 10px;">{{ credit.credits|intcomma }} Credits</h3>
+
+
+
+                                            <h3>${{ credit.amount|intcomma }} only</h3>
+                                            <hr />
+                                            <p>{{ credit.description }}
+
+                                            </p>
+
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </ul>
+                        </section>
+
+
+
+
+                </div>
+        <div class="col-md-12">
+            <div class="tab-content">
+        {% if successMessage %}
+        <div class="flashes">
+            <div class="alert alert-success">{{ successMessage }}</div>
+        </div>
+        {% endif %}
+            <div role="tabpanel" class="tab-pane {% if not emailformSubmit %}active{% endif %}" id="info">
+                <div class="flashes"></div>                 <p class="helper-text"><i class="fa fa-info-circle"></i> Use a valid credit card, in order to avoid from blocking.</p>
+                <form role="form" action="." method="POST" id="depositForm" name="depositForm">
+            {% csrf_token %}
+            {% if not userprofile.stripe_id %}
+            <div class="form-body">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    {{ form.name }}
+
+                        <div class="red text-center">{{ form.name.errors.0 }}</div>
+                </div>
+
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    {{ form.number }}
+
+                        <div  class="red text-center"><div id="cardError">{{ form.number.errors.0 }}</div></div>
+                </div>
+
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    {{ form.month }}
+
+                            <div  class="red text-center"><div id="expMonthError">{{ form.month.errors.0 }}</div></div>
+
+                </div>
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    {{ form.year }}
+                            <div  class="red text-center">{{ form.year.errors.0 }}</div>
+                </div>
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    {{ form.verification_value }}
+
+
+                            <div  class="red text-center"><div id="cvcError">{{ form.verification_value.errors.0 }}</div></div>
+
+                </div>
+
+            </div>
+                <input name="cc_form_submit" type="hidden" id="cc_form_submit"/>
+            {% else %}
+                <div class="form-body">
+                    <section class=" ">
+                            <ul class="list-unstyled">
+                                <div style="color: #3397a5">
+                                    <div class="items">
+                                        <li>
+                                             **** **** **** {{ is_customer }} <br>
+                                        <p>( <a href="/removeCard/" style="color: red;">EDIT</a> ) Existing Card Number</p>
+                                        <input hidden id="cc_form_submit_cus" name="cc_form_submit_cus">
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </ul>
+                        </section>
+
+                </div>
+
+
+            {% endif %}
+                <section class="widget tasks">
+                            <ul class="list-unstyled">
+                                <div style="color: #3397a5">
+                                    <div class="items">
+                                        <li class="text-center">
+                                         <input name="stripe_token" type="hidden" id="stripe_token"/>
+
+                                        <input hidden id="registerUser" name="registerUser"/>
+
+                                        <button type="submit" id="paymentButton" class=" add-group btn-block">PAY NOW
+                                        </button>
+                                            <div class="red"><div class="red text-center" id="stripe-error-message">{{ stripeError }}</div></div>
+
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </ul>
+                        </section>
+
+            <div class="">
+
+{#                <button type="button" id='cancel' class="btn default pull-right">Cancel#}
+{#                </button>#}
+            </div>
+
+        </form>
+            </div>
+            <!-- end panel -->
+            <!-- end panel -->
+        </div>
+        </div>
+    </section>
+</div>
+<div class="col-md-7 profile-content">
+<h3 class="section-title">More Packages </h3>
+    <div role="tabpanel">
+
+        <!-- Tab panes -->
+        {% for credit in credits %}
+                <div class="col-md-4">
+                    <a href="/creditBuy/{{ credit.id }}/">
+                        <section class="widget tasks">
+                            <h4>{{ credit.title }}</h4>
+                            <ul class="list-unstyled">
+                                <div style="color: #3397a5">
+                                    <div class="items">
+                                        <li class="text-center">
+                                            <br />
+                                            <h3 style="margin-bottom: 10px;">{{ credit.credits|intcomma }} Credits</h3>
+
+
+
+                                            <h3>${{ credit.amount|intcomma }} only</h3>
+                                            <hr />
+                                            <p>{{ credit.description }}
+
+                                            </p>
+
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </ul>
+                            <a href="/creditBuy/{{ credit.id }}/" class="view-all">Buy Now</a>
+                        </section>
+                    </a>
+
+                </div>
+            {% endfor %}
+    </div>
+    <!-- end tabs -->
+</div>
+<!-- patch3 -->
+
+</section>
+{% endblock content %}
+{% block jquery %}
+
+<script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+        {% if not is_customer %}
+        // alert('working');
+        Stripe.setPublishableKey('pk_live_Hxwa4UrkwLn3bhUqx6sjbQTF');
+        $("#depositForm").submit(function () {
+            $('#paymentButton').prop('disabled', true);
+            //alert('submit');
+            if ($("#id_number").length == 1) {
+                // alert('inside');
+                var form = this;
+                var card = {
+                    number: $("#id_number").val(),
+                    expMonth: $("#id_month").val(),
+                    expYear: $("#id_year").val(),
+                    cvc: $("#id_verification_value").val()
+                };
+                //console.log(card);
+                Stripe.card.createToken(card, function (status, response) {
+                    if (status === 200) {
+                        console.log(status, response);
+                        //$("#credit-card-errors").hide();
+                        //$("#last_4_digits").val(response.card.last4);
+                        $("#stripe_token").val(response.id);
+                        //$('#setupPayment').prop('disabled', false);
+                        form.submit();
+                    } else {
+                        console.log(response.error);
+                        console.log(response.error.param);
+                        if(response.error.param=='number'){
+                            $("#cardError").html(response.error.message);
+{#                            $("#cardError").css('color','#cb5a5e');#}
+{#                            $("#id_number").addClass('edited');#}
+                            $("#stripe-error-message").text('');
+                        }else if(response.error.param=='exp_month'){
+                            $("#expMonthError").html(response.error.message);
+{#                            $("#expMonthError").css('color','#cb5a5e');#}
+                            $("#cardError").html('Enter Card Number');
+{#                            $("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text('');
+                        }
+                        else if(response.error.param=='cvc'){
+                            $("#cvcError").html(response.error.message);
+{#                            $("#cvcError").css('color','#cb5a5e');#}
+{#                            $("#id_verification_value").addClass('edited');#}
+                            $("#expMonthError").html('Enter Expiration Month');
+{#                            $("#expMonthError").css('color','#999');#}
+                            $("#cardError").html('Enter Card Number');
+{#                            $("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text('');
+                        }
+                        else{
+                            $("#cvcError").html(response.error.message);
+{#                            $("#cvcError").css('color','#999');#}
+                            $("#expMonthError").html('Enter Expiration Month');
+{#                            $("#expMonthError").css('color','#999');#}
+                            $("#cardError").html('Enter Card Number');
+{#                            $("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text(response.error.message);
+                        }
+
+{#                        $("#paymentBlock").attr('style','border: 4px solid red');#}
+                        //$("#credit-card-errors").show();
+                        //$("#user_submit").attr("disabled", false);
+                        $(this).children('button[type=submit]').prop('disabled', false);
+                        $('#paymentButton').prop('disabled', false);
+                    }
+                });
+                return false;
+            }
+            return true;
+        });
+        {% endif %}
+        {% if form_w.errors or error or message %}
+            $(document).ready(function(){
+                $('#make-withdrawl').modal('show');
+            });
+        {% endif %}
+        {% if form_cc.errors or error %}
+            $(document).ready(function(){
+                $('#make-deposit').modal('show');
+            });
+        {% endif %}
+
+
+</script>
+
+{% endblock jquery %}

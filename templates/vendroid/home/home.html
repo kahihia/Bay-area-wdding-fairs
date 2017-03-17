@@ -1,0 +1,1803 @@
+{% load static %}
+{% load cache %}
+{% load myfilters %}
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html><!--<![endif]-->
+
+<!-- Specific Page Data -->
+<!-- End of Data -->
+
+<head>
+    <meta charset="utf-8"/>
+    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding
+        <online></online>
+    </title>
+    <meta name="keywords" content="HTML5 Template, CSS3, Metro Slider, Elegant HTML5 Theme"/>
+    <meta name="description" content="Multipurpose Responsive HTML5 Themes with Animated Metro Slider - Vencorp">
+    <meta name="author" content="Venmond">
+
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="{% static "vendroid/img/ico/apple-touch-icon-144-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="{% static "vendroid/img/ico/apple-touch-icon-114-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="{% static "vendroid/img/ico/apple-touch-icon-72-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static "vendroid/img/ico/apple-touch-icon-57-precomposed.png" %}">
+    <link rel="shortcut icon" href="{% static "images/favicon.png" %}">
+
+
+    <!-- CSS -->
+
+    <!-- Bootstrap & FontAwesome & Entypo CSS -->
+    <link href="{% static "vendroid/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE 7]><link type="text/css" rel="stylesheet" href="css/font-awesome-ie7.min.css"><![endif]-->
+    <link href="{% static "vendroid/css/font-entypo.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Fonts CSS -->
+    <link href="{% static "vendroid/css/fonts.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="{% static "vendorid/plugins/jquery-ui/jquery-ui.custom.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/prettyPhoto-plugin/css/prettyPhoto.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/isotope/css/isotope.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/pnotify/css/jquery.pnotify.css" %}" media="screen" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/google-code-prettify/prettify.css" %}" rel="stylesheet" type="text/css">
+
+
+    <link href="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendorid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static "vendorid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Specific CSS -->
+    <link href="{% static "vendroid/plugins/layerslider/css/layerslider.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/animate.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- Theme CSS -->
+    <link href="{% static "vendroid/css/theme.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE]> <link href="css/ie.css" rel="stylesheet" > <![endif]-->
+    <link href="{% static "vendroid/css/chrome.css" %}" rel="stylesheet" type="text/chrome">
+    <!-- chrome only css -->
+
+
+    <!-- Responsive CSS -->
+    <link href="{% static "vendroid/css/theme-responsive.min.css" %}" rel="stylesheet" type="text/css">
+
+
+    <!-- for specific page in style css -->
+
+    <!-- for specific page responsive in style css -->
+
+
+    <!-- Custom CSS -->
+    <link href="{% static "vendroid/custom/custom.css" %}" rel="stylesheet" type="text/css">
+
+
+    <!-- Head SCRIPTS -->
+    <script type="text/javascript" src="{% static "vendroid/js/modernizr.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/js/mobile-detect-modernizr.js" %}"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="{% static "vendroid/js/html5shiv.js" %}"></script>
+      <script type="text/javascript" src="{% static "vendroid/js/respond.min.js" %}"></script>
+    <![endif]-->
+    <style>
+        .pink {
+            color: #DF9DA9 !important;
+        }
+        .pink-background{
+            background-color: #DF9DA9 !important;
+        }
+        .white-background{
+            background-color: white !important;
+        }
+    </style>
+
+</head>
+
+<body id="login-page"
+      class="middle-layout no-nav-left no-nav-right  nav-top-fixed background-login     responsive remove-navbar front-layout   clearfix"
+      data-active="login-page " data-smooth-scrolling="1">
+<div class="vd_body">
+
+{#    {% cache 5000 newcachehomepage %}#}
+        <!-- Header Start -->
+    <header class="header-2" id="header">
+        <div class="vd_top-menu-wrapper vd_bg-white light-top-menu">
+            <div class="container">
+                <div class="vd_top-nav vd_nav-width  ">
+                    <div class="vd_panel-header">
+                        <div class="logo">
+                            <a href="/"><img alt="logo" src="{% static "images/unnamed_2_pink.png" %}"></a>
+                        </div>
+                        <!-- logo -->
+                        <div class="vd_panel-menu visible-sm visible-xs">
+                	<span class="menu visible-xs" data-action="submenu">
+	                    <i class="fa fa-bars"></i>
+                    </span>
+                        </div>
+                        <!-- vd_panel-menu -->
+                    </div>
+                    <!-- vd_panel-header -->
+
+                </div>
+                <div class="vd_container">
+                    <div class="row">
+                        <div class="col-sm-8 col-xs-12">
+                            <div class="vd_mega-menu-wrapper horizontal-menu">
+                                <div class="vd_mega-menu">
+                                    <ul class="mega-ul nav">
+{#                                        <li class="mega-li">#}
+{#                                            <a href="#" class="mega-link" data-waypoint="home">#}
+{#                                                <span class="menu-text"><i#}
+{#                                                        class="fa fa-home font-md hidden-xs"></i><span#}
+{#                                                        class="visible-xs">Home</span></span>#}
+{#                                            </a>#}
+{##}
+{#                                        </li>#}
+                                        <li class="mega-li white-background">
+                                            <a href="#" class="mega-link" data-waypoint="services">
+                                                <span class="menu-text pink-">Features</span>
+                                            </a>
+
+                                        </li>
+                                        <li class="mega-li white-background">
+                                            <a href="#" class="mega-link" data-waypoint="features">
+                                                <span class="menu-text">Why YapJoy?</span>
+                                            </a>
+
+                                        </li>
+                                        <li class="mega-li white-background">
+                                            <a href="#" class="mega-link pink white-background" data-waypoint="clients">
+                                                <span class="menu-text">Testimonials</span>
+                                            </a>
+
+                                        </li>
+                                        <li class="mega-li white-background">
+                                            <a href="#" class="mega-link" data-waypoint="contact">
+                                                <span class="menu-text">Join Now</span>
+                                            </a>
+
+                                        </li>
+                                        {#    <li class="hover-trigger mega-li">#}
+                                        {#        <a href="#" class="mega-link" data-action="click-trigger">#}
+                                        {#            <span class="menu-text">Go</span>  <i class="fa fa-caret-down prepend-icon"></i>#}
+                                        {#        </a>#}
+                                        {#          <div class="vd_mega-menu-content  width-xs-2  right-xs hover-target no-top" data-action="click-target">#}
+                                        {#            <div class="child-menu">#}
+                                        {#                <div class="content-list content-menu">#}
+                                        {#                    <ul class="list-wrapper">#}
+                                        {#                        <li> <a href="front-1.html"> Front 1 </a> </li>#}
+                                        {#                        <li> <a href="front-2.html"> Front 2</a> </li>#}
+                                        {#                        <li> <a href="front-blog.html"> Front Blog</a> </li>#}
+                                        {#                        <li> <a href="front-blog-content.html"> Front Blog Content</a> </li>#}
+                                        {#                        <li> <a href="index.html"> Admin Panel </a> </li>#}
+                                        {#                        <li> <a href="http://themeforest.net/item/vendroid-super-flexible-multipurpose-admin-theme/7717536?ref=Venmond"> Buy This Theme </a> </li>                         #}
+                                        {#                    </ul>#}
+                                        {#                </div>#}
+                                        {#            </div>#}
+                                        {#          </div>#}
+                                        {#    </li>#}
+                                    </ul>
+                                    <!-- Head menu search form ends -->                         </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <div class="vd_mega-menu-wrapper">
+                                <div class="vd_mega-menu pull-right">
+                                    <ul class="mega-ul">
+                                        <li id="top-menu-1" class="one-icon mega-li">
+                                            <a data-toggle="modal" data-placement="top" data-target="#loginmodal"
+                                               class="btn vd_btn vd_bg-blue font-semibold pink-background">Login</a>
+                                        </li>
+                                        <li id="top-menu-2" class="one-icon mega-li">
+                                            <a data-toggle="modal" data-placement="top" data-target="#registermodal"
+                                               class="btn vd_btn  vd_bg-blue font-semibold pink-background">Register</a>
+                                        </li>
+
+                                    </ul>
+                                    <!-- Head menu search form ends -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- container -->
+        </div>
+        <!-- vd_primary-menu-wrapper -->
+
+    </header>
+    <!-- Header Ends -->
+    <div class="content">
+
+        <div id="front-1-banner" class="vd_banner vd_bg-white clearfix slide-waypoint text-center" data-waypoint="home">
+            <div id="layerslider" style="width:100%;height:500px; margin-bottom: 50px;">
+                <div class="ls-slide" data-ls="slidedelay:7500;transition2d:8;">
+                    <img src="{% static "vendroid/img/banner/fw-1.jpg" %}" class="ls-bg" alt="Slide background"/>
+
+                    <p class="ls-l font-sm color-blue text-center" style="top:60px; left:239px;"
+                       data-ls="offsetyin:-100; offsetxin:0;">INTRODUCING</p>
+                                    <img width="380px" alt="example image" src="{% static "vendroid/img/login/mrmrs.jpg" %}" class="ls-l" style="top:110px; left:110px;" data-ls="delayin: 1200;easingin:easeOutQuart; offsetyin:-0; offsetxin:0; rotateyin:-60;" />
+{#                    <br />#}
+                    {#                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-1-logo-word.png" %}" class="ls-l" style="top:320px; left:110px;" data-ls="delayin: 1600;easingin:easeOutQuint; offsetyin:100; offsetxin:0;" />#}
+                    <p class="ls-l text-center" style="top:382px; left:177px;  font-size:24px;"
+                       data-ls="delayin: 1700;easingin:easeOutQuint; offsetyin:200; offsetxin:0;"> World’s Only
+                        SMART<br/>
+
+                        Event Planning<br/>
+
+                        Application </p>
+
+
+                    <p class="ls-l vd_bg-blue"
+                       style="top:60px;left:600px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:24px;line-height:37px;color:#ffffff;background:#DF9DA9;border-radius:4px;white-space: nowrap;"
+                       data-ls="durationin:1500;delayin:2200;rotatein:20;rotatexin:30;scalexin:3;scaleyin:3;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
+                        CREATE YOUR PLANNING CIRCLE
+                    </p>
+
+                    <p class="ls-l "
+                       style="top:100px;left:600px;font-weight: 300;font-size:18px;color:#333;white-space: nowrap;"
+                       data-ls="offsetxin:0;durationin:1500;delayin:2600;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
+                        Invite chosen friends and family to the planning group.
+                    </p>
+
+                    <p class="ls-l vd_bg-blue"
+                       style="top:160px;left:600px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:24px;line-height:37px;color:#ffffff;background:#DF9DA9;border-radius:4px;white-space: nowrap;"
+                       data-ls="durationin:1500;delayin:2900;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
+                        SEAMLESSLY CONNECT WITH VENDORS
+                    </p>
+
+                    <p class="ls-l"
+                       style="top:200px;left:600px;font-weight: 300;font-size:18px;color:#333;white-space: nowrap;"
+                       data-ls="offsetxin:0;durationin:1500;delayin:3300;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
+                        Follow the recommended vendors
+                    </p>
+
+                    <p class="ls-l vd_bg-blue"
+                       style="top:260px;left:600px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:24px;line-height:37px;color:#ffffff;background:#DF9DA9;border-radius:4px;white-space: nowrap;"
+                       data-ls="durationin:1500;delayin:3600;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
+                        RECEIVE BIDS & TRACK BUDGET & RSVPs
+                    </p>
+
+                    <p class="ls-l"
+                       style="top:300px;left:600px;font-weight: 300;font-size:18px;color:#333;white-space: nowrap;"
+                       data-ls="offsetxin:0;durationin:1500;delayin:4000;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
+                        Choose the bid which suites your budget and needs. Stay Within Budget
+                    </p>
+
+                    <p class="ls-l vd_bg-blue"
+                       style="top:360px;left:600px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:24px;line-height:37px;color:#ffffff;background:#DF9DA9;border-radius:4px;white-space: nowrap;"
+                       data-ls="durationin:1500;delayin:4300;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
+                        GET IDEAS AND INSPIRATIONS
+                    </p>
+
+                    <p class="ls-l"
+                       style="top:400px;left:600px;font-weight: 300;font-size:18px;color:#333;white-space: nowrap;"
+                       data-ls="offsetxin:0;durationin:1500;delayin:4600;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
+                        Share Ideas and Styles With Your Friends
+                    </p>
+                    {#                <a href="index.html" class="ls-l"  style="top:220px;left:1000px;" data-ls="durationin:1500;delayin:5000;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">#}
+                    {#				<img alt="example image" src="{% static "vendroid/img/banner/take-quick-tour-image.png" %}"  >#}
+                    {#                </a>#}
+                    <!--               	<span class="font-sm vd_black mgbt-xs-5">Take a quick tour..</span><br/>
+                                       <a class="btn vd_btn btn-lg vd_bg-green" href="index.html">
+                                           LIVE PREVIEW <i class="fa fa-angle-double-right prepend-icon"></i>
+                                       </a>
+                                   </p>    -->
+                    <!--banner- arrows-->
+                    {#				<img alt="example image" class="ls-l ls-linkto-3" style="top:410px;left:200px;white-space: nowrap;" data-ls="offsetxin:-50;delayin:5000;offsetxout:-50;" src="{% static "vendroid/img/banner/left.png" %}" >#}
+                    {#                <img alt="example image" class="ls-l ls-linkto-2" style="top:410px;left:250px;white-space: nowrap;" data-ls="offsetxin:50;delayin:5000;offsetxout:50;" src="{% static "vendroid/img/banner/right.png" %}" >#}
+
+
+                </div>
+
+{#                			<div class="ls-slide" data-ls="transition2d:8; slidedelay:9000;">#}
+{#                                <img src="{% static "vendroid/img/banner/fw-1.jpg" %}" class="ls-bg" alt="Slide background"/>#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-center-macbook.png" %}" class="ls-l" style="top:165px; left:670px;" data-ls="delayin: 5600;easingin:easeOutQuart; offsetyin:-50; offsetxin:0; durationin:2000;" />#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-center-desktop.png" %}" class="ls-l" style="top:40px; left:425px;" data-ls="delayin: 200;easingin:easeOutQuart; offsetyin:-200; offsetxin:0; durationin:2000;" />#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-right-desktop.png" %}" class="ls-l" style="top:40px; left:800px;" data-ls="delayin: 800;easingin:easeOutQuart; offsetyin:-0; offsetxin:0; rotateyin:-90; durationin:2000; showuntil:1200; offsetyout:210; offsetxout:360; durationout:620; easingout:linear; scaleyout:1.5; scalexout:1.5;" />#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-left-desktop.png" %}" class="ls-l" style="top:40px; left:50px;" data-ls="delayin: 800; easingin:easeOutQuart; offsetyin:-0; offsetxin:0; rotateyin:90; durationin:2000; showuntil:1200; offsetyout:210; offsetxout:-400; durationout:600; easingout:linear; scaleyout:1.5; scalexout:1.5;" />#}
+{#                                <p class="ls-l font-semibold" style="top:420px;left:540px;font-weight: 300;font-size:18px;color:#666;white-space: nowrap;" data-ls="offsetxin:0; durationin:1500; offsetyin: 120; delayin:800;offsetxout:400;durationout:100;skewxout:60; showuntil:1000;">#}
+{#                                    Perfect Market Place#}
+{#                                </p>#}
+{#                                <p class="ls-l font-semibold" style="top:420px;left:540px;font-weight: 300;font-size:18px;color:#666;white-space: nowrap;" data-ls="offsetxin:0; durationin:1500; offsetyin: 120; delayin:2800; offsetxout:400;durationout:100;skewxout:60; showuntil:1000;">#}
+{#                                    also..#}
+{#                                </p>#}
+{#                                <p class="ls-l font-semibold" style="top:420px;left:540px;font-weight: 300;font-size:18px;color:#666;white-space: nowrap;" data-ls="offsetxin:0; durationin:1500; offsetyin: 120; delayin:2800; offsetxout:400;durationout:100;skewxout:60; showuntil:1000;">#}
+{#                                    also..#}
+{#                                </p>#}
+{#                                    <p class="ls-l" style="top:420px;left:420px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:30px;line-height:37px;color:#ffffff;background:#1FAE66;border-radius:3px;white-space: nowrap;" data-ls="offsetxin:0;durationin:2000;delayin:5800;easingin:easeOutElastic;rotatexin:-90;transformoriginin:50% top 0;offsetxout:-200;durationout:1000;">#}
+{#                                        GET LEAST BIDS#}
+{#                                    </p>#}
+{#                                    <p class="ls-l" style="top:420px;left:705px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:30px;line-height:37px;white-space: nowrap;" data-ls="offsetxin:100;durationin:2000;delayin:5800;easingin:easeOutElastic;offsetxout:-200;durationout:1000;">#}
+{#                                        from the best vendors in town#}
+{#                                    </p>#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-right-desktop-big.png" %}" class="ls-l" style="top:150px; left:1100px;" data-ls="delayin: 4000;easingin:easeOutQuart; offsetyin:-220; offsetxin:-450;  durationin:2000; scalexin:.5; scaleyin:.5;" />#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-left-desktop-big.png" %}" class="ls-l" style="top:150px; left:-500px;" data-ls="delayin: 4000;easingin:easeOutQuart; offsetyin:-220; offsetxin:450;  durationin:2000; scalexin:.5; scaleyin:.5;" />#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-center-tab.png" %}" class="ls-l" style="top:185px; left:345px;" data-ls="delayin: 5800;easingin:easeOutQuart; offsetyin:-50; offsetxin:0; durationin:2000;" />#}
+{#                                <img alt="example image" src="{% static "vendroid/img/banner/banner-front-2-page-2-logo-center-phone.png" %}" class="ls-l" style="top:262px; left:460px;" data-ls="delayin: 6000;easingin:easeOutQuart; offsetyin:-50; offsetxin:0; durationin:2000;" />#}
+{#                				<img alt="example image" class="ls-l ls-linkto-1" style="top:40px;left:600px;white-space: nowrap;" data-ls="offsetxin:-50;delayin:6500;offsetxout:-50;" src="{% static "vendroid/img/banner/left.png" %}" ><img alt="example image" class="ls-l ls-linkto-3" style="top:40px;left:650px;white-space: nowrap;" data-ls="offsetxin:50;delayin:6500;offsetxout:50;" src="{% static "vendroid/img/banner/right.png" %}">#}
+{##}
+{#                			</div>#}
+{##}
+{#                			<div class="ls-slide" data-ls="transition2d:8; slidedelay:9000;">#}
+{#                				<img src="{% static "vendroid/img/banner/fw-1.jpg" %}" class="ls-bg" alt="Slide background"/>#}
+{#                                <img alt="example image" class="ls-l" style="top:50px;left:500px;white-space: nowrap;" data-ls="offsetxin:0; offsetyin: 100; durationin:1500; delayin:800; offsetxout:-300;parallaxlevel:-10;" src="{% static "vendroid/img/banner/banner-front-2-page-3-desktop-1.png" %}">#}
+{#                                <img alt="example image" class="ls-l" style="top:130px;left:600px;white-space: nowrap;" data-ls="offsetxin:0; offsetyin: 100; durationin:1500; delayin:1300; offsetxout:-300;parallaxlevel:1;" src="{% static "vendroid/img/banner/banner-front-2-page-3-desktop-2.png" %}">#}
+{#                                <img alt="example image" class="ls-l" style="top:220px;left:700px;white-space: nowrap;" data-ls="offsetxin:0; offsetyin: 100; durationin:1500; delayin:1800; offsetxout:-300;parallaxlevel:10;" src="{% static "vendroid/img/banner/banner-front-2-page-3-desktop-3.png" %}">#}
+{#                				<p class="ls-l vd_red" style="top:70px;left:80px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:26px;line-height:28px;white-space: nowrap;" data-ls="offsetxin:-50;durationin:1000;delayin:200;easingin:easeOutCubic;offsetxout:-200;durationout:1000;">#}
+{#                					PREMADE#}
+{#                				</p>#}
+{#                				<p class="ls-l vd_red" style="top:100px;left:80px;font-weight: 300;height:40px;padding-right:10px;padding-left:10px;font-size:26px;line-height:28px;white-space: nowrap;" data-ls="offsetxin:50;durationin:1000;delayin:200;easingin:easeOutCubic;offsetxout:-200;durationout:1000;">#}
+{#                                    <strong class="font-semibold">DASHBOARDS READY</strong>#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:150px;left:90px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:-20;durationin:1500;delayin:2500;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					<i class="fa fa-check vd_green"></i>#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:150px;left:120px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:20;durationin:1500;delayin:2500;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					blogs#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:180px;left:90px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:-20;durationin:1500;delayin:3000;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					<i class="fa fa-check vd_green"></i>#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:180px;left:120px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:20;durationin:1500;delayin:3000;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					analytics#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:210px;left:90px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:-20;durationin:1500;delayin:3500;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					<i class="fa fa-check vd_green"></i>#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:210px;left:120px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:20;durationin:1500;delayin:3500;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					all purpose#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:240px;left:90px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:-20;durationin:1500;delayin:4000;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					<i class="fa fa-check vd_green"></i>#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:240px;left:120px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:20;durationin:1500;delayin:4000;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					e-commerce#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:270px;left:90px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:-20;durationin:1500;delayin:4500;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					<i class="fa fa-check vd_green"></i>#}
+{#                				</p>#}
+{#                				<p class="ls-l" style="top:270px;left:120px;font-size:18px;white-space: nowrap;" data-ls="offsetxin:20;durationin:1500;delayin:4500;easingin:easeOutCubic;offsetxout:-400;">#}
+{#                					and many more..#}
+{#                				</p>#}
+{#                				<a class="ls-l btn vd_btn btn-lg vd_bg-red" style="top:320px;left:90px; font-weight:300; white-space: nowrap;" data-ls="offsetxin:0;durationin:2000;delayin:5200;easingin:easeOutCubic;rotatexin:-90;transformoriginin:50% top 0;offsetxout:-200;durationout:1000;" href="http://themeforest.net/item/vendroid-super-flexible-multipurpose-admin-theme/7717536?ref=Venmond">#}
+{#                					BUY NOW#}
+{#                				</a>#}
+{#                				<img alt="example image" class="ls-l ls-linkto-2" style="top:410px;left:100px;white-space: nowrap;" data-ls="offsetxin:-50;delayin:5200;offsetxout:-50;" src="{% static "vendroid/img/banner/left.png" %}" ><img alt="example image" class="ls-l ls-linkto-1" style="top:410px;left:150px;white-space: nowrap;" data-ls="offsetxin:50;delayin:5200;offsetxout:50;" src="{% static "vendroid/img/banner/right.png" %}" >#}
+{#                			</div>#}
+
+
+            </div>
+        </div>
+
+        <div class="vd_banner vd_bg-blue clearfix pd-20">
+            <div class="container">
+                <div class="vd_content clearfix">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-9 mgbt-sm-10 mgbt-md-0">
+                            <div class="font-semibold font-md vd_white"><strong>SAY GOODBYE TO</strong></div>
+                            <div class="font-md deploy-word vd_white" style="font-size: 18px;">CREATING GOOGLE DOCS TO
+                                SHARE TASKS WITH YOUR FRIENDS AND MANUALLY
+                                SEARCHING FOR VENDORS
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-3 mgbt-sm-10 mgbt-md-0">
+                            <a data-toggle="modal" data-placement="top" data-target="#registermodal"
+                               class="btn vd_btn btn-lg vd_btn-bevel">Get Started !</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="front-1-services" class="vd_section clearfix slide-waypoint" data-waypoint="services" >
+            <div class="container" style="overflow: visible;">
+                <div class="vd_content clearfix">
+                    <div class="row">
+                        <div class="col-md-12 features-wrap">
+                            <h1 class="font-lg text-center "><span class="font-semibold vd_blue">Event Planning - Truly Made Simple !</span>
+                            </h1><br /><br />
+                            <!--<h3 class="text-center">Following are features of yapjoy</h3>-->
+
+                            <div class="block mac-pics-wrap">
+
+                                <div class="col-md-4">
+                                    <h4 class="vd_blue"><strong>Your Planning Quick Look</strong></h4>
+
+                                    <p class="">Get A Quick Overview of Your Tasks & Events</p>
+
+                                    <h4 class="vd_blue"><strong>Near Realtime Updates</strong></h4>
+
+                                    <p class="">Get fast updates on Feeds, Yaps and Polls</p>
+
+                                    <h4 class="vd_blue"><strong>Profile Power</strong></h4>
+
+                                    <p class="">Build & update Your Profile for best planning experience</p>
+
+                                    <h4 class="vd_blue"><strong>Analytical View</strong></h4>
+
+                                    <p class="">Analyze your planning tasks, Track Budget, Bids and RSVPs</p>
+
+                                    <h4 class="vd_blue"><strong>Pin Your Ideas</strong></h4>
+
+                                    <p class="">Get Inspiration from your favorite Pinterest Account</p>
+
+                                </div>
+                                <div class="desktop-img">
+                                    {#                 <img alt="example image" src="{% static "vendroid/img/yapjoy-landingpage-2.png" %}" />#}
+                                    <img alt="example image" src="{% static "vendroid/img/desktop-mac.png" %}"/>
+                                </div>
+                                <div class="mobile-img">
+                                    <img alt="example image" src="{% static "vendroid/img/IOS-img.png" %}"/>
+                                </div>
+                                <div class="clearfix"></div>
+
+                            </div>
+
+
+                        </div>
+                        <!-- col-md-12 -->
+                    </div>
+                    <!-- row -->
+
+                    <!-- row -->
+
+                </div>
+            </div>
+        </div>
+
+        <div id="front-1-features" class="vd_section vd_banner vd_bg-white clearfix slide-waypoint"
+             data-waypoint="features">
+            <div class="container">
+                <div class="vd_content clearfix">
+                    <div class="row">
+                        <div class="col-md-12 mgbt-xs-20 text-center">
+                            <h1 class="font-lg text-center"><span class="font-semibold vd_blue">Why YapJoy?</span></h1>
+
+                            <p class="font-semibold mgbt-xs-10">YapJoy is the only wedding network so far to manage your wedding and find vendors online
+                                for all your plans.</p>
+
+                        </div>
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="text-center video-player">
+                                <video width="500" height="281" controls>
+                                    <source src="https://s3-us-west-2.amazonaws.com/yapjoy-static/static/videos/yapjoy_intro.mp4"
+                                            type="video/mp4">
+                                    <source src="movie.ogg" type="video/ogg">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <br />
+                                <br />
+                                <!-- <iframe src="https://s3-us-west-2.amazonaws.com/yapjoy-static/static/videos/yapjoy_intro.mp4" width="500" height="281" class="no-bd" allowfullscreen></iframe> </div>-->
+                            </div>
+                        </div>
+
+                        {#      <div class="row">#}
+                        {#        <div class="col-md-5 mgbt-xs-20">#}
+                        {#          <div class="text-center"> <img alt="example image" src="{% static "vendroid/img/yapjoy-dashboard.JPG" %}" /> </div>#}
+                        {#        </div>#}
+                        {#        <div class="col-md-7">#}
+                        {#          <h2 class="h1"><strong>Responsive</strong> <span class="font-light">In All Devices</span></h2>#}
+                        {#          <p>Planning for your wedding day and beyond. At our shows, you will find everything you need from starting the planning process with budgeting, finding a wedding venue and bridal gown to booking wedding photographer, florist, caterer, dj and more.</p>#}
+                        {#        </div>#}
+                        {#      </div>#}
+
+
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-6 mgbt-xs-15">
+                        <div class="content-list content-blog-small clearfix">
+                            <div class="list-wrapper feature-item feature-1">
+                                <div class="menu-icon">
+                                    <i class="vd_blue fa fa-group font-lg"></i>
+                                </div>
+                                <div class="menu-text">
+                                    <h3 class="font-semibold mgbt-xs-10 vd_blue">Friends </h3>
+
+                                    <p>Invite friends and family that are part of your planning group. Invite via email
+                                        or import from your Facebook, Gmail or Yahoo mail account. Keep all your
+                                        communication private within your invited friends.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- col-xs-6 -->
+                    <div class="col-md-6 mgbt-xs-15">
+                        <div class="content-list content-blog-small clearfix">
+                            <div class="list-wrapper feature-item feature-2" style="opacity: 10;">
+                                <div class="menu-icon">
+                                    <i class="vd_blue fa fa-book font-lg"></i>
+                                </div>
+                                <div class="menu-text">
+                                    <h3 class="font-semibold mgbt-xs-10 vd_blue">My Planner </h3>
+
+                                    <p>No need to maintain Google Doc for your event plans. Create your planning tasks
+                                        or use YapJoy’s pre-created commonly used planning tasks. Assign a budget to the
+                                        tasks and publish to the related vendors. Receive bids on those plans and award
+                                        bids to the ones that meet your needs and budget.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- col-xs-6 -->
+
+                </div>
+                <!-- row -->
+
+                <div class="row">
+                    <div class="col-md-6 mgbt-xs-15">
+                        <div class="content-list content-blog-small clearfix">
+                            <div class="list-wrapper feature-item feature-3">
+                                <div class="menu-icon">
+                                    <i class="vd_blue fa fa-bullhorn font-lg"></i>
+                                </div>
+                                <div class="menu-text">
+                                    <h3 class="font-semibold mgbt-xs-10 vd_blue">Yapper </h3>
+
+                                    <p>An open forum where you can find helpful information on various topics. Search on
+                                        different categories or keywords. Its a place where you meet Yappers and you get
+                                        a chance to Yap all you want.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- col-xs-6 -->
+                    <div class="col-md-6 mgbt-xs-15">
+                        <div class="content-list content-blog-small clearfix">
+                            <div class="list-wrapper feature-item feature-4">
+                                <div class="menu-icon">
+                                    <i class="vd_blue glyphicon glyphicon-list-alt font-lg"></i>
+                                </div>
+                                <div class="menu-text">
+                                    <h3 class="font-semibold mgbt-xs-10 vd_blue">Wedding Professionals</h3>
+
+                                    <p>Connect and follow professionals that YapJoy recommends based on what you are
+                                        looking for. Check out their profile, rating and reviews. Invite them to your
+                                        planning tasks and receive bids from them.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- col-xs-6 -->
+
+                </div>
+                <!-- row -->
+
+                <div class="row">
+                    <div class="col-md-6 mgbt-xs-15">
+                        <div class="content-list content-blog-small clearfix">
+                            <div class="list-wrapper feature-item feature-5">
+                                <div class="menu-icon">
+                                    <i class="vd_blue fa fa-calendar font-lg"></i>
+                                </div>
+                                <div class="menu-text">
+                                    <h3 class="font-semibold mgbt-xs-10 vd_blue">Events & Tasks</h3>
+
+                                    <p>Create events and tasks. Assign to your friends and family. Send reminders and
+                                        check them off when completed.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- col-xs-6 -->
+                    <div class="col-md-6 mgbt-xs-15">
+                        <div class="content-list content-blog-small">
+                            <div class="list-wrapper feature-item feature-6">
+                                <div class="menu-icon">
+                                    <i class="vd_blue fa fa-tasks font-lg"></i>
+                                </div>
+                                <div class="menu-text">
+                                    <h3 class="font-semibold mgbt-xs-10 vd_blue">Seating Charts</h3>
+
+                                    <p>Create seating chart for your event. Assign seats to the users and email them
+                                        where they will be seated (feature coming soon..)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- col-xs-6 -->
+
+                </div>
+
+            </div>
+        </div>
+        <div class="vd_banner vd_bg-blue clearfix pd-20">
+            <div class="container">
+                <div class="vd_content clearfix">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-9 mgbt-sm-10 mgbt-md-0">
+                            <div class="font-semibold font-md vd_white"><strong>Wedding Professional?</strong></div>
+                            <div class="font-md deploy-word vd_white" style="font-size: 18px;">Claim your profile now
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-3 mgbt-sm-10 mgbt-md-0">
+                            <a onclick="openWeddingProfessionalModal();" class="btn vd_btn btn-lg vd_btn-bevel vd_bg-green">Sign up Now !</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="vd_banner vd_bg-white clearfix pd-20">
+            <div class="container">
+                <div class="vd_content clearfix">
+                    <div class="row">
+        <div class="col-md-12 text-center mgbt-xs-20">
+           <div class="btn vd_btn vd_bg-white vd_round-btn  vd_bd-green vd_blue btn-lg  mgbt-xs-15"><i class="fa  fa-camera fa-fw"></i></div>
+          <h2 class="font-semibold"> YapJoy Events </h2><br>
+        </div>
+        <div class="vd_gallery">
+          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">
+            <div style="opacity: 0;" class="gallery-item full-width gallery-1 animated fadeInUp">
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button"  href="{% static "images/landing_page/YapJoyBoothPic.jpg" %}"> <img alt="yapjoy events" src="{% static "images/landing_page/YapJoyBoothPic.jpg" %}">
+              <div class="bg-cover"></div>
+              </a>
+              <div class="vd_info">
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">Stunning</span> Dashboard</h3>#}
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyBoothPic.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a>
+{#                  <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> #}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">
+            <div style="opacity: 0;" class="gallery-item full-width gallery-2 animated fadeInUp">
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button"  href="{% static "images/landing_page/YapJoyLaunch.jpg" %}"> <img alt="yapjoy events" src="{% static "images/landing_page/YapJoyLaunch.jpg" %}">
+              <div class="bg-cover"></div>
+              </a>
+              <div class="vd_info">
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">A Lot of</span> premade Pages</h3>#}
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyLaunch.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a>
+{#                  <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> #}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">
+            <div style="opacity: 0;" class="gallery-item full-width gallery-3 animated fadeInUp"> <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button"  href="{% static "images/landing_page/YapJoyLaunch2.jpg" %}"> <img alt="yapjoy events" src="{% static "images/landing_page/YapJoyLaunch2.jpg" %}">
+              <div class="bg-cover"></div>
+              </a>
+              <div class="vd_info">
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">Dashboard </span>Examples</h3>#}
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyLaunch2.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a>
+{#                  <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> #}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">
+            <div style="opacity: 0;" class="gallery-item full-width gallery-4 animated fadeInUp"> <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button"  href="{% static "images/landing_page/YapJoyLaunch3.jpg" %}"> <img alt="yapjoy events" src="{% static "images/landing_page/YapJoyLaunch3.jpg" %}">
+              <div class="bg-cover"></div>
+              </a>
+              <div class="vd_info">
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">A lot of Skin and Functionality</span> to Choose</h3>#}
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyLaunch3.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a>
+{#                  <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> #}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">
+            <div style="opacity: 0;" class="gallery-item full-width gallery-5 animated fadeInUp"> <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button"  href="{% static "images/landing_page/YapJoyPic3.jpg" %}"> <img alt="yapjoy events" src="{% static "images/landing_page/YapJoyPic3.jpg" %}">
+              <div class="bg-cover"></div>
+              </a>
+              <div class="vd_info">
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">Neat </span> Invoice</h3>#}
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyPic3.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a>
+{#                  <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> #}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">
+            <div style="opacity: 0;" class="gallery-item full-width gallery-6 animated fadeInUp"> <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button"  href="{% static "images/landing_page/YapJoyLaunch4.jpg" %}"> <img alt="yapjoy events" src="{% static "images/landing_page/YapJoyLaunch4.jpg" %}">
+              <div class="bg-cover"></div>
+              </a>
+              <div class="vd_info">
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">Email</span> Ready Page</h3>#}
+                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyLaunch4.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a>
+{#                  <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> #}
+              </div>
+            </div>
+          </div>
+{#          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">#}
+{#            <div style="opacity: 0;" class="gallery-item full-width gallery-7 animated fadeInUp"> <a href="{% static "images/landing_page/YapJoypic2.jpg" %}"> <img alt="example image" src="{% static "images/landing_page/YapJoypic2.jpg" %}">#}
+{#              <div class="bg-cover"></div>#}
+{#              </a>#}
+{#              <div class="vd_info">#}
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">Website Layout Tour Guide</span> Ready Examples</h3>#}
+{#                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="i{% static "images/landing_page/YapJoypic2.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a> <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">#}
+{#            <div style="opacity: 0;" class="gallery-item full-width gallery-8 animated fadeInUp"> <a href="{% static "images/landing_page/YapJoyPic3.jpg" %}"> <img alt="example image" src="{% static "images/landing_page/YapJoyPic3.jpg" %}">#}
+{#              <div class="bg-cover"></div>#}
+{#              </a>#}
+{#              <div class="vd_info">#}
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">Registration, Login, Error</span> and many example form</h3>#}
+{#                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyPic3.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a> <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="col-lg-4 col-md-6 col-sm-6 mgbt-xs-15">#}
+{#            <div style="opacity: 0;" class="gallery-item full-width gallery-9 animated fadeInUp"> <a href="{% static "images/landing_page/YapJoyLaunch.jpg" %}"> <img alt="example image" src="{% static "images/landing_page/YapJoyLaunch.jpg" %}">#}
+{#              <div class="bg-cover"></div>#}
+{#              </a>#}
+{#              <div class="vd_info">#}
+{#                <h3 class="mgbt-xs-15"><span class="font-semibold">User Profile</span> Page</h3>#}
+{#                <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{% static "images/landing_page/YapJoyLaunch.jpg" %}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a> <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-link"></i></a> </div>#}
+{#            </div>#}
+{#          </div>#}
+        </div>
+        <!-- vd_gallery -->
+
+      </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="front-1-clients" class="vd_section vd_bg-soft-yellow clearfix slide-waypoint" data-waypoint="clients">
+            <div class="container">
+                <div class="vd_content clearfix">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8">
+                            <h1 class="font-semibold mgbt-xs-20 vd_white"><strong>Testimonials</strong></h1>
+
+                            <div class="vd_testimonial clearfix">
+
+                                <div class="vd_carousel-control">
+                                    <a href="#"> <i class="fa fa-chevron-left"></i></a> <a href="#"><i
+                                        class="fa fa-chevron-right"></i></a>
+                                </div>
+
+                                <div class="vd_carousel">
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/avatar/c_avatar_1.jpg" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>Carolyn C. and Adam
+                                                    W</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                    I love YapJoy. It's free and simple to get the tasks
+                                                    done."<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/avatar/c_avatar_2.jpg" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>Kristen &
+                                                    Jason</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                    Perfect app that connects everyone<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                     <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-1.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>Kiana B. & Matthew S</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                    We like the Pinterest integration aspect of YapJoy. Pinterest is great in getting more ideas for wedding<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                     <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-2.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>Ariel & Brian</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                   Asking friends and family to complete wedding tasks is an awesome part of YapJoy.<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-3.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>Lisa & Chris</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                  YapJoy is Free<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-4.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>Shiela & Jordan</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                  Love the budget aspect and pie chart<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-5.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong> Arlene H. & Eric G.</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                   We like RSVP guests feature. Don't want to use paper invites.<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-6.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>  Sonia & Jose</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                   We love Facebook so YapJoy will be easy to use.<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-7.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong>  Stephanie & Jeff</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                   Social media is huge so yapJoy is a step in right direction.<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-8.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong> Jane & Ohen</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                   YapJoy lets vendors bid on your ideas and planning tasks.<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="vd_carousel-column">
+                                        <div class="content-list  content-large">
+                                            <div class="menu-icon"><img alt="example image" class="img-circle"
+                                                                        src="{% static "vendroid/img/testimonial/testi-9.png" %}"/>
+                                            </div>
+                                            <div class="menu-text"><br/>
+                                                <br/>
+                                                <h4 class="vd_black font-semibold mgbt-xs-0"><strong> Vanessa & Alfredo</strong></h4>
+
+                                                <p class="vd_black font-semibold"><br/></p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mgtp-20">
+                                            <div class="testimonial-word-wrapper">
+                                                <div class="caret-icon"></div>
+                                                <div class="testimonial-word font-sm">
+                                                   We like the Pinterest integration in YapJoy.<br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <!-- vd_carousel -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="front-1-contacts" class="vd_section clearfix slide-waypoint register-now-section" data-waypoint="contact" style="background-image: url('{% static "vendroid/img/photos/bridegroomflower.jpg" %}'); padding-top: 230px; padding-bottom: 230px; 	background-position: center; background-repeat: no-repeat;	background-attachment: fixed; background-size: 100% 100%;">
+            <div class="container">
+                <div class="vd_content clearfix">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="text-center vd_white"> What are you waiting for? </h1>
+                            <br/>
+
+                            <div class="text-center">
+                                <a data-toggle="modal" data-placement="top" data-target="#registermodal"
+                                   class="btn vd_btn vd_btn-bevel vd_bg-green btn-lg font-semibold">Register Now</a>
+                            </div>
+
+                            {#          <br/>#}
+                            {#          <h1 class="text-center vd_white"> or... </h1>#}
+                            {#          <br/>#}
+
+                            {#          <h2 class="text-center vd_white font-semibold mgbt-xs-20"> CONTACT US </h2>#}
+                        </div>
+                        {#        <div class="col-md-offset-3 col-sm-offset-2 col-md-6 col-sm-8">#}
+                        {#          <div class="panel">#}
+                        {#            <div class="panel-body vd_bg-green radius-10" >#}
+                        {#              <div id="contact-form-result">#}
+                        {#                  <div id="success" class="alert alert-success hidden"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>We have <strong>successfully</strong> received your Message and will get Back to you as soon as possible.</div>#}
+                        {#                  <div id="error" class="alert alert-danger hidden"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button> </div>#}
+                        {#                  <div id="empty" class="alert alert-danger hidden"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>Please <strong>Fill up</strong> all the Fields and Try Again.</div>#}
+                        {#                  <div id="unexpected" class="alert alert-danger hidden"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>An <strong>unexpected error</strong> occured. Please Try Again later.</div>#}
+                        {#              </div>#}
+                        {#            <form role="form" action="functions/contact.php" id="contact-form-widget" class="form-horizontal">#}
+                        {#                <input type="hidden" id="admin-email" name="admin-email" value="info@venmond.com">#}
+                        {#                <input type="hidden" id="admin-name" name="admin-name" value="Venmond, Inc.">#}
+                        {#                <div class="row">#}
+                        {#                        <div class="col-md-12 mgbt-xs-10">#}
+                        {#                              <label class="control-label vd_white">Name</label>#}
+                        {#                              <div class="controls">#}
+                        {#                                <input id="contact-form-name" name="contact-form-name" type="text" required placeholder="" class="no-bd">#}
+                        {#                              </div>#}
+                        {#                        </div>#}
+                        {#                        <div class="col-md-12 mgbt-xs-10">#}
+                        {#                              <label class="control-label vd_white">Email</label>#}
+                        {#                              <div class="controls">#}
+                        {#                                <input id="contact-form-email" name="contact-form-email"  type="email" required placeholder="" class="no-bd">#}
+                        {#                              </div>#}
+                        {#                        </div>#}
+                        {#                        <div class="col-md-12 mgbt-xs-15">#}
+                        {#                              <label class="control-label vd_white">Message</label>#}
+                        {#                              <div class="controls">#}
+                        {#                                <textarea id="contact-form-message" name="contact-form-message" rows="4" required class="no-bd"></textarea >#}
+                        {#                              </div>#}
+                        {#                        </div>#}
+                        {#                        <div class="col-md-12 mgbt-xs-10">#}
+                        {#                        	<button class="btn vd_btn vd_btn-bevel vd_bg-blue font-semibold" id="contact-form-submit"><i class="append-icon fa fa-envelope"></i>SEND MESSAGE</button>#}
+                        {#                        </div>#}
+                        {##}
+                        {#                </div>#}
+                        {#            </form>       #}
+                        {##}
+                        {##}
+                        {#            </div>#}
+                        {#			<!-- panel-body -->#}
+                        {#          </div>#}
+                        {#		  <!-- panel -->#}
+                        {#        </div>#}
+                        <!-- col-md-offset-3 -->
+
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- vd_content -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- front-1-contacts -->
+
+    </div>
+    <!-- content -->
+{#    {% endcache %}#}
+
+    <!-- Middle Content End -->
+
+
+    <!-- Footer Start -->
+    <footer class="footer-2" id="footer">
+        <div class="vd_bottom vd-bg-lightblue pd-20">
+            <div class="container">
+                <div class="row">
+                    <div class=" col-xs-12">
+                        <div class="text-center mgbt-xs-10">
+                            <a href="https://www.facebook.com/yapjoyinc"
+                               class="btn vd_btn vd_bg-facebook vd_round-btn btn-sm  mgr-10"><i
+                                    class="fa fa-facebook fa-fw "></i></a>
+                            {#                    <a class="btn vd_btn vd_bg-googleplus vd_round-btn btn-sm  mgr-10"><i class="fa fa-google-plus fa-fw"></i></a>#}
+                            <a href="https://twitter.com/yapjoyinc"
+                               class="btn vd_btn vd_bg-twitter vd_round-btn btn-sm mgr-10"><i
+                                    class="fa fa-twitter fa-fw "></i></a>
+                        </div>
+                        <div class="copyright text-center">
+                            <p>
+{#                                <span class="mgr-10">2600 Kitty Hawk Rd. Suite #100</span><span#}
+{#                                    class="mgr-10">-</span><span class="mgr-10">San Francisco, CA 94506</span>#}
+{#                                <br/>#}
+                                Contact us at: <a style="color: white;" href="mailto:info@yapjoy.com">info@yapjoy.com</a>{#                    P: (123) 456-7890#}
+                            </p>
+                            Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                        </div>
+                    </div>
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+    </footer>
+    <!-- Footer END -->
+
+</div>
+<!-- .vc_body END  -->
+<a id="back-top" href="#" data-action="backtop" class="vd_bg-green vd_back-top visible"> <i
+        class="fa  fa-angle-up"> </i> </a>
+
+<div class="modal fade" id="loginmodal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                <!-- patch2 -->
+                <h4 class="modal-title">Login</h4>
+                <hr/>
+                <form class="form-horizontal" action="." method="post" role="form">
+                    {% csrf_token %}
+                    <div class="alert alert-danger {% if not form.errors %}vd_hidden{% endif %}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                        {{ form.errors }}
+                    </div>
+                    <div class="alert alert-danger {% if not InvalidDetails %}vd_hidden{% endif %}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                        {{ InvalidDetails }}
+                    </div>
+                    <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i
+                                class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>
+                    <div class="alert alert-success vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well
+                        done!</strong>.
+                    </div>
+                    <div class="form-group  mgbt-xs-20">
+                        <div class="col-md-12">
+                            <div class="label-wrapper sr-only">
+                                <label class="control-label" for="email">Email</label>
+                            </div>
+                            <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}"
+                                 id="email-input-wrapper"><span class="menu-icon"> <i
+                                    class="fa fa-envelope"></i> </span>
+                                {{ form.username|addcss:"required" }}
+                            </div>
+                            {% if form.username.errors %}
+                                <div class="vd_red" for="username">{{ form.username.errors }}</div>{% endif %}
+                            <div class="label-wrapper">
+                                <label class="control-label sr-only" for="password">Password</label>
+                            </div>
+                            <div class="vd_input-wrapper {% if form.username.errors %}vd_bd-red{% endif %}"
+                                 id="password-input-wrapper"><span class="menu-icon"> <i class="fa fa-lock"></i> </span>
+                                {{ form.password|addcss:"required" }}
+                            </div>
+                            {% if form.password.errors %}
+                                <div class="vd_red" for="password">{{ form.password.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div id="vd_login-error" class="alert alert-danger hidden"><i
+                            class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 text-center mgbt-xs-5">
+                            <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">Login
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="vd_checkbox">
+                                        <input type="checkbox" id="checkbox-1" value="1">
+                                        <label for="checkbox-1"> Remember me</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <div class=""><a href="/forgotPasswordV2/">Forget Password? </a></div>
+                                </div>
+                            </div>
+                        </div>
+{#                        <div class="col-md-12 text-center">#}
+{#                            <hr />#}
+{#                            - OR -<br /><br />#}
+{#                            <style>#}
+{#                                @media (min-width: 768px) {#}
+{#                                    .omb_row-sm-offset-3 div:first-child[class*="col-"] {#}
+{#                                        margin-left: 25%;#}
+{#                                    }#}
+{#                                }#}
+{##}
+{#                                .omb_login .omb_authTitle {#}
+{#                                    text-align: center;#}
+{#                                    line-height: 300%;#}
+{#                                }#}
+{##}
+{#                                .omb_login .omb_socialButtons a {#}
+{#                                    color: white; // In yourUse @body-bg#}
+{#                                    opacity:0.9;#}
+{#                                }#}
+{#                                .omb_login .omb_socialButtons a:hover {#}
+{#                                    color: white;#}
+{#                                    opacity:1;#}
+{#                                }#}
+{#                                .omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}#}
+{#                                .omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}#}
+{#                                .omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}#}
+{##}
+{##}
+{#                                .omb_login .omb_loginOr {#}
+{#                                    position: relative;#}
+{#                                    font-size: 1.5em;#}
+{#                                    color: #aaa;#}
+{#                                    margin-top: 1em;#}
+{#                                    margin-bottom: 1em;#}
+{#                                    padding-top: 0.5em;#}
+{#                                    padding-bottom: 0.5em;#}
+{#                                }#}
+{#                                .omb_login .omb_loginOr .omb_hrOr {#}
+{#                                    background-color: #cdcdcd;#}
+{#                                    height: 1px;#}
+{#                                    margin-top: 0px !important;#}
+{#                                    margin-bottom: 0px !important;#}
+{#                                }#}
+{#                                .omb_login .omb_loginOr .omb_spanOr {#}
+{#                                    display: block;#}
+{#                                    position: absolute;#}
+{#                                    left: 50%;#}
+{#                                    top: -0.6em;#}
+{#                                    margin-left: -1.5em;#}
+{#                                    background-color: white;#}
+{#                                    width: 3em;#}
+{#                                    text-align: center;#}
+{#                                }#}
+{##}
+{#                                .omb_login .omb_loginForm .input-group.i {#}
+{#                                    width: 2em;#}
+{#                                }#}
+{#                                .omb_login .omb_loginForm  .help-block {#}
+{#                                    color: red;#}
+{#                                }#}
+{##}
+{##}
+{#                                @media (min-width: 768px) {#}
+{#                                    .omb_login .omb_forgotPwd {#}
+{#                                        text-align: right;#}
+{#                                        margin-top:10px;#}
+{#                                    }#}
+{#                                }#}
+{#                            </style>#}
+{#                           <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">#}
+{##}
+{#<div class="container" style="padding-left: 0px;">#}
+{##}
+{##}
+{#    <div class="omb_login">#}
+{#		<div class=" omb_socialButtons">#}
+{#    	    <div class="col-xs-3 col-sm-2">#}
+{#		        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" class="btn btn-block omb_btn-facebook">#}
+{#			        <i class="fa fa-facebook "></i>#}
+{#			        <span class="hidden-xs">Facebook</span>#}
+{#		        </a>#}
+{#	        </div>#}
+{#            <div class="col-xs-3 col-sm-2">#}
+{#		        <a href="#" class="btn  btn-block omb_btn-twitter">#}
+{#			        <i class="fa fa-instagram"></i>#}
+{#			        <span class="hidden-xs">Twitter</span>#}
+{#		        </a>#}
+{#	        </div>#}
+{#            <div class="col-xs-3 col-sm-2">#}
+{#		        <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}" class="btn  btn-block omb_btn-google">#}
+{#			        <i class="fa fa-google-plus"></i>#}
+{#			        <span class="hidden-xs">Google+</span>#}
+{#		        </a>#}
+{#	        </div>#}
+{#        	<div class="col-xs-3 col-sm-2">#}
+{#		        <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}" class="btn  btn-block omb_btn-twitter">#}
+{#			        <i class="fa fa-twitter"></i>#}
+{#			        <span class="hidden-xs">Twitter</span>#}
+{#		        </a>#}
+{#	        </div>#}
+{##}
+{##}
+{#		</div>#}
+{##}
+{##}
+{##}
+{#	</div>#}
+{##}
+{##}
+{##}
+{#        </div>#}
+{##}
+{#                        </div>#}
+                    </div>
+
+                </form>
+
+            </div>
+            {#            <div class="modal-footer">#}
+            {##}
+            {#                </div>#}
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="registermodal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                <!-- patch2 -->
+                <h4 class="modal-title">Register</h4>
+                <hr/>
+                <form class="form-horizontal" action="." method="POST" role="form"
+                      id="register-form">
+                    {% csrf_token %}
+                    <div class="alert alert-danger vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true"><i class="icon-cross"></i></button>
+                                                <span class="vd_alert-icon"><i
+                                                        class="fa fa-exclamation-circle vd_red"></i></span><strong>Oh
+                        snap!</strong> Change a few things up and try submitting again.
+                    </div>
+                    <div class="alert alert-warning vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true"><i class="icon-cross"></i></button>
+                                                <span class="vd_alert-icon"><i
+                                                        class="fa fa-exclamation-circle vd_red"></i></span>Your password
+                        and Confirm password are not same
+                    </div>
+                    <div class="alert alert-success vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true"><i class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span>Registration
+                        confirmation has been sent to your email.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="label-wrapper">
+                                <label class="control-label">I am a.. <span
+                                        class="vd_red">*</span></label>
+                            </div>
+                            <div class="vd_input-wrapper" id="email-input-wrapper">
+                                {% if registerform.type.errors %}
+                                    {{ registerform.type|addcss:"vd_bd-red" }}{% else %}
+                                    {{ registerform.type }}{% endif %}
+                            </div>
+                            {% if registerform.type.errors %}
+                                <div class="vd_red"
+                                     for="name">{{ registerform.type.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-6">
+                            <div class="label-wrapper">
+                                <label class="control-label">First Name <span
+                                        class="vd_red">*</span></label>
+                            </div>
+                            <div class="width-100" id="first-name-input-wrapper">
+                                {% if registerform.first_name.errors %}
+                                    {{ registerform.first_name|addcss:"vd_bd-red" }}{% else %}
+                                    {{ registerform.first_name }}{% endif %}
+                            </div>
+                            {% if registerform.first_name.errors %}
+                                <div class="vd_red"
+                                     for="name">{{ registerform.first_name.errors }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="label-wrapper">
+                                <label class="control-label">Last Name <span
+                                        class="vd_red">*</span></label>
+                            </div>
+                            <div class="width-100" id="last-name-input-wrapper">
+                                {% if registerform.last_name.errors %}
+                                    {{ registerform.last_name|addcss:"vd_bd-red" }}{% else %}
+                                    {{ registerform.last_name }}{% endif %}
+                            </div>
+                            {% if registerform.last_name.errors %}
+                                <div class="vd_red"
+                                     for="name">{{ registerform.last_name.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="label-wrapper">
+                                <label class="control-label">Email <span class="vd_red">*</span></label>
+                            </div>
+                            <div class="width-100" id="email-input-wrapper">
+                                {% if registerform.email.errors %}
+                                    {{ registerform.email|addcss:"vd_bd-red" }}{% else %}
+                                    {{ registerform.email }}{% endif %}
+                            </div>
+                            {% if registerform.email.errors %}
+                                <div class="vd_red"
+                                     for="name">{{ registerform.email.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="label-wrapper">
+                                <label class="control-label">Password <span
+                                        class="vd_red">*</span></label>
+                            </div>
+                            <div class="width-100" id="password-input-wrapper">
+                                {% if registerform.password.errors %}
+                                    {{ registerform.password|addcss:"vd_bd-red" }}{% else %}
+                                    {{ registerform.password }}{% endif %}
+                            </div>
+                            {% if registerform.password.errors %}
+                                <div class="vd_red"
+                                     for="name">{{ registerform.password.errors }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="label-wrapper">
+                                <label class="control-label">Confirm Password <span
+                                        class="vd_red">*</span></label>
+                            </div>
+                            <div class="width-100" id="confirm-password-input-wrapper">
+                                {% if registerform.confirm_password.errors %}
+                                    {{ registerform.confirm_password|addcss:"vd_bd-red" }}{% else %}
+                                    {{ registerform.confirm_password }}{% endif %}
+                            </div>
+                            {% if registerform.confirm_password.errors %}
+                                <div class="vd_red"
+                                     for="name">{{ registerform.confirm_password.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div id="vd_login-error" class="alert alert-danger hidden"><i
+                            class="fa fa-exclamation-circle fa-fw"></i> Please fill the
+                        necessary field
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 mgbt-xs-10 mgtp-20">
+
+                            <div class="vd_checkbox checkbox-success">
+                                {{ registerform.agree }}
+                                <label for="id_agree"> I accept the <a
+                                        href="/terms_and_conditions/" target="_blank">terms and conditions</a>
+                                    and <a href="/privacy_policy/" target="_blank">privacy policy</a></label>
+                            </div>
+                            {% if registerform.agree.errors %}
+                                <div class="vd_red" for="name">{{ registerform.agree.errors }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-12 text-center mgbt-xs-5">
+                            <button class="btn vd_bg-green vd_white width-100" type="submit"
+                                    id="submit-register" name="submit-register">Register
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!--
+<a class="back-top" href="#" id="back-top"> <i class="icon-chevron-up icon-white"> </i> </a> -->
+
+<!-- Javascript =============================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+<!--[if lt IE 9]>
+  <script type="text/javascript" src="{% static "vendroid/js/excanvas.js" %}"></script>
+<![endif]-->
+<script type="text/javascript" src="{% static "vendroid/js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src='{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}'></script>
+<script type="text/javascript"
+        src="{% static "vendroid/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/js/caroufredsel.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/js/plugins.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/plugins/breakpoints/breakpoints.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/dataTables/jquery.dataTables.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "vendroid/plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js" %}"></script>
+
+<script type="text/javascript"
+        src="{% static "vendroid/plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/blockUI/jquery.blockUI.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/pnotify/js/jquery.pnotify.min.js" %}"></script>
+
+<script type="text/javascript" src="{% static "vendroid/js/theme.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/custom/custom.js" %}"></script>
+
+<!-- Specific Page Scripts Put Here -->
+<script type="text/javascript" src="{% static "vendroid/plugins/stellar/jquery.stellar.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/waypoints/waypoints.min.js" %}"></script>
+<script type="text/javascript" src="{% static "vendroid/plugins/jquery-easing/jquery.easing.1.3.js" %}"></script>
+
+<script src="{% static "vendroid/plugins/layerslider/js/greensock.js" %}" type="text/javascript"></script>
+<!-- LayerSlider script files -->
+<script src="{% static "vendroid/plugins/layerslider/js/layerslider.transitions.js" %}" type="text/javascript"></script>
+<script src="{% static "vendroid/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" %}"
+        type="text/javascript"></script>
+
+<script type="text/javascript">
+            function openWeddingProfessionalModal(){
+                $('#registermodal').modal('show');
+                $('#id_type').val('Professional');
+            };
+
+
+{#            data-toggle="modal" data-placement="top" data-target="#registermodal"#}
+    $(document).ready(function () {
+        {% if form.errors or InvalidDetails %}
+            $('#loginmodal').modal('show');
+        {% endif %}
+        {% if registerform.errors %}
+            $('#registermodal').modal('show');
+        {% endif %}
+        "use strict";
+
+        var options = {
+            type: "POST",
+            url: $("#contact-form-widget").attr('action'),
+            dataType: "json",
+            success: function (data) {
+                if (data.response == "success") {
+                    $("#contact-form-result div").addClass('hidden');
+                    $("#contact-form-result #success").removeClass('hidden');
+                } else if (data.response == "error") {
+                    $("#contact-form-result div").addClass('hidden');
+                    $("#contact-form-result #error").removeClass('hidden');
+                    $("#contact-form-result #error").append(data.message);
+                } else if (data.response == "empty") {
+                    $("#contact-form-result div").addClass('hidden');
+                    $("#contact-form-result #empty").removeClass('hidden');
+                } else if (data.response == "unexpected") {
+                    $("#contact-form-result div").addClass('hidden');
+                    $("#contact-form-result #unexpected").removeClass('hidden');
+                }
+                $("#contact-form-widget").find('#contact-form-submit #spin').remove();
+                $("#contact-form-widget").find('#contact-form-submit').removeClass('disabled').removeAttr('disabled').blur();
+
+                $("#contact-form-widget").fadeOut(500, function () {
+                    $('#contact-form-result').fadeIn(500);
+                });
+            },
+            error: function () {
+                $("#contact-form-result div").addClass('hidden');
+                $("#contact-form-result #unexpected").removeClass('hidden');
+            }
+        };
+
+        $("#contact-form-widget").validate({
+            submitHandler: function (form) {
+                $(form).find('#contact-form-submit').prepend('<i id="spin" class="fa fa-spinner fa-spin mgr-10"></i>').addClass('disabled').attr('disabled');
+                $(form).ajaxSubmit(options);
+            },
+            success: function (form) {
+            }
+        });
+
+
+        $(".vd_testimonial .vd_carousel").carouFredSel({
+            prev: {
+                button: function () {
+                    return $(this).parent().parent().children('.vd_carousel-control').children('a:first-child')
+                }
+            },
+            next: {
+                button: function () {
+                    return $(this).parent().parent().children('.vd_carousel-control').children('a:last-child')
+                }
+            },
+            scroll: {
+                fx: "crossfade",
+                onBefore: function () {
+                    var target = "#front-1-clients";
+                    $(target).css("transition", "all .5s ease-in-out 0s");
+                    if ($(target).hasClass("vd_bg-soft-yellow")) {
+                        $(target).removeClass("vd_bg-soft-yellow");
+                        $(target).addClass("vd_bg-soft-red");
+                    } else if ($(target).hasClass("vd_bg-soft-red")) {
+                        $(target).removeClass("vd_bg-soft-red");
+                        $(target).addClass("vd_bg-soft-blue");
+                    } else if ($(target).hasClass("vd_bg-soft-blue")) {
+                        $(target).removeClass("vd_bg-soft-blue");
+                        $(target).addClass("vd_bg-soft-green");
+                    } else if ($(target).hasClass("vd_bg-soft-green")) {
+                        $(target).removeClass("vd_bg-soft-green");
+                        $(target).addClass("vd_bg-soft-yellow");
+                    }
+                }
+            },
+            width: "auto",
+            height: "responsive",
+            responsive: true
+
+        });
+
+        var slide = $('.slide-waypoint');
+
+        //Setup waypoints plugin
+        slide.waypoint(function (direction) {
+            //  		alert('Direction example triggered scrolling ' + direction);
+            //cache the variable of the data-waypoint attribute associated with each slide
+            var dataslide = $(this).attr('data-waypoint');
+
+
+            //If the user scrolls up change the navigation link that has the same data-waypoint attribute as the slide to active and
+            //remove the active class from the previous navigation link
+            /*			if (direction === 'down') {
+             resetActive();
+             $('.vc_primary-menu  ul li a[data-waypoint="' + dataslide + '"]').parent().addClass('active');
+             }
+             else {
+             resetActive();
+             $('.vc_primary-menu  ul li a[data-waypoint="' + dataslide + '"]').parent().prev().addClass('active');
+             }
+             */
+
+        }, {offset: 0});
+
+
+        $(".feature-item, .vd_gallery .gallery-item").css("opacity", 0);
+
+
+        $("#front-1-services").waypoint(function () {
+            $(".feature-1").delay().queue(function () {
+                $('.feature-1').addClass("animated fadeInRightBig");
+            });
+            $(".feature-3").delay(200).queue(function () {
+                $('.feature-3').addClass("animated fadeInRightBig");
+            });
+            $(".feature-5").delay(400).queue(function () {
+                $('.feature-5').addClass("animated fadeInRightBig");
+            });
+            $(".feature-2").delay(600).queue(function () {
+                $('.feature-2').addClass("animated fadeInRightBig");
+            });
+            $(".feature-4").delay(800).queue(function () {
+                $('.feature-4').addClass("animated fadeInRightBig");
+            });
+            $(".feature-6").delay(1000).queue(function () {
+                $('.feature-6').addClass("animated fadeInRightBig");
+            });
+
+        }, {offset: 600});
+
+        $(".vd_gallery").waypoint(function () {
+            $(".vd_gallery .gallery-1").queue(function () {
+                $('.vd_gallery .gallery-1').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-2").delay(200).queue(function () {
+                $('.vd_gallery .gallery-2').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-3").delay(400).queue(function () {
+                $('.vd_gallery .gallery-3').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-4").delay(600).queue(function () {
+                $('.vd_gallery .gallery-4').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-5").delay(800).queue(function () {
+                $('.vd_gallery .gallery-5').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-6").delay(1000).queue(function () {
+                $('.vd_gallery .gallery-6').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-7").delay(1200).queue(function () {
+                $('.vd_gallery .gallery-7').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-8").delay(1400).queue(function () {
+                $('.vd_gallery .gallery-8').addClass("animated fadeInUp");
+            });
+            $(".vd_gallery .gallery-9").delay(1600).queue(function () {
+                $('.vd_gallery .gallery-9').addClass("animated fadeInUp");
+            });
+
+
+        }, {offset: 600});
+
+
+        //Create a function that will be passed a slide number and then will scroll to that slide using jquerys animate. The Jquery
+        //easing plugin is also used, so we passed in the easing method of 'easeInOutQuint' which is available throught the plugin.
+        function goToByScroll(dataslide) {
+            if (dataslide == "home") {
+                $('html,body').animate({scrollTop: 0}, 1500, 'easeInOutQuint');
+            } else {
+                $('html,body').animate({
+                    scrollTop: $('.slide-waypoint[data-waypoint="' + dataslide + '"]').offset().top
+                }, 1500, 'easeInOutQuint');
+            }
+        }
+
+
+        $('.vd_top-menu-wrapper .horizontal-menu .nav > li >  a[data-waypoint]').click(function (e) {
+            e.preventDefault();
+
+            var dataslide = $(this).attr('data-waypoint');
+            goToByScroll(dataslide);
+        });
+
+        jQuery("#layerslider").layerSlider({
+            responsive: false,
+            responsiveUnder: 1280,
+            layersContainer: 1280,
+            skin: 'noskin',
+            hoverPrevNext: false,
+            skinsPath: '{% static "/vendroid/plugins/layerslider/skins/" %}'
+        });
+    });
+</script>
+<!-- Specific Page Scripts END -->
+
+
+<!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information. -->
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-68785620-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

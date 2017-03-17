@@ -1,0 +1,239 @@
+{% extends "vendroid/demo/base_vendor.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{#{% load rest_framework %}#}
+{% block content %}
+    <style>
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+
+
+
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+        {% include "vendroid/demo/_partial/_header_yapjoy_theme_vendor.html" %}
+
+        <div class="content">
+            <div class="container">
+
+                 {% include "vendroid/demov2/vendors/teamChat/_chatbar.html" %}
+
+                <div class="vd_content-wrapper yp-content-wrap" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                           <div class="col-md-4 col-md-offset-4">
+                               <div class="panel panel-vendor-register">
+                                  <div class="panel-title">
+                                    <h4>My Events</h4>
+                                  </div>
+                                  <div class="panel-body">
+                                        <div class="event-list-wrap">
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                        </div>
+
+                                  </div>
+                                </div>
+                           </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+
+        <div class="yp-chat-box">
+            <div class="chat-header">
+                <div class="img-wrap">
+                    <img src="{% static "vendroid/img/food-pic.jpg" %}">
+                </div>
+                <div class="title">
+                    <h2>Food & Drinks </h2>
+                </div>
+                <div class="actions">
+                    <div class="dropdown">
+                        <span class="fa fa-sort-desc  dropdown-toggle" id="menu1" data-toggle="dropdown" style="vertical-align: text-top;line-height: 0px;"></span>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="count">
+                    <h3>9 </h3>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="chat-list-wrap">
+
+                <div class="chat-list">
+                    <div class="col-md-2">
+                        <div class="chat-img">
+                            <img src="{% static "vendroid/img/user-dp.jpg" %}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div class="chat-content">
+                            <h2 class="name">jason Snow</h2>
+                            <p class="description">a quick brown fox jumps over the lazy dog</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="chat-list">
+                    <div class="col-md-2">
+                        <div class="chat-img">
+                            <img src="{% static "vendroid/img/user-dp.jpg" %}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div class="chat-content">
+                            <h2 class="name">jason Snow</h2>
+                            <p class="description">a quick brown fox jumps over the lazy dog</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="chat-list">
+                    <div class="col-md-2">
+                        <div class="chat-img">
+                            <img src="{% static "vendroid/img/user-dp.jpg" %}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div class="chat-content">
+                            <h2 class="name">jason Snow</h2>
+                            <p class="description">a quick brown fox jumps over the lazy dog</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="chat-list">
+                    <div class="col-md-2">
+                        <div class="chat-img">
+                            <img src="{% static "vendroid/img/user-dp.jpg" %}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div class="chat-content">
+                            <h2 class="name">jason Snow</h2>
+                            <p class="description">a quick brown fox jumps over the lazy dog</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="chat-list">
+                    <div class="col-md-2">
+                        <div class="chat-img">
+                            <img src="{% static "vendroid/img/user-dp.jpg" %}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div class="chat-content">
+                            <h2 class="name">jason Snow</h2>
+                            <p class="description">a quick brown fox jumps over the lazy dog</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+            <div class="chat-reply-box">
+                <div class="text-area-wrap">
+                    <textarea class="text-area-chat" placeholder="Type a message"></textarea>
+                    <div class="chat-action-btns text-right">
+                        <i class="fa fa-paperclip attach" aria-hidden="true"></i>
+                        <button type="submit" class="btn btn-chat-sbt">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+{% block footer %}
+    {% include "vendroid/demov2/vendors/teamChat/_footer.html" %}
+{% endblock footer %}
+{% block script %}
+
+
+{% endblock script %}

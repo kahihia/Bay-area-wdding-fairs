@@ -1,0 +1,419 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+
+
+    <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet"
+          type="text/css">
+
+    <!--Script -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <!-- Data Table -->
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet"
+          type="text/css">
+
+    <!--Scripts End-->
+    <style>
+
+        .pagination {
+            font-size: 15px;
+        }
+
+        .dataTables_wrapper {
+            overflow-x: scroll;
+        }
+    </style>
+
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+    </style>
+
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+        {#        @import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);#}
+
+        #wrap {
+            margin: 50px 100px;
+            display: inline-block;
+            position: relative;
+            height: 60px;
+            float: right;
+            padding: 0;
+            position: relative;
+        }
+
+        input[type="text"] {
+            height: 60px;
+            font-size: 55px;
+            display: inline-block;
+            font-family: "Lato";
+            font-weight: 100;
+            border: none;
+            outline: none;
+            color: #555;
+            padding: 3px;
+            padding-right: 60px;
+            width: 0px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            z-index: 3;
+            transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
+            cursor: pointer;
+        }
+
+        input[type="text"]:focus:hover {
+            border-bottom: 1px solid #BBB;
+        }
+
+        input[type="text"]:focus {
+            width: 700px;
+            z-index: 1;
+            border-bottom: 1px solid #BBB;
+            cursor: text;
+        }
+        input[type="button"] {
+            height: 67px;
+            width: 63px;
+            display: inline-block;
+            color:red;
+            float: right;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNQTFRFU1NT9fX1lJSUXl5e1dXVfn5+c3Nz6urqv7+/tLS0iYmJqampn5+fysrK39/faWlp////Vi4ZywAAABF0Uk5T/////////////////////wAlrZliAAABLklEQVR42rSWWRbDIAhFHeOUtN3/ags1zaA4cHrKZ8JFRHwoXkwTvwGP1Qo0bYObAPwiLmbNAHBWFBZlD9j0JxflDViIObNHG/Do8PRHTJk0TezAhv7qloK0JJEBh+F8+U/hopIELOWfiZUCDOZD1RADOQKA75oq4cvVkcT+OdHnqqpQCITWAjnWVgGQUWz12lJuGwGoaWgBKzRVBcCypgUkOAoWgBX/L0CmxN40u6xwcIJ1cOzWYDffp3axsQOyvdkXiH9FKRFwPRHYZUaXMgPLeiW7QhbDRciyLXJaKheCuLbiVoqx1DVRyH26yb0hsuoOFEPsoz+BVE0MRlZNjGZcRQyHYkmMp2hBTIzdkzCTc/pLqOnBrk7/yZdAOq/q5NPBH1f7x7fGP4C3AAMAQrhzX9zhcGsAAAAASUVORK5CYII=) center center no-repeat;
+            text-indent: -10000px;
+            border: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            cursor: pointer;
+            opacity: 0.4;
+            cursor: pointer;
+            transition: opacity .4s ease;
+        }
+
+        input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+
+        .vd_menu a {
+            color: #FFF;
+            display: block;
+            font-weight: 300;
+        }
+    </style>
+
+    <style>
+        #exTab1 .tab-content {
+            color : white;
+            background-color: #ba8c00;
+            padding : 5px 15px;
+        }
+        #exTab2 h3 {
+            color : white;
+            background-color: #ba8c00;
+            padding : 5px 15px;
+        }
+        /* remove border radius for the tab */
+        #exTab1 .nav-pills > li > a {
+            border-radius: 0;
+        }
+        /* change border radius for the tab , apply corners on top*/
+        #exTab3 .nav-pills > li > a {
+            border-radius: 4px 4px 0 0 ;
+        }
+        #exTab3 .tab-content {
+            color : white;
+            background-color: #ba8c00;
+            padding : 5px 15px;
+        }
+        .nav-tabs { border-bottom: 2px solid #DDD; }
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+        .nav-tabs > li > a { border: none; color: #666; }
+        .nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #ba8c00 !important; background: transparent; }
+        .nav-tabs > li > a::after { content: ""; background: #ba8c00; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+
+        .tab-pane { padding: 15px 0; }
+        .tab-content{padding:20px}
+    </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="">
+
+                                <!-- vd_title-section -->
+
+                                <div class="vd_content-section clearfix">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget">
+                                                <div class="panel-body">
+                                                    <br>
+                                                    <div class="tab-content mgbt-xs-20">
+                                                        {% if successMessage %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-success">{{ successMessage }}</div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+                                                                {% include "vendroid/CRM/partial/_header_inside.html" %}
+
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                        <div class="panel">
+                                                                            <div class="panel-heading">
+                                                                                <div class="panel-title">
+                                                                                    <br />
+                                                                                    <br />
+
+
+                                                                                    <input id="input_search" name="search" type="text" placeholder="What're you looking for ?"><input id="search_submit" value="Rechercher" type="button">
+
+
+                                                                                </div><!--.panel-title-->
+
+                                                                            </div><!--.panel-heading-->
+
+                                                                            <div class="card" id="tabs">
+
+                                                                                <ul class="nav nav-tabs" role="tablist">
+                                                                                    <li role="presentation" class=""><a href="#vendors" aria-controls="timelogs" role="tab" data-toggle="tab">Interested Vendors</a></li>
+                                                                                    {#                                                                                <li role="presentation"><a href="#contracted" aria-controls="projectlogs" role="tab" data-toggle="tab">Contracted Vendors </a></li>#}
+                                                                                    {#                                                                                <li role="presentation"><a href="#bride_grooms" aria-controls="breaklogs" role="tab" data-toggle="tab">Bride/Groom</a></li>#}
+                                                                                </ul>
+
+                                                                                <!-- Tab panes -->
+                                                                                <div class="tab-content">
+
+
+
+
+                                                                                    <label><input type="radio" id="id_vendor_name" name="search_radio" value="name"  />Vendor Name</label>
+                                                                                    <label><input type="radio" id="id_email"  name="search_radio" value="email" />Email</label>
+                                                                                    <label><input type="radio" id="id_phone" name="search_radio" value="phone" />Phone</label>
+                                                                                    <label><input type="radio" id="id_business" name="search_radio" value="business"  />Business</label>
+                                                                                    <label><input type="radio" id="id_category" name="search_radio" value="category" />Category</label>
+                                                                                    <label><input type="radio" id="id_created_date" name="search_radio" value="created_date" />Created Date</label>
+                                                                                    <label><input type="radio" id="id_all" name="search_radio" value="all" />All</label>
+
+
+                                                                                    <form method="post" id="id_submit_csv" action="/crm/generatecsv/" >
+                                                                                        {% csrf_token %}
+                                                                                        {#                                                                                    <a id="generate_csv" href="/crm/generatecsv/" class="btn vd_btn vd_bg-green">Generate CSV</a>#}
+                                                                                        <input type="hidden" id="hidden_type" name="hidden_type" />
+                                                                                        <input type="hidden" id="hidden_search" name="hidden_search" />
+                                                                                    <input name="generate_csv" value="Generate CSV" type="submit" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;" />
+                                                                                    </form>
+                                                                                    <div id="id_vendors"></div>
+                                                                                    <div role="tabpanel" class="tab-pane" id="vendors">
+
+
+                                                                                    </div>
+                                                                                    {#                                                                                <div role="tabpanel" class="tab-pane" id="contracted">#}
+                                                                                    {#                                                                                    <div id="id_contracted"></div>#}
+                                                                                    {##}
+                                                                                    {#                                                                                </div>#}
+                                                                                    {#                                                                                <div role="tabpanel" class="tab-pane" id="bride_grooms">#}
+                                                                                    {#                                                                                    <div id="id_bridegroom"></div>#}
+                                                                                    {#                                                                                </div>#}
+
+                                                                                </div>
+
+                                                                            </div><!--.panel-->
+                                                                        </div><!--.col-md-12-->
+
+                                                                </div><!--.row-->
+
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <br><br>
+
+
+                                                </div>
+                                            </div>
+                                            <!-- Panel Widget -->
+                                        </div>
+                                        <!-- col-md-6 -->
+
+                                    </div>
+                                    <!-- row -->
+
+                                </div>
+                                <!-- .vd_content-section -->
+
+                            </div>
+                            <!-- .vd_content -->
+                        </div>
+                        <!-- .vd_container -->
+                    </div>
+
+                </div>
+                <!-- .container -->
+                <div class="clearfix"></div>
+            </div>
+            <!-- .content -->
+
+            <!-- Footer Start -->
+            <footer class="footer-1" id="footer">
+                <div class="vd_bottom ">
+                    <div class="container">
+                        <div class="row">
+                            <div class=" col-xs-12">
+                                <div class="copyright">
+                                    Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row -->
+                    </div>
+                    <!-- container -->
+                </div>
+            </footer>
+            <!-- Footer END -->
+
+
+        </div>
+    </div>
+
+
+
+{% endblock content %}
+{% block script %}
+
+    {#    <script src="{% static "vendroid/plugins/dataTables/table2CSV.js" %}"></script>#}
+    <script src="//code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+    <script>
+
+        $('#data-tables').dataTable({
+            "iDisplayLength": -1,
+            "aLengthMenu": [[10, 15, 25, 35, 50, 100, -1], [10, 15, 25, 35, 50, 100, "All"]],
+        });
+
+        var search = $('#input_search').val();
+        var type;
+        $("input[name='search_radio']").click(function () {
+
+            var search = $('#input_search').val();
+            var data = {};
+
+            if (search != ''){
+                type = $("input[name='search_radio']:checked").val();
+
+                $("#hidden_type").val(type);
+                $("#hidden_search").val(search);
+                data = {
+                    'search':search,
+                    'type':type
+                };
+                ajax_call('/crm/search/', 'GET', data).done(function (data) {
+                    console.log('data: ', search);
+                    $("#id_vendors").html(data);
+
+
+                })
+            }
+
+        });
+
+        $("#input_search").keyup(function (e) {
+
+
+            var search = $('#input_search').val();
+            var data = {};
+            type = $("input[name='search_radio']:checked").val();
+            if (e.keyCode == 13) {
+                console.log('type: ', type);
+
+                data = {
+                    'search':search,
+                    'type':type
+                };
+                ajax_call('/crm/search/', 'GET', data).done(function (data) {
+
+                    console.log('data: ', search);
+                    $("#id_vendors").html(data);
+                });
+
+
+            }
+        });
+
+        $("#id_submit_csv").submit(function () {
+            var search = $('#input_search').val();
+
+            type = $("input[name='search_radio']:checked").val();
+            $("#hidden_type").val(type);
+            $("#hidden_search").val(search);
+            console.log("csv: ", $("#hidden_type").val(), $("#hidden_search").val())
+        })
+        //ajax generic function
+        function ajax_call(url, req_type, data) {
+            var mes;
+            mes = $.ajax({
+                url: url,
+                type: req_type,
+                data: data,
+                success: function (response) {
+                    return response
+                },
+                error: function (error) {
+                    console.log("error: ", error);
+                    return error
+                }
+            });
+            return mes;
+        }
+
+
+
+    </script>
+
+
+
+{% endblock script %}

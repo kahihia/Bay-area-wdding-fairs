@@ -1,0 +1,492 @@
+{% extends "vendroid/base_v2.html" %}
+{% load static %}
+{#{% load cache %}#}
+{% load myfilters %}
+{% block content %}
+    <link href="{% static "fonts/sanfrancisco-font.css" %}" rel="stylesheet" type="text/css">
+
+    {#    {% cache 2500000 "main_page_cache" %}#}
+    <style>
+   header .active {
+        background-color: black !important;
+        opacity:0.5;
+    }
+        #front-1-banner {
+        {#            background: url('{% static "images/homev3/v2/BG_Desktop.jpg" %}') no-repeat !important;#}
+        {#            background-size: auto 100% !important;#}
+        {#            background-position: center !important;#}
+        {#                    min-height: 600px !important;#}
+            background: url("{% static "images/homev3/v2/BG_Desktop.jpg" %}") no-repeat;
+            background-size: cover;
+            background-clip: border-box;
+        }
+
+        @media only screen and (max-width: 500px) {
+            #front-1-banner {
+                background: url('{% static "images/homev3/v2/BG_Mobile.jpg" %}') no-repeat !important;
+                background-size: auto 100% !important;
+                min-height: 630px !important;
+                background-position: center !important;
+            }
+            .word-subheader {
+                margin-top: 26% !important;
+            }
+
+        }
+        @media only screen and (max-width: 800px) and (orientation: landscape) {
+            #front-1-banner {
+                background: url('{% static "images/homev3/v2/BG_Desktop.jpg" %}') no-repeat !important;
+                background-size: auto 100% !important;
+                min-height: 690px !important;
+                background-position: center !important;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+            #front-1-banner {
+                background: url('{% static "images/homev3/v2/BG_Desktop.jpg" %}') no-repeat !important;
+                background-size: auto 100% !important;
+                min-height: 630px !important;
+                background-position: center !important;
+            }
+
+            .word-subheader {
+                margin-top: 26% !important;
+            }
+            .modal-dialog {
+                width: 94%;
+            }
+        }
+        hr {
+            border-top: 2px solid #eee !important;
+        }
+        .fa-large-one {
+            font-size: 80px !important;
+            color: #0892a5 !important;
+        }
+        #front-1-contacts {
+        {#            background: url('{% static "images/homev3/Find wedding vendors Footer.jpg" %}') no-repeat !important;#}
+        {#        background-position: relative;#}
+        {#            background-size: 100% auto !important;#}
+        {#            min-height: 600px !important;#}
+            background: url("{% static "images/homev3/Find wedding vendors Footer.jpg" %}") no-repeat;
+            background-size: cover;
+            background-clip: border-box;
+        }
+        @media only screen and (max-width: 500px) {
+            #front-1-contacts {
+                background: url('{% static "images/homev3/Find wedding vendors Footer Mobile.jpg" %}') no-repeat !important;
+            {#        background-position: relative;#}
+                background-size: 100% auto !important;
+                min-height: 560px !important;
+            }
+            .word-subheader {
+                margin-top: 26% !important;
+            }
+            .dyto {
+                font-size: 38px !important;
+                margin-top: 150px;
+            }
+            .tfwm {
+                font-size: 22px !important;
+            }
+            .wedding-pre-container{
+                margin-top: 0px !important
+            }
+            .wedding-preparations {
+                font-size: 22px !important;
+                font-weight:400 !important;
+            }
+            .Discover-wedding {
+                font-size: 22px !important;
+            }
+
+            #front-1-services {
+                padding-top:40px !important;
+            }
+            .text-top {
+                font-size:20px !important;
+            }
+            .text-desc {
+                font-size: 18px !important;
+            }
+            .bottom-top {
+                font-size: 20px !important;
+            }
+            .bottom-desc {
+                font-size: 32px !important;
+            }
+            .get-started-oval {
+
+                background-color: #07A6C3;
+                border-radius: 180px;
+                margin-top: 5%;
+                    padding-top:1px !important;
+                    padding-bottom:1px !important;;
+            }
+            .footer-text {
+                font-size: 13px !important;
+            }
+            .footer-text-2 {
+                font-size: 11px !important;
+            }
+            .image-footer {
+                width: 180px;
+            }
+            .draft-footer {
+                font-size: 25px !important;
+            }
+            .fa-large-one {
+                font-size: 60px !important;
+            }
+
+        }
+        #header {
+            height: 0px !important;
+        }
+        .grey {
+            color: #BCB8B8 !important;
+        }
+        #front-1-services {
+            background-color: #f6f9fc !important;
+        }
+
+        hr {
+            border-top: 4px solid #eee;
+        }
+        .get-started-oval {
+            background-color: #07A6C3;
+            border-radius: 180px;
+            margin-top: 5%;
+        }
+        .oval-inner {
+            border: 3px solid white;
+            border-radius: 180px;
+            margin-top: 14px;
+            margin-bottom: 14px;
+        }
+        .upper-test {
+            font-size: 31.353px !important;
+            font-family: "SF UI Display" !important;
+            color: rgba(0, 0, 0, 0.78) !important;;
+
+        }
+        {#        @media (max-width: @screen-xs-min) {#}
+        {#          .modal-xs { width: @modal-sm; }#}
+        {#        }#}
+
+
+    </style>
+
+
+
+
+
+
+    <div class="vd_body">
+        <!-- Header Start -->
+
+        <header class="header-2" id="header">
+            <div class="vd_top-menu-wrapper" id="vd_top-menu-wrapper-id"
+                 style="background-color: transparent !important;"
+            >
+                <div class="container">
+                    <div class="vd_top-nav vd_nav-width col-md-offset-2">
+                        <div class="vd_panel-header">
+                            <div class="logo">
+                                <a href="/"><img alt="logo" src="{% static "images/logo/logo-lg.png" %}"></a>
+                            </div>
+                            <!-- logo -->
+                            <div class="vd_panel-menu visible-xs">
+                	<span class="visible-xs">
+{#	                    <i class="fa fa-bars"></i>#}
+                        <a  id="menu-toggle" style="cursor: pointer; color: white; border: 2px white solid; background-color: transparent;margin-right:10px;" type="button" class="btn btn-primary" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">Login</a>
+                    </span>
+                            </div>
+                            <!-- vd_panel-menu -->
+                        </div>
+
+                        <!-- vd_panel-header -->
+
+                    </div>
+
+                    <div class="vd_container">
+                        <div class="row">
+                            <div class="col-sm-8 col-xs-12">
+                                <div class="vd_mega-menu-wrapper horizontal-menu">
+                                    <div class="vd_mega-menu">
+
+                                        <!-- Head menu search form ends -->                         </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-12">
+                                <div class="vd_mega-menu-wrapper">
+                                    <div class="vd_mega-menu pull-left">
+                                        <ul class="mega-ul">
+                                            <li id="top-menu-1" class="one-icon mega-li">
+                                                <a  id="menu-toggle" style="cursor: pointer; color: white; border: 2px white solid; background-color: transparent;" type="button" class="btn btn-primary" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">Login</a>
+                                            </li>
+                                            {#                                            <li id="top-menu-2" class="one-icon mega-li">#}
+                                            {#                                                <a href="pages-register.html" class="btn vd_btn vd_btn-bevel vd_bg-yellow font-semibold">Register</a>#}
+                                            {#                                            </li>#}
+
+                                        </ul>
+                                        <!-- Head menu search form ends -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- container -->
+            </div>
+            <!-- vd_primary-menu-wrapper -->
+
+        </header>
+        <!-- Header Ends -->
+        <div class="content">
+            {#        <img src="{% static "images/homev3/v2/BG_Desktop.jpg" %}" class="bg">#}
+            <div id="front-1-banner" style="min-height: 870px;" class="vd_banner vd_bg-dark-green clearfix slide-waypoint" data-waypoint="home" >
+
+                <div class="container">
+                    <div class="vd_content vd_info-parent clearfix">
+                        {#                        <div class="word-header">#}
+                        {#                            <h1 class="font-semibold text-center vd_white"><strong>SUPER FLEXIBLE</strong> ADMIN THEME</h1>#}
+                        {#                        </div>#}
+                        <div class="word-subheader" style="margin-top: 16%;">
+                            <h1 class="col-md-offset-2 vd_white dyto" style="font-size: 69px;font-family: 'San Francisco' !important;font-weight:200;color: #fff; ">Draft your team of<br />wedding vendors</h1>
+                            <h4 style="margin-top:50px;font-size:30px;font-family: 'San Francisco' !important;font-weight:400;" class="col-md-offset-2 vd_white tfwm">The free wedding marketplace<br />for collaboration</h4>
+                            <a onclick="modelGetStartedOpen()" class="col-md-offset-2 btn vd_btn" style="background-color: #07A6C3; color: white; border-radius: 20px; margin-top: 50px;width:150px;height:40px;line-height: 26px; ">{% if not pre_register %}Sign Up{% else %}Get started{% endif %}</a><a class="col-md-offset-1 btn text-left" style="margin-top: 50px;width:150px;height:40px;color: white;" href="{% url "login_professional" %}">I am a vendor</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="front-1-services" class="vd_section clearfix slide-waypoint" data-waypoint="services">
+                <div class="container wedding-pre-container" style=" margin-top:50px;margin-bottom: 25px;">
+                    <div class="vd_content clearfix">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2 text-center">
+                                <!-- vd_visitor-counter -->
+                                <div class="text-center mgtp-20 visitor-word appear grey">
+                                    <h1 class="wedding-preparations" style="font-size: 50px;font-family: 'San Francisco' !important;font-weight:200;">WEDDING PREPARATIONS</h1>
+                                    <h2 class="Discover-wedding" style="font-size: 35px;font-family: 'San Francisco' !important;font-weight:400;">Discover wedding vendors and<br /> have them work together</h2>
+                                    <hr />
+                                </div>
+                            </div>
+                            <!-- col-md-12 -->
+                        </div>
+                        <!-- row -->
+                        <br />
+                        <br />
+                        <br />
+                        <div class="row mgtp-20">
+                            <div class="col-md-8  col-md-offset-2">
+                                <div class="col-md-6 mgbt-sm-20">
+                                    <div class=" clearfix feature-1">
+                                        <p class="mgbt-xs-20"><i class="fa fa-pencil-square-o fa-large-one" aria-hidden="true"></i>
+                                        </p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;font-size:25px;">1) Plan</h2>
+                                        <h2 class="grey text-desc" style="font-family: 'San Francisco' !important;font-weight:200;font-size:25px;">Share photos and take surveys to match with vendors in your area.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mgbt-sm-20">
+                                    <div class="clearfix feature-2">
+                                        <p class="mgbt-xs-20"><i class="fa fa-gavel fa-large-one" aria-hidden="true"></i>
+                                        </p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;font-size:25px;">2) Decide</h2>
+                                        <h2 class="grey text-desc" style="font-family: 'San Francisco' !important;font-weight:200;font-size:25px;">Receive four bids from qualified vendors. Draft your favorite.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mgbt-sm-20">
+                                    <div class="clearfix feature-3">
+                                        <p class="mgbt-xs-20"><i class="fa fa-comment-o fa-large-one" aria-hidden="true"></i></p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;font-size:25px;">3) Collaborate</h2>
+                                        <h2 class="grey text-desc" style="font-family: 'San Francisco' !important;font-weight:200;font-size:25px;">Chat together with your team of vendors, all in one place.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mgbt-sm-20">
+                                    <div class="text-center clearfix feature-3">
+                                        <h1 class="grey " style="margin-top: 15%;font-family: 'San Francisco' !important;font-weight:200;font-size:60px;">DONE!</h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 50px;">
+                                <!-- vd_visitor-counter -->
+                                <div class="text-center mgtp-20 visitor-word appear grey">
+                                    <hr />
+                                    <h2 class="bottom-top" style="font-size: 50px;font-family: 'San Francisco' !important;font-weight:200;">No planner, no problem</h2>
+                                    <h1 class="bottom-desc" style="font-size: 70px;font-family: 'San Francisco' !important;font-weight:400;">It takes a team</h1>
+
+
+                                </div>
+                            </div>
+                            <!-- col-md-12 -->
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="row mgtp-20">
+                            <div class="col-md-8  col-md-offset-2">
+                                <div class="col-md-6 mgbt-sm-20 text-center">
+                                    <div class=" clearfix feature-1">
+                                        <p class="mgbt-xs-20"><img src="{% static "images/homev3/Vendor team chat.png" %}" width="20%" />
+                                        </p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;">Vendor Team Chat</h2>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:200;">Let all your Vendors coordinate before the big day. Don't be their only point of contact.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mgbt-sm-20 text-center">
+                                    <div class="clearfix feature-2">
+                                        <p class="mgbt-xs-20"><img src="{% static "images/homev3/Family Collaboration.png" %}" width="12%" />
+                                        </p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;">Family Collaboration</h2>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:200;">Invite your partner, friends and family to join your team. Make decisions together.</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="front-1-contacts" class="vd_section vd_bg-dark-green clearfix slide-waypoint" data-waypoint="contact">
+                <div class="container" style="margin-top:25px;margin-bottom: 50px;">
+                    <div class="vd_content clearfix">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4 get-started-oval">
+                                <div class="oval-inner">
+                                    <br />
+                                    <h1 class="text-center vd_white draft-footer" style="font-family: 'San Francisco' !important;font-weight:200;"> Draft your team </h1>
+                                    <br/>
+                                    <div class="text-center"> <a  onclick="modelGetStartedOpen()" class="btn vd_btn" style="background-color: white; color: #07A6C3; border-radius: 20px;font-family: 'San Francisco' !important;font-weight:200;width:60%;">{% if not pre_register %}Sign Up{% else %}Get started{% endif %}</a> </div>
+                                    <br/>
+                                    <br/>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- row -->
+                    </div>
+                    <!-- vd_content -->
+                </div>
+                <!-- container -->
+            </div>
+            <!-- front-1-contacts -->
+
+        </div>
+        <!-- content -->
+
+        <!-- Middle Content End -->
+
+
+        <!-- Footer Start -->
+        <footer class="footer-2"  id="footer">
+            <div class="vd_bottom pd-20" style="background-color: #f6f9fc; opacity: 0.8;">
+                <div class="container" style="margin-top: 20px;">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="text-center mgbt-xs-10">
+                                <img class="image-footer" src="{% static "images/logo/logo-lg.png" %}" width="15%" />
+                            </div>
+                            <div class="copyright text-center">
+                                <p><span class="footer-text" style="color: #07A6C3;font-size:20px;font-family: 'San Francisco' !important;font-weight:200;">a Bay Area Wedding Fairs company</span>
+                                    <br/>
+                                    {#                                    <br/>#}
+                                    <span class="footer-text" style="color: #07A6C3;font-size:20px;margin-top:15px;font-family: 'San Francisco' !important;font-weight:200;">Contact us: info@yapjoy.com</span>
+
+
+                                </p>
+                                <p class="text-center footer-text-2" style="color: black;">
+                                    Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                                </p>
+                            </div>
+                        </div>
+                    </div><!-- row -->
+                </div><!-- container -->
+            </div>
+        </footer>
+
+
+        <!-- Footer END -->
+
+    </div>
+    {#    {% endcache %}#}
+    {% include "moments/_partial/_login_modal.html" %}
+{#    {% if not pre_register %}#}
+{#        {% include "moments/_partial/_register_modal.html" %}#}
+{#    {% else %}#}
+        {% include "moments/_partial/_pre_register_modal.html" %}
+{#    {% endif %}#}
+    <!-- .vc_body END  -->
+    {#    <a id="back-top" href="#" data-action="backtop" class="vd_back-top visible"> <i class="fa  fa-angle-up"> </i> </a>#}
+
+{% endblock content %}
+{% block script %}
+    <script>
+        {% if form.errors or InvalidDetails %}
+            $(document).ready(function(){
+                jQuery('#loginmodal').modal('show');
+            })
+        {% endif %}
+        {% if req_form.errors %}
+            $(document).ready(function(){
+            $('#registermodal').modal('show');
+            });
+        {% endif %}
+        {% if registerform.errors %}
+            $(document).ready(function(){
+                $('#registermodal').modal('show');
+            });
+        {% endif %}
+        {#        $('#id_wedding_date').datepicker();#}
+        {% if request_success_form %}
+            notification("topright","success","fa fa-check-circle vd_green","Registeration Successful","Your request has been successfully submitted.");
+        {% endif %}
+        function modelGetStartedOpen(){
+            $('#registermodal').modal('show');
+        }
+        function modelLoginOpen(){
+            jQuery('#loginmodal').modal('show');
+        }
+        $('#req_button').on('click',function(){
+            {#        alert('working')#}
+            $('#registermodal').modal('show');
+        })
+        $('.mark-blue').on('click',function(){
+            $('.mark-blue').removeClass('selected')
+            $(this).attr('class','col-md-12 mark-blue selected')
+        })
+        $('.step_text').hide();
+        $('#no_1').show();
+    </script>
+    {#    <script>#}
+    {#        $(document).ready(function(){#}
+    {#          $(window).scroll(function() {#}
+    {#              if ($(document).scrollTop() >= 50){#}
+    {##}
+    {#                  $("#vd_top-menu-wrapper-id").css("background-color", "#BCB8B8 !important");#}
+    {#              }#}
+    {#              else{#}
+    {#                  $("#vd_top-menu-wrapper-id").css("background-color", "transparent !important");#}
+    {#              }#}
+    {#          });#}
+    {#            var scrollPos = $('body').scrollTop();#}
+    {#            if (scrollPos > 50) { // check if user scrolled more than 50 from top of the browser window#}
+    {#              $(".vd_top-menu-wrapper").css("background-color", "#BCB8B8 !important"); // if yes, then change the color of class "navbar-fixed-top" to white (#f8f8f8)#}
+    {#            } else {#}
+    {#              $(".vd_top-menu-wrapper").css("background-color", "transparent !important"); // if not, change it back to transparent#}
+    {#            }#}
+    {#          });#}
+    {#            alert('working')#}
+    {#            $(document).on("scrollstart",function(){#}
+    {#          alert("Started scrolling!");#}
+    {#        });#}
+    {#        });#}
+    {##}
+    {#    </script>#}
+{% endblock script %}

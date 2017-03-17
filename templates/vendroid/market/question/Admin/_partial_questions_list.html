@@ -1,0 +1,76 @@
+{% load static %}
+{% load myfilters %}
+
+<div class="">
+    <a class="col-sm-2 btn append-icon fa fa-fw fa-plus-circle" onclick="viewQuestion(0)" style="color: coral; font-size: 150%">
+        Add a new question at the left panel
+    </a>
+    <hr>
+    {% if zipped_questions %}
+      {% for category, questions in zipped_questions %}
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" href="#collapse_{{ forloop.counter }}" style="color: orange">
+                  <span class="caret"></span>{{ category }}
+              </a>
+            </h4>
+          </div>
+          <div id="collapse_{{ forloop.counter }}" class="panel-collapse collapse">
+           {% if questions %}
+            <ul class="list-group" style="list-style-type: none">
+                {% for question, options in questions %}
+                    <li class="list-item">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-1">Q.{{ forloop.counter }}</div>
+
+                                <a class="col-sm-9" onclick="viewQuestion({{ question.id }})" style="cursor: pointer; cursor: hand;">
+                                    <div id="ID_answer_{{ question.id }}">{{ question.title }}</div>
+                                </a>
+                                <a class="col-sm-1 btn append-icon fa fa-fw fa-trash-o" onclick="removeQuestion({{ question.id }})" style="color: orangered"> </a>
+                            </div>
+                        </div>
+                        <br/>
+                        <ul class="list-group" style="list-style-type: none; margin-left: 4em">
+                            {% if options %}
+                                {% for o in options %}
+                                    <li class="list-item">
+                                        <p>{{ forloop.counter }}. &nbsp; {{ o.option }}</p>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                        <br>
+                    </li>
+                {% endfor %}
+            </ul>
+           {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+</div>
+
+
+<script type="text/javascript">
+{#    function popDialog(questionId){#}
+{#         console.log("questionId", questionId);#}
+{#         $.ajax({#}
+{#            url : "",#}
+{#            type : "POST",#}
+{#            data : {'questionId':questionId},#}
+{##}
+{#            success : function(response) {#}
+{#                console.log("response success");#}
+{#                $("#ID_updateQuestionModal").html(response).modal('show');#}
+{#            },#}
+{##}
+{#            error : function(xhr,errmsg,err) {#}
+{#                alert("change answer failed");#}
+{#            }#}
+{#        });#}
+{#    };#}
+</script>

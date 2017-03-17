@@ -1,0 +1,262 @@
+{% extends "vendroid/bayareaweddingfairs_tickets/base_bawf_tickets.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <style>
+        @page {
+            size: A4;
+        {#  margin: 0;#}
+        }
+
+        @media print {
+            html, body {
+                width: 340mm;
+                height: 550mm;
+            }
+
+            h3 {
+                font-size: 15px !important;
+            }
+
+            /* ... the rest of the rules ... */
+        }
+    </style>
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+{#    <script>#}
+{#        $(function () {#}
+{#            $('#id_wedding_date').datepicker();#}
+            {#            $("#id_wedding_date").datetimepicker({#}
+            {#             'showTimepicker': false,#}
+            {#            });#}
+{#        });#}
+{#    </script>#}
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    {#<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 40px;
+        }
+
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+    </style>
+    <style>
+        .vd_content-section {
+            margin-bottom: 5px;
+        }
+
+        #footer .vd_bottom {
+            background-color: #816100 !important;
+        }
+
+        .vd_top-menu-wrapper {
+            background-color: #816100 !important;
+        }
+
+        .vd_menu-search-submit {
+            background-color: black !important;
+        }
+    .event-choose:hover {
+        background-color: gainsboro;
+    }
+    </style>
+    <div class="vd_body">
+    <!-- Header Start -->
+    {% include "vendroid/bayareaweddingfairs_tickets/_partial/_header.html" %}
+    <!-- Header Ends -->
+    <div class="content">
+  <div class="clearfix pd-20">
+    <div class="container">
+      <div class="vd_content clearfix">
+        <div class="row mgtp-20">
+          <div class="col-md-7 col-md-offset-1">
+            <div class="panel widget light-widget">
+              <div class="panel-heading no-title"> </div>
+              <div class="panel-body">
+              <h1 style="color: #BCB8B8"
+                  class="text-center"
+              ><b>UPCOMING EVENTS</b></h1>
+              <h3
+                      class="text-center"
+              ><b>Bay Area Wedding Fairs</b></h3>
+              <hr />
+{#                <h2 class="mgtp--5"> Blog</h2>#}
+                <div class="content-list content-blog-large">
+                  <ul class="list-wrapper">
+                      {% for event in events %}
+                    <li style="margin-bottom: 50px;">
+                      <div class="menu-icon"> <img alt="example image" style="width: 150px;margin-left:10px;" src="{% static "images/bawf/banner1.jpg" %}"> </div>
+                      <div class="menu-text">
+                        <h2 class="blog-title font-bold letter-xs"><a href="#"> {{ event.name }} </a></h2>
+                        <h4 class="blog-title font-bold letter-xs"><a href="#"> {{ event.date }} </a></h4>
+                        <div class="menu-info">
+                          <div class="menu-date font-xs">CA, USA </div>
+                        </div>
+{#                        <div class="menu-tags  mgbt-xs-15"> Tags: <a href="#"><span class="label vd_bg-yellow">Sports</span></a> <a href="#"><span class="label vd_bg-yellow">Hobby</span></a> <a href="#"><span class="label vd_bg-yellow">Blogs</span></a> <a href="#"><span class="label vd_bg-yellow">Journal</span></a> </div>#}
+                        <p>{{ event.description }}</p>
+{#                          <a href="#">#}
+                          <div class="col-md-12 event-choose" style="cursor: pointer;" onclick="window.location='/bayareaweddingfairs/tickets/buy/{{ event.id }}/';">
+                              <div class="pull-left" style="margin-top: 10px;"><h4 class="blog-title font-bold letter-xs"> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ event.date|date:"D, M d Y" }}</h4></div>
+                        <a class="btn vd_btn btn-sm pull-right" style="background-color: rgb(160, 24, 80);margin-top:5px;" href="/bayareaweddingfairs/tickets/buy/{{ event.id }}/">GET TICKETS</a> </div>
+{#                              </a>#}
+                        <div class="clearfix"></div>
+                          </div>
+                    </li>
+                      {% endfor %}
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Panel Widget -->
+
+          </div>
+          <!-- col-md-4 -->
+
+          <div class="col-md-3">
+            <div class="panel widget light-widget ">
+              <div class="panel-heading no-title"> </div>
+              <div class="panel-body">
+                <h2 class="mgtp--5 text-center"><img style="width: 60%;height: auto;" src="{% static "images/bawf/logo-3.jpg" %}" /></h2>
+                <div class="content-list content-image">
+                    <hr />
+                  <div class="social text-center">
+
+
+
+
+
+
+
+
+                    <a style="margin-bottom: 60px;" class="email-us" href="mailto:info@bayareaweddingfairs.com" data-ga-interaction-id="event-org-page-email-us">
+                        <h2><i class="fa fa-envelope" aria-hidden="true"></i></h2>
+                        <p>Email Us</p>
+
+                    </a>
+                      <div class="clearfix"></div>
+                      <div id="fullcalendar"></div>
+                      <p style="margin-top: 35px;">EVENTS POWERED BY</p>
+                      <a href="https://www.yapjoy.com/" target="_blank"><img style="width: 40%;" src="{% static "images/logo/logo-lg.png" %}" /></a>
+
+                </div>
+                </div>
+              </div>
+            </div>
+            <!-- Panel Widget -->
+
+          </div>
+          <!-- col-md-4 -->
+
+        </div>
+        <!--row -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{#    <script src="{% static "js/chosen.jquery.min.js" %}"></script>#}
+
+    </div>
+{% endblock content %}
+{% block script %}
+
+<script type="text/javascript">
+$(window).load(function()
+	{
+	"use strict";
+
+    function renderCalendar(){
+
+        if (!jQuery().fullCalendar) {
+            return;
+        }
+
+        var events_list = [
+                {% for event in events %}
+                    {
+                        title: 'Event',
+                        start: new Date({{ event.date.year }}, {{ event.date.month }}-1, {{ event.date.day }}),
+        {#                end: new Date({{ event.date.year }}, {{ event.date.month }}, {{ event.date.day }}),#}
+                        allDay: true,
+            },
+                {% endfor %}
+                ];
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth()+1;
+        var y = date.getFullYear();
+
+{#        alert(d)#}
+{#        alert(m)#}
+{#        alert(y)#}
+		var h = {
+			left: 'title, prev,next',
+			center: '',
+			right: ''
+		};
+
+        $('#fullcalendar').html("");
+        $('#fullcalendar').fullCalendar({
+            header: h,
+            editable: false,
+            droppable: false, // this allows things to be dropped onto the calendar !!!
+{#            drop: function (date, allDay) { // this function is called when something is dropped#}
+{##}
+{#                // retrieve the dropped element's stored Event Object#}
+{#                var originalEventObject = $(this).data('eventObject');#}
+{#                // we need to copy it, so that multiple events don't have a reference to the same object#}
+{#                var copiedEventObject = $.extend({}, originalEventObject);#}
+{##}
+{#                // assign it the date that was reported#}
+{#                copiedEventObject.start = date;#}
+{#                copiedEventObject.allDay = allDay;#}
+{#                copiedEventObject.className = $(this).attr("data-class");#}
+{##}
+{#                // render the event on the calendar#}
+{#                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)#}
+{#                $('#fullcalendar').fullCalendar('renderEvent', copiedEventObject, true);#}
+{##}
+{#                // is the "remove after drop" checkbox checked?#}
+{#                if ($('#drop-remove').is(':checked')) {#}
+{#                    // if so, remove the element from the "Draggable Events" list#}
+{#                    $(this).remove();#}
+{#                }#}
+{#            },#}
+            events: events_list
+        });
+
+    }
+
+	renderCalendar();
+
+
+
+
+
+});
+</script>
+{% endblock script %}

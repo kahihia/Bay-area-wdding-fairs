@@ -1,0 +1,99 @@
+{% load static %}
+<div class="mb-content-wrapper-child" >
+    <div class="vd_content clearfix"></div>
+    <!--Main panel-->
+    <div class="row mb-row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-vendor-register">
+                <div class="panel-title">
+                    <h4>My Events <a href="#" style="color: #07a6c3;" class="pull-right" onclick="create_event()">Create Event</a></h4>
+
+
+                </div>
+                <div class="panel-body">
+                    <div class="event-list-wrap">
+                        {% for event in events %}
+                        <div class="my-event-list" id="event_list_id_{{ event.id }}">
+                            <h2 class="my-event-title">{{ event.name }}</h2>
+                            <h3 class="my-event-date">{{ event.event_date }}</h3>
+                            <div class="dropdown text-right pull-right">
+                                <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="get_change_event('{{ event.id }}')">Change Detail</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="close_event" id="{{ event.id }}">Close Event</a></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div><!--End my Event List-->
+                        {% endfor %}
+
+{#                        <div class="my-event-list">#}
+{#                            <h2 class="my-event-title">Jen and jhonson Wedding</h2>#}
+{#                            <h3 class="my-event-date">April 4th 2015</h3>#}
+{#                            <div class="dropdown text-right pull-right">#}
+{#                                <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>#}
+{#                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{#                        </div><!--End my Event List-->#}
+{##}
+{#                        <div class="my-event-list">#}
+{#                            <h2 class="my-event-title">Jen and jhonson Wedding</h2>#}
+{#                            <h3 class="my-event-date">April 4th 2015</h3>#}
+{#                            <div class="dropdown text-right pull-right">#}
+{#                                <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>#}
+{#                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{#                        </div><!--End my Event List-->#}
+{##}
+{#                        <div class="my-event-list">#}
+{#                            <h2 class="my-event-title">Jen and jhonson Wedding</h2>#}
+{#                            <h3 class="my-event-date">April 4th 2015</h3>#}
+{#                            <div class="dropdown text-right pull-right">#}
+{#                                <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>#}
+{#                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>#}
+{#                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{#                        </div><!--End my Event List-->#}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--vd_content-wrapper-->
+<script>
+    $('.close_event').on('click',function(){
+{#        alert('works')#}
+        var id_event_close = $(this).attr('id')
+{#        alert(id_event_close)#}
+{#        https://www.yapjoy.com/pusher/event/delete/7#}
+        if (confirm('Are you sure do you want to delete this event?')) {
+                     $.ajax({
+            url: '/pusher/event/delete/'+id_event_close+'/',
+            type: "DELETE",
+
+            success: function (response) {
+               $('#event_list_id_'+id_event_close).hide()
+                get_all_events()
+            },
+
+            error: function (xhr, errmsg, err) {
+                alert("Api not working");
+            }
+        });
+        }
+
+    })
+</script>

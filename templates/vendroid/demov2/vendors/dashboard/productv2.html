@@ -1,0 +1,271 @@
+{% extends "vendroid/demo/iframe_base.html" %}
+{% load static %}
+{#{% load static %}#}
+{% load humanize %}
+{% load myfilters %}
+{% block content %}
+
+    <style>
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+        .yelpSaveButton {
+            margin-bottom:15px;
+        }
+        .image-cropper {
+            max-width: 110px;
+            min-width: 110px;
+            max-height: 110px;
+            min-height: 110px;
+        }
+        #profile-image-id img:hover {
+            content: url('{% static "images/vendorProfile/Stock_Profile_Picture.png" %}');
+            cursor: pointer;
+        }
+        .images-mobile {
+            width: 120px;
+            min-width: 120px;
+            max-height: 120px;
+            min-height: 120px;
+            /* overflow: hidden; */
+            /* position: relative; */
+            max-width: 120px;
+        }
+        .panel {
+            border:none !important;
+            border-radius:none !important;
+        }
+        .blue-button {
+            background-color: #07A6C3;
+            color: white;
+        {#            border-radius: 20px;#}
+            margin-top: 10px;
+            width: 80%;
+            height: 60px;
+            line-height: 26px;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        .mb-content-wrapper-child {
+{#            min-height: 931px;#}
+{#            margin-top:50px;#}
+        }
+        .form-wizard .nav > li.active .menu-icon {
+            background: #07A6C3;
+        }
+        .panel-group .panel+.panel {
+            margin-top:0px;
+        }
+        .progress-img {
+            width: 50%;
+        }
+        .modal {
+            width: 98%;
+        }
+        @media only screen and (max-width: 500px) {
+            .yelpSaveButton {
+                margin-bottom:0px;
+            }
+            .blue-button {
+                background-color: #07A6C3;
+                color: white;
+            {#            border-radius: 20px;#}
+                margin-top: 10px;
+                width: 300px;
+                height: 60px;
+                line-height: 26px;
+            }
+            .images-mobile {
+                width:100%;
+                max-width:100%;
+                max-height:120px;
+                min-height:120px;
+            {#            height:auto;#}
+                overflow: hidden;
+                position: relative;
+            }
+            .progress-img {
+                width: 100%;
+            }
+            .mb-panel-col-md-8 {
+                padding-left:0px;
+                padding-right:0px;
+            }
+            .panel{
+            {#                border:none !important;#}
+            }
+
+            .mb-content-wrapper-child {
+                margin-top:0px;
+            }
+            .mb-panel-body{
+                padding:0px !important;
+            }
+            .mb-row {
+                margin-left: -17px !important;
+                margin-right: -17px !important;
+
+            }
+            .nav-justified {
+                width: 100%;
+            }
+            .nav-justified > li {
+            {#  float: left;#}
+                display: table-cell;
+            }
+            .yelp-heading {
+                font-size: 18px;
+            }
+            .mb-col-xs-12 {
+                padding:0px;
+            }
+            .image-cropper {
+                width: 70px;
+                height: 70px;
+                max-height: 70px;
+                min-height: 70px;
+                max-width:70px;
+                min-width:70px;
+            }
+            .company__fonts {
+                font-size: 16px;
+            }
+            .social_icons_style {
+                width: 20%;
+                padding:0px;
+                display: inline;
+                margin-top:15px;
+            }
+
+
+
+        }
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    {% if biddings_number %}
+        <div class="vd_body">
+            {#        {% include "vendroid/demo/_partial/_header_vendors.html" %}#}
+
+            <div class="content">
+                <div class="container">
+
+                    <div id="wizard-1" class="form-wizard">
+                        <ul class="nav nav-pills nav-justified">
+                            {% if biddings_number >= 1 %}
+                                <li class="active"><a  href="#" onclick="openIndex(0);" data-toggle="tab">
+                                    <div class="menu-icon"> 1 </div>
+                                    {#                            User Profile #}
+                                </a>
+                                </li>
+                            {% endif %}
+                            {% if biddings_number >= 2 %}
+                                <li><a   data-toggle="tab" href="#" onclick="openIndex(1);"    >
+                                    <div class="menu-icon"> 2 </div>
+                                    {#                            Address Information #}
+                                </a></li>
+
+                            {% endif %}
+                            {% if biddings_number >= 3 %}
+                                <li><a   onclick="openIndex(2);" href="#"  data-toggle="tab" >
+                                    <div class="menu-icon"> 3 </div>
+                                    {#                            Contact Detail #}
+                                </a></li>
+                            {% endif %}
+                            {% if biddings_number >= 4 %}
+                                <li><a  {% if biddings_number >= 4 %}disabled onclick="openIndex(3);" href="#"  data-toggle="tab"{% endif %} >
+                                    <div class="menu-icon"> 4 </div>
+                                    {#                            Billing Information #}
+                                </a></li>
+                            {% endif %}
+                            {#                          <li><a href="#tab5" data-toggle="tab">#}
+                            {#                            <div class="menu-icon"> 5 </div>#}
+                            {#                            Confirm </a></li>#}
+                        </ul>
+                        <div class="tab-content">
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div id="append_biddings"></div>
+                    {#                {% include "vendroid/demov2/vendors/dashboard/_partial_productV2/_partial_profile.html" %}#}
+                    <!-- .vd_content-wrapper -->
+                </div>
+            </div>
+            {#        {% incl ude "vendroid/demov2/vendors/profile/_partial_modals.html" %}#}
+        </div>
+    {% else %}
+        <div class="">
+            <div class="">
+                <div class="" id="login-form" style="">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body select-images">
+                                    {% if product.isListing  %}
+                                        <h1 style="margin-top: 20px;color: #BCB8B8;" class="message_heading">Your listing has been published successfully!<br /><br />
+
+                                            Please allow until December before receiving any bids.<br /><br />
+                                            Thanks for your patience</h1>
+                                    {% else %}
+                                        <h4 style="margin-top: 20px;color: #BCB8B8;" class="text-left message_heading">First, publish your listing to recieve bids</h4>
+                                    {% endif %}
+
+                                    <div class="clearfix"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}
+
+
+
+
+{#{% endblock content %}#}
+{% block script %}
+    <script>
+        {% if biddings_number %}
+            $(document).ready(function(){
+                openIndex(0)
+            })
+            function openIndex(index){
+                $.ajax({
+                    type: "POST",
+                    url: "",
+                    data:{'bid_id':index},
+                    dataType: "text",
+                    success: function(resultData){
+                        {#                    alert("Save Complete");#}
+                        $('#append_biddings').html(resultData)
+                        parent.resizeIDecideframe();
+                    }
+                });
+            }
+        {% endif %}
+    </script>
+
+{% endblock script %}

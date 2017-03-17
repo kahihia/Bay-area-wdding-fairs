@@ -1,0 +1,361 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+    $(function () {
+            $('#id_wedding_date').datepicker();
+{#            $("#id_wedding_date").datetimepicker({#}
+{#             'showTimepicker': false,#}
+{#            });#}
+        });
+    </script>
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+    .red {
+        color: red;
+    }
+    textarea {
+        height: 80px;
+    }
+    .btn-brown {
+        background-color: #ba8c00 !important;
+    }
+    </style>
+    <style>
+    .vd_content-section {
+         margin-bottom: 400px;
+    }
+    #footer .vd_bottom {
+        background-color: #816100 !important;
+    }
+    .vd_top-menu-wrapper{
+        background-color: #816100 !important;
+    }
+    .vd_menu-search-submit {
+        background-color: black !important;
+    }
+</style>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/CRM/partial/_sidebar.html" %}#}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+      <div class="">
+        <div class="vd_content clearfix">
+
+          <!-- vd_head-section -->
+
+          <div class="clearfix">
+
+          <!-- vd_title-section -->
+
+          <div class="vd_content-section clearfix">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-body">
+{#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+{#                    <ul class="nav nav-tabs">#}
+{##}
+{##}
+{#                    </ul>#}
+                    <br>
+                    <div class="tab-content mgbt-xs-20">
+                         {% if successMessage %}
+                    <div class="flashes">
+                        <div class="alert alert-success">{{ successMessage }}</div>
+                    </div>
+                    {% endif %}
+                      <div class="tab-pane active" id="privacy">
+                          <div class="col-md-12 text-center">
+                              <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png" width="20%" /><br />
+                              <div class="clearfix"></div>
+{#                              <br />#}
+{#                              <h3 style="color: #ba8c00;">REGISTERED EVENTS</h3>#}
+{#                              <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"  />#}
+                              <hr />
+
+                          </div>
+                          <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="panel-body table-responsive">
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                          <p>
+                                              <h3 class="text-center" style="margin-bottom: 30px;">Details</h3>
+                                              <div class="col-md-6">
+                                                  Email: {{ agreement.email }}<br />
+                                              Name: {{ agreement.invoices.all.0.register.name }}<br />
+                                              Phone: {{ agreement.invoices.all.0.register.phone }}<br />
+                                              </div>
+                                              <div class="col-md-6">City: {{ agreement.invoices.all.0.register.city }}<br />
+{#                                              Amount Due: ${{ agreement.register_event.get_amount|intcomma }}<br />#}
+                                              Registration Date: {{ agreement.invoices.all.0.register.created_at }}<br />
+                                              PV Prize: ${{ inv.pv_prize_offered }}<br />
+                                              Booth: {{ reg.booth }}<br />
+                                              Fashionshow sponsorship: {{ reg.is_fashionshow }}<br />
+
+                                              </div>
+                                           <div class="col-md-12" style="margin-top: 30px;">
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Invoices</h3>#}
+{#                                      </div>#}
+                                           <h3 class="text-center" style="margin-bottom: 10px;">Invoices</h3>
+                                      <div class="panel-body table-responsive">
+{#                                        <form action="" method="POST">#}
+{#                                        {% csrf_token %}#}
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+{#                                                      <th>Bulk</th>#}
+
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+                                                      <th>Event</th>
+                                                      <th>Offered Price</th>
+                                                      <th>List Price
+                                                      </th>
+                                                      <th>Electricity</th>
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+                                                      <th>Method</th>
+{#                                                      <th>PV Prize</th>#}
+                                                      <th>Total Amount</th>
+                                                      <th>
+                                                          Created at
+                                                      </th>
+{#                                                      <th>Remove</th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  {% for csv in invoices %}
+                                                      <tr role="row" class="gradeA odd">
+{#                                                      <td><input type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+                                                          <td>{{ csv.register.event }}</td>
+                                                          <td>${{ csv.offered_price }}</td>
+                                                          <td>${{ csv.list_price }}</td>
+{#                                                          <td>{{ csv.csv }}</td>#}
+
+                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>
+{#                                                          <td>{{ csv.register.status }}</td>#}
+                                                          <td>{{ csv.payment_method }}</td>
+{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+                                                          <td>${{ csv.get_total }}</td>
+                                                          <td>{{ csv.created_at }}</td>
+{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+                                                      </tr>
+                                                  {% endfor %}
+                                                  </tbody>
+                                              </table>
+                                          <input hidden id="create_bulk_signal" name="create_bulk_signal" />
+{#                                                <button class="btn vd-bg-lightblue vd_white" type="submit">Combine and Send</button>#}
+                                          </div>
+{#                                        </form>#}
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div>
+                                            <hr />
+                                          <div class="clearfix"></div>
+                                          </p>
+                                              <h3 class="text-center">Terms and Conditions</h3>
+                    <h4>Deposits & Payments</h4>
+                    <p>A deposit is required to hold a space in any Bay Area Wedding Fairs (BAWF) trade shows. All deposits are Non-Refundable
+                    and Final. If you signed for multiple shows, deposits for all contracted shows must be received to hold space.</p>
+                     <h4>Cancellations and Refunds</h4>
+                    <p>Deposits are non refundable. If cancelled within 30 days of the show, full balance is due. If a Fashion Show sponsor or Stage
+                    Services Provider cancels, the list price is due. To recieve the Brides'/Grooms' List, you must be present at the entire show.</p>
+                     <h4>Confidentiality Agreement</h4>
+                    <p>Booth pricing is category specific. This contract is a confidential document between BAWF and the exhibitor. A breach of the
+                    contract confidentiality agreement will result in this contract reverting to list price.</p>
+                     <h4>Booth Staffing & Operations</h4>
+                    <p>The booth must be staffed throughout the duration of the show. The booth can not be shared. Displaying advertisements for
+                    business not listed on this contract is prohibited. Promoting your business outside the boundary of your assigned booth is not
+                    allowed. Intoxication during the show hours is also not permitted. Refusal to comply with these terms will result in removal
+                    from the show without refund.</p>
+                     <h4>Setup</h4>
+                    <p>Booth placements are entire discretion of BAWF. Booths are to be completely set-up 30 minutes prior to the start of the show.
+                    Late arrival will result in loss of booth space without refund. No pricing displayed on banners, backdrops, and posters allowed.</p>
+                     <h4>Tear Down</h4>
+                    <p>Tear down prior to the end of the show will result in  $100 fee. Tear must start as soon as the show ends and must be
+                    completed within an hour.</p>
+                     <h4>BAWF Rights, Indemnities and Limitations</h4>
+                    <p>All exhibitors must adhere completely by these terms and conditions and our policies and procedures at all times. Anyone not
+
+                        adhering to these terms will be asked to leave our shows immediately without refund. The exhibitor agrees to indemnify and
+
+                        hold harmless BAWF and BAWF assumes no liability, and offers no compensation of any kind for injury or loss or personal or
+
+                        property damage as a result of participating in this (or any) show. Exhibitors agree to use their own Business Liability
+
+                        Insurance for remedy in such cases. BAWF reserves all these above rights at all times.</p>
+
+                                    <div class="col-md-12">
+                                    <div class="clearfix"></div>
+                                    {% if notes %}
+                                     <h3 class="text-center">Notes</h3>
+                                        {% for note in notes %}
+                                                    {% if forloop.counter0 == 0 %}
+                                                        <hr>
+                                                        <p>Sales/Owner : {{ wp.sales.get_full_name }}</p>
+                                                    {% endif %}
+                        {#                            <div class="container">#}
+                                                        <img style="width: 70px;" class="col-sm-4" src="{{note.exhibitor.user.userprofile.get_image_url}}" alt="add image if you want">
+                                                        <div class="col-sm-8">
+                                                            <span>{{ note.note }}</span>
+                                                            <p>Note Writer: <i class="">{{ note.note_writer.get_full_name }}</i><br/>
+                        {#                                       Interested Vendor: <i class="vd">{{ note.exhibitor.user.get_full_name }}</i><br/>#}
+                                                            modified at: {{ note.created_at }}</p>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <br/>
+                        {#                            </div>#}
+                                                {% endfor %}
+                                    {% endif %}
+                                    </div>
+                                              <div class="col-md-12">
+                                                  {% if agreement.status == "Viewed" %}
+
+                                                  <form action="." method="post">
+                                                      {% csrf_token %}
+                                                      <input hidden id="decline" name="decline" />
+                                                      <button class="btn vd_btn pull-right btn-default">Decline</button>
+                                                  </form>
+                                                  <form action="." method="post">
+                                                      {% csrf_token %}
+                                                      <input hidden id="accept" name="accept" />
+                                                      <button class="btn vd_btn pull-right btn-brown" style="margin-right: 10px;">Accept</button>
+                                                  </form>
+                                                  {% elif agreement.status == "Accepted" %}
+                                                      <div class="col-md-12 text-right" style="color: green;">
+                                                          You have accepted this agreement
+                                                      </div>
+                                                  {% elif agreement.status == "Rejected" %}
+                                                      <div class="col-md-12 text-right" style="color: red;">
+                                                      You have rejected this agreemnet.
+                                                      </div>
+                                                  {% endif %}
+                                                <div class="clearfix"></div>
+                                                <p class="text-right">YOU PRE-AUTHORIZE BAWF to process your balance payments</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          </div>
+
+                      </div>
+                    </div>
+                    <br><br>
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-6 -->
+
+            </div>
+            <!-- row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+        </div>
+        <!-- .vd_content -->
+      </div>
+      <!-- .vd_container -->
+    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+  <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

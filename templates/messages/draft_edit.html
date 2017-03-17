@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+            <section class="messages-section">
+    {% include 'messages/partial/_sidebar.html' %}
+    <div class="col-md-6 messages-read">
+        <h3 class="section-title">Draft</h3>
+        <form method="post" id="composeForm" action=".">
+            {% csrf_token %}
+            <ul class=" list-unstyled messages-list">
+                <li><a href="#" class="add-action-btn mark-all" id="sendBtn"><i class="fa fa-envelope-o"></i> <span>Send</span></a>
+{#                    <a href="#" class="add-btn delete-btn" id="saveDraftBtn"><i class="glyphicon glyphicon-trash"></i> Save Draft</a></li>#}
+             </ul>
+                <input type="hidden" id="draftField" name="draft" value="0">
+                <div class="form-group">
+                <label>To:</label>
+
+                    <select multiple="multiple" class="form-control" data-placeholder="To" name="to_users" id="to">
+
+                            <option value="{{ draft.receiver.id }}" selected="selected">{{ draft.receiver.get_full_name }}</option>
+                    </select>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                <label>Subject:</label>
+{#                <input type="text" class="form-control" name="subject" placeholder="Subject" value="" required>#}
+                     {{ form.subject }}
+                     <p style="color: red;">{{ form.subject.errors.0 }}</p>
+                </div>
+                <div class="form-group">
+{#                   <textarea name="message" class="form-control compose-content" value="" required></textarea>#}
+                    {{ form.message }}
+                    <p style="color: red;">{{ form.message.errors.0 }}</p>
+
+                </div>
+            <ul>
+        </form>
+    </div>
+
+
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="/static/js/jquery.mail.js"></script>
+{% endblock jquery %}

@@ -1,0 +1,150 @@
+{% extends "vendroid/demo/base_vendor.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{#{% load rest_framework %}#}
+{% block content %}
+    <style>
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+
+
+
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+        {% include "vendroid/demo/_partial/_header_yapjoy_theme_vendor.html" %}
+
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/demov2/vendors/teamChat/_chatbar.html" %}
+
+
+                <div class="vd_content-wrapper yp-content-wrap" id="vd_content_id" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <div class="panel panel-vendor-register">
+                                    {#                                  <div class="panel-title">#}
+                                    {#                                    <h4>My Account</h4>#}
+                                    {#                                  </div>#}
+                                    <div id="id_card">
+                                        <div class="panel-body" id="id_panel_body">
+                                            <div class="event-list-wrap">
+                                                <a href="#" id="id_profile_edit">
+                                                    <div class="col-md-9">
+                                                        <h2>{{ u.user.get_full_name }}</h2>
+                                                        <h4>View and edit profile</h4>
+
+                                                    </div>
+                                                </a>
+                                                <div class="col-md-3">
+{#                                                    <img src="{% static "images/options/dummyPic.png" %}" />#}
+                                                                <img src="{{ u.get_image_url }}" />
+                                                </div>
+                                                <div class="col-md-12" style="margin-top:80px;">
+                                                    <a href="#" id="id_feedback"><h4>Feedback and support <span class="fa fa-bell pull-right"></span></h4></a>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-md-12" style="margin-top:20px;">
+                                                    <a href="#" id="id_notification"><h4>Notifications <span class="fa fa-bell pull-right"></span></h4></a>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-md-12" style="margin-top:20px;">
+                                                    <a href="#" id="id_logout"><h4>Logout <span class="fa fa-bell pull-right"></span></h4></a>
+                                                    <hr />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+
+    {% include "vendroid/demov2/vendors/teamChat/_chatbox.html" %}
+    </div>
+{% endblock content %}
+{% block footer %}
+    {% include "vendroid/demov2/vendors/teamChat/_footer.html" %}
+{% endblock footer %}
+{% block script %}
+    <script src="{% static 'js/bg_profile/profile.js' %}"></script>
+
+    <script>
+
+        function ajax_call(url, req_type, data){
+            var mes ;
+            mes = $.ajax({
+                url: url,
+                type: req_type,
+                data: data,
+                success: function (response) {
+                    return response
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                    return error
+                }
+            });
+            return mes;
+        }
+
+        $("#id_feedback").click(function () {
+
+            console.log("feedback");
+            data =  {action: 'feedback'},
+                ajax_call('/bg/profile/', "GET", data).done(function( data ) {
+
+                    $("#id_card").html(data);
+                });
+
+        })
+        $("#id_profile_edit").click(function () {
+
+            console.log("profile");
+            data =  {action: 'profile'},
+                ajax_call('/bg/profile/', "GET", data).done(function( data ) {
+
+                    $("#id_card").html(data);
+                });
+
+        });
+
+        $("#id_notification").click(function () {
+
+            console.log("notification");
+            data =  {action: 'notification'},
+                ajax_call('/bg/profile/', "GET", data).done(function( data ) {
+
+                    $("#id_card").html(data);
+                });
+
+        });
+
+    </script>
+{% endblock script %}

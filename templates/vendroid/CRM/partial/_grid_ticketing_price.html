@@ -1,0 +1,51 @@
+{% load pagination_tags %}
+<div class="panel-body table-responsive">
+    <div class="dataTables_wrapper form-inline no-footer"
+         id="data-tables_wrapper">
+        <div id="button-id">
+        <table class="table table-striped dataTable no-footer" id="data-tables">
+            <thead>
+            <tr role="row">
+                <th>
+                    Event Name
+                </th>
+                <th>
+                    Event Date
+                </th>
+                <th>
+                    Standard Ticket Price
+                </th>
+                <th>
+                    EarlyBirds Ticket Price
+                </th>
+                <th>
+                    Group Ticket Price
+                </th>
+                <th>
+                    Expire
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+                {% for e in events %}
+                    <tr role="row" class="gradeA odd">
+
+                        <td>{{  e.name }}</td>
+                        <td>{{  e.date }}</td>
+                        <td>{{  e.amount }}</td>
+                        <td>{{  e.earlybird_ticket }}</td>
+                        <td>{{  e.group_ticket }}</td>
+                        <td>{{  e.is_expired }}</td>
+                        <td><input type="button" value="Edit" name="edit_promo"  data-id="{{ e.id }}" class="btn vd_btn btn-brown promo_edit"/></td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table></div>
+        {% paginate %}
+    </div>
+</div>

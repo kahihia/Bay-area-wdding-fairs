@@ -1,0 +1,920 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% block content %}
+    <style>
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+{#                div.panel-heading.vd_bg-green.vd_bd-green {#}
+{#                    background-color: white !important;#}
+{#                    color: black !important;#}
+{#                    border: 1px grey solid !important;#}
+{#                }#}
+{#                div.panel-heading.vd_bg-green.vd_bd-green a{#}
+{#                    color: grey !important;#}
+{#                }#}
+        .yelpSaveButton {
+            margin-bottom:15px;
+        }
+        .image-cropper {
+            max-width: 110px;
+            min-width: 110px;
+            max-height: 110px;
+            min-height: 110px;
+        {#            position: relative;#}
+        {#            overflow: hidden;#}
+        {#            border-radius: 50%;#}
+        {#            background: #eee no-repeat center;#}
+        {#            background-size: cover;#}
+        {#            border-color: darkgray;#}
+        }
+        #profile-image-id img:hover {
+            content: url('{% static "images/vendorProfile/Stock_Profile_Picture.png" %}');
+            cursor: pointer;
+        {#             position:absolute;#}
+        {#               left:50% ;#}
+        {#             right: 50% ;#}
+        {#            opacity:0.5;#}
+        {#             margin-top:    -111px;#}
+        {#             margin-left: -106px;#}
+        {#            z-index:15;#}
+        }
+        .images-mobile {
+                width: 120px;
+                min-width: 120px;
+                max-height: 120px;
+                min-height: 120px;
+                /* overflow: hidden; */
+                /* position: relative; */
+                max-width: 120px;
+        }
+        .panel {
+            border:none !important;
+            border-radius:none !important;
+        }
+        .blue-button {
+            background-color: #07A6C3;
+            color: white;
+        {#            border-radius: 20px;#}
+            margin-top: 10px;
+            width: 80%;
+            height: 60px;
+            line-height: 26px;
+        }
+        {#        ul.tab {#}
+        {#            list-style-type: none;#}
+        {#            margin: 0;#}
+        {#            padding: 0;#}
+        {#            overflow: hidden;#}
+        {#            border: 1px solid #ccc;#}
+        {#            background-color: #f1f1f1;#}
+        {#        }#}
+        {##}
+        {#        /* Float the list items side by side */#}
+        {#        ul.tab li {float: left;}#}
+        {##}
+        {#        /* Style the links inside the list items */#}
+        {#        ul.tab li a {#}
+        {#            display: inline-block;#}
+        {#            color: black;#}
+        {#            text-align: center;#}
+        {#            padding: 14px 16px;#}
+        {#            text-decoration: none;#}
+        {#            transition: 0.3s;#}
+        {#            font-size: 17px;#}
+        {#        }#}
+        {##}
+        {#        /* Change background color of links on hover */#}
+        {#        ul.tab li a:hover {#}
+        {#            background-color: #ddd;#}
+        {#        }#}
+        {##}
+        {#        /* Create an active/current tablink class */#}
+        {#        ul.tab li a:focus, .active {#}
+        {#            background-color: #ccc;#}
+        {#        }#}
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        {#        .social_icons_style {#}
+        {#                width: 20%;#}
+        {#                padding:0px;#}
+        {#                display: inline;#}
+        {#                margin-top:15px;#}
+        {#                align:center;#}
+        {#                width: 60% !important;#}
+        {#                align: center;#}
+        {#            }#}
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+        .form-wizard .nav > li.active .menu-icon {
+            background: #07A6C3;
+        }
+        .panel-group .panel+.panel {
+            margin-top:0px;
+        }
+        .progress-img {
+            width: 50%;
+        }
+        .modal {
+            width: 98%;
+        }
+        @media only screen and (max-width: 500px) {
+            .yelpSaveButton {
+                margin-bottom:0px;
+            }
+            .blue-button {
+                background-color: #07A6C3;
+                color: white;
+            {#            border-radius: 20px;#}
+                margin-top: 10px;
+                width: 300px;
+                height: 60px;
+                line-height: 26px;
+            }
+            .images-mobile {
+                width:100%;
+                max-width:100%;
+                max-height:120px;
+                min-height:120px;
+            {#            height:auto;#}
+                overflow: hidden;
+                position: relative;
+            }
+            .progress-img {
+                width: 100%;
+            }
+            .mb-panel-col-md-8 {
+                padding-left:0px;
+                padding-right:0px;
+            }
+            .panel{
+            {#                border:none !important;#}
+            }
+
+            .mb-content-wrapper-child {
+                margin-top:0px;
+            }
+            .mb-panel-body{
+                padding:0px !important;
+            }
+            .mb-row {
+                margin-left: -17px !important;
+                margin-right: -17px !important;
+
+            }
+            .nav-justified {
+                width: 100%;
+            }
+            .nav-justified > li {
+            {#  float: left;#}
+                display: table-cell;
+            }
+            .yelp-heading {
+                font-size: 18px;
+            }
+            .mb-col-xs-12 {
+                padding:0px;
+            }
+            .image-cropper {
+                width: 70px;
+                height: 70px;
+                max-height: 70px;
+                min-height: 70px;
+                max-width:70px;
+                min-width:70px;
+            {#            position: relative;#}
+            {#            overflow: hidden;#}
+            {#            border-radius: 50%;#}
+            {#            background: #eee no-repeat center;#}
+            {#            background-size: cover;#}
+            {#            border-color: darkgray;#}
+            }
+            .company__fonts {
+                font-size: 16px;
+            }
+            .social_icons_style {
+                width: 20%;
+                padding:0px;
+                display: inline;
+                margin-top:15px;
+            }
+
+
+
+        }
+
+        {#   ul.experiences li {#}
+        {#    padding-left: 33px;#}
+        {#    margin-bottom: 2.5em;#}
+        {#    list-style: none;#}
+        {#    background: url('../img/misc/list-bullet-darkgray.png') no-repeat;#}
+        {#    border-left: 1px solid #yourcolor;#}
+        {# } #}
+        {#    @import "compass/css3";#}
+
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+        {% include "vendroid/demo/_partial/_header_vendors.html" %}
+
+        <div class="content">
+            <div class="container">
+
+                {% include "vendroid/demov2/vendors/teamChat/_chatbar.html" %}
+
+                <div class="vd_content-wrapper" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                            <div class="col-md-4 col-md-offset-4 mb-panel-col-md-8">
+                                <div class="panel" >
+                                    <div class="panel-body mb-panel-body" style="padding:0px;">
+
+
+
+                                        <div class="form-wizard text-center">
+                                            {#                                            <ul class="nav nav-pills nav-justified">#}
+                                            {#                                                <li class="active"><a data-toggle="tab" href="#tab61">#}
+                                            {##}
+                                            {#                                                    Setup Account <div class="menu-icon"> <i class="fa fa-check" aria-hidden="true"></i> </div></a></li>#}
+                                            {#                                                <li><a data-toggle="tab" href="#tab62">#}
+                                            {##}
+                                            {#                                                    Optimize Storefront <div class="menu-icon"> <i class="fa fa-check" aria-hidden="true"></i> </div></a></li>#}
+                                            {#                                                <li><a data-toggle="tab" href="#tab63">#}
+                                            {##}
+                                            {#                                                    Send 30 bids for $30 each month <div class="menu-icon">  <i class="fa fa-times" aria-hidden="true"></i></div></a></li>#}
+                                            {#                                            </ul>#}
+                                            <div id="DirectoryRequestDiv">
+                                                {% if not up.is_review_request %}
+                                                    <img src="{% static "images/checklist/check_one.png" %}" class="progress-img" />
+                                                    <br />
+                                                    <button class="btn blue-button" style="margin-bottom: 15px;"  onclick="$('#directoryAccessRegistrationModal').modal('show');
+                                                            {#                                                $('#DirectoryRequestDiv').toggle('hidden');$('#DirectoryAccessDiv').toggle('hidden');#}
+                                                            ">Apply for directory access</button>
+                                                {% else %}
+                                                    {% include "vendroid/demov2/vendors/profile/_partial_submission.html" %}
+                                                {% endif %}
+                                            </div>
+                                            {#                                            <div id="DirectoryRequestDivSubmitted">#}
+                                            {#                                               #}
+                                            {#                                            </div>#}
+                                            {#                                            <div class="col-md-12 col-xs-12" id="DirectoryAccessDiv" hidden>#}
+                                            {#                                                <form action="" method="post" >#}
+                                            {#                                                    <p style="padding-top:20px;">Before applying to access YapJoy Directory, please upload:</p>#}
+                                            {#                                                    <p class="text-left" style="padding-left: 20px;">- 1 minute "team introductory video"<br />#}
+                                            {#                                                        - Profile Picture<br />#}
+                                            {#                                                        - A description about your company<br />#}
+                                            {#                                                        - 10+ photos that represents your work<br />#}
+                                            {#                                                        - 2+ package deals<br />#}
+                                            {#                                                        - Yelp account details#}
+                                            {#                                                    </p>#}
+                                            {##}
+                                            {#                                                    <div class="text-center">#}
+                                            {#                                                        <button class="btn blue-button" type="submit" style="margin-bottom: 20px;">I am ready. Apply!</button>#}
+                                            {#                                                    </div>#}
+                                            {#                                                </form>#}
+                                            {#                                            </div>#}
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        {#                                        <div class="col-sm-12 col-xs-12">#}
+                                        {#                                            <ul id="nav">#}
+                                        {#  <li><a href="#">Team Introductory Video</a>#}
+                                        {#    <section>#}
+                                        {#       <div class="col-xs-12"><video style="background-color: black;" class="video" width="100%" controls>#}
+                                        {#                                                            <source src="" type="video/mp4">#}
+                                        {#                                                            <source src="" type="video/ogg">#}
+                                        {#                                                            Your browser does not support HTML5 video.#}
+                                        {#                                                        </video>#}
+                                        {#                                                            <div class="col-sm-4 col-xs-4">#}
+                                        {#                                                                <img src="{{ up.image.url }}" class="image-cropper"><br>#}
+                                        {##}
+                                        {#                                                            </div>#}
+                                        {#                                                            <div class="col-sm-8 col-xs-8">#}
+                                        {#                                         <p>{{ up.user.get_full_name }}</p>#}
+                                        {#                                                                <h4>{{ company_name }}</h4><br>#}
+                                        {#                                                                {% if up.get_yelp_image  %}#}
+                                        {#                                                                    <img src="{{ up.get_yelp_image }}" class="profileImg">#}
+                                        {#                                                                {% endif %}#}
+                                        {#                                                                <p>{{ up.city }}, {{ up.state }}</p>#}
+                                        {#                                                                {% for tag in up.tag %}#}
+                                        {#                                                                    <p>{{ tag }}</p>#}
+                                        {#                                                                {% endfor %}#}
+                                        {#                                                            </div>#}
+                                        {#                                                        </div>#}
+                                        {#    </section>#}
+                                        {#  </li>#}
+                                        {#  <li><a href="#"><a data-toggle="collapse" href="#collapseTwo"> {% if up.get_yelp_image  %}#}
+                                        {#                                                        <img src="{{ up.get_yelp_image }}" class="profileImg">#}
+                                        {#                                                    {% else %}#}
+                                        {#                                                        No Yelp Rating available#}
+                                        {#                                                    {% endif %} </a> </a>#}
+                                        {#    <section>#}
+                                        {#      <p>Ut laoreet augue et neque pretium non sagittis nibh pulvinar. Etiam ornare tincidunt orci quis ultrices. Pellentesque ac sapien ac purus gravida ullamcorper. Duis rhoncus sodales lacus, vitae adipiscing tellus pharetra sed. Praesent bibendum lacus quis metus condimentum ac accumsan orci vulputate. Aenean fringilla massa vitae metus facilisis congue. Morbi placerat eros ac sapien semper pulvinar. Vestibulum facilisis, ligula a molestie venenatis, metus justo ullamcorper ipsum, congue aliquet dolor tortor eu neque. Sed imperdiet, nibh ut vestibulum tempor, nibh dui volutpat lacus, vel gravida magna justo sit amet quam. Quisque tincidunt ligula at nisl imperdiet sagittis. Morbi rutrum tempor arcu, non ultrices sem semper a. Aliquam quis sem mi.</p>#}
+                                        {#     </section>#}
+                                        {#  </li>#}
+                                        {#  <li><a href="#">About Us </a>#}
+                                        {#    <section>#}
+                                        {#      <p>Donec mattis mauris gravida metus laoreet non rutrum sem viverra. Aenean nibh libero, viverra vel vestibulum in, porttitor ut sapien. Phasellus tempor lorem id justo ornare tincidunt. Nulla faucibus, purus eu placerat fermentum, velit mi iaculis nunc, bibendum tincidunt ipsum justo eu mauris. Nulla facilisi. Vestibulum vel lectus ac purus tempus suscipit nec sit amet eros. Nullam fringilla, enim eu lobortis dapibus, quam magna tincidunt nibh, sit amet imperdiet dolor justo congue turpis.</p>#}
+                                        {#    </section>#}
+                                        {#  </li>#}
+                                        {#  <li><a href="#">Package Deals </a>#}
+                                        {#    <section>#}
+                                        {#         <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus dui urna, mollis vel suscipit in, pharetra at ligula. Pellentesque a est vel est fermentum pellentesque sed sit amet dolor. Nunc in dapibus nibh. Aliquam erat volutpat. Phasellus vel dui sed nibh iaculis convallis id sit amet urna. Proin nec tellus quis justo consequat accumsan. Vivamus turpis enim, auctor eget placerat eget, aliquam ut sapien.</p>#}
+                                        {#    </section>#}
+                                        {#  </li><li><a href="#">Pictures </a>#}
+                                        {#    <section>#}
+                                        {#         <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus dui urna, mollis vel suscipit in, pharetra at ligula. Pellentesque a est vel est fermentum pellentesque sed sit amet dolor. Nunc in dapibus nibh. Aliquam erat volutpat. Phasellus vel dui sed nibh iaculis convallis id sit amet urna. Proin nec tellus quis justo consequat accumsan. Vivamus turpis enim, auctor eget placerat eget, aliquam ut sapien.</p>#}
+                                        {#    </section>#}
+                                        {#  </li>#}
+                                        {#</ul>#}
+                                        {#                                        </div>#}
+                                        {#                                    <div class="clearfix"></div>#}
+                                        <div class="panel-group" id="accordion">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading vd_bg-green vd_bd-green" style="background-color: white !important;">
+                                                    <h4 class="panel-title">
+                                                        {#                                                        <a  data-toggle="collapse" href="#collapseOne"> #}
+                                                        Team Introductory Video
+                                                        {#                                                    </a> #}
+                                                        <a class="pull-right" onclick="$('#uploadVideoDiv').toggle('hidden');"><img style="height: 20px;color: grey;cursor:pointer;" src="{% static "images/vendorProfile/Upload.png" %}" /></a> </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel collapse in" style="border:0px !important;" >
+                                                    <div class="panel-body mb-panel-body" style="padding:0px;">
+                                                        <div class="col-xs-12 mb-col-xs-12" style="padding-left:0px;padding-right:0px;">
+                                                            <div>
+                                                                {#                                            <h3 style="align-content:center;">Create an Introductory Video</h3><button class="btn pull-right" id="ID_btnVideo">Upload</button><br>#}
+                                                                <div class="col-md-12 col-xs-12" id="uploadVideoDiv" hidden>
+                                                                    <form action="" method="post" enctype="multipart/form-data" id="videoUploaderForm">
+                                                                        <p>An Opportunity to introduce your team to engaged couples.</p>
+                                                                        <p>Get your whole team behind one camera and tell couples why you do what you do.</p>
+                                                                        <p><b>Guidelines</b>
+                                                                            <br />90 seconds or less<br />
+                                                                            One continuous shot<br />
+                                                                            No after effects</p>
+                                                                        <p><b>Tips</b><br />
+                                                                            Use your phone to record and upload. <br />Ensure that your voice sounds clear</p>
+                                                                        <p><b>File format</b><br />
+                                                                            Widescreen 16:9<br />.mp4, .avi or .mov</p>
+                                                                        {{ videoForm.as_p }}
+                                                                        {#                                                                    {{ videoUrl }}#}
+                                                                        <input name="uploadVideo" id="uploadVideo" hidden />
+                                                                        <div class="text-center" id="teamVideoUploader">
+                                                                            {#                                                                            <div class="col-md-12">#}
+                                                                            <img id="uploading_image" src="" />
+                                                                            {#                                                                            </div>#}
+                                                                            <button class="btn blue-button" type="submit" id="videoUploadbutton" style="margin-bottom: 20px;">Upload Team Video</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                                {#                                                                <input id="ID_videoUrl" hidden onkeyup="saveVideoUrl(this)">#}
+                                                                {#                                            <script>#}
+                                                                {##}
+                                                                {#                                            </script>#}
+                                                                {#                                            <br>#}
+                                                                {#                                            {% if videoUrl %}#}
+                                                                <div id="ID_VideoShow">
+                                                                    {% include "vendroid/demov2/vendors/profile/_partial_video.html" %}
+                                                                </div>
+                                                                {#                                                                {% if not videoUrl %}#}
+                                                                {#                                                                    <p>#}
+                                                                {#                                                                        Please upload your video Url#}
+                                                                {#                                                                    </p>#}
+                                                                {#                                                                {% endif %}#}
+
+
+                                                                <div class="col-md-12 col-xs-12">
+                                                                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding:10px;" id="profile-image-id">
+                                                                        <img src="{{ up.image.url }}" class="image-cropper" id="profile_image_update">
+{#                                                                        <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>#}
+
+                                                                    </div>
+                                                                    <div class="col-md-9 col-sm-9 col-xs-9" style="padding:10px;margin-top:14px">
+                                                                        {#                                                                                                         <p>{{ up.user.get_full_name }}</p>#}
+                                                                        <h3 style="cursor: pointer;" class="company__fonts" id="company__name__id">{{ company_name }} <span id="company__name__icon" hidden><i  class="fa fa-pencil" aria-hidden="true"></i></span></h3>
+                                                                        {#                                                                {% if up.get_yelp_image  %}#}
+                                                                        {#                                                                    <img src="{{ up.get_yelp_image }}" class="profileImg">#}
+
+
+
+
+
+                                                                        {#                                                                {% endif %}#}
+                                                                        <h3 style="cursor: pointer;" class="company__fonts" id="company__location__id"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ up.city }}, {{ up.state }} <span id="company__location__icon" hidden><i  class="fa fa-pencil" hidden aria-hidden="true"></i></span></h3>
+                                                                        {#                                                                {% for tag in up.tag %}#}
+                                                                        {#                                                                    <p>{{ tag }}</p>#}
+                                                                        {#                                                                {% endfor %}#}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default" id="yelpPanel">
+                                                    {% include "vendroid/demov2/vendors/profile/_partial_yelp.html" %}
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading vd_bg-green vd_bd-green">
+                                                        <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseThree" > About Us
+{#                                                            <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>#}
+                                                        </a> </h4>
+
+                                                    </div>
+                                                    <div id="collapseThree" class="panel  collapse in">
+
+                                                        <div class="panel-body mb-panel-body" style="padding:0px;">
+                                                            {% include "vendroid/demov2/vendors/profile/_partial_about.html" %}
+                                                        </div>
+                                                        <div class="panel-body mb-panel-body" style=";padding:0px;">
+                                                            {% include "vendroid/demov2/vendors/profile/_partial_about_desc.html" %}
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading vd_bg-green vd_bd-green">
+                                                        <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseFour" > Package Deals <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i></a> </h4>
+                                                    </div>
+                                                    <div id="collapseFour" class="panel collapse in">
+                                                        <div class="panel-body" style="padding:15px !important;">
+                                                            {% include "vendroid/demov2/vendors/profile/_partial_deals.html" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading vd_bg-green vd_bd-green">
+                                                        <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseFive" > Pictures <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i></a> </h4>
+                                                    </div>
+                                                    <div id="collapseFive" class="panel collapse in">
+                                                        <div class="panel-body mb-panel-body">
+                                                            {% include "vendroid/demov2/vendors/profile/_partial_photos.html" %}
+
+                                                            {#                                                            <a  href="{% url "support" %}" class="btn vd_btn btn-block" style="background-color: white; color: #07A6C3; border-radius: 20px ;font-family: 'San Francisco' !important;font-weight:200;border:2px solid #07A6C3;">Support</a>#}
+                                                            {#                                                            <a  href="{% url "vendors__storefront" %}" class="btn vd_btn btn-block" style="background-color: white; color: #07A6C3; border-radius: 20px ;font-family: 'San Francisco' !important;font-weight:200;border:2px solid #07A6C3;">Settings</a>#}
+{#                                                            <a  href="mailto:?subject=YapJoy - It Takes a Team (Invitation)&body=Discover weddings that fit your schedule, pricing, and style.#}
+{##}
+{#It is just $1 to send each offer!#}
+{##}
+{#Setup your Storefront today!#}
+{#yapjoy.com/login/professional#}
+{#ᐧ" class="btn vd_btn btn-block" style="background-color: white; color: #07A6C3; border-radius: 20px ;font-family: 'San Francisco' !important;font-weight:200;border:2px solid #07A6C3;">Share YapJoy</a>#}
+{#                                                            <a  href="{% url "logout__vendor" %}" class="btn vd_btn btn-block" style="background-color: white; color: #07A6C3; border-radius: 20px ;font-family: 'San Francisco' !important;font-weight:200;border:2px solid #07A6C3;">Logout</a>#}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {#                                                <div class="panel panel-default">#}
+                                                {#                                                    <div class="panel-heading vd_bg-green vd_bd-green">#}
+                                                {#                                                        <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseFive" > Pictures </a> </h4>#}
+                                                {#                                                    </div>#}
+                                                {#                                                    <div id="collapseFive" class="panel collapse in">#}
+                                                {#                                                        <div class="panel-body">#}
+                                                {#                                                            <div class="col-md-4 col-md-offset-4 col-xs-12 text-center">#}
+                                                {#                                               #}
+                                                {##}
+                                                {##}
+                                                {#                                            </div>#}
+                                                {#                                                        </div>#}
+                                                {#                                                    </div>#}
+                                                {#                                                </div>#}
+
+                                            </div>
+                                            {#                                                                            <div class="col-sm-12">#}
+                                            {#                                                                                <div class="col-sm-4">#}
+                                            {#                                                                                    <img src="{{ up.image.url }}" class="image-cropper"><br>#}
+                                            {#                                                                                    <p>{{ up.user.get_full_name }}</p>#}
+                                            {#                                                                                </div>#}
+                                            {#                                                                                <div class="col-sm-8">#}
+                                            {#                                                                                    <h4>{{ company_name }}</h4><br>#}
+                                            {#                                                                                    {% if up.get_yelp_image  %}#}
+                                            {#                                                                                        <img src="{{ up.get_yelp_image }}" class="profileImg">#}
+                                            {#                                                                                    {% endif %}#}
+                                            {#                                                                                    <p>{{ up.city }}, {{ up.state }}</p>#}
+                                            {#                                                                                    {% for tag in up.tag %}#}
+                                            {#                                                                                        <p>{{ tag }}</p>#}
+                                            {#                                                                                    {% endfor %}#}
+                                            {#                                                                                </div>#}
+                                            {#                                                                            </div>#}
+
+                                            <!--tab 1-->
+                                            {#                                        <ul class="tab">#}
+                                            {#                                            <li><a href="javascript:void(0)" class="tablinks" onclick="openTopTab(event, 'tab1')" id="defaultOpen">Preview Profile</a></li>#}
+                                            {#                                            <li><a href="javascript:void(0)" class="tablinks" onclick="openTopTab(event, 'tab2')">Edit Tags</a></li>#}
+                                            {#                                            <li><a href="javascript:void(0)" class="tablinks" onclick="openTopTab(event, 'tab3')">Profile Settings</a></li>#}
+                                            {#                                        </ul>#}
+
+                                            {#                                        <div id="tab1" class="tabcontent">#}
+                                            {#                                  <h3>Preview Profile</h3>#}
+                                            {#                                        </div>#}
+                                            {##}
+                                            {#                                        <div id="tab2" class="tabcontent">#}
+                                            {#                                  <h3>Edit Tags</h3>#}
+                                            {#                                        </div>#}
+                                            {##}
+                                            {#                                        <div id="tab3" class="tabcontent">#}
+                                            {#                                  <h3>Profile Settings</h3>#}
+                                            {#                                        </div>#}
+
+                                            <!--Video URL--->
+                                            {#                                        <hr>#}
+                                            {#                                        <div>#}
+                                            {#                                            <h3 style="align-content:center;">Create an Introductory Video</h3><button class="btn pull-right" id="ID_btnVideo">Upload</button><br>#}
+                                            {#                                            <input class="" id="ID_videoUrl" hidden onkeyup="saveVideoUrl(this)">#}
+                                            {#                                            <script>#}
+                                            {##}
+                                            {#                                            </script>#}
+                                            {#                                            <br>#}
+                                            {#                                            {% if videoUrl %}#}
+                                            {#                                                <div id="ID_VideoShow">#}
+                                            {#                                                    {% include "vendroid/demov2/vendors/profile/_partial_video.html" %}#}
+                                            {#                                                </div>#}
+                                            {#                                            {% else %}#}
+                                            {#                                                <p>#}
+                                            {#                                                    Please upload your video Url#}
+                                            {#                                                </p>#}
+                                            {#                                            {% endif %}#}
+                                            {##}
+                                            {#                                        </div>#}
+                                            {##}
+                                            {#                                        <!--Major tabs--->#}
+                                            {#                                        <ul class="tab">#}
+                                            {#                                            <li><a href="javascript:void(0)" class="tablinksBtm fa fa-file-photo-o " onclick="openBottomTab(event, 'Photos')" id="defaultOpenBottomTab">Photos</a></li>#}
+                                            {#                                            <li><a href="javascript:void(0)" class="tablinksBtm fa fa-user" onclick="openBottomTab(event, 'About')">About</a></li>#}
+                                            {#                                            <li><a href="javascript:void(0)" class="tablinksBtm fa fa-tag" onclick="openBottomTab(event, 'Deals')">Deals</a></li>#}
+                                            {#                                            <li><a href="javascript:void(0)" class="tablinksBtm fa fa-pencil-square-o" onclick="openBottomTab(event, 'Reviews')">Reviews</a></li>#}
+                                            {#                                        </ul>#}
+                                            {##}
+                                            {#                                        <div id="Photos" class="tabcontentBtm">#}
+                                            {#                                        {% include "vendroid/demov2/vendors/profile/_partial_photos.html" %}#}
+                                            {#                                        </div>#}
+                                            {##}
+                                            {#                                        <div id="About" class="tabcontentBtm">#}
+                                            {#                                            {% include "vendroid/demov2/vendors/profile/_partial_about.html" %}#}
+                                            {#                                        </div>#}
+                                            {##}
+                                            {#                                        <div id="Deals" class="tabcontentBtm">#}
+                                            {#                                            {% include "vendroid/demov2/vendors/profile/_partial_deals.html" %}#}
+                                            {#                                        </div>#}
+                                            {##}
+                                            {#                                        <div id="Reviews" class="tabcontentBtm">#}
+                                            {#                                            {% include "vendroid/demov2/vendors/profile/_partial_reviews.html" %}#}
+                                            {#                                        </div>#}
+
+
+                                        </div>
+                                    </div>
+
+                                    <!--Stength panel-->
+                                    {#                                <div class="col-sm-4">#}
+                                    {#                                    <h3>Storefront Strength</h3>#}
+                                    {#                                </div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+        {% include "vendroid/demov2/vendors/profile/_partial_modals.html" %}
+    </div>
+    </div>
+{% endblock content %}
+{% block footer %}
+    {% include "vendroid/demov2/vendors/teamChat/_footer.html" %}
+{% endblock footer %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+
+            $('#nav').children('li').first().children('a').addClass('active')
+                .next().addClass('is-open').show();
+
+            $('#nav').on('click', 'li > a', function() {
+
+                if (!$(this).hasClass('active')) {
+
+                    $('#nav .is-open').removeClass('is-open').hide();
+                    $(this).next().toggleClass('is-open').toggle();
+
+                    $('#nav').find('.active').removeClass('active');
+                    $(this).addClass('active');
+                } else {
+                    $('#nav .is-open').removeClass('is-open').hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+        //Video upload url
+        var i = 0;
+        $("#ID_btnVideo").click(function(){
+            if (i == 0){
+                $("#ID_videoUrl").show();
+                i = 1;
+            } else {
+                $("#ID_videoUrl").hide();
+                i = 0
+            }
+        });
+
+        function saveVideoUrl(obj){
+            var url = obj.value;
+            console.log("url is ", url);
+            $("#ID_videoUrl").hide();
+
+            if (url.length == 0){
+                alert("Please enter something if you would like to upload the video")
+            } else {
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {'videoUrl': url},
+
+                    success: function (response) {
+                        $("#ID_VideoShow").html(response);
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        alert("change video failed");
+                    }
+                });
+            }
+        }
+
+
+        //Tab 1
+        $("#defaultOpen").click();
+        function openTopTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = $(".tabcontent");
+
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = $(".tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            {#            evt.currentTarget.className += " active";#}
+        }
+
+        //Tab 2
+        $("#defaultOpenBottomTab").click();
+        function openBottomTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = $(".tabcontentBtm");
+
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = $(".tablinksBtm");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            {#            evt.currentTarget.className += " active";#}
+        }
+        {#        $.ajax({#}
+        {#          xhr: function() {#}
+        {#            var xhr = new window.XMLHttpRequest();#}
+        {##}
+        {#            xhr.upload.addEventListener("progress", function(evt) {#}
+        {#              if (evt.lengthComputable) {#}
+        {#                var percentComplete = evt.loaded / evt.total;#}
+        {#                percentComplete = parseInt(percentComplete * 100);#}
+        {#                console.log(percentComplete);#}
+        {##}
+        {#                if (percentComplete === 100) {#}
+        {##}
+        {#                }#}
+        {##}
+        {#              }#}
+        {#            }, false);#}
+        {##}
+        {#            return xhr;#}
+        {#          },#}
+        {#          url: posturlfile,#}
+        {#          type: "POST",#}
+        {#          data: JSON.stringify(fileuploaddata),#}
+        {#          contentType: "application/json",#}
+        {#          dataType: "json",#}
+        {#          success: function(result) {#}
+        {#            console.log(result);#}
+        {#          }});#}
+        $('#profile-image-id').on('click',function(){
+            $('#EditProfileImage').modal('show');
+        });
+        $('#profile_complete_form').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#directory_access_button').attr('disabled','disabled')
+            $('#directory_access_button').html('Requesting, Please wait.')
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: $(this).serialize(),
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#directory_access_button_success').toggle('hidden')
+                    $('#profile_complete_form').toggle('hidden')
+                    $('#directory_access_button').html('')
+                    $('#DirectoryRequestDiv').html(response)
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+
+        $('#profile_image_form').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#update_image_button').attr('disabled','disabled')
+            $('#update_image_button').html('Uploading, Please wait.')
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#update_image_button').html('Upload')
+                    $('#EditProfileImage').modal('hide')
+                    $('#profile_image_update').attr('src',response)
+                    $('#update_image_button').removeAttr('disabled')
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+        $('#AlbumPictureRemoveForm').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            {#            $('#update_image_button').attr('disabled','disabled')#}
+            {#            $('#update_image_button').html('Uploading, Please wait.')#}
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    {#                    $('#update_image_button').html('Upload')#}
+                    {#                    $('#EditProfileImage').modal('hide')#}
+                    $('#all_images').html(response);
+                    $('#AlbumPictureView').modal('hide');
+                    {#                    $('#update_image_button').removeAttr('disabled')#}
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    $('#directory_access_button').removeAttr('I am ready. Apply!')
+                }
+            });
+
+        })
+
+        $('#videoUploaderForm').on('submit',function(event){
+            event.preventDefault();
+            //alert('submit form profile')
+            $('#videoUploadbutton').attr('disabled','disabled')
+            $('#uploading_image').attr('src', '{% static "images/vendorProfile/dots64.gif" %}')
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: "POST",
+                cache:false,
+                contentType: false,
+                processData: false,
+                data: formData,
+
+                success: function (response) {
+                    {#                        alert('success')#}
+                    // alert(response)
+                    {#                        $('#directoryAccessRegistrationModal').modal('hide')#}
+                    $('#ID_VideoShow').html(response);
+                    $('#videoUploadbutton').removeAttr('disabled')
+                    $('#uploading_image').attr('hidden', 'hidden')
+                    $('#uploadVideoDiv').toggle('hidden')
+                    {#                        $('#EditProfileImage').modal('hide')#}
+                    {#                        $('#profile_image_update').attr('src',response)#}
+                    {#                        $('#update_image_button').removeAttr('disabled')#}
+                    {#                        $('#profile_complete_form').toggle('hidden')#}
+                    {#                        $('#directory_access_button').html('')#}
+                    {#                        $('#DirectoryRequestDiv').html(response)#}
+                    {#                        $('#directory_access_button').removeAttr('disabled')#}
+                    {#                        $('#directory_access_button').html('Apply for Dictionary Access')#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("System busy at the moment, please try again later.");
+                    {#                        $('#directory_access_button').removeAttr('I am ready. Apply!')#}
+                }
+            });
+
+        })
+        function updateYelp(){
+            var name = $('#ID_yelpName').val().trim();
+            var zip = $('#ID_yelpZip').val().trim();
+            console.log("txt is ", name, zip);
+
+            if ((name.length == 0) || (zip.length == 0)) {
+                alert("Please fill up all the fields")
+            } else {
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {'YelpName': name,
+                        'YelpZip': zip
+                    },
+                    success: function (response) {
+                        $("#yelpPanel").html(response);
+                    },
+
+                    error: function (xhr, errmsg, err) {
+                        alert("change description failed");
+                    }
+                });
+            }
+        }
+        {#        $('#company__name__id').mouseover(function() {#}
+        {#            $('#company__name__icon').show();#}
+        {#        });#}
+        {#        $('#company__location__id').mouseover(function() {#}
+        {#            $('#company__location__icon').show();#}
+        {#        });#}
+        $("#company__name__id").on("mouseenter", function() {
+            $("#company__name__icon").show();
+        }).on("mouseleave", function() {
+            $("#company__name__icon").hide();
+        });
+        $("#company__location__id").on("mouseenter", function() {
+            $("#company__location__icon").show();
+        }).on("mouseleave", function() {
+            $("#company__location__icon").hide();
+        });
+        $("#company__name__id,#company__location__id").on('click',function(){
+            window.location.href = "{% url "vendors__storefrontEdit" %}";
+        })
+
+    </script>
+
+{% endblock script %}

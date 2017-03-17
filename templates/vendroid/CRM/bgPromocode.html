@@ -1,0 +1,270 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <style>
+        {#  th{#}
+        {#    font-size: 15px;#}
+        {#  }#}
+        {#  td{#}
+        {#    font-size: 10px;#}
+        {#    word-break: break-all;#}
+        {#  }#}
+
+        .pagination{
+            font-size:15px;
+        }
+
+        .dataTables_wrapper{
+        {#    width: 200px !important;#}
+        {#    max-width:200px;#}
+            overflow-x: scroll;
+        }
+    </style>
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    {#    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+    {#    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+    {#    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>#}
+    {#    <script>#}
+    {#    $(function () {#}
+    {#            $('#id_wedding_date').datepicker();#}
+    {#            $("#id_wedding_date").datetimepicker({#}
+    {#             'showTimepicker': false,#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    {#<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
+    <style>
+        .red {
+            color: red;
+        }
+        textarea {
+            height: 80px;
+        }
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+    .dataTables_filter pull-right{
+        margin-top: -80px;
+    }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="clearfix">
+
+                                <!-- vd_title-section -->
+
+                                <div class="vd_content-section clearfix">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget">
+                                                <div class="panel-body">
+
+                                                    <br>
+                                                    <div class="tab-content mgbt-xs-20">
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+                                                                {% include "vendroid/CRM/partial/_header_inside.html" %}
+
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+
+                                                                         <form action="" method="post" id="searchForm">
+                                                                            {% csrf_token %}
+                                                                            <div class="col-md-4" style="padding: 0px;">
+
+                                                                                <form method="post" id="edit_promocode_form">
+                                                                                    {% csrf_token %}
+
+                                                                                    {{ form.as_p  }}
+                                                                                    <div id="promo_error"></div>
+                                                                                    <input type="submit" id="submit_promo" name="submit" class="btn vd_btn btn-brown " value="Create"/>
+                                                                                    <input type="button" id="edit_promocode" name="submit_edit" class="btn vd_btn btn-brown " value="Edit" disabled/>
+                                                                                </form>
+                                                                            <br />
+
+                                                                            </div>
+{#                                                                            <div class="col-md-6"><button class="btn vd_btn btn-brown pull-left" style="margin-left: 10px;" id="search-btn" type="submit" style="margin-bottom: 20px;">SEARCH</button></div>#}
+                                                                            <br />
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="panel-heading vd_bg-grey">
+                                                                            <h3 class="panel-title text-center"> <span class="menu-icon">  </span> PROMOCODE TICKETS</h3>
+                                                                        </div>
+                                                                        <div id="grid_table">
+                                                                                        {% autopaginate promocode 10 %}
+                                                                            {% include "vendroid/CRM/partial/_grid_promocode.html" %}
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br><br>
+                                            </div>
+                                        </div>
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2016 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+    {#  <script src="{% static "js/chosen.jquery.min.js" %}"></script>#}
+    {##}
+    {#    <script type="text/javascript">#}
+    {##}
+    {#        if($("#to").length > 0){#}
+    {#            $("#to").chosen();#}
+    {#        }#}
+    {#    </script>#}
+
+
+{% endblock content %}
+{% block script %}
+     <script src="{% static "vendroid/plugins/dataTables/table2CSV.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var id;
+            $("#button-id input:button").click(function () {
+                id = $(this).attr("data-id");
+
+                $.ajax({
+                    url: "/crm/bridegroom/bg/promo/populate/"+id,
+                    type: "GET",
+
+                    success: function (data) {
+                        console.log('in error promo ajax: ', data);
+                        $("#id_code").val(data['code']);
+                        $("#id_amount_percent").val(data['amount']);
+                        $("#id_type").val(data['type']);
+                        if (data['is_available'] == true)
+                            $("#id_is_Available").prop('checked', true);
+                        else
+                            $("#id_is_Available").prop('checked', false);
+
+                        $("#edit_promocode").prop('disabled', false)
+                        $("#submit_promo").prop('disabled', true)
+                    },
+
+                    error: function(error) {
+{#                        console.log("error: "+error.message);#}
+
+                    }
+                })
+            });
+
+            $("#edit_promocode").click(function () {
+
+                $.ajax({
+                    url: "/crm/bridegroom/bg/promo/edit/",
+                    type: "POST",
+                    data: {
+                        'id':id,
+                        'code':$("#id_code").val(),
+                        'amount':$("#id_amount_percent").val(),
+                        'type':$("#id_type").val(),
+                        'is_available': $("#id_is_Available").prop('checked')
+                    },
+                    success: function (data) {
+                        if (data == "success")
+                        {
+                            console.log("data", data);
+                            $("#promo_error").html("PromoCode change successfully");
+                            $("#promo_error").css({"color":"green"});
+                            location.reload();
+                        }
+                    },
+
+                    error: function(error) {
+                        console.log("error: "+error.message);
+
+                    }
+                })
+            });
+
+        } );
+    </script>
+
+
+{% endblock script %}

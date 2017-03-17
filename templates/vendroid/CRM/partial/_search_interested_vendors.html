@@ -1,0 +1,229 @@
+{% load pagination_tags %}
+
+
+{% if event %}
+    <div class="panel-body table-responsive">
+        <div class="dataTables_wrapper form-inline no-footer"
+             id="data-tables_wrapper">
+            {#            {%  if not view_all %}#}
+            {#                {% autopaginate event 20 %}#}
+            {#            {% endif %}#}
+            <table aria-describedby="data-tables_info" role="grid"
+                   class="table table-striped dataTable no-footer" id="data-tables">
+                <thead>
+                <tr role="row">
+                    {#                                                      <th>Registration ID#}
+                    {#                                                      </th>#}
+
+                    <th>
+                        Vendor's Name
+                    </th>
+                    <th>
+                        Company
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    {#                                                                  <th>Event Registered#}
+                    {#                                                                  </th>#}
+                    <th>
+                        Created at
+                    </th>
+                    {#                                                      <th>#}
+                    {#                                                          Status#}
+                    {#                                                      </th>#}
+                    {#                                                                  <th>#}
+                    {#                                                                      Invoices#}
+                    {#                                                                  </th>#}
+
+                    {#                                                                  <th>#}
+                    {#                                                                      Sales#}
+                    {#                                                                  </th>#}
+                </tr>
+                </thead>
+
+                <tbody>
+                {#                                                              {% autopaginate events 10 %}#}
+                {% for event in event %}
+                    <tr role="row" class="gradeA odd">
+                        {#                                                          <td>{{ event.id }}</td>#}
+                        <td><a target="_blank" id="id_vendor_name" href="{% url "interested_contractor_detail" event.id %}" style="color:dodgerblue">{{ event.name }}</a></td>
+                        <td>{{ event.business_name }}</td>
+                        <td>{{ event.phone }}</td>
+                        <td>{{ event.email }}</td>
+                        <td>{{ event.category }}</td>
+                        {#                                                                      <td>{% for event_ob in event.event.all %}{{ event_ob.name }}<br />{% endfor %}</td>#}
+                        <td>{{ event.created_at|date:"Y-m-d" }}</td>
+                        {#                                                          <td>{{ event.status }}</td>#}
+                        {#                                                                      <td><a href="{%  url "event_invoice_detail" event.id   %}" class="btn vd_btn btn-brown">View invoice</a></td>#}
+                        {#                                                                      <td>{% if event.sales  %}#}
+                        {#                                                                            <div class="salesNow">{{event.sales.get_full_name }}</div>#}
+                        {#                                                                          {% else %}#}
+                        {#                                                                            No sales#}
+                        {#                                                                          {% endif %}#}
+                        {#                                                              <a onclick="chooseSales({{ event.id }})" class="btn vd_btn btn-brown">Assign To</a>#}
+                        {#                                                                          <div class="dropdown">#}
+                        {#                                                                              <button class="btn vd_btn btn-brown dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Assign Sales#}
+                        {#                                                                              <span class="caret"></span></button>#}
+                        {#                                                                              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
+                        {#                                                                                  {% for sales in salesCandidates %}#}
+                        {#                                                                                    <li role="presentation"><a role="menuitem" onclick="chooseSales({{ event.id}}, {{sales.id}});">{{ sales.get_full_name }}</a></li>#}
+                        {#                                                                                  {% endfor %}#}
+                        {#                                                                              </ul>#}
+                        {#                                                                            </div>#}
+                        {#                                                                      </td>#}
+                        {#                                                          <td><a href="/crm/invoices/edit/{{ event.id }}" class="btn vd_btn btn-brown">Edit invoice</a></td>#}
+                    </tr>
+                {% endfor %}
+                {#                                                              {% paginate %}#}
+                </tbody>
+
+            </table>
+            {#            {% if not view_all %}#}
+            {#                {% paginate %}#}
+            {#            {% endif %}#}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if contracted %}
+    {#    {% if not view_all %}#}
+    {#        {% autopaginate events 20 %}#}
+    {#    {% endif %}#}
+    <table aria-describedby="data-tables_info"
+           role="grid"
+           class="table table-striped dataTable no-footer"
+           id="data-tables">
+        <thead>
+        <tr role="row">
+            <th>
+                Vendor's Name
+            </th>
+            <th>
+                Company
+            </th>
+            <th>Show Signed Up
+            </th>
+            <th>Total Amount
+            </th>
+            <th>Balance Due</th>
+            <th>Status</th>
+            <th>Created at</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for con in contracted %}
+            <tr role="row"
+                class="gradeA odd">
+                <td><a target="_blank"
+                       href="{% url "contracted_contractor_detail" con.id %}"
+                       style="color:dodgerblue">{{ con.name }}</a>
+                </td>
+                <td>{{ con.business_name }}</td>
+                <td>{{ con.event.name }}
+                    - {{ con.event.date }}</td>
+                <td>
+                    ${{ con.total_amount }}</td>
+                <td>
+                    ${{ con.amount_due }}</td>
+                <td>
+                    {{ con.have_invoices }}
+                    {#                    {% if con.status == "Deleted" %}#}
+                    {#                        Deleted#}
+                    {#                    {% else %}#}
+                    {#                        {% if con.total_amount == 0 %}#}
+                    {#                            {% if con.have_invoices %}#}
+                    {#                                Paid#}
+                    {#                            {% else %}#}
+                    {#                                No#}
+                    {#                                invoice#}
+                    {#                                available{% endif %}{% else %}#}
+                    {#                            {% if con.amount_due == 0 %}#}
+                    {#                                Paid#}
+                    {#                            {% else %}#}
+                    {#                                <span style="color:red;">Unpaid</span>#}
+                    {#                            {% endif %}#}
+                    {#                        {% endif %}{% endif %}#}
+                </td>
+
+                <td>{{ con.created_at|date:"Y-m-d" }}</td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+    {#    {% if not view_all %}#}
+    {#        {% paginate %}#}
+    {#    {% endif %}#}
+{% endif %}
+
+
+{% if bridegrooms %}
+
+    <table aria-describedby="data-tables_info" role="grid"
+           class="table table-striped dataTable no-footer" id="data-tables">
+        <thead>
+        <tr role="row">
+            <th>
+                Name
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                Zip
+            </th>
+            <th>Looking For
+            </th>
+            <th>Wedding Date
+            </th>
+            <th>
+                Comments
+            </th>
+            <th>
+                How heard
+            </th>
+            <th>
+                Event
+            </th>
+            <th>Las Vegas Sign In?
+            </th>
+            <th>Created at</th>
+        </tr>
+        </thead>
+        <tbody>
+        {#                                                  {% autopaginate bgUsers 10 %}#}
+        {% for userprofile in bridegrooms %}
+            <tr role="row" class="gradeA odd">
+                <td><a target="_blank" href="{% url "bride_detail" userprofile.id %}">{{  userprofile.name }}</a></td>
+                <td>{{  userprofile.phone }}</td>
+                <td>{{  userprofile.email }}</td>
+                <td>{{  userprofile.city }}</td>
+                <td>{{  userprofile.zip }}</td>
+                <td>{{  userprofile.looking_for }}</td>
+                <td>{{  userprofile.weddingDate }}</td>
+                <td>{{  userprofile.comments }}</td>
+                <td>{{  userprofile.how_heard }}</td>
+                <td>{{  userprofile.event }}</td>
+                <td>{{  userprofile.is_lasVegasSignIn }}</td>
+                <td>{{  userprofile.created_at }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

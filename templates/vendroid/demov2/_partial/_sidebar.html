@@ -1,0 +1,86 @@
+<style>
+    .vd_menu a:hover {
+    {#        color: blue;#}
+        background-color: #d6e3f0 !important;
+    }
+    .vd_menu a {
+        color: black;
+    }
+    .vd_menu > ul > li > a {
+        border: none;
+    }
+</style>
+<div class="vd_navbar vd_nav-width vd_navbar-tabs-menu vd_navbar-left  " style="background-color: white;color: black;">
+
+    <div class="navbar-menu clearfix">
+        <a href="{% url "select" %}" class="btn vd_btn"  style="background-color: white; color: lightgrey;border:2px solid lightgrey; border-radius: 20px; margin: 35px;width:150px;height:40px;line-height: 26px;">+teammate</a>
+        <div class="vd_menu">
+            <ul class="sidebar-slider">
+                {% for prod in products %}
+                    {#                                                                    <li class="tl-item {% if prod.id == product.id %}active-product{% endif %}" id="prod-active-id-{{ prod.id }}">#}
+                    {#                                                                        <div#}
+                    {#                                                                                {% if prod.id == product.id %}style="background-color: rgb(7,160,195) !important;" {% else %}#}
+                    {#                                                                                style="background-color: #d9d9d9;"#}
+                    {#                                                                                {% endif %}#}
+                    {#                                                                                class="tl-icon success"><i#}
+                    {#                                                                                class="fa fa-book"></i></div>#}
+                    {#                                                                        <div class="tl-label panel widget light-widget ">#}
+                    {#                                                                            <div class="panel-body">#}
+                    {#                                                                                <a#}
+                    {#                                                                                        style="cursor: pointer;"#}
+                    {#                                                                                        href="/demov2/plans/{{ prod.id }}/"#}
+                    {#                                                                                        onclick="changeProduct(product_cat_name_val='{{ prod.category.name }}', product_id_val='{{ prod.id }}', product_cat_id_val='{{ prod.category_id }}', product_title_val='{{ prod.title }}');"#}
+                    {#                                                                                >#}
+                    {#                                                                                    <h4 style="margin-top:15px;#}
+                    {#                                                                                            {% if prod.id == product.id %}color:  #07A6C3 !important;{% else %}#}
+                    {#                                                                                                color: #d9d9d9;#}
+                    {#                                                                                            {% endif %}#}
+                    {#                                                                                            ">{{ prod.title }}</h4>#}
+                    {#                                                                                </a>#}
+                    {#                        <span>xx months left</span>#}
+                    {#                        <!-- comments -->#}
+                    {#                                                                            </div>#}
+                    {#                                                                            <!-- panel-body -->#}
+                    {#                                                                        </div>#}
+                    {#                                                                        <!-- panel -->#}
+                    {#                                                                    </li>#}
+                    <li id="prod-active-id-{{ prod.id }}" class="{% if prod.id == product.id %}active-product{% endif %}">
+                        <a style="cursor: pointer;" onclick="changeProduct(product_cat_name_val='{{ prod.category.name }}', product_id_val='{{ prod.id }}', product_cat_id_val='{{ prod.category_id }}', product_title_val='{{ prod.title }}', product_image='https://s3-us-west-2.amazonaws.com/yapjoy-static/media/{{ prod.category.image_icon }}', percentage='{{ prod.get_progress }}');" >
+        	<span class="menu-icon">
+{#                <i class="fa fa-book"></i>#}
+                <img class="product_progress_{{ prod.id }}" src="https://s3-us-west-2.amazonaws.com/yapjoy-static/media/{{ prod.category.image_icon }}" style="display: inline-block;
+                        width: 40px;
+                        margin-right: 10px;
+                        border-radius: 20px;
+                        background: linear-gradient(00deg, #07A6C3 {{ prod.get_progress }}%, transparent {{ prod.get_progress }}%);" />
+            </span>
+                            <span class="menu-text">{{ prod.title }}</span>
+                            {#            <span class="menu-badge"><span class="badge vd_bg-red">78</span></span>#}
+                        </a>
+                    </li>
+                {% endfor %}
+                {# 	<li>#}
+                {#    	<a href="email.html">#}
+                {#        	<span class="menu-icon"><i class="fa fa-envelope"></i></span>#}
+                {#            <span class="menu-text">Email</span>#}
+                {#            <span class="menu-badge"><span class="badge vd_bg-red">78</span></span>#}
+                {#       	</a>#}
+                {#    </li>#}
+
+            </ul>
+            <!-- Head menu search form ends -->         </div>
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+    <div class="vd_menu vd_navbar-bottom-widget">
+        <ul>
+            <li>
+                <a href="/logout/">
+                    <span class="menu-icon"><i class="fa fa-sign-out"></i></span>
+                    <span class="menu-text">Logout</span>
+                </a>
+
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+{% load static %}
+{% load comments %}
+{% load cache %}
+ <link href="{% static "vendroid/plugins/prettyPhoto-plugin/css/prettyPhoto.css" %}" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{% static "vendroid/plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js" %}"></script>
+{% for feed in userfeed %}
+<div class="panel widget light-widget">
+    <div class="vd_timeline">
+        <div class="tl-item">
+            <div class="panel-body">
+{#                {% cache 50000 feed.id %}#}
+                <img alt="example image" class="tl-img tl-img-author img-right img-circle  mgtp-5"
+                                         src="{{ feed.user.userprofile.get_image_url }}">
+
+                <h3 class="mgtp-10 mgbt-xs-5"> {{ feed.user.get_full_name }}
+{#                    <em class="vd_soft-grey font-sm">via facebook</em>#}
+                </h3>
+                                                        <span class="vd_soft-grey">{{ feed.created_at|timesince }}
+{#                                                            -  near <a href="#">Los#}
+{#                                                            Angeles</a> - <a href="javascript:void(0)"#}
+{#                                                                             data-toggle="tooltip" data-placement="top"#}
+{#                                                                             data-original-title="Shared Globally"#}
+{#                                                                             class=""><i#}
+{#                                                                class="fa fa-globe"></i></a>#}
+                                                        </span>
+                {% if feed.image %}
+                <div class="tl-post-image mgbt-xs-20"><a data-rel="prettyPhoto[{{ feed.id }}]" rel="prettyPhoto[{{ feed.id }}]" href="{{ MEDIA_URL }}{{ feed.image }}" ><img src="{{ MEDIA_URL }}{{ feed.image }}"
+                                                                                            alt="Feed Image"> </a>
+                </div>
+            {% endif %}
+                <div class="clearfix mgbt-xs-10"></div>
+                <p class="mgbt-xs-20"> {{ feed.text }}</p>
+{#                {% endcache %}#}
+
+{#                <div class="tl-action">#}
+{#                    <a role="button" class="btn btn-sm mgr-10" href="javascript:void(0)"><i#}
+{#                        class="fa fa-thumbs-up fa-fw"></i> Like (10)</a> <a role="button"#}
+{#                                                                            class="btn btn-sm btn-xs mgr-10"#}
+{#                                                                            href="javascript:void(0)"><i#}
+{#                        class="fa fa-comment fa-fw"></i> Comment (2)</a> <a role="button" class="btn btn-sm "#}
+{#                                                                            href="javascript:void(0)"><i#}
+{#                        class="fa fa-share fa-fw"></i> Share</a>#}
+{#                </div>#}
+                <hr class="mgtp-0">
+
+                <div class="comments">
+                    <div class="content-list content-image">
+                        <ul class="list-wrapper no-bd-btm">
+                            {% get_comment_list for feed as comment_list %}
+                            {% for comment in comment_list %}
+{#                                {% cache 50000 comments_list comment.id %}#}
+                                    <li>
+                                <div class="menu-icon"><img src="{{ comment.user.userprofile.get_image_url }}"
+                                                            alt="example image"></div>
+                                <div class="menu-text"><a href="/profile/{{ comment.user.userprofile.id }}/">{{ comment.user.get_full_name }}</a> {{ comment.comment }}
+                                    <div class="menu-info"><span class="menu-date">{{ comment.submit_date|timesince }} Ago </span>
+                                    </div>
+                                </div>
+                            </li>
+{#                                {% endcache %}#}
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                    <!-- content-list -->
+                    <hr class="no-bd">
+                    <div class="reply-comment">
+                        <div class="content-list content-image">
+                            <div class="list-wrapper">
+                                <div>
+                                    <div class="menu-icon"><img src="{{ profile.get_image_url }}"
+                                                                alt="example image"></div>
+                                    <div class="menu-text">
+                                        {% get_comment_form for feed as form %}
+                                        <form action="{% comment_form_target %}" id="commentForm_{{ feed.id }}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input class="col-md-10 form-control" id="id_comment" feed_id="{{ feed.id }}"
+                                       name="comment"/>
+
+                                {#                                            {{ form.comment }}#}
+                                {#                                                                <div class="col-md-6">#}
+                                {#                                                                    <textarea cols="45" id="id_comment" maxlength="3000"#}
+                                {#                                                                          name="comment" rows="2"></textarea>#}
+                                {#                                            {{ form.honeypot }}#}
+                                {{ form.content_type }}
+                                {{ form.object_pk }}
+                                {{ form.timestamp }}
+                                {{ form.security_hash }}
+                                <input type="hidden" name="next"
+                                       value="{{ request.path }}"/>
+                                {#                                                                </div>#}
+                                {#                                                                <div class="col-md-6">#}
+                                {#                                                                    <input type="submit" value="Reply" class="btn bg-yellow"#}
+                                {#                                                                       id="id_submit"/>#}
+                                {#                                                                </div>#}
+                            </div>
+                            {#                            <a class="margin-top-20 btn bg-yellow btn-sm" onclick="submitComment({{ comment.id }})">Reply</a>#}
+                            <div class="clearfix"></div>
+                            {#                                                                <br/>#}
+                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- reply-comment -->
+                </div>
+                <!-- comments -->
+            </div>
+            <!-- panel-body -->
+        </div>
+        <!-- panel -->
+    </div>
+</div>
+{% endfor %}

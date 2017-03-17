@@ -1,0 +1,186 @@
+{% extends 'base_blank_iframe.html' %}
+{% load myfilters %}
+{% block content %}
+
+
+    <div class="portlet light">
+        <div class="portlet-body">
+
+            <div class="row">
+                {% for friend in friends %}
+
+                    <div class="col-md-6">
+                    <div class="md-checkbox">
+                            <input type="checkbox" value="{{ friend.id }}" id="{{ friend.id }}" name="invitation[ids][]" class="md-check">
+                            <label for="{{ friend.id }}">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            <img src="{{ friend.picture.data.url }}" alt="..." class="img-rounded pull-left"
+                                 style="width: 30px;margin-right: 6px;"> {{ friend.name }}</label>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for friend in friends_invite %}
+                    <div class="col-md-6">
+                    <div class="md-checkbox">
+                            <input type="checkbox" value="{{ friend.id }}" id="{{ friend.id }}" name="invitation[ids][]" class="md-check">
+                            <label for="{{ friend.id }}">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            <img src="{{ friend.picture.data.url }}" alt="..." class="img-rounded pull-left"
+                                 style="width: 30px;margin-right: 6px;"> {{ friend.name }}</label>
+                        </div>
+
+                    </div>
+                {% endfor %}
+                </br>
+                </br>
+                </br>
+                    <div class="col-md-12" >
+                        <div class="form-group form-md-line-input form-md-floating-label">
+                            <textarea class="form-control" rows="3" id='message' name='message'></textarea>
+                            <label for="form_control_1">Message
+                            </label>
+
+                        </div>
+                        <div class="form-actions noborder">
+                        <input hidden id="hidden" name="hidden"/>
+                        <a onclick="" class="btn bg-yellow disabled" id="btnSendMessage" >Send Message</a>
+                    </div>
+                    </div>
+
+
+
+                </div>
+        </div>
+
+    </div>
+
+{% endblock content %}
+{% block jquery %}
+
+    <script>
+        var checkedArray = []
+        $(document).ready(function () {
+
+            {% comment %}$('#selectall').click(function(event) {
+               $("input[name='invitation[ids][]']:checked").each(function () {
+                    checkedArray.push($(this).val());
+                });
+            });{% endcomment %}
+
+            $("input[type=checkbox]").change(function () {
+
+                checkedArray.push($(this).val());
+                console.log(checkedArray)
+
+                if (checkedArray.length > 0) {
+                    $("#btnSendMessage").attr('onclick', 'showRequestDialog()');
+                    $("#btnSendMessage").removeClass('disabled');
+                } else {
+                    $("#btnSendMessage").attr('onclick', '#');
+                    $("#btnSendMessage").addClass('disabled');
+                }
+            });
+        });
+        function showRequestDialog() {
+            FB.ui({
+                method: 'apprequests',
+                message: $('#message').val(),
+                to: checkedArray,
+
+            }, inviteResponse)
+        }
+
+        function inviteResponse(response) {
+                if (response) {
+                    console.log("request" + response.request)
+                    console.log("request to" + response.to)
+
+                    var data = {
+                        'request_id': response.request,
+                        'to_ids': JSON.stringify(response.to),
+                        'message': $('#message').val()
+                    }
+
+                    $.ajax({
+                        url: "/invite_response/",
+                        traditional: true,
+                        type: "POST",
+                        data: data,
+
+                        success: function (json) {
+                            console.log(json);
+                            console.log("success");
+                        },
+
+                        error: function (xhr, errmsg, err) {
+                            console.log(errmsg)
+                            console.log(xhr.status + ": " + xhr.responseText);
+                        }
+                    });
+                    window.parent.location.reload(true);
+                }
+                else {
+                    console.log("response is not found")
+                }
+
+            return false;
+        }
+    </script>
+
+
+   
+    <script>
+
+        $(document).ready(function () {
+            //Layout.init();
+
+
+            // Floating labels
+            var handleInput = function (el) {
+                if (el.val() != "") {
+                    el.addClass('edited');
+                } else {
+                    el.removeClass('edited');
+                }
+            };
+            $('.form-md-floating-label .form-control').each(function () {
+                handleInput($(this));
+            });
+
+            $('body').on('keydown', '.form-md-floating-label .form-control', function (e) {
+                handleInput($(this));
+            });
+            $('body').on('blur', '.form-md-floating-label .form-control', function (e) {
+                handleInput($(this));
+            });
+
+        });
+
+    </script>
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '778671392242244',
+                xfbml: true,
+                version: 'v2.3'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+{% endblock jquery %}

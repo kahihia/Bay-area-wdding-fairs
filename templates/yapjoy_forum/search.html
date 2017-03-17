@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block content %}
+
+
+
+    <section class="recommendations-section">
+        <div class="col md-11 col-md-offset-1">
+            <div class="row">
+                <h3 class="section-title">Search Topic
+                    <div class="clearfix"></div>
+                </h3>
+            </div>
+
+
+                <section class="rec-list">
+                    <div id="rec-list" class="list-view">
+
+
+                        <div class="items">
+
+                            <div class="col-md-12 wrap">
+                                <div class="media-body">
+                                    <div class="col-md-12">
+                                        <input name="searchtopic" id="searchtopic" class="form-control"
+                                               placeholder="Search topics in yapper" type="text">
+                                        <hr/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+
+                    </div>
+                  {% if forums %}
+                        <div id="rec-list" class="list-view">
+                        <div class="items">
+
+                            <div class="col-md-12 wrap">
+                                <div class="">
+
+                                    <div class="media-body">
+                                        <h4></h4>
+
+                                        <div class="col-md-4"><h4>Forums</h4></div>
+                                        <div class="col-md-2"><h4>Posts</h4></div>
+                                        <div class="col-md-4"><h4>Last post</h4></div>
+                                        <div class="col-md-2"><h4>View</h4></div>
+
+
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                {% for forum in forums %}
+
+                                    <div class="media">
+
+                                        <div class="media-body">
+                                            <h4></h4>
+
+                                            <div class="col-md-4"><a
+                                                    href="{% url 'forum-detail' forum.pk %}">{{ forum.title }}</a></div>
+                                            <div class="col-md-2">{{ forum.num_posts }}</div>
+                                            <div class="col-md-4">{{ forum.get_last_post.short|safe }}</div>
+                                            <div class="col-md-2"><a class="button"
+                                                                     href="{% url 'forum-detail' forum.pk %}">VIEW</a>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="clearfix"></div>
+                                    </div>
+
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                   {% endif %}
+                </section>
+            {% if topics %}
+                <section class="rec-list">
+
+                    <div id="rec-list" class="list-view">
+                        <div class="items">
+
+                            <div class="col-md-12 wrap">
+                                <div class="">
+
+                                    <div class="media-body">
+                                        <div class="col-md-4"><h4>Topics</h4></div>
+                                        <div class="col-md-2"><h4>Replies</h4></div>
+                                        <div class="col-md-4"><h4>Last post</h4></div>
+                                        <div class="col-md-2"><h4>View</h4></div>
+
+
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                {% for topic in topics.object_list %}
+
+                                    <div class="media">
+
+                                        <div class="media-body">
+                                            <div class="col-md-4"><a
+                                                    href="{% url 'topic-detail' topic.pk %}">{{ topic.title }}</a></div>
+                                            <div class="col-md-2">{{ topic.num_replies }}</div>
+                                            <div class="col-md-4">{{ topic.last_post.short|safe }}</div>
+                                            <div class="col-md-2"><a class="button"
+                                                                     href="{% url 'topic-detail' topic.pk %}">VIEW</a>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="clearfix"></div>
+                                    </div>
+
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        </div>
+    </section>
+    <script>
+
+        $('#searchtopic').keypress(function (e) {
+            if (e.which == 13) {
+                window.location.href = '/forum/search/?topic=' + $('#searchtopic').val();
+            }
+        });
+    </script>
+
+{% endblock content %}

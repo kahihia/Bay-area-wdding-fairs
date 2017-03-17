@@ -1,0 +1,170 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-subtitle">
+                                    <br/>
+                                    <h1 class="pull-left">Email Management</h1>
+                                </div>
+                            </div>
+
+                            <!-- row -->
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                    <!--left panel-->
+                                    {% include "vendroid/messages/partial/_left_panel.html" %}
+
+                                    <!--right row col-5-->
+                                    <div class="col-sm-8">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-heading no-title"> </div>
+                                              <!-- vd_panel-heading -->
+                                                <form method="post" id="composeForm" action=".">
+                                                    {% csrf_token %}
+
+                                                    <div class="panel-body">
+                                                        <h2 class="mgtp--10"><i class="icon-feather mgr-10 vd_green"></i> Compose New Email </h2>
+                                                        <br>
+                                                        <form class="form-horizontal" role="form" action="#">
+                                                          <div class="form-group clearfix">
+                                                            <label class="col-sm-2 control-label">To</label>
+
+                                                            <div class="col-sm-10 controls">
+{#                                                            <input onclick="showselect()" id="email-input" type="text" class="input-border-btm" placeholder="someone@example.com">#}
+                                                                <p><em>Please select the receiver from your fiend list. If they are not in the list, please <a href="/friends/" class="text vd_green"><b>add your friends</b></a></em></p>
+                                                                <select multiple="multiple" class="form-control"  data-placeholder="To" name="to_users" id="to">
+                                                                    {% for friend in friends %}
+                                                                        {% if friend.user == request.user %}
+                                                                            <option value="{{ friend.friends.user.id }}">{{ friend.friends.user.get_full_name }}</option>
+                                                                        {% else %}
+                                                                            <option value="{{ friend.user.id }}">{{ friend.user.get_full_name }}</option>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+
+                                                            </div>
+                                                          </div>
+
+{#                                                          <div class="form-group  clearfix">#}
+{#                                                            <label class="col-sm-2 control-label">Subject</label>#}
+{#                                                            <div class="col-sm-10 controls">#}
+{#                                                            {{ form.subject|addcss:'input-border-btm'}}#}
+{#                                                            <p style="color: red;">{{ form.subject.errors.0 }}</p>#}
+                                    {#                          <input type="text" id="subject-input" class="input-border-btm" placeholder="Subject Title">#}
+{#                                                            </div>#}
+{#                                                          </div>#}
+{#                                                          <br>#}
+
+                                                          <div class="form-group  clearfix">
+                                                            <label class="col-sm-12 control-label sr-only">Message</label>
+                                                            <div class="col-sm-12 controls">
+                                                                {{ form.message }}
+                                                                <p style="color: red;">{{ form.message.errors.0 }}</p>
+                                    {#                          <ul class="wysihtml5-toolbar"><li class="dropdown"><a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-font"></i>&nbsp;<span class="current-font">Normal text</span>&nbsp;<b class="caret"></b></a><ul class="dropdown-menu"><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="div" href="javascript:;" unselectable="on">Normal text</a></li><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" href="javascript:;" unselectable="on">Heading 1</a></li><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" href="javascript:;" unselectable="on">Heading 2</a></li><li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" href="javascript:;" unselectable="on">Heading 3</a></li></ul></li><li><div class="btn-group"><a class="btn btn-default" data-wysihtml5-command="bold" title="CTRL+B" href="javascript:;" unselectable="on">Bold</a><a class="btn btn-default" data-wysihtml5-command="italic" title="CTRL+I" href="javascript:;" unselectable="on">Italic</a><a class="btn btn-default" data-wysihtml5-command="underline" title="CTRL+U" href="javascript:;" unselectable="on">Underline</a></div></li><li><div class="btn-group"><a class="btn btn-default" data-wysihtml5-command="insertUnorderedList" title="Unordered list" href="javascript:;" unselectable="on"><i class="fa fa-list"></i></a><a class="btn btn-default" data-wysihtml5-command="insertOrderedList" title="Ordered list" href="javascript:;" unselectable="on"><i class="fa fa-th-list"></i></a><a class="btn btn-default" data-wysihtml5-command="Outdent" title="Outdent" href="javascript:;" unselectable="on"><i class="fa fa-dedent"></i></a><a class="btn btn-default" data-wysihtml5-command="Indent" title="Indent" href="javascript:;" unselectable="on"><i class="fa fa-indent"></i></a></div></li><li><div class="bootstrap-wysihtml5-insert-link-modal modal  fade"><div class="modal-dialog"> <div class="modal-content"><div class="modal-header vd_bg-green vd_white"><button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-times"></i></button><h4 id="myModalLabel" class="modal-title">Insert link</h4></div><div class="modal-body"><input value="http://" class="bootstrap-wysihtml5-insert-link-url input-border-btm input-lg width-100"></div><div class="modal-footer background-login"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="#" class="btn vd_btn vd_bg-blue" data-dismiss="modal">Insert link</a></div></div> </div></div><a class="btn btn-default" data-wysihtml5-command="createLink" title="Insert link" href="javascript:;" unselectable="on"><i class="fa fa-share"></i></a></li><li><div class="bootstrap-wysihtml5-insert-image-modal modal fade"><div class="modal-dialog"> <div class="modal-content"><div class="modal-header vd_bg-green vd_white"><button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="fa fa-times"></i></button><h4 id="myModalLabel" class="modal-title">Insert image</h4></div><div class="modal-body"><input value="http://" class="bootstrap-wysihtml5-insert-image-url input-border-btm input-lg width-100"></div><div class="modal-footer background-login"><a href="#" class="btn" data-dismiss="modal">Cancel</a><a href="#" class="btn vd_btn vd_bg-blue" data-dismiss="modal">Insert image</a></div></div> </div></div><a class="btn btn-default" data-wysihtml5-command="insertImage" title="Insert image" href="javascript:;" unselectable="on"><i class="fa fa-picture-o"></i></a></li></ul><textarea id="message" class="width-100 form-control" rows="15" placeholder="Write your message here" style="display: none;"></textarea><input type="hidden" name="_wysihtml5_mode" value="1"><iframe class="wysihtml5-sandbox" security="restricted" allowtransparency="true" frameborder="0" width="0" height="0" marginwidth="0" marginheight="0" style="border-collapse: separate; border: 1px solid rgb(204, 204, 204); clear: none; display: block; float: none; margin: 0px; outline: rgb(85, 85, 85) none 0px; outline-offset: 0px; padding: 6px 12px; position: static; z-index: auto; vertical-align: baseline; text-align: start; box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; border-radius: 4px; width: 749.234px; height: 314px; top: auto; left: auto; right: auto; bottom: auto; background-color: rgb(255, 255, 255);"></iframe>#}
+                                                            </div>
+                                                          </div>
+
+                                                          <div class="form-group form-actions">
+                                                            <div class="col-sm-12">
+{#                                                                <div style="padding-left: 19px">#}
+{#                                                                <div class="row-fluid">#}
+                                                                <button type="submit" class="btn vd_btn vd_bg-green vd_white pull-right"  id="saveDraftBtn"><i class="fa fa-archive append-icon"></i> SAVE TO DRAFT</button>
+                                                                <button type="submit" class="btn vd_btn vd_bg-yellow vd_white pull-right" id="sendBtn" style="padding-left: 19px;"><i class="fa fa-envelope append-icon"></i> SEND</button>
+                                                            </div>
+                                                            <input type="hidden" id="draftField" name="draft" value="0">
+                                                          </div>
+                                                        </form>
+                                                    </div>
+
+                                                <!-- panel body  -->
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- panel -->
+                        </div>
+                        <!-- .vd_content-section -->
+                    </div>
+                    <!-- .vd_content -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    <link href="{% static 'css/chosen.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script type="text/javascript" src="{% static "js/jquery.mail.js" %}"></script>
+    <script>
+{#        function showselect(){#}
+{##}
+{#            $('#to').removeAttr("hidden");#}
+{#        }#}
+
+{#        $('#to').on('change',function(){#}
+{##}
+{#            var c= $(this).find('option:selected').text();#}
+{#        #}
+{#            var ta = document.getElementById('email-input');#}
+{#            ta.value = c;#}
+{#            $('#to').attr("hidden","hidden");#}
+{#        });#}
+
+    </script>
+    <script>
+{#    if($("#email-input").length > 0){#}
+{#            $("#to").chosen();#}
+{#        }#}
+
+    if ($("#to").length > 0) {
+            $("#to").chosen();
+        }
+
+    </script>
+
+{% endblock script %}

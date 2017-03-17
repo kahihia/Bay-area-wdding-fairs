@@ -1,0 +1,18 @@
+{% if yelp_description or yelp_image %}
+    <div id="yelpContent">
+    {% if yelp_image %}
+        <img id="ID_Yimage" class="image-cropper" src="{{ yelp_image }}">
+    {% endif %}
+
+    {% if yelp_description %}
+        <p id="ID_Ydescription">{{ yelp_description }}</p>
+    {% endif %}
+</div>
+{% else %}
+    <div class=" clearfix"></div>
+    <div class="row">
+        <input id="ID_yelpName" style="margin-bottom:10px;" name="Notes" rows="3" cols="10" placeholder="Name in Yelp" class="form-control" />
+        <input id="ID_yelpZip" style="margin-bottom:10px;" name="Notes" rows="3" cols="10" placeholder="zipcode in Yelp" class="form-control" />
+        <a class="btn btn-block yelpSaveButton" style="background-color: red;color:white;" onclick="updateYelp()">Save</a>
+    </div>
+{% endif %}

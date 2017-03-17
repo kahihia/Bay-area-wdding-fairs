@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+    <section class="profile-section ">
+        <div class="col-md-11 col-md-offset-1 ">
+            <!-- <section class="main-header"
+                     style="background-image:url(/images/tempBg.jpg)"> -->
+            <!-- seth -->
+            <section class="main-header"
+                     >
+            {% for credit in credits %}
+                <div class="col-md-3">
+                    <a href="/creditBuy/{{ credit.id }}/">
+                        <section class="widget tasks">
+                            <h4>{{ credit.title }}</h4>
+                            <ul class="list-unstyled">
+                                <div style="color: #3397a5">
+                                    <div class="items">
+                                        <li class="text-center">
+                                            <br />
+                                            <h3 style="margin-bottom: 10px;">{{ credit.credits|intcomma }} Credits</h3>
+                                            
+
+
+                                            <h3>${{ credit.amount|intcomma }} only</h3>
+                                            <hr />
+                                            <p>{{ credit.description }}
+
+                                            </p>
+
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </ul>
+                            <a href="/creditBuy/{{ credit.id }}/" class="view-all">Buy Now</a>
+                        </section>
+                    </a>
+
+                </div>
+            {% endfor %}
+                <!-- seth -->
+                <!-- Old Code -->
+
+
+            </section>
+            <!-- end main-content -->
+        </div>
+        <!-- end col -->
+
+        <!-- end col -->
+    </section>
+{% endblock content %}
+{% block jquery %}
+
+{% endblock jquery %}

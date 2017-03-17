@@ -1,0 +1,431 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block tags %}<div class="tutorial-overaly" id="getStarted" hidden></div>
+{% endblock tags %}
+{% block header_tags %}
+
+    <link rel="stylesheet" href="{% static "css/jquery-ui.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/chosen.jquery.min.js" %}"></script>
+{#    <link rel="stylesheet" href="/resources/demos/style.css">#}
+
+
+{% endblock %}
+{% block jquery-min %}
+{% endblock jquery-min %}
+{% block content %}
+    <script>
+        $(function() {
+            $( "#id_wedding_date" ).datepicker();
+        });
+
+
+    </script>
+    <div class="col-md-8 col-md-offset-1 wall-posting">
+        <h3 class="section-title">Home</h3>
+        {% if profile.type == "Professional" %}{% include 'partial/_feed_professional.html' %}{% else %}{% include 'partial/_feed.html' %}{% endif %}
+    </div>
+
+
+    <div class="col-md-3">
+        <!-- seth -->
+        <!--   -->
+         {% if not profile.type == "Professional"  %}
+         {% if not profile.type == "Other"  %}
+        <section class="wedding-widget">
+
+            <div class="countdown">
+                <p><span class="months">{{ profile.wedding_date|timeuntil }}</span>
+                </p>
+
+                <p>Wedding Day Count Down</p>
+            </div>
+            <div class="rsvp">
+                <p><span class="title">RSVP's</span><span class="count">{{ profile.rsvp_count|intcomma }}</span></p>
+            </div>
+
+            <div class="invite-count">
+                <p><span class="title">Invites Sent</span><span class="count">0</span></p>
+            </div>
+
+        </section>
+    {% endif %}
+    {% endif %}
+        <section class="widget tasks">
+            <h4>Tasks</h4>
+            <ul class="list-unstyled">
+                {% for task in tasks %}
+                <div id="task-list" class="list-view">
+                    <div class="items">
+                        <li class="">
+                            <a onclick="completeTask('{{ task.id }}');"><i id="complete_task_{{ task.id }}" class="{% if task.complete %}fa fa-check fa-lg success_green{% else %}fa fa-circle-o fa-lg{% endif %}"></i></a>
+
+                            <p><a {% if task.complete %}class="success_green"{% endif %} id="task_subject_{{ task.id }}" href="/tasks">{{ task.subject }}</a></p>
+
+                        </li>
+                    </div>
+                </div>
+                {% endfor %}
+            </ul>
+            <a href="/tasks/" class="view-all">View all</a>
+        </section>
+        <section class="widget events">
+            <h4>Events</h4>
+            {% for event in events %}
+            <div id="event-list" class="list-view">
+                <div class="items">
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-calendar fa-3x"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading"><a href="/events/">{{ event.title }}</a></h5>
+
+                            <p class="event-descript"></p>
+
+                            <p class="event-time">{{ event.start }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <a href="/events" class="view-all">View all</a>
+        </section>
+        {% if not profile.type == "Professional" %}
+        <section class="widget recommendations">
+            <h4>Recommendations</h4>
+
+            <div id="task-list" class="list-view">
+                <div class="items">
+                    {% for recommended in recommend %}
+                    <div class="media">
+                        <div class="media-left">
+                            <span class="profile-thumb profile-sm"
+                                  style="background-image: url({% if recommended.image %}{{ recommended.get_image_url }}{% else %}https://s3-us-west-2.amazonaws.com/yapjoyimages/media/media/tempPhoto.png{% endif %})"></span>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading"><a href="/profile/{{ recommend.id }}/">
+                                {{ recommended.user.first_name }} {{ recommended.user.last_name }}
+                            </a></h5>
+
+                            <p class="status">
+                                {{ recommended.type }} </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="keys" style="display:none" title="/dashboard">
+                    <span>156</span><span>159</span><span>161</span></div>
+            </div>
+            <a href="/recommendations" class="view-all">View all</a>
+        </section>
+        {% endif %}
+        <section class="widget ads">
+            <!--  <img src="http://placehold.it/350x250&text=ads"> -->
+            <img id="ad"/>
+        </section>
+        <section class="widget ads text-center">
+            <!-- <img src="https://s3-us-west-2.amazonaws.com/yapjoyimages/images/static_ad.png"> -->
+            <!-- patch4 -->
+            <!-- point to bayareaweddingfairs -->
+            <a href="http://bayareaweddingfairs.com/"> <img
+                    src="https://s3-us-west-2.amazonaws.com/yapjoyimages/images/static_ad.png"></a>
+        </section>
+    </div>
+
+
+{% if not profile.type == "Professional" %}
+<div class="modal fade" id="registerModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title">Complete your profile</h4>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6 col-xs-6">
+{#                                <input placeholder="First Name" class="form-control" name="User[first_name]" id="User_first_name" type="text" maxlength="100" value="Adeel" />#}
+                                {{ profileform.first_name }}
+                                  {% if profileform.first_name.errors %}<p style="color: red;">{{ profileform.first_name.errors.0 }}</p>{% endif %}
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+{#                                <input placeholder="Last Name" class="form-control" name="User[last_name]" id="User_last_name" type="text" maxlength="100" value="Khan" />#}
+                                {{ profileform.last_name }}
+                                  {% if profileform.last_name.errors %}<p style="color: red;">{{ profileform.last_name.errors.0 }}</p>{% endif %}
+                            </div>
+                        </div>
+                    <hr>
+                    <div class="form-row">
+                            <div class="col-md-12">
+                                <h5>Gender</h5>
+                                <div class="checkbox">
+                                    {{ profileform.gender.1 }}
+                                    {{ profileform.gender.0 }}
+                                 </div>
+                            </div>
+
+                        {% if profileform.gender.errors %}<p style="color: red;">{{ profileform.gender.errors.0 }}</p>{% endif %}
+
+                            <div class="col-md-12">
+                                <p>Age</p>
+                                {{ profileform.age|addcss:"form-control" }}
+                                  {% if profileform.age.errors %}<p style="color: red;">{{ profileform.age.errors.0 }}</p>{% endif %}
+                            </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    {% if not profile.type == "Other" %}
+                    <div  class="form-row" style="margin-top: 10px;">
+                        <div class="col-md-12">
+                            {{ profileform.wedding_date }}
+                            {% if profileform.wedding_date.errors %}<p style="color: red;">{{ profileform.wedding_date.errors.0 }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <hr>
+
+                    <div class="form-row">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            {{ profileform.street }}
+                          {% if profileform.street.errors %}
+                              <p style="color: red;">{{ profileform.street.errors.0 }}</p>{% endif %}
+                        </div>
+                          <div class="col-md-4" style="margin-top: 10px;">
+{#                              <input placeholder="City" class="form-control" name="UserAddress[city]" id="UserAddress_city" type="text" maxlength="45" />#}
+                              {{ profileform.city }}
+                               {% if profileform.city.errors %}<p style="color: red;">{{ profileform.city.errors.0 }}</p>{% endif %}
+                          </div>
+                           <div class="col-md-4" style="margin-top: 10px;">
+                               {{ profileform.state|addcss:"form-control" }}
+                                 {% if profileform.state.errors %}<p style="color: red;">{{ profileform.state.errors.0 }}</p>{% endif %}
+                           </div>
+                           <div class="col-md-4" style="margin-top: 10px;">
+{#                               <input placeholder="Zip" class="form-control" name="UserAddress[zip_code]" id="UserAddress_zip_code" type="text" maxlength="45" />#}
+                               {{ profileform.zip|addcss:"form-control" }}
+                                {% if profileform.zip.errors %}<p style="color: red;">{{ profileform.zip.errors.0 }}</p>{% endif %}
+                           </div>
+                           <div class="col-md-12"><p class="helper-text"><i class="fa fa-info-circle"></i> Setting up location helps to refine your recommendation</p></div>
+                    </div>
+                    <div class="form-row interest">
+                        <!-- patch3 -->
+                        <div class="col-md-12">
+                            <h5>Looking For...</h5>
+
+
+                            <select multiple="multiple" class="form-control" data-placeholder="Choose"
+                                    name="assigned_to" id="to">
+                                {% for o in looking_for_selected %}
+                                    <option selected="selected"
+                                            value="{{ o.open_search.id }}">{{ o.open_search.name }}</option>
+                                {% endfor %}
+                                {% for lf in looking_for %}
+
+                                    <option value="{{ lf.id }}">{{ lf.name }}</option>
+
+                                {% endfor %}
+                            </select>
+
+
+                            {#                            {{ profileform.looking_for }}#}
+                            {#                         <div class="red">{{ profileform.image.errors }}</div>#}
+                            {#                        <textarea placeholder="Use tags/keywords which describes your interest" class="form-control" name="UserInterest[interest]" id="UserInterest_interest"></textarea>        #}
+                            <p class="helper-text"><i class="fa fa-info-circle"></i> Use comma to separate interest</p>
+
+                            <p class="helper-text"><i class="fa fa-info-circle"></i> Appropriate keywords helps to
+                                refine your recommendations</p>
+                        </div>
+                    <div class="clearfix"></div>
+                    </div>
+                    <hr>
+                     <div class="clearfix"></div>
+                    <div class="col-md-12" style="margin-bottom: 10px;;">
+                         <input id="profileform" name="profileform" hidden="hidden">
+                    <hr>
+                    <button type="submit" class="btn btn-blue pull-right">Update</button>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        <div class="clearfix"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{% else %}
+    <div class="modal fade" id="professionalModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title">Company Profile</h4>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}{{ companyform.errors }}
+                        <div class="form-row">
+                            <div class="col-md-12 col-xs-12">
+{#                                <input placeholder="First Name" class="form-control" name="User[first_name]" id="User_first_name" type="text" maxlength="100" value="Adeel" />#}
+                                {{ companyform.name }}
+                                  {% if companyform.name.errors %}<p class="red">{{ companyform.name.errors.0 }}</p>{% endif %}
+                            </div>
+                        </div>
+                <div class="clearfix"></div>
+                    <div class="form-row">
+                            <div class="col-md-12 margin-top-10">
+                                    {{ companyform.description }}
+                                    {% if companyform.description.errors %}<p class="red">{{ companyform.description.errors.0 }}</p>{% endif %}
+                            </div>
+
+
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div  class="form-row">
+                        <div class="col-md-12 margin-top-10">
+                            {{ companyform.employees|addcss:"form-control" }}
+                            {% if companyform.employees.errors %}<p class="red">{{ companyform.employees.errors.0 }}</p>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="form-row">
+                        <!-- patch3 -->
+                         <div class="col-md-12 margin-top-10">
+
+
+
+                            {{ companyform.payment_terms }}
+                                  {% if companyform.payment_terms.errors %}<p class="red">{{ companyform.payment_terms.errors.0 }}</p>{% endif %}
+{#                        <textarea placeholder="Use tags/keywords which describes your interest" class="form-control" name="UserInterest[interest]" id="UserInterest_interest"></textarea>        #}
+                        <p class="helper-text"><i class="fa fa-info-circle"></i>Payment Terms are the mode of payments you can recieve.</p>
+                    </div>
+                     <div class="clearfix"></div>
+                    <div class="col-md-12 margin-top-10 ">
+                         <input id="comapnyform" name="companyform" hidden="hidden">
+                    <button type="submit" class="btn btn-blue pull-right margin-bottom-10">Update</button>
+                    </div>
+                    <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        <div class="clearfix"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{% endif %}
+
+{% endblock %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.dashboard.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.form.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+
+    <script type="text/javascript">
+        /*<![CDATA[*/
+{#        jQuery(function ($) {#}
+{#            jQuery('#post-list').yiiListView({#}
+{#                'ajaxUpdate': ['post-list'],#}
+{#                'ajaxVar': 'ajax',#}
+{#                'pagerClass': 'pager',#}
+{#                'loadingClass': 'list-view-loading',#}
+{#                'sorterClass': 'sorter',#}
+{#                'enableHistory': false#}
+{#            });#}
+{#            jQuery('#task-list').yiiListView({#}
+{#                'ajaxUpdate': ['task-list'],#}
+{#                'ajaxVar': 'ajax',#}
+{#                'pagerClass': 'pager',#}
+{#                'loadingClass': 'list-view-loading',#}
+{#                'sorterClass': 'sorter',#}
+{#                'enableHistory': false#}
+{#            });#}
+{#            jQuery('#event-list').yiiListView({#}
+{#                'ajaxUpdate': ['event-list'],#}
+{#                'ajaxVar': 'ajax',#}
+{#                'pagerClass': 'pager',#}
+{#                'loadingClass': 'list-view-loading',#}
+{#                'sorterClass': 'sorter',#}
+{#                'enableHistory': false#}
+{#            });#}
+{#        });#}
+        /*]]>*/
+{#        if($("#to").length > 0){#}
+{#            $("#to").chosen();#}
+{#        }#}
+        {% if not profile.type == "Professional" %}
+            {% if not profile.type == "Other" %}
+            {% if not profile.wedding_date or profileform.errors %}
+                $('#registerModal').modal('show');
+
+                /*<![CDATA[*/
+                jQuery(function($) {
+                jQuery('#id_wedding_date').datepicker({'showAnim':'slide','dateFormat':'mm/dd/yy'});
+                });
+                /*]]>*/
+            {% endif %}
+                {% else %}
+                {% if profile.gender == "N/A" or profileform.errors %}
+                $('#registerModal').modal('show');
+
+
+            {% endif %}
+                {% endif %}
+
+        {% elif not company.name %}
+
+            //professionalModal
+            $('#professionalModal').modal('show');
+
+        {% elif company.name and not profile.subscribed %}
+            openSubscriptionModal();
+        {% endif %}
+        if($("#to").length > 0){
+            $("#to").chosen();
+        };
+        function completeTask(id){
+          //  alert(id);
+
+            $.ajax({
+                        url: '/tasks/complete/', // the endpoint
+                        type: 'post', // http method
+                        data: {id:id}, // data sent with the post request
+
+                        // handle a successful response
+                        success: function (response) {
+                            //alert("success"); // another sanity check
+                            if (response == "success") {
+                                var task_id = '#complete_task_'+id;
+                                $(task_id).removeClass('fa fa-circle-o fa-lg')
+                                        .attr('class','fa fa-check fa-lg')
+                                        .addClass('success_green');
+{#                                $('#delete_bin_'+id).addClass('success_green');#}
+                                $('#task_subject_'+id).addClass('success_green');
+                            }
+                            if (response == "successFalse"){
+                                var task_id = '#complete_task_'+id;
+                                $(task_id).removeClass('fa fa-check fa-lg')
+                                        .attr('class','fa fa-circle-o fa-lg')
+                                        .removeClass('success_green');
+{#                                $('#delete_bin_'+id).removeClass('success_green');#}
+                                $('#task_subject_'+id).removeClass('success_green');
+                            }
+
+
+                        },
+
+                        // handle a non-successful response
+                        error: function (xhr, errmsg, err) {
+{#                            alert(err, errmsg);#}
+                        }
+                    });
+
+        }
+    </script>
+{% endblock %}

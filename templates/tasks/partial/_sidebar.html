@@ -1,0 +1,40 @@
+<div class="col-md-2 col-md-offset-1 left-col" >
+    <section class="task-nav">
+        <h3 class="section-title">Tasks<small><a href="/tasks">Show All</a></small>
+        </h3>
+
+        <a style= "display:none" href="#" class="add-btn " id="addTaskBtn"><i class="glyphicon glyphicon-plus"></i> <span>Add List</span></a>
+
+        <div class="task-list">
+            <ul class="list-inline">
+                <li class="descript"><p><a href="/tasks/today/">Today </a></p></li>
+                <li><i class="fa fa-chevron-right"></i></li>
+            </ul>
+        </div>
+
+        <div class="task-list">
+            <ul class="list-inline">
+                <li class="descript"><p><a href="/tasks/completed/">Completed </a></p></li>
+                <li><i class="fa fa-chevron-right"></i></li>
+            </ul>
+        </div>
+
+        <br> <h3 class="section-title">Assigned</h3>
+        <div id="friend-list" class="list-view">
+            <div class="items">
+                <div class="friend">
+                    <ul class="list-inline">
+                        <div class="form-group">
+                            <li><span class="profile-thumb profile-sm" style="background-image: url(/images/tempPhoto.png)"></span></li>
+                            <li class="user-name"><p><a href='/profile/{{ friend.id }}/'>{{ friend.get_full_name  }}></a></p></li>
+                            <li><i class="fa fa-chevron-right"></i></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="keys" style="display:none" title="/tasks?friend=195"><span>347</span><span>348</span><span>350</span></div>
+        </div>
+    </section>
+</div>
+
+

@@ -1,0 +1,117 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% block content %}
+    <style>
+        .select-images div img {
+            margin-bottom: 20px;
+        }
+
+    </style>
+    <style type="text/css">
+        {#    background-image: url({% static "images/demo/Invite.png" %}) no-repeat; #}
+        .button-image{
+            background: url({% static "images/demo/Invite.png" %}) no-repeat;
+            cursor:pointer;
+            border: none;
+        }
+        .image-width{
+            width: 210px;
+        }
+        .panel-body{
+            padding: 15px 20px 20px;
+        }
+    @media only screen and (max-width: 500px) {
+            .image-width{
+                 width: 45%;
+            }
+        .image-box
+        {
+            padding:0px;
+        }
+        .image-titles {
+            font-size: 8px;
+        }
+        }
+    </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container" id="login-form" style="margin-top: 25px;">
+                {#	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>#}
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="panel panel-default">
+                            {#					<div class="panel-heading text-center">#}
+                            {#						#}
+                            {#					</div>#}
+                            {#                    {{ form.errors }}#}
+                            <div class="text-center image-box">
+                                <form class="form-horizontal" action="." method="post" role="form">
+                                <div class="panel-body select-images ">
+                                    <h4 style="margin-bottom: 20px;color: #BCB8B8;">Who would you like on your team?</h4>
+                                    {% for option in options %}
+                                        <div class="col-md-2 col-sm-2 col-xs-5 select-option image-width text-center" value="{{ option.id }}" style="border: 1px solid grey;margin: 4px;padding: 4px;">
+                                            <img id="image_live_{{ option.id }}" src="https://s3-us-west-2.amazonaws.com/yapjoy-static/media/{{ option.image }}" />
+                                            <img id="image_mark_{{ option.id }}" src="https://s3-us-west-2.amazonaws.com/yapjoy-static/media/{{ option.image_selected }}" hidden />
+                                            <span class="text-center image-titles">{{ option.name }}</span>
+                                            <input hidden value="{{ option.id }}" />
+                                        </div>
+                                    {% endfor %}
+                                    <div class="clearfix"></div>
+                                    <form acton="" method="post">
+                                        {% csrf_token %}
+                                        <input hidden id="survey" name="survey" />
+                                        <button type="submit" id="invite-btn" class="btn btn-primary pull-right btn-blue" style="margin-top: 20px;width: 120px;">Select</button>
+                                    </form>
+
+
+
+
+
+                                </div>
+
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $('.select-option').on('click',function() {
+            {#        alert($(this).attr('value'))#}
+            var input = $("#survey");
+            var value_id = $(this).attr('value');
+            {#        alert($(this).attr('mark'))#}
+            if (!$(this).attr('mark')) {
+                $(this).attr('mark', 'true');
+                input.val(input.val() + value_id + ",");
+            } else {
+                $(this).removeAttr('mark');
+                var val_text = value_id + ","
+                input.val(input.val().replace(val_text, ""));
+
+            }
+            {#        $('#image_live_'+value_id).hide()#}
+            {#        alert($('#image_live_'+value_id).css('hidden'));#}
+            var isVisible = $('#image_live_' + value_id).is(':visible');
+            var isHidden = $('#image_live_' + value_id).is(':hidden');
+            {#        alert(isVisible)#}
+            {#        alert(isHidden)#}
+            if (isVisible == true) {
+                $('#image_live_' + value_id).hide()
+                $('#image_mark_' + value_id).show()
+            } else {
+                $('#image_live_' + value_id).show()
+                $('#image_mark_' + value_id).hide()
+            }
+        });
+    </script>
+{% endblock content %}
+

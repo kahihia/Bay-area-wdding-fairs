@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+{% endblock %}
+{% block content %}
+    <script>
+        $(function () {
+            $("#id_end_date").datepicker();
+        });
+    </script>
+    <section class="recommendations-section">
+        <div class="col-md-11 col-md-offset-1 ">
+
+            <div class="row">
+                <h3 class="section-title">My Planner <a data-toggle="modal" href="#addTodoModal"
+                                                        class="btn btn-primary pull-right margin-right-30">Add a
+                    Plan</a>
+
+                    <div class="clearfix"></div>
+                </h3>
+
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="clearfix"></div>
+            <section class="rec-list">
+
+                <div id="rec-list" class="list-view">
+                    <div class="items">
+                        {% for product in products %}
+                            <div class="col-md-3 wrap"  >
+                                <div class="media height-250 " style="cursor: pointer; {% if product.is_completed %}border: 2px solid green;{% endif %}" onclick="window.location='/plans/{{ product.id }}/';">
+
+                                    <div class="media-body text-center">
+                                        {% if product.is_completed %}<h4 ><div style="color:green;">AWARDED</div></h4>{% endif %}
+                                        <h4>{{ product.title }}</h4>
+
+                                        <p>Budget: ${{ product.amount|intcomma }} (Bids: {{ product.amount_min|intcomma }})
+                                        </p>
+                                        <p>Created at: {{ product.created_at }}</p>
+                                        <hr/>
+                                        <p class="status">
+                                            {{ product.description|truncatechars:"220" }}           </p>
+                                        {#                                        <hr />#}
+                                        {#                                         <div class="col-md-9 text-center" style="position: absolute; bottom: 5px;">#}
+                                        {#                                    <button class="btn btn-primary btn-block pull-right">Edit</button>#}
+                                        {#                                    </div>#}
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                     </div>
+                    <div class="keys" style="display:none" title="/recommendations"><span>156</span></div>
+                </div>
+            </section>
+        </div>
+
+
+    </section>
+    <!-- (7) Add task Form -->
+    <div class="modal fade" id="addTodoModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Add a Plan</h4>
+
+                    <form action="." method="POST">
+                        {% csrf_token %}
+                        <!-- seth -->
+                        <div class="form-group">
+
+
+                            <label>Title:</label>
+
+                            {{ form.title }}
+                            <div class="red">{{ form.title.errors }}</div>
+
+                        </div>
+                        <div class="form-group due">
+
+                            <label>End Date:</label>
+                            <i class="fa fa-calendar"></i>
+                            {{ form.end_date }}
+                            <div class="red">{{ form.end_date.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description:</label>
+                            {{ form.description }}
+                            <div class="red">{{ form.description.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Amount:</label>
+                            {{ form.amount|addcss:"form-control" }}
+                            <div class="red">{{ form.amount.errors }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 margin-top-10">
+                                <button type="submit" class="btn btn-blue pull-right">Create</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+    <script type="text/javascript">
+        {% if form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#rec-list').yiiListView({
+                'ajaxUpdate': ['rec-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+        });
+        {% if form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+    </script>
+
+{% endblock %}

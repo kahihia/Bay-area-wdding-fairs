@@ -1,0 +1,130 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{#{% block tags %}#}
+{#    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{#{% endblock %}#}
+{% block content %}
+    <link rel="stylesheet" href="{% static "mdl/material.min.css" %}">
+    <script src="{% static "mdl/material.min.js" %}"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Wide card with share menu button -->
+    <style>
+        .demo-card-wide.mdl-card {
+            width: 100%;
+        }
+
+        .demo-card-wide > .mdl-card__title {
+            color: #fff;
+            height: 176px;
+        {#  background: url('../assets/demos/welcome_card.jpg') center / cover;#} background-color: #47A4C9 !important;
+        }
+
+        .demo-card-wide > .mdl-card__menu {
+            color: #fff;
+        }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                {% include "vendroid/messages/partial/chat_list.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <div class="block pull-left">#}
+{#                                        <h1>Market</h1> ()#}
+                                        {#                                        <small class="subtitle">Place a bid to the plans needed.</small>#}
+{#                                    </div>#}
+{##}
+                                    {#                                    <div class="vd_panel-menu hidden-sm hidden-xs pull-right" data-intro="<strong>Expand Control</strong><br/>To expand content page horizontally, vertically, or Both. If you just need one button just simply remove the other button code." data-step=5  data-position="left">#}
+                                    {#                                        <div data-action="remove-navbar" data-original-title="Remove Navigation Bar Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-navbar-button menu"> <i class="fa fa-arrows-h"></i> </div>#}
+                                    {#                                        <div data-action="remove-header" data-original-title="Remove Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="remove-header-button menu"> <i class="fa fa-arrows-v"></i> </div>#}
+                                    {#                                        <div data-action="fullscreen" data-original-title="Remove Navigation Bar and Top Menu Toggle" data-toggle="tooltip" data-placement="bottom" class="fullscreen-button menu"> <i class="glyphicon glyphicon-fullscreen"></i> </div>#}
+                                    {#                                    </div>#}
+{#                                    <div class="clearfix"></div>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="vd_content-section example-icon clearfix">
+                                <div class="row">
+{#                                <a href="/market/?categories=True">Filter by my categories</a>#}
+                                    <div class="vd_pricing-table">
+                                        {% for product in products %}
+                                            <div class="col-md-3 col-lg-3"
+                                                 style="cursor: pointer; {% if product.is_completed %}border: 2px solid green;{% endif %} margin-top: 20px;"
+                                                 onclick="window.location='/market/{{ product.id }}/';">
+                                                <div class="demo-card-wide mdl-card mdl-shadow--2dp" style="min-height: 469px;;">
+                                                    <div class="mdl-card__title" style="height: 100px;">
+                                                        <h2 class="mdl-card__title-text">{{ product.title|truncatechars:"30" }}</h2>
+                                                    </div>
+                                                    <div class="mdl-card__supporting-text">
+                                                        Budget: ${{ product.amount|intcomma }} <br/>By <a
+                                                            href="{{ product.user.userprofile.get_profile_url }}">{{ product.user.get_full_name }}</a>
+                                                        on {{ product.created_at }}<br/>
+                                                        Total Bids: {{ product.amount_min|intcomma }}<br />
+                                                        Category: {{ product.category }}<br />
+                                                        Days Left: {% if product.end_date %}{{ product.end_date|timeuntil }}{% else %}Not Mentioned{% endif %}
+                                                        <hr/>
+
+                                                        {{ product.description|truncatechars:"210" }}
+                                                    </div>
+{#                                                    <div class="mdl-card__actions mdl-card--border">#}
+{#                                                        <a href="/market/{{ product.id }}/"#}
+{#                                                           class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">#}
+{#                                                            View Details#}
+{#                                                        </a>#}
+{#                                                    </div>#}
+                                                    <div class="mdl-card__menu">
+                                                        {#                                            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">#}
+                                                        {#                                              <i class="material-icons">share</i>#}
+                                                        {#                                            </button>#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+
+    <script type="text/javascript">
+        {% if form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#rec-list').yiiListView({
+                'ajaxUpdate': ['rec-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+        });
+        {% if form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+    </script>
+{% endblock %}

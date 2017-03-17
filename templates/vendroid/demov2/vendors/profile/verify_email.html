@@ -1,0 +1,79 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block content %}
+    <style>
+        .vertical-center {
+            min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+            min-height: 60vh; /* These two lines are counted as one :-)       */
+
+            display: flex;
+            align-items: center;
+        }
+        .white {
+            color: white !important;
+        }
+        .container {
+            background-color: #07A6C3;
+        }
+        @media only screen and (max-width: 500px) {
+            .title-font {
+                font-size: 12px;
+            }
+        }
+    .form-button {
+        height:60px;
+        font-size: 25px;
+    }
+    </style>
+
+    {#    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>#}
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <div class="">
+        <div class="content">
+            <div class="container">
+                <div class="" style="min-height: 931px;">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class=" vertical-center"
+{#                             style="min-height: 931px;"#}
+                        >
+                            <div class="clearfix"></div>
+                            <!--Main panel-->
+                            <div class="">
+                                <div class="col-md-12 text-center">
+                                    <img class="text-center " style="margin-bottom:15px;" src="{% static "images/logo/logo.png" %}" width="60%" />
+                                </div>
+                                <h3 class="text-center white grey title-font">The verification code was sent to your email</h3>
+                                <form action="." method="POST" id="" class="form-horizontal">
+                                    {% csrf_token %}
+{#                                    <span class="grey">EMAIL</span>#}
+                                    <div class="col-md-12" style="padding-left:0px;padding-right:0px;">
+                                        <div class="col-md-8 col-xs-8" style="padding-left:0px;">
+                                            {{ form.code|addcss:"form-control text-center form-button" }}
+                                    {% if form.code.errors %}<div class="red">{{ form.code.errors.0 }}</div>{% endif %}
+                                    {% if error %}<div class="red">{{ error }}</div>{% endif %}
+
+
+                                    </div>
+                                        <div class="col-md-4 col-xs-4" style="padding-left:0px;padding-right:0px;">
+                                            <button class="btn btn-primary btn-blue col-xs-12 pull-right btn-block" style="border:none;width: 100%;height:60px;font-size:18px;" type="submit">Verify<br /> email</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--vd_content-wrapper-->
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script>
+    </script>
+
+{% endblock script %}

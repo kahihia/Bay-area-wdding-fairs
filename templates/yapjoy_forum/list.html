@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block content %}
+     <section class="recommendations-section">
+<div class="col md-11 col-md-offset-1">
+<div class="row">
+                <h3 class="section-title">Yapper
+                    <a class="btn btn-primary pull-right margin-right-30" data-toggle="modal" href="#suggestTopic">Suggest a topic</a>
+                    <div class="clearfix"></div>
+                </h3>
+                 {% if message %}<h3 style="color: green;" class="text-center">{{ message }}</h3><hr />{% endif %}
+
+            </div>
+
+<div id="rec-list" class="list-view">
+
+
+                        <div class="items">
+
+                            <div class="col-md-12 wrap">
+                                <div class="media-body">
+                                    <div class="col-md-12">
+                                        <input name="searchtopic" id="searchtopic" class="form-control"
+                                               placeholder="Search topics in yapper" type="text">
+                                        <hr/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+
+                    </div>
+<section class="rec-list">
+
+                <div id="rec-list" class="list-view">
+                    <div class="items">
+
+                        <div class="col-md-12 wrap">
+                                <div class="">
+
+                                    <div class="media-body">
+                                        <h4></h4>
+                                    <div class="col-md-4"><h4>Topic</h4></div>
+                                    <div class="col-md-2"><h4>Posts</h4></div>
+                                    <div class="col-md-4"><h4>Last post</h4></div>
+                                    <div class="col-md-2"><h4>View</h4></div>
+
+
+
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                        {% for forum in forums %}
+
+                                <div class="media">
+
+                                    <div class="media-body">
+                                        <h4></h4>
+                                    <div class="col-md-4"><a href="{% url 'forum-detail' forum.pk %}">{{ forum.title }}</a></div>
+                                    <div class="col-md-2">{{ forum.num_posts }}</div>
+                                    <div class="col-md-4">{{ forum.get_last_post.short|safe }}</div>
+                                    <div class="col-md-2"><a class="button" href="{% url 'forum-detail' forum.pk %}">VIEW</a></div>
+
+
+
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+
+
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+  <div class="modal fade" id="suggestTopic" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/forum/" method="post">
+                    {% csrf_token %}
+
+                    <div class="modal-body">
+                        <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                        <h4 class="modal-title">Suggest a new topic</h4>
+
+                        <p class="text-center">Enter the topic below you want to suggest</p>
+
+                        <div class="form-group"><input id="suggest" name="suggest" class="form-control" type="text"/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue">Suggest</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+<!-- Forums  -->
+{#<div id="list" class="media">#}
+{#    <table border="0" cellpadding="4" width="100%" class="table ">#}
+{#        <tr>#}
+{#            <td>Topic</td>#}
+{#            <td>Posts</td>#}
+{#            <td>Last post</td>#}
+{#            <td></td>#}
+{#        </tr>#}
+{#        {% for forum in forums %}#}
+{#            <tr>#}
+{#                <td {% if forloop.last %}class="last"{% endif %}>#}
+{#                    <div class="title"> <a href="{% url 'forum-detail' forum.pk %}">{{ forum.title }}</a></div>#}
+{#                </td>#}
+{#                <td {% if forloop.last %}class="last"{% endif %}>{{ forum.num_posts }}</td>#}
+{#                <td {% if forloop.last %}class="last"{% endif %}>#}
+{#                    {{ forum.last_post.short|linebreaksbr }}</td>#}
+{#                <td {% if forloop.last %}class="last"{% endif %}>#}
+{#                    <a class="button" href="{% url 'forum-detail' forum.pk %}">VIEW</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#</div>#}
+</div>
+     </section>
+        <script>
+
+        $('#searchtopic').keypress(function (e) {
+            if (e.which == 13) {
+                window.location.href = '/forum/search/?topic=' + $('#searchtopic').val();
+            }
+        });
+    </script>
+{% endblock content %}

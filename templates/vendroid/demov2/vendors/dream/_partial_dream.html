@@ -1,0 +1,29 @@
+<div class="image-tiles">
+    <div class="col-md-4 col-xs-4">
+        {% for d in list1 %}
+            <div class=" text-center">
+                <img style="width:100%;" alt="example image" src="{{ d.image.url }}" />
+                <p style="margin-top: 10px;">{{ d.description }}</p>
+            </div>
+            <div class="clearfix"></div>
+        {% endfor %}
+    </div>
+    <div class="col-md-4 col-xs-4">
+        {% for d in list2 %}
+            <div class=" text-center">
+                <img style="width:100%;" alt="example image" src="{{ d.image.url }}" />
+                <p style="margin-top: 10px;">{{ d.description }}</p>
+            </div>
+            <div class="clearfix"></div>
+        {% endfor %}
+    </div>
+    <div class="col-md-4 col-xs-4">
+        {% for d in list3 %}
+            <div class=" text-center">
+                <img style="width:100%;" alt="example image" src="{{ d.image.url }}" />
+                <p style="margin-top: 10px;">{{ d.description }}</p>
+            </div>
+            <div class="clearfix"></div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,78 @@
+{% extends "vendroid/demo/iframe_base.html" %}
+{% load static %}
+{% block body %}
+    <body data-smooth-scrolling="0" data-active="dashboard" class="full-layout nav-right-hide nav-right-start-hide nav-top-fixed responsive clearfix nav-left-medium  nav-left-hide breakpoint-480" id="dashboard" style="background-color: #f6f9fc !important;">
+{% endblock body %}
+{% block content %}
+    <style>
+        .select-images div img {
+            margin-bottom: 20px;
+        }
+        .question_font {
+            font-family: Calibri;
+            font-size: 30px;
+            color: #747474;
+        }
+        .option_font {
+            font-family: Calibri;
+            font-weight:lighter;
+            font-size: 24px;
+            color: #747474;
+        }
+    </style>
+    <style type="text/css">
+        .button-image{
+            background: url({% static "images/demo/Invite.png" %}) no-repeat;
+            cursor:pointer;
+            border: none;
+        }
+    </style>
+
+    <div class="" style="padding-bottom:200px;background-color: #f6f9fc !important;">
+        <div class="">
+            <div class="" id="login-form" style="">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="panel panel-default">
+                            <form class="form-horizontal" action="." method="post" role="form">
+                                <div class="select-images"  >
+                                    <div id="ID_question">
+                                        {% include "vendroid/demov2/market/question/_partial_question.html" %}
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function goBack(index){
+            console.log("back index", index-1);
+            $.ajax({
+                url : "",
+                type : "POST",
+                data : {'backIndex': index-1},
+
+                success : function(response) {
+                    $("#ID_question").html(response);
+                },
+
+                error : function(xhr,errmsg,err) {
+                    alert("change answer failed");
+                }
+            });
+        }
+        var varFinish = "{{ isFinish }}";
+        if (varFinish == "True"){
+            console.log("finish");
+            window.location.href = "/answer/{{ option_id_forward }}/{{ product_id }}/{{ user_id }}/";
+        }
+
+    </script>
+
+{% endblock content %}

@@ -1,0 +1,129 @@
+{% extends "vendroid/demo/iframe_base.html" %}
+{% load static %}
+{% block content %}
+    <style>
+    .select-images div img {
+        margin-bottom: 20px;
+    }
+    </style>
+    <style type="text/css">
+{#    background-image: url({% static "images/demo/Invite.png" %}) no-repeat; #}
+            .button-image{
+                background: url({% static "images/demo/Invite.png" %}) no-repeat;
+                cursor:pointer;
+                border: none;
+            }
+        </style>
+
+    <div class="">
+        <!-- Header Start -->
+{#        {% include "vendroid/demo/_partial/_header.html" %}#}
+        <!-- Header Ends -->
+        <div class="">
+<div class="" id="login-form" style="">
+{#	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>#}
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+{#					<div class="panel-heading text-center">#}
+{#						#}
+{#					</div>#}
+{#                    {{ form.errors }}#}
+                    <form class="form-horizontal" action="." method="post" role="form">
+					<div class="panel-body select-images" style="height:570px;">
+                        <h4 style="margin-bottom: 20px;">What is your budget for the Venue and related services?</h4>
+
+
+
+
+
+{#               <input type="radio" name="gender" value="25"> Fewer than 25<br>#}
+{#                      <input type="radio" name="gender" value="female"> 25-50<br>#}
+{#                      <input type="radio" name="gender" value="other"> 50-75<br />#}
+{#                      <input type="radio" name="gender" value="other"> 75-100<br />#}
+{#                      <input type="radio" name="gender" value="other"> 100-150<br />#}
+{#                      <input type="radio" name="gender" value="other"> 150-200<br />#}
+{#                      <input type="radio" name="gender" value="other"> Greater than 200<br />#}
+
+
+                        <div class="col-sm-7 controls">
+                          <div class="vd_radio radio-success">
+                            <input type="radio" value="less than $250" name="venue_select" id="d25">
+                            <label for="d25">less than $250</label>
+                          </div>
+                          <div class="vd_radio radio-success">
+                            <input type="radio"  value="$200 - $5000" name="venue_select" id="d50">
+                            <label for="d50">$200 - $500</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" value="$500 - $750" name="venue_select" id="d75">
+                            <label for="d75">$500 - $750</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" value="$750 - $1,000" name="venue_select" id="d100">
+                            <label for="d100">$750 - $1,000</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio"  value="$1,000 - $1,500" name="venue_select" id="d150">
+                            <label for="d150">$1,000 - $1,500</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" value="$1,500 - $2,000" name="venue_select" id="d200">
+                            <label for="d200">$1,500 - $2,000</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" value="More than $2,000" name="venue_select" id="d200plus">
+                            <label for="d200plus">More than $2,000</label>
+                          </div>
+                            <div class="vd_radio radio-success">
+                            <input type="radio" value="Not sure" name="venue_select" id="d210plus">
+                            <label for="d210plus">Not sure</label>
+                          </div>
+                            <div class="col-md-7 col-md-offset-1" hidden id="checks">
+                                <div class="vd_radio radio-success">
+                                <input type="radio"  value="I am looking for the top quality" name="venue_select" id="d220plus">
+                                <label for="d220plus">I am looking for the top quality</label>
+                              </div>
+                                <div class="vd_radio radio-success">
+                                <input type="radio" value="I am looking for high quality and affordable" name="venue_select" id="d230plus">
+                                <label for="d230plus">I am looking for high quality and affordable</label>
+                              </div>
+                                <div class="vd_radio radio-success">
+                                <input type="radio" value="I am looking for the most affordable" name="venue_select" id="d240plus">
+                                <label for="d240plus">I am looking for the most affordable</label>
+                              </div>
+                            </div>
+                            <script>
+                                  $('input:radio[name="venue_select"]').on('click',function(){
+                                      if($(this).val() == 'Not sure' || $(this).val() == 'I am looking for the top quality'|| $(this).val() == 'I am looking for high quality and affordable'|| $(this).val() == 'I am looking for the most affordable' ){
+                                           $('#checks').removeAttr('hidden');
+                                        }else{
+                                           $('#checks').attr('hidden','hidden');
+                                      }
+
+                                  })
+                              </script>
+                        </div>
+                        <div class="clearfix"></div>
+{#                            <form acton="" method="post">#}
+{#                                {% csrf_token %}#}
+                                <input id="surveyVenue" name="surveyVenue" value="7" hidden />
+                                <button type="submit" id="invite-btn" class="btn btn-primary pull-right pink-background" style="margin-top: 20px;width: 120px;">Finish</button>
+{#                            </form>#}
+
+
+
+
+
+					</div>
+
+                    </form>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
+</div>
+
+
+{% endblock content %}

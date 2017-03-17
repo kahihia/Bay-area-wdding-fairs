@@ -1,0 +1,6 @@
+<div class="col-md-12 np">
+    <input {% if event.id in eventsIDList %}checked{% endif %} type="checkbox" style="height: 20px;width: 20px;"
+       {% if event.id in inteventsIDList %}checked{% endif %} name="eventsCheck" value="{{ event.id }}">
+<b>{{ event.name }}--</b>
+<b>{{ event.date }}</b>
+</div>

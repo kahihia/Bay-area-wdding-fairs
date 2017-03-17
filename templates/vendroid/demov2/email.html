@@ -1,0 +1,148 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{#<!DOCTYPE html>#}
+{#<html lang="en" class="coming-soon">#}
+{#<head>#}
+{#    <meta charset="utf-8">#}
+{#    <title>Login Form</title>#}
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">#}
+{#    <meta name="apple-mobile-web-app-capable" content="yes">#}
+{#    <meta name="apple-touch-fullscreen" content="yes">#}
+{#    <meta name="author" content="KaijuThemes">#}
+{##}
+{#    <link type='text/css' href='http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500' rel='stylesheet'>#}
+{#    <link type='text/css'  href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">#}
+{#    <link href="{% static "bawf/css/skylo.css" %}" type="text/css" rel="stylesheet">                   <!-- Skylo -->#}
+{##}
+{#    <link href="{% static "bawf/css/font-awesome.min.css" %}" type="text/css" rel="stylesheet">#}
+{#    <link href="{% static "bawf/css/styles.css" %}" type="text/css" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#        .text-center {#}
+{#            text-align: center !important;#}
+{#        }#}
+{#        .panel-heading h2 {#}
+{#            height: 100%;#}
+{#            width: auto;#}
+{#            text-aligh: center !important;#}
+{#            float: center !important;#}
+{#        }#}
+{#        .red {#}
+{#            color: red;#}
+{#        }#}
+{#    </style>#}
+{#    </head>#}
+{##}
+{#    <body class="focused-form animated-content">#}
+{% block content %}
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+<div class="container" id="login-form" style="margin-top: 150px;">
+{#	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>#}
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="panel-default">
+{#					<div class="panel-heading text-center">#}
+{#						#}
+{#					</div>#}
+{#                    {{ form.errors }}#}
+                    <form class="form-horizontal" action="." method="post" role="form">
+					<div class="panel">
+                        <div class="panel-body">
+{#                        <h4 class="text-center" style="margin-bottom: 20px;">Enter Email Below</h4>#}
+							<div class="form-group">
+{#                                {{ form.errors }}#}
+{#                                {{ InvalidDetails }}#}
+{#		                        <div class="col-xs-12">#}
+{#		                        	<div class="input-group">#}
+{#										<span class="input-group-addon">#}
+{#											<i class="ti ti-user"></i>#}
+{#										</span>#}
+                                        <h3 class="text-center grey">Let's create your team of Wedding Professionals</h3>
+										<div class=" light-theme">
+                                            <span class="grey">Email</span>
+{#                                          <span class="menu-icon"> <i class="fa fa-envelope"></i> </span>#}
+                                          <input required name="email" id="email" type="email" style="height: 45px; opacity: 0.8;" placeholder="Enter Email Here">
+                                       </div>
+                                        <a class="grey">By clicking "Start" you agree to YapJoy's Terms of Use.</a>
+                                        {% if error %}<div class="red">{{ error }}</div>{% endif %}
+                                        <button type="submit" class="btn btn-primary pull-right pink-background" style="margin-top: 20px;width: 120px;" >START</button>
+{#									</div>#}
+{#		                        </div>#}
+							</div>
+
+
+
+
+
+					</div>
+                    </div>
+{#					<div class="panel-footer">#}
+{#						<div class="clearfix">#}
+{#							<a href="extras-registration.html" class="btn btn-default pull-left">Register</a>#}
+{##}
+{#						</div>#}
+{#					</div>#}
+{#                        <div style="text-align: center !important;">#}
+{#                            <div class="panel-heading text-center">#}
+{#                                <h2 >Powered by <a href="https://www.yapjoy.com/">YapJoy</a> </h2>#}
+{#                            </div>#}
+{#                        </div>#}
+
+                    </form>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
+</div>
+
+
+
+{% endblock content %}
+{#    <!-- Load site level scripts -->#}
+{##}
+{#<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>#}
+{#<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script> -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery-1.10.2.min.js" %}"></script> 							<!-- Load jQuery -->#}
+{#<script src="{% static "bawf/js/jqueryui-1.10.3.min.js" %}"></script> 							<!-- Load jQueryUI -->#}
+{#<script src="{% static "bawf/js/bootstrap.min.js" %}"></script> 								<!-- Load Bootstrap -->#}
+{#<script src="{% static "bawf/js/enquire.min.js" %}"></script> 									<!-- Load Enquire -->#}
+{##}
+{#<script src="{% static "bawf/js/velocity.min.js" %}"></script>					<!-- Load Velocity for Animated Content -->#}
+{#<script src="{% static "bawf/js/velocity.ui.min.js" %}"></script>#}
+{##}
+{#<script src="{% static "bawf/js/skylo.js" %}"></script> 		<!-- Skylo -->#}
+{##}
+{#<script src="{% static "bawf/js/wijets.js" %}"></script>     						<!-- Wijet -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery.sparklines.min.js" %}"></script> 			 <!-- Sparkline -->#}
+{##}
+{#<script src="{% static "bawf/js/prettify.js" %}"></script> 				<!-- Code Prettifier  -->#}
+{##}
+{#<script src="{% static "bawf/js/bootstrap-tabdrop.js" %}"></script>  <!-- Bootstrap Tabdrop -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery.nanoscroller.min.js" %}"></script> <!-- nano scroller -->#}
+{##}
+{#<script src="{% static "bawf/js/jquery.dropdown.js" %}"></script> <!-- Fancy Dropdowns -->#}
+{#<script src="{% static "bawf/js/material.min.js" %}"></script> <!-- Bootstrap Material -->#}
+{#<script src="{% static "bawf/js/ripples.min.js" %}"></script> <!-- Bootstrap Material -->#}
+{##}
+{#<script src="{% static "bawf/js/application.js" %}"></script>#}
+{#<script src="{% static "bawf/js/demo.js" %}"></script>#}
+{#<script src="{% static "bawf/js/demo-switcher.js" %}"></script>#}
+{##}
+{#<!-- End loading site level scripts -->#}
+{#    <!-- Load page level scripts-->#}
+{##}
+{##}
+{#    <!-- End loading page level scripts-->#}
+{#    </body>#}
+{#</html>#}
+

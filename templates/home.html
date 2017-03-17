@@ -1,0 +1,123 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootbox.min.js"></script>
+    <script src="/static/js/chosen.jquery.min.js"></script>
+    <script src="/static/js/jquery.yapjoy.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/main/jquery-ui.css" />
+<script type="text/javascript" src="/static/main/jquery.ba-bbq.js"></script>
+<title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>
+    <!-- patch1 -->
+    <link rel="icon" href="/static/images/favicon.png" type="image/png" sizes="32x32">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- patch4 -->
+     <meta name="description" content="An Intelligent Way to Plan Stress Free Wedding online">
+     <meta name="keywords" content="Wedding,bride,groom,wedding planners,venues,caterers,yapjoy,bayareawedding,wedding fairs">
+     <meta name="author" content="yapjoy">
+
+     <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    <!-- patch4 -->
+
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/static/styles.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/static/main/chosen.css" rel="stylesheet" type="text/css" media="all"/>
+    
+</head>
+<body onload="startTime();">
+
+
+{% include 'partial/_header.html' %}
+
+<section class="main-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1 side-nav">
+
+            </div>
+            <section class="friends-section">
+            <div class="col-md-11 col-md-offset-1 left-col">
+                <iframe id="iFrameID" src="/friends/" width="100%" height="1000px"></iframe>
+            </div>
+                </section>
+
+
+
+
+
+
+                <!-- seth -->
+<!-- patch2 -->
+               <!--  <div class="modal fade" id="addFriendModalOne" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <input type="text" name="searchone" id="searchField" class="form-control" placeholder="Search people on yapjoy"></div>
+                 <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title">Add People</h4>
+                <p class="text-center">Search for people on yapjoy</p>
+                <form id="addFriendForm"> -->
+
+                <!-- php code for add friend button with + sign goes here  -->
+<!-- patch2 -->
+{#                </form>#}
+{#            </div>#}
+               <!-- patch3 -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-blue" id="addFriendBtn" data-dismiss="modal">Add People</button>
+            </div> -->
+            <!-- patch3 -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="/static/js/jquery.friends.js"></script>
+<script type="text/javascript" src="/static/js/jquery.search.js"></script>
+<script type="text/javascript" src="/static/js/jquery.yiilistview.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+jQuery(function($) {
+jQuery('#friend-list').yiiListView({'ajaxUpdate':['friend-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+jQuery('#friend-group-list').yiiListView({'ajaxUpdate':['friend-group-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+jQuery('#user-list').yiiListView({'ajaxUpdate':['user-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+jQuery('#my_input_name').autocomplete({'minLength':'1','source':[]});
+});
+/*]]>*/
+</script>
+</body>
+<script>
+var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+var imgCount = 0;
+function startTime() {
+    if(imgCount == imgArray.length) {
+        imgCount = 0;
+    }
+    document.getElementById("ad").src = imgArray[imgCount];
+    imgCount++;
+    setTimeout("startTime()", 5000);
+}
+    function LoadiFrameURL(url){
+        $('#iFrameID').attr('src',url);
+    }
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68785620-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>

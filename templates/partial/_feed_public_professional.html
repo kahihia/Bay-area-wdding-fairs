@@ -1,0 +1,239 @@
+{% load static %}
+{% load comments %}
+{#<ul class="list-inline pull-right filter-menu">#}
+{#    <li>Filter</li>#}
+{#    <li><a href="/dashboard">All</a></li>#}
+{#    <li><a href="/dashboard?favorites=1">My Favorites</a></li>#}
+{#</ul>#}
+<div class="clearfix"></div>
+{% if is_following or professional.user == request.user %}
+<form method="post" id="" action="." enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="share-update">
+        <textarea
+                placeholder="New Post" class="form-control" name="Post_comment"
+                id="Post_comment" style="margin-bottom: 5px;"></textarea>
+        <span
+                class="post-row">
+            <button type="submit" class="btn btn-blue pull-right" id="postBtn">Post</button>
+                <!-- <input type="file" name="file"/> -->
+                  <!-- seth -->
+                  <!-- choose fie change -->
+               <div class="new_Btn pull-left">
+{#                   <img id="postPicture" src="{% static "static/images/choose_file.png" %}">#}
+
+
+                       <div class="pull-right profile-card-username grey-gallery  nm-t">
+
+{#                           {{ form.images }}#}
+                            <input name="images" type="file" />
+
+
+                       </div>
+                       <div class="clearfix"></div>
+               </div>
+            <br>
+         <!--   <a href="#" class="btn btn-gray"><i class="fa fa-paperclip"></i> Attach Photo</a> -->
+        </span>
+    </div>
+</form>
+<!-- end update -->
+{% endif %}
+<!-- choose fie change -->
+
+<style>
+    #postPicture:hover {
+        opacity: .5;
+        filter: alpha(opacity=100); /* For IE8 and earlier */
+
+    }
+
+    #html_btn {
+        display: none;
+    }
+</style>
+
+
+<script>
+    $('.new_Btn').bind("click", function () {
+        $('#html_btn').click();
+    });
+</script>
+
+<!-- choose fie change -->
+
+<div id="post-list" class="list-view">
+    <div class="items">
+        {% for feed in userfeed %}
+            <div class="media post" id="media_post_id_{{ feed.id }}">
+                <div class="media-left">
+                        <span class="profile-thumb profile-sm"
+                              style="background-image: url({{ feed.user.userprofile.get_image_url }})"></span>
+                </div>
+                <div class="media-body">
+                    <h5 class="media-heading">{% if feed.user == feed.user_wall %}<a href="/profile/{{ feed.user.userprofile.id }}/">{{ feed.user.get_full_name }}</a>{% else %}<a href="/profile/{{ feed.user.userprofile.id }}/">{{ feed.user.get_full_name }}</a> wrote on <a href="/profile/{{ feed.user_wall.userprofile.id }}/">{{ feed.user_wall.get_full_name }}</a> wall{% endif %}
+                        <span class="time-stamp">{{ feed.created_at|timesince }} ago</span></h5>
+                    {% if not feed.user == user and profile.subscribed %}
+                    <p class="post-comment">{{ feed.text }}</p>
+                    {% elif feed.user == user %}
+                        <p class="post-comment">{{ feed.text }}</p>
+                    {% else %}
+                        <small style="color: #ff9800;">Subscribe to view the comment.</small>
+                    {% endif %}
+                    {% if feed.image %}<div class="submitted-image" style="background-image:url({{ feed.get_image_url }})"></div>{% endif %}
+
+                </div>
+
+                    <span class="post-row">
+                        <ul class="list-inline links">
+
+
+                            <input type="hidden" name="feed_to_delete"/>
+                            {% if feed.user == request.user %}<li><a onclick="deletePOST('{{ feed.id }}');">Delete</a></li>{% endif %}
+
+                            <input type="hidden" name="feed_to_like"/>
+                            <li><a onclick="likePOST('{{ feed.id }}');" id="like_post_{{ feed.id }}">Like ({{ feed.likes_count }})</a></li>
+                        </ul>
+                    </span>
+                {% get_comment_list for feed as comment_list %}
+                {% for comment in comment_list %}
+                    <div class="media re-post">
+                        <div class="media-left">
+                            <span class="profile-thumb profile-sm"
+                                  style="background-image: url({{ comment.user.userprofile.get_image_url }})"></span>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading"><a href="/profile/{{ comment.user.userprofile.id }}/">{{ comment.user.get_full_name }}</a> <span
+                                    class="time-stamp">{{ comment.submit_date|timesince }} ago</span></h5>
+                            {{ comment.comment }}
+                        </div>
+                    </div>
+
+
+
+                {% endfor %}
+                <div id="new_comment_{{ feed.id }}"></div>
+                <div class="media leave-comment">
+                    <div class="media-left">
+                        <span class="profile-thumb profile-sm"
+                              style="background-image: url({{ profile.get_image_url }})"></span>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading"><a href="/profile/{{ request.user.userprofile.id }}/">{{ request.user.get_full_name }}</a></h5>
+                        {#            <input type="text" data-id="173" class="form-control " placeholder="Leave a comment">#}
+                        {% get_comment_form for feed as form %}
+
+                        <form action="{% comment_form_target %}" id="commentForm_{{ feed.id }}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input class="col-md-10 form-control" id="id_comment" feed_id="{{ feed.id }}"
+                                       name="comment"/>
+
+                                {#                                            {{ form.comment }}#}
+                                {#                                                                <div class="col-md-6">#}
+                                {#                                                                    <textarea cols="45" id="id_comment" maxlength="3000"#}
+                                {#                                                                          name="comment" rows="2"></textarea>#}
+                                {#                                            {{ form.honeypot }}#}
+                                {{ form.content_type }}
+                                {{ form.object_pk }}
+                                {{ form.timestamp }}
+                                {{ form.security_hash }}
+                                <input type="hidden" name="next"
+                                       value="{{ request.path }}"/>
+                                {#                                                                </div>#}
+                                {#                                                                <div class="col-md-6">#}
+                                {#                                                                    <input type="submit" value="Reply" class="btn bg-yellow"#}
+                                {#                                                                       id="id_submit"/>#}
+                                {#                                                                </div>#}
+                            </div>
+                            {#                            <a class="margin-top-20 btn bg-yellow btn-sm" onclick="submitComment({{ comment.id }})">Reply</a>#}
+                            <div class="clearfix"></div>
+                            {#                                                                <br/>#}
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+<script>
+    function deletePOST(id) {
+         bootbox.confirm("<h3>Are you sure you wish to delete this POST?</h3>", function(result) {
+            if (!result) return;
+             else {
+               // alert(id)
+                $.ajax({
+                    url:'.', // the endpoint
+                    type: 'post', // http method
+                    data: {'feed_to_delete':id}, // data sent with the post request
+
+                    // handle a successful response
+                    success: function (response) {
+                        //alert(response);
+                        if (response == "success") {
+                            $('#media_post_id_' + id).attr('hidden', 'hidden');
+                        }
+                    },
+                    // handle a non-successful response
+                    error: function (xhr, errmsg, err) {
+                        alert("fail");
+
+                    }
+                });
+            }
+        });
+    };
+
+
+    function likePOST(id) {
+        $.ajax({
+            url:'.',
+            type: 'post',
+            data: {'feed_to_like':id},
+
+            success: function (data) {
+                $('#like_post_'+id).html('Like (' + data + ')');
+            },
+
+            error: function (xhr, errmsg, err) {
+                alert("fail");
+            }
+        });
+    };
+
+
+    $(document).on('click', '.starBtn', function(){
+        var id = $(this).data('id');
+        var flagged = $(this).data('flagged');
+        if(flagged == '1'){
+            $(this).find('i').removeClass('fa-star').addClass('fa-star-o');
+            $(this).data('flagged', 0);
+        } else {
+            $(this).find('i').removeClass('fa-star-o').addClass('fa-star');
+            $(this).data('flagged', 1);
+        }
+
+        var info = [];
+        info[1] = id;
+        info[2] = flagged;
+
+        $.ajax({
+            url: ".",
+            type: "POST",
+            data: {'feed_to_fav':info},
+
+            success:function (response){
+                if(response == "success"){
+                    alert("success fav"); // another sanity check
+                }
+            },
+            error: function (xhr, errmsg, err) {
+                alert("fail fav");
+            }
+        });
+    });
+
+</script>

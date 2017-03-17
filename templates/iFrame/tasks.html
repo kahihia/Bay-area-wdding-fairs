@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<section class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <section class="tasks-section">
+    <div class="col-md-2 col-md-offset-1 left-col" >
+        <section class="tasks-nav">
+             <!-- patch3 -->
+            <h3 class="section-title">Tasks<small><a href="/tasks">Show All</a></small>
+
+            </h3>
+
+           <!-- Removing task list
+             sETH -->
+             <a style= "display:none" href="#" class="add-btn " id="addTaskBtn"><i class="glyphicon glyphicon-plus"></i> <span>Add List</span></a>
+
+            <div  class="task-list">
+                    <ul class="list-inline">
+                        <li class="descript"><p><a href="/tasks?today=1">Today </a></p></li>
+                       <li><i class="fa fa-chevron-right"></i></li>
+                    </ul>
+                </div>
+                 <div class="task-list">
+                    <ul class="list-inline">
+                        <li class="descript"><p><a href="/tasks?complete=1">Completed </a></p></li>
+                       <li><i class="fa fa-chevron-right"></i></li>
+                    </ul>
+                </div>
+
+
+             <!-- patch3 -->
+
+          <!--   <div id="task-group-list" class="list-view">
+<div class="items">
+<span class="empty"></span></div><div class="keys" style="display:none" title="/tasks?friend=195"></div>
+</div> -->
+           <!-- patch3 -->
+
+            <br>
+            <h3 class="section-title">Assigned</h3>
+
+            <div id="friend-list" class="list-view">
+<div class="items">
+    <div class="friend">
+        <ul class="list-inline">
+
+            <li><span class="profile-thumb profile-sm" style="background-image: url(/images/tempPhoto.png)"></span></li>
+            <li class="user-name"><p><a href="/tasks?friend=195">Adeel Khan </a></p></li>
+            <li><i class="fa fa-chevron-right"></i></li>
+
+        </ul>
+    </div>
+    <div class="friend">
+        <ul class="list-inline">
+
+            <li><span class="profile-thumb profile-sm" style="background-image: url(/images/tempPhoto.png)"></span></li>
+            <li class="user-name"><p><a href="/tasks?friend=195">Adeel Khan </a></p></li>
+            <li><i class="fa fa-chevron-right"></i></li>
+
+        </ul>
+    </div>
+    <div class="friend">
+        <ul class="list-inline">
+
+            <li><span class="profile-thumb profile-sm" style="background-image: url(/../images/profiles/156?p=1439014002)"></span></li>
+            <li class="user-name"><p><a href="/tasks?friend=156">Piyush Seth </a></p></li>
+            <li><i class="fa fa-chevron-right"></i></li>
+
+        </ul>
+    </div>
+</div><div class="keys" style="display:none" title="/tasks?friend=195"><span>347</span><span>348</span><span>350</span></div>
+</div>
+        </section>
+    </div>
+    <div class="col-md-9">
+        <h7 class="section-title"> </h7>
+
+        <ul class=" list-unstyled todo-list">
+            <li><a href="#" class="add-btn add-task" data-toggle="modal" data-target="#addTodoModal"><i class="glyphicon glyphicon-plus"></i> <span>Add Task</span></a>
+            </li>
+            <div id="task-list" class="list-view">
+<div class="items">
+<!--
+<li class="">
+    <span class="task">
+    	<a href="#!" data-id="" class="check markTask"><i class="fa  fa-lg"></i></a>
+        <p><a href="#!"  class="task-listen" data-id=""></a></p>
+
+        <p>Delete<span><a href="#!" class="deleteGroupBtn" data-id=""><i class="glyphicon glyphicon-trash trash"></i></a></p>
+
+    </span>
+</li>
+
+
+ -->
+
+
+<li class="">
+    <span class="task">
+    	<a href="#!" data-id="158" class="check markTask"><i class="fa fa-circle-o fa-lg"></i></a>
+        <p><a href="#!"  class="task-listen" data-id="158">8-10 months before</a> &nbsp;
+        	<a href="#!" class="deleteGroupBtn" data-id="158"><i class="glyphicon glyphicon-trash"></i></a>
+        </p>
+        <!-- <p><a href="#!" class="deleteGroupBtn" data-id="158"><i class="glyphicon glyphicon-trash"></i></a></p> -->
+
+    </span>
+</li></div><div class="keys" style="display:none" title="/tasks?friend=195"><span>158</span></div>
+</div>        </ul>
+    </div>
+</section>
+
+
+<div class="modal fade" id="addTodoModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                 <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                  <!-- patch2 -->
+                <h4 class="modal-title">Add Task</h4>
+                <form id="addTodoModalForm">
+
+                     <!-- seth -->
+                    <div class="form-group">
+
+
+
+                        <label>Task:</label>
+                        <!-- v27 -->
+                      <input type="text" class='form-control'placeholder='Choose task from dropdown or Create your custom task'  id="theinput" list=browsers name="Task[name]" required="required" />
+                    <select name="thelist" class="form-control" onChange="combo(this, 'theinput')">
+                    <option>Choose Task  </option>
+                     <option>12+ months before</option>
+ <option>Envision your wedding budget</option>
+ <option>Invite  "planning team"  on YapJoy</option>
+ <option>Plan guest list. Create YapJoy Groups</option>
+ <option>Look for ceremony & reception sites</option>
+ <option>Create a 'Wedding Party' Group</option>
+ <option>Time for an engagement party?</option>
+ <option>8-10 months before</option>
+ <option>Bride: Shop for, & order your gown</option>
+ <option>Envision reception food</option>
+ <option>Arrange for Music Entertainment</option>
+ <option>Connect with wedding Professionals</option>
+ <option>Connect with  photographers</option>
+ <option>Connect with videographers</option>
+ <option>Connect with reception band or DJs</option>
+ <option>Connect with & Search Florist</option>
+ <option>Research a wedding insurance policy</option>
+ <option>Accommodations for out-of-towners</option>
+ <option>Register for gifts</option>
+ <option>Arrange rental companies</option>
+ <option>6-8 months before</option>
+ <option>Book ceremony musicians</option>
+ <option>Order bridesmaid dresses</option>
+ <option>Start planning honeymoon</option>
+ <option>Send save-the-date via YapJoy Email</option>
+ <option>4-6 months before</option>
+ <option>Attend prewedding counseling</option>
+ <option>Shop for invitations</option>
+ <option>Shop for wedding rings</option>
+ <option>Shop for formalwear</option>
+ <option>Renew or get passports, if necessary</option>
+ <option>Envision your wedding cake</option>
+ <option>3 months before</option>
+ <option>Order wedding cake</option>
+ <option>Attend your shower</option>
+ <option>Groom: Rent the men's formalwear</option>
+ <option>Hire wedding-day transport</option>
+ <option>2 months before</option>
+ <option>Add guests to your Wedding Event</option>
+ <option>Write your vows</option>
+ <option>Purchase gifts for parents & guests</option>
+ <option>Look for hair stylist</option>
+ <option>Book makeup and go for a trial run</option>
+ <option>1 month before</option>
+ <option>Apply for a marriage license</option>
+ <option>Bride: Have final gown fitting</option>
+ <option>See if bridesmaids gowns are ready</option>
+ <option>Create wedding program for guests</option>
+ <option>Gift baskets for out-of-town guests</option>
+ <option>2 weeks before</option>
+ <option>Review RSVPs on YapJoy dashboard</option>
+ <option>Send guests reminders to RSVP</option>
+ <option>Send shot lists to photographer</option>
+ <option>Send shot lists to videographer</option>
+ <option>Deliver final song list to your DJ</option>
+ <option>Bride: Get your last haircut & color</option>
+ <option>1 week before</option>
+ <option>Give reception site final head count</option>
+ <option>Give caterer final guest head count</option>
+ <option>Print place and table cards</option>
+ <option>Call all wedding vendors to confirm</option>
+ <option>Groom: Get your hair trimmed</option>
+ <option>Attend bachelor/ette parties</option>
+ <option>2-3 days before</option>
+ <option>Bride: Have your gown pressed</option>
+ <option>Groom: Go for formalwear final fitting</option>
+ <option>Groom: Get groomsmen fitted</option>
+ <option>Determine wedding-party order</option>
+ <option>Reconfirm final details with all vendors</option>
+ <option>Confirm details with limousine</option>
+ <option>Arrange for guests airport pickup</option>
+ <option>Day before</option></option>
+ <option>Give emergency contact to all vendors</option>
+ <option>Pay off any final balances</option>
+ <option>Night before</option>
+ <option>Rehearse ceremony</option>
+ <option>Give marriage license to officiant</option>
+ <option>Attend rehearsal dinner</option>
+ <option>Postwedding</option>
+ <option>Prearrange for rental returns</option>
+ <option>Write and send thank-you notes</option>
+ <option>Take lots of photos & share on YapJoy</option>
+
+                    </select>
+
+                    <script>
+                    function combo(thelist, theinput) {
+                        theinput = document.getElementById(theinput);
+                        var idx = thelist.selectedIndex;
+                        var content = thelist.options[idx].innerHTML;
+                        theinput.value = content;
+                    }
+                    </script>
+
+                    </div>
+
+
+                             <div class="form-group due">
+
+                        <label>Due:</label>
+                        <i class="fa fa-calendar"></i>
+                        <input class="form-control" id="Task_due_date" type="text" value="" name="Task[due_date]" />                    </div>
+                    <div class="form-group">
+                        <label>Assign:</label>
+                        <!-- patch4 -->
+                        <!-- getFriendDropdownTask -->
+                        <select multiple="multiple" class="form-control" data-placeholder="Choose" name="assigned_to_add[]" id="assigned_to_add">
+<option value="195">Adeel Khan</option>
+<option value="156">Piyush Seth</option>
+</select>                    </div>
+                    <div class="form-group">
+                        <label>Notes:</label>
+                        <input class="form-control" name="Task[notes]" id="Task_notes" type="text" />                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-blue" id="createTodoBtn" data-dismiss="modal">Create</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="editTaskModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="editTaskBody">
+
+            </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-gray" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-blue" id="editTaskSubmitBtn">Save</button>
+                <!-- <button type="button" class="btn btn-gray" data-dismiss="modal">OK</button> -->
+                <button style = "display:none" type="button" class="btn btn-blue" id="editTaskSubmitBtn">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jquery %}
+     <script type="text/javascript" src="/static/js/jquery.tasks.js"></script>
+     <script type="text/javascript" src="/static/js/jquery.yiilistview.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+/*<![CDATA[*/
+jQuery(function($) {
+jQuery('#task-group-list').yiiListView({'ajaxUpdate':['task-group-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+jQuery('#friend-list').yiiListView({'ajaxUpdate':['friend-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+jQuery('#task-list').yiiListView({'ajaxUpdate':['task-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+jQuery('#Task_due_date').datepicker({'showAnim':'slide','dateFormat':'mm/dd/yy'});
+});
+/*]]>*/
+</script>
+{% endblock %}

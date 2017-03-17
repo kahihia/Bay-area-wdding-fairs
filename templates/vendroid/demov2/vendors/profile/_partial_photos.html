@@ -1,0 +1,126 @@
+{% load static  %}
+<div class="container">
+    <div class="vd_content-wrapper" style="min-height: 20em;background-color: white;">
+        <div class="" style="min-height: 20em;">
+            <div class=" clearfix"></div>
+            <div class="row">
+                <div id="ID_hasPhoto">
+                    {% include "vendroid/demov2/vendors/profile/_partial_hasPhotos.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function deleteAlbum(id){
+         $.ajax({
+             url: "",
+             type: "POST",
+             data: {'deleteAlbumID': id},
+
+             success: function (response) {
+                 $("#ID_hasPhoto").html(response);
+             },
+
+             error: function (xhr, errmsg, err) {
+                 alert("change video failed");
+             }
+         });
+    }
+
+    function changeAlbumTitle(id){
+         var title = $("#ID_album_{{ id }}").val();
+         $.ajax({
+             url: "",
+             type: "POST",
+             data: {'changeAlbumTitleID': id,
+                 'title':title
+             },
+
+             success: function (response) {
+                 if(id == 0) {
+                    $("#ID_hasPhoto").html(response);
+                 } else {
+                    alert("change title successful");
+                 }
+             },
+
+             error: function (xhr, errmsg, err) {
+                 alert("change video failed");
+             }
+         });
+    }
+
+    function deletePhoto(id){
+         $.ajax({
+             url: "",
+             type: "POST",
+             djata: {'deletePhotoID': id},
+
+             success: function (response) {
+                 $("#ID_hasPhoto").html(response);
+             },
+
+             error: function (xhr, errmsg, err) {
+                 alert("change video failed");
+             }
+         });
+    }
+
+
+
+
+
+    var imageLoader = document.getElementById('filePhoto');
+        imageLoader.addEventListener('change', handleImage, false);
+
+    var targetFile;
+    function handleImage(e) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+
+            $('.uploader img').attr('src', event.target.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+
+        targetFile = e.target.files[0];
+    }
+{#    $('#albumimageuploaderimage').addEventListener("DOMAttrModified", function(event) {#}
+{#        if (event.attrName == "src") {#}
+{#           alert('fire uploader')#}
+{#        }#}
+{#    });#}
+
+
+    function uploadImage(){
+        //alert('started uploading')
+        $('#image_uploader_button').attr('src','{% static "images/vendorProfile/picture-upload-loading-200x.gif" %}')
+        var formdata = new FormData();
+        formdata.append("image", targetFile);
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: formdata,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                $('#all_images').html(response);
+                $('#image_uploader_button').attr('src','{% static "images/vendorProfile/Upload_Pictures.jpg" %}')
+
+            },
+
+            error: function (xhr, errmsg, err) {
+                $('#image_uploader_button').attr('src','{% static "images/vendorProfile/Upload_Pictures.jpg" %}')
+
+            }
+        });
+
+    }
+    $("#filePhoto").change(function (){
+      uploadImage()
+     });
+</script>
+

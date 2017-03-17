@@ -1,0 +1,460 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<style>
+    .circle-online {
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #a1a1a1;
+        border-radius: 25px;
+        background-color: green;
+        position: absolute;
+        top: 1px;
+        left: -14px;
+        z-index:99;
+    }
+    .circle-offline {
+        border: 1px solid #a1a1a1;
+        border-radius: 25px;
+        background-color: grey;
+        left: -14px;
+        margin: 5px;
+        padding: 5px;
+        position: absolute;
+        top: 1px;
+        z-index:99;
+    }
+    .white-bg {
+        background-color: #FFF;
+    }
+
+</style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            {#                            <div class="vd_title-section clearfix">#}
+                            {#                                <div class="vd_panel-header no-subtitle">#}
+                            {#                                    <h1>Home</h1>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                {% if success_message %}
+                                    <div class="col-lg-12 col-md-3">
+                                        <div class="alert alert-success alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button"><i class="icon-cross"></i></button>
+                        <i class="fa fa-check-circle append-icon"></i>{{ success_message }}</div>
+                                    </div>
+                                {% endif %}
+                                    <div class="col-lg-12 col-md-3">
+
+                                        <div class="panel widget vd_todo-widget light-widget">
+
+                                            <div class="panel-body">
+                                                <h3 class="mgbt-xs-20"> Invite members to planning circle</h3>
+
+                                                <div class="text-center mgbt-xs-10">
+                                                    <a data-toggle="modal" data-target="#addFriendModal"
+                                                       class="btn vd_btn vd_round-btn vd_bg-green mgr-10"><i
+                                                            class="fa fa-plus fa-fw"></i></a>
+{#                                                    <a onclick="openSocialShareModal('/invite/');"#}
+{#                                                       class="btn vd_btn vd_bg-facebook vd_round-btn mgr-10"><i#}
+{#                                                            class="fa fa-facebook fa-fw "></i></a>#}
+                                                    <a href="/invites/?provider=google"
+                                                       class="btn vd_btn vd_bg-googleplus vd_round-btn mgr-10"><i
+                                                            class="fa fa-google-plus fa-fw"></i></a>
+                                                    <a href="/invites/?provider=live" class="btn vd_btn vd_bg-linkedin vd_round-btn mgr-10"><i
+                                                            class="fa fa-windows fa-fw "></i></a>
+                                                    <a href="/invites/?provider=yahoo" class="btn vd_btn vd_bg-soft-red vd_round-btn mgr-10"><i
+                                                            class="fa fa-yahoo fa-fw "></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+{#                                        <div class="panel widget light-widget">#}
+{#                                            <div class="panel-body-list">#}
+{#                                                <h3 class="pd-20 mgbt-xs-0"><i class="fa fa-users mgr-10"></i>Friends#}
+{#                                                    Requests</h3>#}
+{##}
+{#                                                <div class="content-grid column-xs-2 column-sm-3 height-xs-auto mgbt-xs-20">#}
+{#                                                    <div>#}
+{#                                                        <ul class="list-wrapper">#}
+{#                                                            <li><a data-toggle="modal" data-target="#addFriendModal">#}
+{#                                                                <span class="menu-icon"><img alt="example image"#}
+{#                                                                                             src="{% static "vendroid/img/avatar/avatar.jpg" %}"></span>#}
+{#                                                            </a></li>#}
+{#                                                            <li class="warning"><a href="#"> <span#}
+{#                                                                    class="menu-icon"><img alt="example image"#}
+{#                                                                                           src="{% static "vendroid/img/avatar/avatar-2.jpg" %}"></span>#}
+{#                                                            </a></li>#}
+{#                                                            <li><a href="#">#}
+{#                                                                <div class="menu-icon"><img#}
+{#                                                                        src="{% static "vendroid/img/avatar/avatar.jpg" %}"#}
+{#                                                                        alt="example image"></div>#}
+{#                                                            </a>#}
+{##}
+{#                                                                <div class="menu-text"> Gabriella Montagna#}
+{#                                                                    <div class="menu-info">#}
+{#                                                                        <div class="menu-date">San Diego</div>#}
+{#                                                                        <div class="menu-action"><span#}
+{#                                                                                data-placement="bottom"#}
+{#                                                                                data-toggle="tooltip"#}
+{#                                                                                data-original-title="Approve"#}
+{#                                                                                class="menu-action-icon vd_green vd_bd-green"> <i#}
+{#                                                                                class="fa fa-check"></i> </span> <span#}
+{#                                                                                data-placement="bottom"#}
+{#                                                                                data-toggle="tooltip"#}
+{#                                                                                data-original-title="Reject"#}
+{#                                                                                class="menu-action-icon vd_red vd_bd-red"> <i#}
+{#                                                                                class="fa fa-times"></i> </span></div>#}
+{#                                                                    </div>#}
+{#                                                                </div>#}
+{#                                                            </li>#}
+{#                                                            <li><a href="#"> <span class="menu-icon"><img#}
+{#                                                                    alt="example image"#}
+{#                                                                    src="{% static "vendroid/img/avatar/avatar-4.jpg" %}"></span>#}
+{#                                                            </a></li>#}
+{#                                                            <li><a href="#"> <span class="menu-icon"><img#}
+{#                                                                    alt="example image"#}
+{#                                                                    src="{% static "vendroid/img/avatar/avatar-5.jpg" %}"></span>#}
+{#                                                            </a></li>#}
+{#                                                            <li><a href="#"> <span class="menu-icon"><img#}
+{#                                                                    alt="example image"#}
+{#                                                                    src="{% static "vendroid/img/avatar/avatar-6.jpg" %}"></span>#}
+{#                                                            </a></li>#}
+{#                                                            <li><a href="#"> <span class="menu-icon"><img#}
+{#                                                                    alt="example image"#}
+{#                                                                    src="{% static "vendroid/img/avatar/avatar-7.jpg" %}"></span>#}
+{#                                                            </a></li>#}
+{#                                                            <li><a href="#"> <span class="menu-icon"><img#}
+{#                                                                    alt="example image"#}
+{#                                                                    src="{% static "vendroid/img/avatar/avatar-8.jpg" %}"></span>#}
+{#                                                            </a></li>#}
+{#                                                        </ul>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="closing text-center" style=""><a href="#">See All Friends<i#}
+{#                                                        class="fa fa-angle-double-right prepend-icon"></i></a></div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+                                    </div>
+                                    <div class="col-lg-6 col-md-9">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-heading no-title"></div>
+                                            <div class="panel-body">
+                                                <h3 class="mgtp--5"> Planning Circle</h3>
+
+                                                <div class="content-grid column-xs-3 column-sm-4 column-md-5 column-lg-6 height-xs-4">
+                                                    <ul class="list-wrapper">
+                                                        {% for friends in all_friends %}
+                                                            {% if friends.user == user %}
+                                                                <li>
+                                                                    <a href="{{ friends.friends.user.userprofile.get_profile_url }}">
+                                                                        <div class="menu-icon"><img
+                                                                                src="{{ friends.friends.user.userprofile.get_image_url }}"
+                                                                                alt="example image"></div>
+                                                                    </a>
+
+                                                                    <div class="menu-text"><span class="text-right onlineStatus" id="friend{{ friends.friends.user.id}}" data-id="{{ friends.friends.user.id }}"></span> {{ friends.friends.user.get_full_name }}
+                                                                        <div class="menu-info">
+                                                                            <div class="menu-date">{{ friends.friends.user.userprofile.type }}</div>
+                                                                             {% if friends.status == "Pending" and friends.user == user %}
+                                                                <div class="menu-action" >
+                                                                <form action="." id="accept_form_{{ friends.id }}" method="POST" style="margin-left: 10px;">
+                                                                    {% csrf_token %}
+
+                                                                    <input name="accept" value="{{ friends.id }}" hidden="hidden" />
+                                                                    <a onclick="document.getElementById('accept_form_{{ friends.id }}').submit(); return false;" type="submit" class="menu-action-icon vd_green vd_bd-green pull-left" >
+                                                                        <span data-placement="bottom"
+                                                                                               data-toggle="tooltip"
+                                                                                               data-original-title="Approve"
+                                                                                               class=""> <i
+                                                                        class="fa fa-check"></i> </span> </a>
+                                                                    </form>
+                                                                     <form action="."  id="reject_form_{{ friends.id }}" method="POST">
+                                                                    {% csrf_token %}
+                                                                         <input name="reject" value="{{ friends.id }}" hidden="hidden" />
+                                                                         <a onclick="document.getElementById('reject_form_{{ friends.id }}').submit(); return false;" type="submit" class="menu-action-icon vd_red vd_bd-red pull-left">
+                                                                    <span
+                                                                        data-placement="bottom" data-toggle="tooltip"
+                                                                        data-original-title="Reject"
+                                                                        class=""> <i
+                                                                        class="fa fa-times"></i> </span></a>
+                                                                          </form>
+                                                                </div>
+
+
+
+
+
+
+
+                                                                {% elif friends.status == "Pending" %}
+                                                                    <div class="menu-date">Request Sent</div>
+                                                                {% elif friends.status == "Accepted" %}
+                                                                    <div class="menu-date">Friends</div>
+                                                                    {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li>
+                                                                    <a href="{{ friends.user.userprofile.get_profile_url }}">
+                                                                        <div class="menu-icon"><img
+                                                                                src="{{ friends.user.userprofile.get_image_url }}"
+                                                                                alt="example image"></div>
+                                                                    </a>
+
+                                                                    <div class="menu-text"><span class="text-right onlineStatus" id="friend{{ friends.user.id}}" data-id="{{ friends.user.id }}"></span> {{ friends.user.get_full_name }}
+                                                                        <div class="menu-info">
+                                                                            <div class="menu-date">{{ friends.user.userprofile.type }}</div>
+                                                            {% if friends.status == "Pending" and friends.user == user %}
+                                                                <div class="menu-action" >
+                                                                <form action="." method="POST" style="margin-left: 10px;">
+                                                                    {% csrf_token %}
+
+                                                                    <input name="accept" value="{{ friends.id }}" hidden="hidden" />
+                                                                    <a type="submit" class="menu-action-icon vd_green vd_bd-green pull-left" >
+                                                                        <span data-placement="bottom"
+                                                                                               data-toggle="tooltip"
+                                                                                               data-original-title="Approve"
+                                                                                               class=""> <i
+                                                                        class="fa fa-check"></i> </span> </a>
+                                                                    </form>
+                                                                     <form action="." method="POST">
+                                                                    {% csrf_token %}
+                                                                         <input name="reject" value="{{ friends.id }}" hidden="hidden" />
+                                                                         <a type="submit" class="menu-action-icon vd_red vd_bd-red pull-left">
+                                                                    <span
+                                                                        data-placement="bottom" data-toggle="tooltip"
+                                                                        data-original-title="Reject"
+                                                                        class=""> <i
+                                                                        class="fa fa-times"></i> </span></a>
+                                                                          </form>
+                                                                </div>
+
+
+
+
+                                                                {% elif friends.status == "Pending" %}
+                                                                    <div class="menu-date">Request Sent</div>
+                                                                {% elif friends.status == "Accepted" %}
+                                                                    <div class="menu-date">Friends</div>
+                                                                    {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                                 {% if friends.status == "Pending" and friends.user == user %}
+{#                                                                     <div class="menu-action" >#}
+{#                                                                <form action="." method="POST" style="margin-left: 10px;">#}
+{#                                                                    {% csrf_token %}#}
+{##}
+{#                                                                    <input name="accept" value="{{ friends.id }}" hidden="hidden" />#}
+{#                                                                    <a type="submit" class="menu-action-icon vd_green vd_bd-green pull-left" >#}
+{#                                                                        <span data-placement="bottom"#}
+{#                                                                                               data-toggle="tooltip"#}
+{#                                                                                               data-original-title="Approve"#}
+{#                                                                                               class=""> <i#}
+{#                                                                        class="fa fa-check"></i> </span> </a>#}
+{#                                                                    </form>#}
+{#                                                                     <form action="." method="POST">#}
+{#                                                                    {% csrf_token %}#}
+{#                                                                         <input name="reject" value="{{ friends.id }}" hidden="hidden" />#}
+{#                                                                         <a type="submit" class="menu-action-icon vd_red vd_bd-red pull-left">#}
+{#                                                                    <span#}
+{#                                                                        data-placement="bottom" data-toggle="tooltip"#}
+{#                                                                        data-original-title="Reject"#}
+{#                                                                        class=""> <i#}
+{#                                                                        class="fa fa-times"></i> </span></a>#}
+{#                                                                          </form>#}
+{#                                                                </div>#}
+
+
+                                                                {% elif friends.status == "Pending" %}
+{#                                                                    <p>Request Sent</p>#}
+                                                                {% elif friends.status == "Accepted" %}
+{#                                                                    <p>Friends</p>#}
+                                                                    {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <!-- content-grid -->
+                                            </div>
+                                        <div class="clearfix"></div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-9">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-heading no-title"></div>
+                                            <div class="panel-body">
+                                                <h3 class="mgtp--5"> Following</h3>
+
+                                                <div class="content-grid column-xs-3 column-sm-4 column-md-5 column-lg-6 height-xs-4">
+                                                    <ul class="list-wrapper">
+                                                        {% for friends in followings %}
+                                                                <li>
+                                                                    <a href="{{ friends.user.userprofile.get_profile_url }}">
+                                                                        <div class="menu-icon"><img
+                                                                                src="{{ friends.user.userprofile.get_image_url }}"
+                                                                                alt="example image"></div>
+                                                                    </a>
+
+                                                                    <div class="menu-text"><span class="text-right onlineStatus" id="friend{{ friends.user.id}}" data-id="{{ friends.user.id }}"></span> {{ friends.user.get_full_name }}
+                                                                        <div class="menu-info">
+                                                                            <div class="menu-date">{{ friends.user.userprofile.type }}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <!-- content-grid -->
+                                            </div>
+                                        <div class="clearfix"></div>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- col-md-x -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+    <div class="modal fade" id="addFriendModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/friends/" method="post">
+                    {% csrf_token %}
+
+                    <div class="modal-body">
+                        <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                        <h4 class="modal-title text-center">Invite Friends or Family to Your Planning Circle.</h4>
+
+                        <p class="text-center">To invite multiple users, use comma to separate email address.</p>
+
+                        <div class="form-group"><input id="emails" name="emails" class="form-control" type="text"/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Invite Friend</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="share" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <h4 class="modal-title" style="margin-bottom: 0px;">Invite Friends</h4>
+
+
+                    {#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
+                    {#        <!-- Nav tabs -->#}
+
+
+                    <iframe id="iframe_sub" src="" width="100%" height="584px"></iframe>
+
+                    <!-- end panel -->
+                    <!-- end panel -->
+
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script>
+        function openSocialShareModal(url) {
+            $('#share').modal('show');
+            $('#iframe_sub').attr('src', url);
+        }</script>
+
+<script>
+    function loadOnlineStatus() {
+        $('.onlineStatus').each(function (i, obj) {
+            $.ajax({
+                url: '/is_online/?user=' + $(this).attr('data-id'),
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (response) {
+                if (response['is_online']) {
+                    $(obj).addClass('circle-online').removeClass('circle-offline');
+                }
+                else {
+                    $(obj).addClass('circle-offline').removeClass('circle-online');
+                }
+                $(obj).parent().css('position', 'relative');
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        loadOnlineStatus();
+        setInterval(loadOnlineStatus, 10000);
+        find_friend_message('{{ friend.id}}');
+    })
+</script>
+{% endblock script %}

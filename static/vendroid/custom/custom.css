@@ -1,0 +1,242 @@
+/* Insert Your Custom CSS Here */
+
+/*Messages part styling*/
+.np{
+    padding: 0px;
+}
+.npr{
+    padding-right: 0px;
+}
+.npl{
+    padding-left: 0px;
+}
+.npt{
+    padding-top: 0px;
+}
+.npb{
+    padding-bottom: 0px;
+}
+.col-md-6.npr
+{
+	margin-left:10px;
+}
+.friends-search-wrap{
+       padding-top: 5px;
+    background: #f6f6f6;
+    padding-bottom: 5px;
+    float: none;
+    padding-left: 0px;
+}
+.friends-search-wrap li{
+    list-style-type: none;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.chat-wrap,
+.reciever-chat-wrap{
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.chat-date{
+    font-size: 12px;
+}
+.reciever-chat-wrap,
+.chat-wrap p{
+    margin-bottom: 5px;
+}
+.type_msg_box textarea{
+    border-radius: 5px;
+    border:1px solid #23709e;
+    height: 36px;
+}
+.conversation_board-body {
+    margin-top: 10px;
+}
+
+
+.chat-wrap {
+	position: relative;
+	background: #88b7d5;
+	border: 4px solid #c2e1f5;
+}
+.chat-wrap:after, .chat-wrap:before {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.chat-wrap:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: #88b7d5;
+	border-width: 5px;
+	margin-top: -5px;
+	display:none;
+}
+.chat-wrap:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-left-color: #e5f7fd;
+	border-width: 10px;
+    margin-top: -30px;
+}
+
+/*Left Chat Box*/
+
+.reciever-chat-wrap {
+	position: relative;
+	background: #7A7F82;
+	border: 4px solid #7A7F82;
+}
+.reciever-chat-wrap:after, .reciever-chat-wrap:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.reciever-chat-wrap:after {
+	border-color: rgba(122, 127, 130, 0);
+	border-right-color: #7A7F82;
+	border-width: 5px;
+	margin-top: -5px;
+	display:none;
+}
+.reciever-chat-wrap:before {
+	border-color: rgba(122, 127, 130, 0);
+	border-right-color: #7A7F82;
+	border-width: 10px;
+    margin-top: -30px;
+}
+
+.msg-profile-img{
+
+}
+.chat-friend-listings li{
+	border-bottom: 0px !important;
+}
+.chat-friend-listings li:hover{
+    background: transparent !important ;
+}
+.results_to_hide{
+	position: absolute;
+    z-index: 9;
+    width: 100%;
+	display: none;
+}
+.results_to_hide .menu-text,
+.results_to_hide .menu-info
+{
+	color: #23709E;
+}
+.features-wrap p
+{
+	margin-bottom: 20px;
+	min-height: 40px;
+}
+.desktop-img
+{
+	position: absolute;
+    left: 264px;
+    width: 100%;
+}
+.mac-pics-wrap
+{
+	position: relative;
+    height: 559px;
+}
+.mobile-img{
+	text-align: center;
+	display:none;
+}
+.top-boxes-list{
+	padding-right: 20px;
+}
+.top-boxes-list ul li a{
+	padding-top: 0px;
+    padding-bottom: 0px;
+}
+.top-boxes-list ul li{
+	list-style: none;
+}
+.top-boxes-list ul{
+	margin-top: 15px;
+	margin-left: -57px;
+}
+.vd_pricing-table .c_name_pro a{
+	font-size: 16px;
+}
+
+
+@media only screen and (max-width : 480px)
+{
+	.mac-pics-wrap{
+		height: auto;
+	}
+	.desktop-img{
+		display: none;
+	}
+	.mobile-img img{
+		width: 260px;
+	}
+	.mobile-img{
+		display: block;
+	}
+	.video-player video{
+		width: 100%;
+	}
+	.features-wrap h1{
+		font-size: 30px;
+	}
+	.content-blog-small .menu-icon {
+		font-size: 32px;
+		width: 77px;
+		margin-right: 22px;
+	}
+	.content-blog-small .menu-text {
+		margin-left: 90px;
+	}
+	.dashboard-box{
+		margin-bottom: 10px;
+	}
+	.register-now-section{
+		background-size: 125% 100% !important;
+		background-position: center !important;
+		background-attachment: inherit !important;
+		padding-top: 100px !important;
+		padding-bottom: 100px !important;
+
+	}
+}
+@media only screen and (min-width : 481px) and (max-width: 768px)
+{
+	.mac-pics-wrap{
+		height: auto;
+	}
+	.desktop-img{
+		display: none;
+	}
+	.mobile-img{
+		display: block;
+	}
+	.mobile-img img{
+		width: 325px;
+	}
+	.video-player video{
+		width: 100%;
+	}
+	.dashboard-box{
+		margin-bottom: 10px;
+	}
+
+}
+@media only screen and (min-width : 769px) and (max-width: 1024px)
+{
+}

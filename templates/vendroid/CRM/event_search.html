@@ -1,0 +1,392 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <style>
+
+        .pagination {
+            font-size: 15px;
+        }
+
+        .dataTables_wrapper {
+            overflow-x: scroll;
+        }
+    </style>
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet"
+          type="text/css">
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                            <!-- vd_head-section -->
+
+                            <div class="">
+
+                                <!-- vd_title-section -->
+
+                                <div class="vd_content-section clearfix">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel widget">
+                                                <div class="panel-body">
+                                                    <br>
+                                                    <div class="tab-content mgbt-xs-20">
+                                                        {% if successMessage %}
+                                                            <div class="flashes">
+                                                                <div class="alert alert-success">{{ successMessage }}</div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="tab-pane active" id="privacy">
+                                                            <div class="col-md-12 text-center">
+                                                                {% include "vendroid/CRM/partial/_header_inside.html" %}
+
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-12" style="margin-bottom: 10px;">
+                                                                        <div class="col-md-12">
+                                                                            <div class="col-md-6">
+                                                                                <form action="" method="post"
+                                                                                      id="searchForm">
+                                                                                    {% csrf_token %}
+                                                                                    <div class="col-md-4"
+                                                                                         style="padding: 0px;">
+                                                                                        <select id="id_events"
+                                                                                                name="events"
+                                                                                                class="form-control">
+                                                                                            <option>-------------
+                                                                                            </option>
+                                                                                            <optgroup label="Last Year"
+                                                                                                      style="padding-bottom: 20px;">
+                                                                                                {% for o in last_year %}
+                                                                                                    <option value="{{ o.id }}">{{ o }}</option>
+                                                                                                {% endfor %}
+                                                                                            </optgroup>
+                                                                                            <optgroup label="This Year">
+                                                                                                {% for o in this_year %}
+                                                                                                    <option value="{{ o.id }}">{{ o }}</option>
+                                                                                                {% endfor %}
+                                                                                            </optgroup>
+                                                                                            <optgroup label="Next Year">
+                                                                                                {% if next_year %}
+                                                                                                    {% for o in next_year %}
+                                                                                                        <option value="{{ o.id }}">{{ o }}</option>
+                                                                                                    {% endfor %}
+                                                                                                {% else %}
+                                                                                                    <option>N/A</option>
+                                                                                                {% endif %}
+                                                                                            </optgroup>
+                                                                                        </select>
+
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <button class="btn vd_btn btn-brown pull-left"
+                                                                                                style="margin-left: 10px;"
+                                                                                                id="search-btn"
+                                                                                                type="submit"
+                                                                                                style="margin-bottom: 20px;">
+                                                                                            SEARCH
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <br/>
+                                                                                </form>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <form action="" method="post"
+                                                                                      id="searchForm">
+                                                                                    {% csrf_token %}
+                                                                                    <div class="col-md-2 pull-right">
+                                                                                        <button class="btn vd_btn btn-brown pull-right"
+                                                                                                style="margin-left: 2px;"
+                                                                                                id="search-btn"
+                                                                                                type="submit"
+                                                                                                style="margin-bottom: 20px;">
+                                                                                            SEARCH
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="col-md-4 pull-right"
+                                                                                         style="padding: 0px;">
+                                                                                        <select id="id_events_year"
+                                                                                                name="events_year"
+                                                                                                class="form-control pull-right">
+                                                                                            <option>-------------
+                                                                                            </option>
+                                                                                            <option value="lastyear">
+                                                                                                Last Year
+                                                                                                ({{ last_year_no }})
+                                                                                            </option>
+                                                                                            <option value="thisyear">
+                                                                                                This Year
+                                                                                                ({{ this_year_no }})
+                                                                                            </option>
+                                                                                            <option value="nextyear">
+                                                                                                Next Year
+                                                                                                ({{ next_year_no }})
+                                                                                            </option>
+
+                                                                                        </select>
+
+                                                                                    </div>
+
+                                                                                    <br/>
+                                                                                </form>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="clearfix"></div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="panel-heading vd_bg-grey">
+                                                                                    <h3 class="panel-title text-center">
+                                                                                        <span class="menu-icon">  </span>
+                                                                                        Contracted Vendors </h3>
+                                                                                </div>
+                                                                                <div class="panel-body table-responsive">
+                                                                                    <div class="dataTables_wrapper form-inline no-footer"
+                                                                                         id="data-tables_wrapper">
+                                                                                        {% if event_selected or csv_export_id %}
+                                                                                            <form action=""
+                                                                                                  method="post">{% csrf_token %}
+                                                                                                <input name="csv_export_all"
+                                                                                                       id="csv_export_all"
+                                                                                                       value="{{ event_selected.id }}"
+                                                                                                       hidden/>
+                                                                                                <input name="csv_export_id"
+                                                                                                       id="csv_export_id"
+                                                                                                       value="{{ csv_export_id }}"
+                                                                                                       hidden/>
+                                                                                                <button type="submit"
+                                                                                                        class="btn vd_btn btn-brown pull-right">
+                                                                                                    Export
+                                                                                                </button>
+                                                                                            </form>
+                                                                                        {% endif %}
+
+                                                                                        <table aria-describedby="data-tables_info dataTable"
+                                                                                               role="grid"
+                                                                                               class="table table-striped dataTable no-footer"
+                                                                                               id="data-tables">
+                                                                                            <thead>
+                                                                                            <tr role="row">
+                                                                                                <th>Vendor's Name</th>
+                                                                                                <th>Category</th>
+                                                                                                <th>
+                                                                                                    Company
+                                                                                                </th>
+                                                                                                <th>Booth </th>
+                                                                                                <th>PV
+                                                                                                </th>
+
+                                                                                                <th>Total Amount</th>
+                                                                                                <th>Balance Due</th>
+
+                                                                                                <th>Commission
+                                                                                                </th>
+                                                                                                <th>Commission
+                                                                                                    Percentage
+                                                                                                </th>
+                                                                                                <th>Assigned to</th>
+                                                                                                <th>
+                                                                                                    Payment Method
+                                                                                                </th>
+                                                                                                <th>Grand Prize</th>
+
+                                                                                                <th>Electricity </th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Created at</th>
+                                                                                                <th>Email</th>
+                                                                                                <th>View Invoices</th>
+                                                                                            </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            {% if events %}
+                                                                                                {#                                                      {% autopaginate events 10 %}#}
+                                                                                            {% endif %}
+                                                                                            {% if sum %}
+                                                                                               <b> <p>Prize Count: $ {{ sum }}</p></b>
+                                                                                            {% endif %}
+                                                                                            {% for event in events %}
+
+
+                                                                                                <tr role="row"
+                                                                                                    class="gradeA odd" {% if event.is_partner_vendor %} style="color:#c49d26"{% endif %}>
+                                                                                                    {#                                                          <td>{{ event.id }}</td>#}
+                                                                                                    <td>
+                                                                                                        <a target="_blank"
+                                                                                                           href="{% url "contracted_contractor_detail" event.id %}"
+                                                                                                           style="color:dodgerblue">{{ event.name }}</a>
+                                                                                                    </td>
+                                                                                                    <td>{{ event.category }}</td>
+                                                                                                    <td>{{ event.business_name }}</td>
+                                                                                                <td>{{ event.booth }}</td>
+
+                                                                                                    <td>{{ event.is_partner_vendor }}</td>
+
+
+                                                                                                    <td>
+                                                                                                        ${{ event.total_amount }}</td>
+                                                                                                    <td>
+                                                                                                        ${{ event.amount_due }}</td>
+
+                                                                                                    <td>{{ event.commission }}%</td>
+                                                                                                    <td>
+                                                                                                        ${{ event.get_percent_amount }}</td>
+                                                                                                    <td>
+                                                                                                        {% if event.sales %}
+                                                                                                            {{ event.sales.get_full_name }}{% else %}
+                                                                                                            N/A{% endif %}</td>
+                                                                                                    <td>{{ event.payment_method }}</td>
+
+
+
+                                                                                                    <td>{{ event.grand_prize }}</td>
+
+
+                                                                                                    <td>{{ event.electricity_types }}</td>
+                                                                                                    <td>
+                                                                                                        {% if event.status == "Deleted" %}
+                                                                                                            Deleted
+                                                                                                            {% else %}
+                                                                                                                    {% if event.total_amount == 0 %}
+                                                                                                                        No
+                                                                                                                        invoice
+                                                                                                                        available
+                                                                                                                        {% else %}
+                                                                                                                                {% if event.amount_due == 0 %}
+                                                                                                                                    Paid
+                                                                                                                                {% else %}
+                                                                                                                                    <span style="color:red;">Unpaid</span>
+                                                                                                                                {% endif %}
+                                                                                                                    {% endif %}{% endif %}
+                                                                                                    </td>
+
+                                                                                                    <td>{{ event.created_at|date:"Y-m-d" }}</td>
+                                                                                                    <td>{{ event.email }}</td>
+                                                                                                    <td>
+                                                                                                        <a class="btn vd_btn btn-brown"
+                                                                                                           href="/crm/invoices/bulk/create/?email={{ event.email }}">View</a>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            {% endfor %}
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                        {#                                            {% paginate %}#}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br><br>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+
+            </div>
+            <!-- .container -->
+            <div class="clearfix"></div>
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+
+{% endblock content %}
+{% block script %}
+
+    <script src="{% static "vendroid/plugins/dataTables/table2CSV.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $('#data-tables').dataTable({
+                "iDisplayLength": -1,
+                "aLengthMenu": [[10, 15, 25, 35, 50, 100, -1], [10, 15, 25, 35, 50, 100, "All"]],
+            });
+
+            $('#data-tables').each(function () {
+                var $table = $(this);
+
+            });
+            $('#export').click(function () {
+                {#        alert('click is working')#}
+                $('#data-tables').table2CSV();
+                {#      window.location.href = 'data:text/csv;charset=UTF-8,'#}
+                {#                            + encodeURIComponent(csv);#}
+            });
+        });
+    </script>
+
+{% endblock script %}

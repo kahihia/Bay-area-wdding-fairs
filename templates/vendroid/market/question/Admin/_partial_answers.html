@@ -1,0 +1,94 @@
+{#<style>#}
+{#    table {#}
+{#           border-collapse: separate;#}
+{#           border-spacing: 2px;#}
+{#    }#}
+{##}
+{#</style>#}
+
+<ul style="list-style: none">
+{#    <table aria-describedby="data-tables_info" role="grid" class="table table-striped dataTable no-footer" id="data-tables">#}
+    <table role="grid">
+      <tr>
+        <th>Index</th>
+        <th>Name</th>
+        <th>Datetime</th>
+        <th>TextArea</th>
+        <th>Delete</th>
+        <th>Update</th>
+      </tr>
+
+      {% for option in one_question_options %}
+      <tr>
+        <td>
+            {{ forloop.counter }}
+        </td>
+        <td>
+            <div class="dropdown" style="width: 10em">
+                <select class="option_exist_menu" id="ID_option_exist_menu_{{ option.id }}">
+                {% for o in all_options %}
+                    {% if option == o %}
+                        <option selected id="ID_options_inside_{{ o.id }}" value="{{ o.id }}">
+                        {{ o }}
+                        </option>
+                    {% else %}
+                        <option id="ID_options_inside_{{ o.id }}" value="{{ o.id }}">
+                           {{ o.option }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </td>
+        <td>
+            {% if option.isDateTime %}
+            <input type="checkbox" name="isDateTime" id="ID_DateTimeAns{{ option.id }}" value="" checked><br>
+            {% else %}
+            <input type="checkbox" name="isDateTime" id="ID_DateTimeAns{{ option.id }}" value=""><br>
+            {% endif %}
+        </td>
+        <td>
+            {% if option.isTextArea %}
+            <input type="checkbox" name="isTextArea" id="ID_TextAreaAns{{ option.id }}" value="" checked><br>
+            {% else %}
+            <input type="checkbox" name="isTextArea" id="ID_TextAreaAns{{ option.id }}" value=""><br>
+            {% endif %}
+        </td>
+        <td>
+            <a class="btn append-icon fa fa-fw fa-trash-o" onclick="deleteOption({{ option.id }})" style="color: orangered"> </a>
+        </td>
+        <td>
+            <a class="btn append-icon fa fa-arrow-up" onclick="updateOptionWhole('{{ option.id }}')" style="color: dodgerblue"></a>
+        </td>
+
+    {% endfor %}
+    </tr>
+    </table>
+
+
+</ul>
+<script>
+{#        $(document).ready(function(){#}
+            function updateOptionWhole(value) {
+            var val = $('#ID_option_exist_menu_' +value).val();
+            console.log("new val", val);
+            var allowedDateTime = "";
+
+            if($("#ID_DateTimeAns"+val).is(':checked')) {
+                allowedDateTime = "1";
+            } else {
+                allowedDateTime = "0";
+            }
+
+            var allowedTextArea = "";
+            if($("#ID_TextAreaAns"+val).is(':checked')) {
+                allowedTextArea = "1";
+            } else {
+                allowedTextArea = "0";
+            }
+{#            alert(allowedDateTime)#}
+{#            alert(allowedTextArea)#}
+            updateOption(value, val, allowedDateTime, allowedTextArea);
+        };
+{#        })#}
+    </script>

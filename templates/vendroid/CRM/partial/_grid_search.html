@@ -1,0 +1,63 @@
+{% load pagination_tags %}
+<div class="panel-body table-responsive">
+    <div class="dataTables_wrapper form-inline no-footer"
+         id="data-tables_wrapper">
+
+        <table class="table table-striped dataTable no-footer" id="data-tables">
+            <thead>
+            <tr role="row">
+                <th>
+                    Event
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Attend
+                </th>
+                <th>
+                    Standard
+                </th>
+                <th>
+                    Early Bird Discount
+                </th>
+                <th>
+                    Group Discount
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Promocode
+                </th>
+                <th>
+                    Created at
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+{#            {% autopaginate bgUsers 10 %}#}
+            {% for userprofile in bgUsers %}
+                <tr role="row" class="gradeA odd">
+
+                    <td>{{  userprofile.event }}</td>
+                    <td>{{  userprofile.email }}</td>
+                    <td>{{  userprofile.phone }}</td>
+                    <td>{{  userprofile.is_attended }}</td>
+
+                    <td>{{  userprofile.quantity }}</td>
+                    <td>{{  userprofile.earlybird_ticket }}</td>
+                    <td>{{  userprofile.group_ticket }}</td>
+                    <td>{{  userprofile.amount }}</td>
+                    <td>{{  userprofile.promocode_success }}</td>
+                    <td>{{  userprofile.created_at }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% paginate %}
+    </div>
+</div>

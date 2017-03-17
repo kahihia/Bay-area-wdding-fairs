@@ -1,0 +1,22 @@
+{% extends "vendroid/base.html" %}
+{% load url from future %}
+{% load myfilters %}
+{% block content %}
+<div class="col md-11 col-md-offset-1">
+
+<form action="{% url 'reply' topic.id %}" method="POST">
+    {% csrf_token %}
+{#    <h4>Reply</h4><hr />#}
+    {{ form.body|addcss:"form-control margin-top-10" }}
+    <br />
+    <input type="submit"  class="btn vd_btn vd_bg-green vd_white  pull-right" value="Reply" />
+
+    <div class="clearfix"></div>
+</form>
+</div>
+    <script>
+        {% if done %}
+            window.parent.location.href = '/forum/topic/{{ topic.id }}'
+        {% endif %}
+    </script>
+{% endblock content %}

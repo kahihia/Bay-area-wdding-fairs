@@ -1,0 +1,44 @@
+{% load static %}
+
+{#{% if photos %}#}
+{#    <h1>i am here</h1>#}
+    <div class="col-md-12 col-xs-12" style="padding:0px;margin-bottom: 20px;">
+{#        {% for album, images in zipped_images %}#}
+{#            <input type="text" id="ID_album_{{ album.id }}" value="{{ album.title }}"><br>#}
+{#            <a class="btn pull-left" onclick="deleteAlbum({{ album.id }})">Delete</a>#}
+{#            <a class="btn pull-left" onclick="changeAlbumTitle({{ album.id }})">Change Title</a>#}
+{#            <br><br>#}
+            <div id="all_images">
+                {% include "vendroid/demov2/vendors/profile/_partial_images.html" %}
+            </div>
+          <div class="col-md-4 col-xs-4" style="padding:0px;cursor:pointer;">
+            <label for="filePhoto"style="cursor:pointer;">
+                <img id="image_uploader_button" class="images-mobile" src="{% static "images/vendorProfile/Upload_Pictures.jpg" %}" />
+            </label>
+{#            <div class="uploader" onclick="$('#filePhoto').click()" style="min-height: 500px;display:block;background-image: url('{% static "images/dreams/Drop Images graphic.png" %}'); background-repeat: no-repeat;		background-position: center; ">#}
+{#                <img id="albumimageuploaderimage" src=""/>#}
+                <input type="file" name="dreamCard" style="display: none" id="filePhoto" />
+{#            </div>#}
+{#            <br/>#}
+{#            <a style="margin-bottom: 20px;" class="btn vd_btn btn-xs btn-blue" onclick="uploadImage();">#}
+{#                <i class="fa fa-plus append-icon"></i> Add Photo#}
+{#            </a>#}
+        </div>
+            <!--Add New photo for this album fix me-->
+{#        {% endfor %}#}
+    </div>
+{#{% else %}#}
+{#    <h1>i am here 2</h1>#}
+{#    <div class="col-md-12 col-xs-12">#}
+{#        <input type="text" id="ID_album_0" placeholder="Album title">#}
+{#        <a class="btn pull-right" onclick="changeAlbumTitle(0)">Add Title</a><br>#}
+{##}
+{#        <!--fix me-->#}
+{#        #}
+{#    </div>#}
+{#{% endif %}#}
+
+
+<script>
+
+</script>

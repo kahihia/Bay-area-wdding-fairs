@@ -1,0 +1,136 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                {% include "vendroid/messages/partial/chat_list.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-subtitle">#}
+{#                                    <h1>Yapper</h1>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+
+
+{#                                    <div class="col-sm-12">#}
+{##}
+{#                                        <div class="panel widget light-widget">#}
+{#                                            <div class="panel-body">#}
+{#                                                <div class="tl-item">#}
+{##}
+{#                                    <div>#}
+{#                                    <div class="col-md-4"><h4>Topic</h4></div>#}
+{#                                    <div class="col-md-2"><h4>Posts</h4></div>#}
+{#                                    <div class="col-md-4"><h4>Last post</h4></div>#}
+{#                                    <div class="col-md-2"><h4>View</h4></div>#}
+{#                                    </div>#}
+{#                                                        <div>#}
+{#                                                    {% for forum in forums %}#}
+{#                                            <h4></h4>#}
+{#                                    <div class="col-md-4"><a href="{% url 'forum-detail' forum.pk %}">{{ forum.title }}</a></div>#}
+{#                                    <div class="col-md-2">{{ forum.num_posts }}</div>#}
+{#                                    <div class="col-md-4">{{ forum.get_last_post.short|safe }}</div>#}
+{#                                    <div class="col-md-2"><a class="button" href="{% url 'forum-detail' forum.pk %}">VIEW</a></div>#}
+{#                                                    <!-- panel-body -->#}
+{#                                                {% endfor %}#}
+{#                                                </div>#}
+{#                                                    </div>#}
+{#                                                    </div>#}
+{#                                                <!-- panel -->#}
+{#                                            </div>#}
+{#                                        </div>#}
+                                <div class="col-md-12">
+                <div class="panel widget light-widget">
+                  <div class="panel-heading no-title"> </div>
+                  <div class="panel-body">
+                    <h3 class="mgtp--5"> Topics</h3>
+                    <div class="content-list">
+                      <ul class="list-wrapper">
+                          {% for forum in forums %}
+                        <li> <a href="{% url 'forum-detail' forum.pk %}">
+                          <div class="menu-icon vd_green"><i class="fa fa-bullhorn"></i></div>
+                          <div class="menu-text"> {{ forum.title }} (Topics: {{ forum.num_posts }})
+                            <div class="menu-info"><span class="menu-date">{{ forum.get_last_post.short|safe }}</span></div>
+                          </div>
+                          </a> </li>
+                          {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+
+              </div>
+
+                                    </div>
+                                    <!-- col-md-x -->
+                                </div>
+                                <!-- row -->
+
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+    <script>
+        rsvp = {{ profile.rsvp_count|default_if_none:0 }};
+        invites = {{ profile.invitation_count|default_if_none:0 }};
+        $("#seo-sparkline").sparkline([invites,rsvp], {
+            type: 'pie',
+            height: '25px',
+            sliceColors: ['#2e8258','#4abc96','#1FAE66']
+		});
+
+
+    </script>
+{% endblock script %}

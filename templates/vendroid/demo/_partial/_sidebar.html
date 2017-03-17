@@ -1,0 +1,34 @@
+<style>
+    .navbar-spacing {
+        height: 600px !important;
+    }
+</style>
+<div class="vd_navbar vd_nav-width vd_navbar-tabs-menu vd_navbar-left">
+    <div class="navbar-menu clearfix">
+        <div class="vd_menu">
+            <ul>
+                <li {% if '/demo/plans/' in request.path %}class="active"{% endif %}>
+                    <a href="/demo/plans/">
+                        <span class="menu-icon"><i class="fa fa-book"></i></span>
+                        <span class="menu-text">Plans</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- Head menu search form ends -->
+        </div>
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+
+    <div class="vd_menu vd_navbar-bottom-widget">
+        <ul>
+            <li>
+                <a href="/logout/">
+                    <span class="menu-icon"><i class="fa fa-sign-out"></i></span>
+                    <span class="menu-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

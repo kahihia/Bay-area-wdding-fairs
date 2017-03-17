@@ -1,0 +1,210 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load fullcalendar_tags %}
+{% block content %}
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    {% fullcalendar_css %}
+    {% fullcalendar_print_css %}
+    {% fullcalendar_jquery %}
+    {% fullcalendar_jquery_ui %}
+    {% fullcalendar_javascript %}
+    {% calendar_init calendar_config_options %}
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                {% include "vendroid/messages/partial/chat_list.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_head-section clearfix">#}
+{#                                <div class="vd_panel-header">#}
+{#                                    <ul class="breadcrumb">#}
+{#                                        <li><a href="index.php">Home</a></li>#}
+{#                                        <li><a href="pages-custom-product.php">Pages</a></li>#}
+{#                                        <li class="active">Calendar</li>#}
+{#                                    </ul>#}
+{#                                    <div class="vd_panel-menu hidden-sm hidden-xs"#}
+{#                                         data-intro="<strong>Expand Control</strong><br/>To expand content page horizontally, vertically, or Both. If you just need one button just simply remove the other button code."#}
+{#                                         data-step="5" data-position="left">#}
+{#                                        <div data-action="remove-navbar"#}
+{#                                             data-original-title="Remove Navigation Bar Toggle" data-toggle="tooltip"#}
+{#                                             data-placement="bottom" class="remove-navbar-button menu"><i#}
+{#                                                class="fa fa-arrows-h"></i></div>#}
+{#                                        <div data-action="remove-header" data-original-title="Remove Top Menu Toggle"#}
+{#                                             data-toggle="tooltip" data-placement="bottom"#}
+{#                                             class="remove-header-button menu"><i class="fa fa-arrows-v"></i></div>#}
+{#                                        <div data-action="fullscreen"#}
+{#                                             data-original-title="Remove Navigation Bar and Top Menu Toggle"#}
+{#                                             data-toggle="tooltip" data-placement="bottom"#}
+{#                                             class="fullscreen-button menu"><i#}
+{#                                                class="glyphicon glyphicon-fullscreen"></i></div>#}
+{##}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <h1>Event manager</h1>#}
+{#                                    <small class="subtitle">Add your wedding events, edit them or assign it to your friends.#}
+{#                                    </small>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="panel widget light-widget vd_todo-widget">
+                                            <div class="panel-heading no-title"></div>
+                                            <div class="panel-body">
+                                                <h2 class="mgtp--5 mgbt-xs-20"><strong>Manage</strong> <span
+                                                        class="font-light">Events</span></h2>
+
+                                                <div id="external-events">
+                                                        <div class="input-group">
+
+                                                            <div class="input-group-btn">
+                                                            {% if not profile.type == "Professional" %}
+                                                                {% if profile.check_subscription %}
+                                                                <a onclick="addEventModal();" class="btn btn-block btn-success dropdown-toggle "
+                                                                        type="button" id="event-add"><i
+                                                                        class="fa fa-plus fa-fw"></i> Add an event</a>
+                                                                {% else %}
+                                                                     <a onclick="openSubscriptionModalUser();" class="btn btn-block btn-success dropdown-toggle "
+                                                                        type="button" id="event-add"><i
+                                                                        class="fa fa-plus fa-fw"></i> Add an event</a>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <a onclick="addEventModal();" class="btn btn-block btn-success dropdown-toggle "
+                                                                        type="button" id="event-add"><i
+                                                                        class="fa fa-plus fa-fw"></i> Add an event</a>
+                                                            {% endif %}
+                                                            </div>
+
+                                                            <!-- /btn-group -->
+                                                        </div>
+                                                    <hr />
+
+                                                    <div class="content-list">
+                      <ul class="list-wrapper">
+                          {% for event in events_all %}
+                        <li id="media_{{ event.id }}">
+                            <a {% if event.user == user %} onclick="editEvent('{{ event.id }}');"{% else %}href="{{ event.user.userprofile.get_profile_url }}"{% endif %}>
+                          <div class="menu-icon vd_green"><i class="fa fa-calendar"></i></div>
+                          <div class="menu-text"> {{ event.title }} {% if not event.user == user %}(Assigned by {{ event.user.get_full_name }}){% endif %}
+                            <div class="menu-info">
+                                <form action="." method="POST" id="eventDeleteForm_{{ event.id }}">
+                                {% csrf_token %}
+                                <input type="hidden" name="event_to_delete" value="{{ event.id }}"/>
+                               {% if event.user == user and not event.is_wedding%}
+                                  <span class="menu-date">{{ event.created_at|timesince }} ago</span> <a onclick="deleteEvent('{{ event.id }}');"  type="button" class="btn vd_btn vd_bg-red btn-xs pull-right"><i class="fa fa-trash-o"></i></a>
+                               {% endif %}
+                            </form>
+
+                            </div>
+                          </div>
+                          </a> </li>
+                          {% endfor %}
+                      </ul>
+                    </div>
+                                                    <br>
+
+{#                                                    <div class="vd_checkbox checkbox-success">#}
+{#                                                        <input id="drop-remove" type="checkbox">#}
+{#                                                        <label for="drop-remove"> Remove after drop </label>#}
+{#                                                    </div>#}
+                                                </div>
+                                                <!-- #external-events -->
+
+                                            </div>
+                                            <!-- panel-body -->
+                                        </div>
+                                        <!-- panel -->
+                                    </div>
+                                    <!-- col-sm-3 -->
+                                    <div class="col-sm-9">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-body">
+                                                {% calendar %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- col-sm-9-->
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+    {% include "vendroid/events/partial/_modals.html" %}
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src="{% static 'js/jquery.events.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery.datetimepicker.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/chosen.jquery.min.js" %}"></script>
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                if ($("#to").length > 0) {
+                    $("#to").chosen();
+                }
+            }, 1500);
+        });
+
+
+
+    $('.startpicker').datetimepicker(jQuery.extend({showMonthAfterYear:false}, $.datepicker.regional[''], { format:'Y-m-d H:i',}));
+    $('.endpicker').datetimepicker(jQuery.extend({showMonthAfterYear:false}, $.datepicker.regional[''], {format:'Y-m-d H:i',}));
+
+
+{#        $('#id_start').datepicker({'dateFormat':'mm/dd/yy'});#}
+{#        $('#id_end').datepicker({'dateFormat':'mm/dd/yy'});#}
+        {% if events_form.errors %}
+            $("#addEventModal").modal('show');
+        {% endif %}
+    </script>
+{% endblock script %}

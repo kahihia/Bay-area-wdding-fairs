@@ -1,0 +1,155 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/partial/_sidebar.html" %}#}
+
+            {% include "vendroid/partial/_sidebar.html" %}
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-subtitle">
+                                    <br/>
+                                    <h1 class="pull-left">Email Management</h1>
+                                </div>
+                            </div>
+
+                            <!-- row -->
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                    <!--left panel-->
+                                    {% include "vendroid/messages/partial/_left_panel.html" %}
+
+                                    <!--right row col-5-->
+                                    <div class="col-sm-8">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-body">
+                                                <div class="container" style="width:100%;">
+                                                    <h2><i class="append-icon fa fa-fw fa-paper-plane-o vd_yellow"></i>Sent Emails</h2>
+                                                    <table class="table table-striped table-hover">
+                                                          <thead>
+                                                            <tr>
+                                                              <th>
+                                                                  <div class="vd_checkbox">
+                                                                  <input type="checkbox" id="checkbox-0">
+                                                                  <label for="checkbox-0"></label>
+                                                                </div>
+                                                              </th>
+                                                              <th> </th>
+    {#                                                          <th colspan="3">#}
+    {#                                                          <div class="mgr-20 menu-btn"><a role="button"><i class="icon-trash append-icon vd_green"></i> Delete</a></div>#}
+    {#                                                          <div class="mgr-20 menu-btn"><a role="button"><i class="fa fa-shield append-icon vd_green"></i> Spam</a></div>#}
+    {#                                                          <div class="mgr-20 menu-btn"><a role="button"><i class="icon-folder append-icon vd_green"></i>Move</a></div>#}
+    {#                                                          <div class="mgr-20 menu-btn"><a data-toggle="dropdown" role="button"><i class="fa fa-ellipsis-h append-icon vd_green"></i>More</a>#}
+    {#                                                            <ul class="dropdown-menu pull-right">#}
+    {#                                                              <li><a href="#">Action</a></li>#}
+    {#                                                              <li><a href="#">Another action</a></li>#}
+    {#                                                              <li><a href="#">Something else here</a></li>#}
+    {#                                                              <li class="divider"></li>#}
+    {#                                                              <li><a href="#">Separated link</a></li>#}
+    {#                                                            </ul>#}
+    {##}
+    {#                                                            </div> </th>#}
+                                                            </tr>
+                                                          </thead>
+                                                    <tbody>
+
+
+                                                            <div class="col-md-12">
+                                                            <div class="mgbt-xs-20">
+                                                              <div class="panel widget ">
+{#                                                                <div class="panel-heading"> </div>#}
+{#                                                                <div class="panel-body">#}
+    {#                                                            <h2 class="mgtp--10"> Sent </h2>#}
+                                                                        <tbody>
+                                                                            <tr class="">
+                                                                {% autopaginate messages 10 %}
+                                                                {% for message in messages %}
+
+                                                                    <td style="width:20px"><div class="vd_checkbox">
+                                                                      <input type="checkbox" id="checkbox-1" class="checkbox-group">
+                                                                      <label for="checkbox-1"></label>
+                                                                    </div>
+                                                                  </td>
+
+                                                                <td><a href='/profile/{{ message.receiver.username }}/'>{{ message.receiver.get_full_name }}</a></td>
+                                                                  <td>
+
+    {#                                                                  <span class="prepend-icon append-icon"><i class="icon-dot"></i>#}
+                                                                  </span><a href='/messages/sent/{{ message.id }}' name="sent_detail">{{ message.subject }}</a></td>
+                                                                  <td style="width:80px" class="text-right"><strong><span class='time-stamp'>{{ message.created_at|timesince }} ago</span></strong></td>
+                                                                </tr>
+
+                                                                {% endfor %}
+                                                                {% paginate %}
+
+                                                              </tbody>
+                                                                  <!-- content-list -->
+
+
+                                                                </div>
+{#                                                              </div>#}
+                                                              <!-- panel -->
+
+                                                            </div>
+                                                            </div>
+                                                        </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+
+{% endblock script %}

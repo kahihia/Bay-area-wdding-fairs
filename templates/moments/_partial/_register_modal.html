@@ -1,0 +1,107 @@
+{% load static %}
+{% load myfilters %}
+<div class="modal fade" id="registermodal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-md-12 text-center">
+                    <h2 style="color: #BCB8B8;font-weight: normal; margin-top:25px;margin-bottom:25px;">Uh-oh! We are not yet ready for you<br />;(</h2>
+                </div>
+                <form class="form-horizontal" action="." method="POST" role="form"
+                      id="register-form">
+                    {% csrf_token %}
+                    <div class="alert alert-warning vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true"><i class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i
+                                class="fa fa-exclamation-circle vd_red"></i></span>Your password
+                        and Confirm password are not same
+                    </div>
+                    <div class="alert alert-success vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true"><i class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span>Registration
+                        confirmation has been sent to your email.
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="form-group">
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+                                    <span class="menu-icon"> <i class="fa fa-user"></i> </span>
+                                    {% if req_form.name.errors %}
+                                        {{ req_form.name|addcss:"error-border" }}
+                                    {% else %}
+                                        {{ req_form.name }}
+                                    {% endif %}
+                                </div>
+                                {% if req_form.name.errors %}
+                                    <span class="help-inline red">{{ req_form.name.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+                                    <span class="menu-icon"> <i class="fa fa-envelope"></i> </span>
+                                    {% if req_form.email.errors %}
+                                        {{ req_form.email|addcss:"error-border" }}
+                                    {% else %}
+                                        {{ req_form.email }}
+                                    {% endif %}
+                                </div>
+                                {% if req_form.email.errors %}
+                                    <span class="help-inline red">{{ req_form.email.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+                                    <span class="menu-icon"> <i class="fa fa-calendar"></i> </span>
+                                    {% if req_form.wedding_date.errors %}
+                                        {{ req_form.wedding_date|addcss:"error-border" }}
+                                    {% else %}
+                                        {{ req_form.wedding_date }}
+                                    {% endif %}
+                                </div>
+                                {% if req_form.wedding_date.errors %}
+                                    <span class="help-inline red">{{ req_form.wedding_date.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+                                    <span class="menu-icon"> <i class="fa fa-globe"></i> </span>
+                                    {% if req_form.wedding_location.errors %}
+                                        {{ req_form.wedding_location|addcss:"error-border" }}
+                                    {% else %}
+                                        {{ req_form.wedding_location }}
+                                    {% endif %}
+                                </div>
+                                {% if req_form.wedding_location.errors %}
+                                    <span class="help-inline red">{{ req_form.wedding_location.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div id="vd_login-error" class="alert alert-danger hidden"><i
+                                class="fa fa-exclamation-circle fa-fw"></i> Please fill the
+                            necessary field
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 text-center mgbt-xs-5" >
+                                <input name="requester" id="requester"  hidden />
+                                <button class="btn btn-primary btn-block btn-blue" style="margin-top: 20px;" type="submit">Let me know when</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

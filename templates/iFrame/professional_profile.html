@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+            <section class="wedding-pros-section">
+    <div class="col-md-2 col-md-offset-1 left-col">
+        <section class="wedding-pros-nav">
+            <h3 class="section-title">Filters <small><a href="/professionals">Clear</a></small>
+
+            </h3>
+
+            <div class="wedding-pros-filter">
+                <ul class="list-inline">
+                    <li class="descript"><p><a href="#">Distance </a></p></li>
+                    <li class="descript"><input type="checkbox" onclick="window.location.href='/professionals?distance=5'"> within 5 mi</li>
+                    <li class="descript"><input type="checkbox" onclick="window.location.href='/professionals?distance=10'"> within 10 mi</li>
+                    <li class="descript"><input type="checkbox" onclick="window.location.href='/professionals?distance=25'"> 25+ miles</li>
+                </ul>
+            </div>
+            <!--
+            <div class="wedding-pros-filter">
+                <ul class="list-inline">
+                    <li class="descript"><p><a href="#">Interests </a></p></li>
+                    <li class="descript"><input type="checkbox"  onclick="window.location.href='/professionals?interests[]=sports'"> Sports</li>
+                    <li class="descript"><input type="checkbox"  onclick="window.location.href='/professionals?interests[]=dance'"> Dance</li>
+                    <li class="descript"><input type="checkbox"  onclick="window.location.href='/professionals?interests[]=photography'"> Photography</li>
+                </ul>
+            </div>
+        -->
+        </section>
+    </div>
+    <div class="col-md-9 wedding-pros-list">
+
+        <section class="wedding-profile-section">
+            <h3 class="section-title"><a href="/professionals"><i class="fa fa-arrow-left"></i></a> Wedding Professionals </h3>
+
+ <section class="main-header" style="background-image:url({{ professional.get_cover_url }})">
+
+
+        </section>
+        <section class="profile-info">
+            <span class="profile-thumb profile-lg"
+                  style="background-image: url({{ professional.get_image_url }})">
+              </span>
+            <div class="menu">
+                 <span class="user-name"></span>
+                                    {% if not is_following %}
+                                        <form action="." method="POST">
+                                        {% csrf_token %}
+                                            <input id="follow" name="follow" hidden="hidden">
+                                        <button class="btn btn-blue add-friend pull-right"><i class="fa fa-plus"></i>
+{#                                        <i class="fa fa-user">asd</i>#}
+                                        Follow</button>
+                                        </form>
+
+                                    {% else %}
+                                        <button class="btn btn-blue add-friend pull-right">
+{#                                        <i class="fa fa-user">asd</i>#}
+                                        Following</button>
+                                    {% endif %}
+                    <!-- <a href="/professionals/02b475458bfe4cc09b3b5287b1638ca0?add=p" class="btn btn-blue pull-right">Contact Me</a> -->
+                                <div class="flashes"></div>
+{#                <p>#}
+{#                <i class="fa fa-eye"></i> 59 views</p>#}
+                  </div>
+        </section>
+
+                <section class="main-content">
+                    <div role="tabpanel">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
+                         <!--   <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab"
+                            data-toggle="tab">Reviews</a></li> -->
+
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="details">
+
+                                <div class="col-md-8 wedding-pro-wall">
+                                    {% include "partial/_feed.html" %}
+{#                                    <form method="post" id="postform" action="/post/create">#}
+{#                                        <div class="share-update">#}
+{#                                            <input type="hidden" value="159" name="Post[on_user_id]" id="Post_on_user_id" />                                            <textarea placeholder="New Post" class="form-control" name="Post[comment]" id="Post_comment"></textarea>                                            <span class="post-row">#}
+{#                                            <button type="submit" class="btn btn-blue pull-right" id="postBtn">Post</button>#}
+{#                                                <input type="file" name="file"/>#}
+{#                                         <!--   <a href="#" class="btn btn-gray"><i class="fa fa-paperclip"></i> Attach Photo</a> -->#}
+{#                                        </span>#}
+{#                                        </div>#}
+{#                                    </form>#}
+{#                                    <div class="wall-posting">#}
+{#                                        <div id="post-list" class="list-view">#}
+{#<div class="items">#}
+{##}
+{#<div class="media post">#}
+{#    <div class="media-left">#}
+{#        <span class="profile-thumb profile-sm" style="background-image: url(/../images/profiles/159?p=1440197917)"></span>#}
+{#    </div>#}
+{#    <div class="media-body">#}
+{#        <h5 class="media-heading"><a href="/profile/02b475458bfe4cc09b3b5287b1638ca0">{{ professional.user.get_full_name }}</a> <span class="time-stamp">1 month ago</span></h5>#}
+{#        <p class="post-comment">We have a 4th of July sale going on. Book one of our Limos by July 30th and receive 20% discount. Hurry!!</p>#}
+{##}
+{#    </div>#}
+{##}
+{#        <span class="post-row">#}
+{#            <ul class="list-inline links">#}
+{#                <li><a class="likeBtn" href="#!" data-liked="0" data-id="136">Like (0)</a></li>#}
+{#            <!--    <li><a class="shareBtn" href="#!" data-id="136">Share</a></li> -->#}
+{#                <li><a href="#!" class="active starBtn" data-flagged="0" data-id="136"><i class="fa fa-star-o fa-lg"></i></a></li>#}
+{#            </ul>#}
+{#        </span>#}
+{##}
+{#            <div class="media re-post">#}
+{#            <div class="media-left">#}
+{#                <span class="profile-thumb profile-sm" style="background-image: url(/../images/profiles/156?p=1440197917)"></span>#}
+{#            </div>#}
+{#            <div class="media-body">#}
+{#                <h5 class="media-heading"><a href="#!">Piyush Seth</a> <span class="time-stamp">1 month ago</span></h5>#}
+{#                do you deal in vintage cars ?            </div>#}
+{#        </div>#}
+{#            <div class="media re-post">#}
+{#            <div class="media-left">#}
+{#                <span class="profile-thumb profile-sm" style="background-image: url(/../images/profiles/159?p=1440197917)"></span>#}
+{#            </div>#}
+{#            <div class="media-body">#}
+{#                <h5 class="media-heading"><a href="#!">Jim Reynolds</a> <span class="time-stamp">1 month ago</span></h5>#}
+{#                Sorry for late reply. Actually, vintage is all we specialize in. As you can see in our logo (lol).            </div>#}
+{#        </div>#}
+{##}
+{#    <div class="media leave-comment">#}
+{#        <div class="media-left">#}
+{#            <span class="profile-thumb profile-sm" style="background-image: url(/../images/profiles/171?p=1440196979)"></span>#}
+{#        </div>#}
+{#        <div class="media-body">#}
+{#            <h5 class="media-heading"><a href="#!">Tony Stark</a></h5>#}
+{#            <input type="text" data-id="136" class="form-control commentInput" placeholder="Leave a comment">#}
+{#        </div>#}
+{#    </div>#}
+{#</div></div><div class="keys" style="display:none" title="/professionals/02b475458bfe4cc09b3b5287b1638ca0"><span>136</span></div>#}
+{#</div>                                    </div>#}
+                                    </div><!-- end col -->
+                                    <div class="col-md-4 wedding-pro-info">
+                                        <section class="contact-info">
+                                            <h4></h4>
+                                            <h5>{{ professional.user.get_full_name }}</h5>
+                                            <p class="location">{{ professional.get_full_address|default_if_none:"N/A" }}</p>
+                                            <p class="phone"><i class="fa fa-phone"></i> {{ professional.phone|default_if_none:"N/A" }}</p>
+                                            <p class="email"><i class="fa fa-envelope-o"></i>  {{ professional.user.email }}</p>
+                                        </section>
+                                        <section class="description">
+                                            <h4 class="info-title">Description</h4>
+                                            <p>{{ company.description }}</p>
+                                        </section>
+                                        <section class="company">
+                                            <h4 class="info-title">Company Information</h4>
+                                                <p>Employees: {{ company.employees }}</p>
+                                                <p>Payment: {{ company.payment_terms }}</p>
+                                            </section>
+                                            <section class="wedding-pro-interest">
+                                                <h4 class="info-title">Interest</h4>
+                                                <p>{{ professional.looking_for }}</p>
+                                            </section>
+                                        </div>
+                                        <!-- end info-->
+                                    </div>
+                                    <!-- end activity -->
+                                    <div role="tabpanel" class="tab-pane" id="reviews">
+                                        about
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <!-- end tab panel -->
+                </section>
+                <!-- end main-content -->
+            </section>
+{% endblock content %}
+{% block jquery %}
+<script type="text/javascript" src="/js/jquery.form.js"></script>
+<script type="text/javascript" src="/js/jquery.profile.js"></script>
+<script type="text/javascript" src="/js/bootbox.min.js"></script>
+<script type="text/javascript" src="/assets/cd94a334/listview/jquery.yiilistview.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+jQuery(function($) {
+jQuery('#post-list').yiiListView({'ajaxUpdate':['post-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});
+});
+/*]]>*/
+</script>
+<script>
+var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+var imgCount = 0;
+function startTime() {
+    if(imgCount == imgArray.length) {
+        imgCount = 0;
+    }
+    document.getElementById("ad").src = imgArray[imgCount];
+    imgCount++;
+    setTimeout("startTime()", 5000);
+}
+</script>
+{% endblock jquery %}

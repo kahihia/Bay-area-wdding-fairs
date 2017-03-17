@@ -1,0 +1,879 @@
+{% extends "vendroid/base.html" %}
+{% load comments %}
+{% load humanize %}
+{% load static %}
+{% block tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+
+{% endblock %}
+{% block content %}
+    <style>
+    .widget.wedding-pro h1 {
+    background-color: #ff8561;
+    color: #fff;
+    font-size: 1.6em;
+    font-weight: 300;
+    padding: .25em 1em;
+    text-align: center;
+}
+</style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                {% include "vendroid/messages/partial/chat_list.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <h1>Profile</h1>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                           <div class="vd_content-section clearfix">
+            <div class="row">
+               <div class="col-sm-3">
+                                          <!--(1) profile summary(image, name...) -->
+                                        <div class="panel widget light-widget">
+                                          <div class="panel-heading no-title"> </div>
+                                          <div class="panel-body">
+                                            <div class="text-center vd_info-parent"> <img alt="Profile image" src={{ profile.get_image_url }}> </div>
+                                               <div class="row">
+                                                    <div class="col-xs-12">
+                                                        {% if not request.user == professional.user %}
+                                                {% if not is_following %}
+
+                                                        <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input id="follow" name="follow" hidden="hidden">
+                                            <button class="btn vd_btn vd_bg-green btn-xs btn-block no-br">
+                                                Follow
+                                            </button>
+                                        </form>
+
+                                    {% else %}
+                                         <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input id="unfollow" name="unfollow" hidden="hidden">
+                                            <button class="btn vd_btn vd_bg-green btn-xs btn-block no-br">
+                                                <i class="fa fa-check-circle append-icon"></i>
+                                                {#                                        <i class="fa fa-user">asd</i>#}
+                                                Unfollow
+                                            </button>
+                                        </form>
+                                {% endif %}
+                                {% endif %}
+{#                                              <div class="col-xs-12"> <a class="btn vd_btn vd_bg-grey btn-xs btn-block no-br"><i class="fa fa-envelope append-icon"></i>Send Message</a> </div>#}
+                                            </div>
+                                                    </div>
+                                          <h4>{{ company.name }}</h4>
+                                            <h2 class="font-semibold mgbt-xs-5">{{user.get_full_name}}</h2>
+
+                                              <!----fix me --->
+                                            <h4>{% if profile.type == "Professional" %}<i class="fa fa-briefcase"></i>{% else %}<i class="fa fa-search"></i>{% endif %} {{ profile.looking_for }}</h4>
+{#                                            <p>fill profile describtion here???fix me????</p>#}
+                                            <div class="mgtp-20">
+                                              <table class="table table-striped table-hover"><!----fix me --->
+                                                <tbody>
+{#                                                  <tr>#}
+{#                                                    <td style="width:60%;">Status</td>#}
+{#                                                    <td><span class="label label-success">Active</span></td>#}
+{#                                                  </tr>#}
+{#                                                  <tr>#}
+{#                                                    <td>User Rating</td>#}
+{#                                                    <td><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i></td>#}
+{#                                                  </tr>#}
+{#                                                  <tr>#}
+{#                                                    <td>Member Since</td>#}
+{#                                                    <td>{{ profile.created_at|date:"M-j Y"}}</td>#}
+{#                                                  </tr>#}
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <!-- (2)friends under profile summary-->
+
+
+                                    </div>
+
+              <div class="col-sm-9">
+                <div class="tabs widget">
+  <ul class="nav nav-tabs widget">
+    <li class="active"> <a data-toggle="tab" href="#wall-tab"> Wall <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>
+    <li class=""> <a data-toggle="tab" href="#profile-tab"> Profile <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>
+    <li class=""> <a data-toggle="tab" href="#projects-tab"> Projects <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>
+    <li> <a data-toggle="tab" href="#photos-tab"> Photos <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>
+{#    <li> <a data-toggle="tab" href="#friends-tab"> Friends <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+{#    <li> <a data-toggle="tab" href="#groups-tab"> Groups <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+  </ul>
+  <div class="tab-content">
+    <div id="profile-tab" class="tab-pane">
+      <div class="pd-20">
+<div class="vd_info tr"> <a href="/company/settings/" class="btn vd_btn btn-xs vd_bg-yellow"> <i class="fa fa-pencil append-icon"></i> Edit </a> </div>
+        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="icon-user mgr-10 profile-icon"></i> ABOUT</h3>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Name:</label>
+              <div class="col-xs-7 controls">{{ user.get_full_name }}</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+
+          <div <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Company Name:</label>
+              <div class="col-xs-7 controls">{{ company.name }}</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+      {#      class="col-sm-6">#}
+{#            <div class="row mgbt-xs-0">#}
+{#              <label class="col-xs-5 control-label">Last Name:</label>#}
+{#              <div class="col-xs-7 controls">{{ user.last_name }}</div>#}
+{#              <!-- col-sm-10 -->#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="col-sm-6">#}
+{#            <div class="row mgbt-xs-0">#}
+{#              <label class="col-xs-5 control-label">User Name:</label>#}
+{#              <div class="col-xs-7 controls">Mariah</div>#}
+{#              <!-- col-sm-10 -->#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="col-sm-6">#}
+{#            <div class="row mgbt-xs-0">#}
+{#              <label class="col-xs-5 control-label">Email:</label>#}
+{#              <div class="col-xs-7 controls">{{ user.email }}</div>#}
+{#              <!-- col-sm-10 -->#}
+{#            </div>#}
+{#          </div>#}
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Address:</label>
+              <div class="col-xs-7 controls">{{ professional.get_full_address }}</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Country:</label>
+              <div class="col-xs-7 controls">United States</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+{#          <div class="col-sm-6">#}
+{#            <div class="row mgbt-xs-0">#}
+{#              <label class="col-xs-5 control-label">Birthday:</label>#}
+{#              <div class="col-xs-7 controls">Jan 22, 1984</div>#}
+{#              <!-- col-sm-10 -->#}
+{#            </div>#}
+{#          </div>#}
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Interests:</label>
+              <div class="col-xs-7 controls">{{ professional.looking_for }}</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+            <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Employees:</label>
+              <div class="col-xs-7 controls">{{ company.employees }}</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+            <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Bids:</label>
+              <div class="col-xs-7 controls">{{ professional.bids_count }}</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+{#          <div class="col-sm-6">#}
+{#            <div class="row mgbt-xs-0">#}
+{#              <label class="col-xs-5 control-label">Website:</label>#}
+{#              <div class="col-xs-7 controls"><a href="http://Vendroid.venmond.com">Vendroid.venmond.com</a></div>#}
+{#              <!-- col-sm-10 -->#}
+{#            </div>#}
+{#          </div>#}
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-xs-5 control-label">Phone:</label>
+              <div class="col-xs-7 controls">{{ professional.phone }}</div>
+              <!-- col-sm-10 -->
+            </div>
+          </div>
+        </div>
+           {% if professional.yelp_name and professional.yelp_location_zip %}
+        <div class="row">
+             <div class="col-md-6">
+                    <h3 class="mgbt-xs-15">Yelp Ratings</h3>
+                    <img src="{{ image_url_yelp }}" /><br />
+                    {{ name_yelp }}<br />
+                    Categories: {% for o in name_categories %}{{ o }} {% endfor %}<br />
+                    {{ description_yelp }}
+                </div>
+        </div>
+      {% endif %}
+{#        <hr class="pd-10">#}
+{#        <div class="row">#}
+{#          <div class="col-sm-7 mgbt-xs-20">#}
+{#            <h3 class="mgbt-xs-15 font-semibold"><i class="fa fa-file-text-o mgr-10 profile-icon"></i> EXPERIENCE</h3>#}
+{#            <div class="content-list content-menu">#}
+{#              <ul class="list-wrapper">#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_green"><i class="fa  fa-circle-o"></i></span> <span class="menu-text"> <a href="http://www.venmond.com">Owner</a> at <a href="http://www.venmond.com">Vendroid Ltd.</a> <span class="menu-info"><span class="menu-date"> March 2013 ~ Now</span></span> </span> </li>#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_grey"><i class=" fa  fa-circle-o"></i></span> <span class="menu-text"> <a href="http://www.venmond.com">CEO</a> at <a href="http://www.venmond.com">Mc. Dondon</a> <span class="menu-info"><span class="menu-date"> March 2011 ~ February 2013</span></span> </span> </li>#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_grey"><i class=" fa  fa-circle-o"></i></span> <span class="menu-text"> <a href="http://www.venmond.com">Web Designer</a> at <a href="http://www.venmond.com">Web Design Company Ltd.</a> <span class="menu-info"><span class="menu-date"> March 2010 ~ February 2011</span></span> </span> </li>#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_grey"><i class=" fa  fa-circle-o"></i></span> <span class="menu-text"> <a href="http://www.venmond.com">Sales</a> at <a href="http://www.venmond.com">Sales Company Ltd.</a> <span class="menu-info"><span class="menu-date"> March 2009 ~ February 2010</span></span> </span> </li>#}
+{#              </ul>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="col-sm-5">#}
+{#            <h3 class="mgbt-xs-15 font-semibold"><i class="fa fa-trophy mgr-10 profile-icon"></i> EDUCATION</h3>#}
+{#            <div class="content-list content-menu">#}
+{#              <ul class="list-wrapper">#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_green"><i class="fa  fa-circle-o"></i></span> <span class="menu-text"> Bachelor's degree, E-Commerce/Electronic Commerce at <a href="http://www.venmond.com">UCLA</a> <span class="menu-info"><span class="menu-date"> August 2003 ~ July 2008</span></span> </span> </li>#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_grey"><i class=" fa  fa-circle-o"></i></span> <span class="menu-text"> Student at <a href="http://www.venmond.com">Web Design Education</a> <span class="menu-info"><span class="menu-date"> March 2006 ~ February 2007</span></span> </span> </li>#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_grey"><i class=" fa  fa-circle-o"></i></span> <span class="menu-text"> Student at <a href="http://www.venmond.com">St. Louis High School</a> <span class="menu-info"><span class="menu-date"> August 2000 ~ July 2003 </span></span> </span> </li>#}
+{#                <li class="mgbt-xs-10"> <span class="menu-icon vd_grey"><i class=" fa  fa-circle-o"></i></span> <span class="menu-text"> Student at <a href="http://www.venmond.com">St. Monica Junior High School</a> <span class="menu-info"><span class="menu-date"> August 1998 ~ July 2000</span></span> </span> </li>#}
+{#              </ul>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <!-- row -->#}
+{#        <hr class="pd-10">#}
+{#        <div class="row">#}
+{#          <div class="col-sm-7">#}
+{#            <h3 class="mgbt-xs-15 font-semibold"><i class="fa fa-globe mgr-10 profile-icon"></i> ACTIVITY</h3>#}
+{#            <div class="">#}
+{#              <div class="content-list">#}
+{#                <div data-rel="scroll" class="mCustomScrollbar _mCS_6" style="overflow: hidden;"><div class="mCustomScrollBox mCS-light" id="mCSB_6" style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 400px;"><div class="mCSB_container mCS_no_scrollbar" style="position: relative; top: 0px;">#}
+{#                  <ul class="list-wrapper">#}
+{#                    <li> <span class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></span> <span class="menu-text"> Someone has give you a surprise <span class="menu-info"><span class="menu-date"> ~ 12 Minutes Ago</span></span> </span>  </li>#}
+{#                    <li> <span class="menu-icon vd_blue"><i class=" fa fa-user"></i></span> <span class="menu-text"> Change your user profile details <span class="menu-info"><span class="menu-date"> ~ 1 Hour 20 Minutes Ago</span></span> </span> </li>#}
+{#                    <li> <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span></li>#}
+{#                    <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span>  </li>#}
+{#                    <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span> </li>#}
+{#                    <li>  <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span>  </li>#}
+{#                    <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span> </li>#}
+{#                    <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span>  </li>#}
+{#                  </ul>#}
+{#                </div><div class="mCSB_scrollTools" style="position: absolute; opacity: 0; display: none;"><div class="mCSB_draggerContainer"><div class="mCSB_dragger" style="position: absolute; height: 352px; top: 0px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="position: relative; line-height: 352px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>#}
+{#                <div class="closing text-center" style=""> <a href="#">See All Activities <i class="fa fa-angle-double-right"></i></a> </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          <!-- col-sm-7 -->#}
+{#          <div class="col-sm-5">#}
+{#            <h3 class="mgbt-xs-15 font-semibold"><i class="fa fa-flask mgr-10 profile-icon"></i> SKILL</h3>#}
+{#            <div class="skill-list">#}
+{#              <div class="skill-name"> Photoshop </div>#}
+{#              <div class="progress  progress-sm">#}
+{#                <div style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" role="progressbar" class="progress-bar progress-bar-success "> <span class="sr-only">90%</span> </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="skill-list">#}
+{#              <div class="skill-name"> Illustrator </div>#}
+{#              <div class="progress  progress-sm">#}
+{#                <div style="width: 20%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-danger "> <span class="sr-only">20%</span> </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="skill-list">#}
+{#              <div class="skill-name"> PHP </div>#}
+{#              <div class="progress  progress-sm">#}
+{#                <div style="width: 50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" role="progressbar" class="progress-bar progress-bar-warning "> <span class="sr-only">50% Complete</span> </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="skill-list">#}
+{#              <div class="skill-name"> Javascript </div>#}
+{#              <div class="progress  progress-sm">#}
+{#                <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-info "> <span class="sr-only">60% Complete</span> </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="skill-list">#}
+{#              <div class="skill-name"> Communication </div>#}
+{#              <div class="progress  progress-sm">#}
+{#                <div style="width: 95%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="95" role="progressbar" class="progress-bar progress-bar-success "> <span class="sr-only">95% Complete</span> </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="skill-list">#}
+{#              <div class="skill-name"> Writing </div>#}
+{#              <div class="progress  progress-sm">#}
+{#                <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar progress-bar-warning "> <span class="sr-only">45% Complete</span> </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          <!-- col-sm-7 -->#}
+{#        </div>#}
+        <!-- row -->
+      </div>
+      <!-- pd-20 -->
+    </div><div id="wall-tab" class="tab-pane active">
+      <div class="pd-20">
+{#<div class="vd_info tr"> <a href="/company/settings/" class="btn vd_btn btn-xs vd_bg-yellow"> <i class="fa fa-pencil append-icon"></i> Edit </a> </div>#}
+{#        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="icon-user mgr-10 profile-icon"></i> ABOUT</h3>#}
+        <div class="row">
+           <div class="col-sm-12">
+                                                          <div class="panel widget light-widget">
+                                                            <div class="panel-body text-center">
+                                                                <div>
+                                                    <div class="menu">
+                                                        <form method="post" action="." enctype="multipart/form-data" id="form_post_id" >
+                                                    {% csrf_token %}
+
+                                                            <textarea name="Post_comment" id="Post_comment" class="no-bd" rows="3" placeholder="What are you doing?"></textarea>
+                                                            <div class="vd_textarea-menu vd_bg-yellow vd_bd-yellow">
+                                                                <ul class="nav nav-pills ">
+{#                                                                <li class="one-icon">#}
+{#                                                                    <a name="image">#}
+{#                                                                        <span class="menu-icon">#}
+{##}
+{#                                                                            <i class="fa fa-camera fa-fw"></i>#}
+{#                                                                        </span>#}
+{#                                                                    </a>#}
+{#                                                                </li>#}
+                                                                <li class="pull-right">
+                                                                    <a style="cursor:pointer" onclick="document.getElementById('form_post_id').submit(); return false;" id="form_button_submit" type="submit" style="border-left:1px solid rgba(255,255,255,.3)">
+                                                                        <span class="menu-icon">
+                                                                            <i class="fa fa-check fa-fw"></i>
+                                                                        </span>
+                                                                        <span class="menu-text">
+                                                                            Post
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+
+                                                                </ul>
+
+                                                        </div>
+                                                        </form>
+                                                        <script>
+                                                            function submitTheForm(){
+
+                                                            }
+                                                        </script>
+                                                    </div> <!-- child-menu -->
+                                                  </div>
+                                                        </div>
+                                                        </div>
+                                                                <div class="">
+                                                          <div class="content-list">
+                                                            <div data-rel="">
+                                                              <ul  class="list-wrapper">
+{#                                                                <li> <span class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></span> <span class="menu-text"> Someone has give you a surprise <span class="menu-info"><span class="menu-date"> ~ 12 Minutes Ago</span></span> </span>  </li>#}
+{#                                                                <li> <span class="menu-icon vd_blue"><i class=" fa fa-user"></i></span> <span class="menu-text"> Change your user profile details <span class="menu-info"><span class="menu-date"> ~ 1 Hour 20 Minutes Ago</span></span> </span> </li>#}
+{#                                                                <li> <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span></li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span>  </li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span> </li>#}
+{#                                                                <li>  <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span>  </li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span> </li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span>  </li>#}
+                                                                  <!--fix me link to version 2 feed-->
+                                                                  {% include 'vendroid/partial/_user_feed.html' %}
+                                                              </ul>
+                                                            </div>
+{#                                                            <div class="closing text-center" style=""> <a href="#">See All Activities <i class="fa fa-angle-double-right"></i></a> </div>#}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+            <div class="clearfix"></div>
+        </div>
+      </div>
+      <!-- pd-20 -->
+    </div>
+    <!-- home-tab -->
+
+    <div id="projects-tab" class="tab-pane ">
+    	<div class="pd-20">
+				<div class="vd_info tr"> <a href="/market" class="btn vd_btn btn-xs vd_bg-yellow"> Place a bid </a> </div>
+				<h3 class="mgbt-xs-15 mgtp-10 font-semibold">
+{#                    <i class="fa fa-bolt mgr-10 profile-icon"></i> #}
+                    PROJECTS</h3>
+
+                         <div class="col-md-12">
+                         <div class="panel widget">
+                         <div class="panel-body table-responsive">
+                             <table class="table table-striped table-hover">
+							  <thead>
+								  <tr>
+{#                                  	  <th>#</th>#}
+{#									  <th>Profile Picture</th>#}
+									  <th>Owner</th>
+									  <th>Title</th>
+									  <th>Awarded</th>
+                                      <th>Budget</th>
+                                      <th>Bid</th>
+								  </tr>
+							  </thead>
+							  <tbody>
+
+                                    {% for bid in bids %}<tr>
+{#                                	<td>1</td>#}
+{#									<td><img height="80" src="{{ bid.user.userprofile.get_image_url }}" alt="example image"></td>#}
+                                	<td><a target="_blank" href="{{ bid.product.user.userprofile.get_profile_url }}">{{ bid.product.user.get_full_name }}</a></td>
+									<td class="center"><a href="/market/{{ bid.product.id }}/" target="_blank">{{ bid.product.title|truncatechars:"25" }}</a></td>
+									<td class="center">
+										{% if bid.is_awarded %}Awarded{% else %}Not yet{% endif %}
+									</td>
+                                    <td class="center"><strong>$ {{ bid.product.amount|intcomma }}</strong></td>
+                                    <td class="center"><strong>$ {{ bid.amount|intcomma }}</strong></td>
+{#									<td class="menu-action rounded-btn">#}
+{#                                    	<a class="btn menu-icon vd_bg-green" data-placement="top" data-toggle="tooltip" data-original-title="view">#}
+{#                                           <i class="fa fa-eye"></i>#}
+{#                                        </a>#}
+{#                                    	<a class="btn menu-icon vd_bg-yellow" data-placement="top" data-toggle="tooltip" data-original-title="edit">#}
+{#                                           <i class="fa fa-pencil"></i>#}
+{#                                        </a>#}
+{#                                    	<a class="btn menu-icon vd_bg-red" data-placement="top" data-toggle="tooltip" data-original-title="delete">#}
+{#                                           <i class="fa fa-times"></i>#}
+{#                                        </a>#}
+{##}
+{#									</td>#}
+                                        </tr>
+                                    {% endfor %}
+
+
+
+							  </tbody>
+						 </table>
+                         </div>
+                         <div class="clearfix"></div>
+        </div>
+                         <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div id="photos-tab" class="tab-pane">
+      <div class="pd-20">
+		<div class="vd_info tr"> <a data-toggle="modal" href="#picture-upload" class="btn vd_btn btn-xs vd_bg-yellow"> <i class="fa fa-plus append-icon"></i> Add Photo </a> </div>
+        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="fa fa-picture-o mgr-10 profile-icon"></i> PHOTOS</h3>
+        <ul id="filters" class="nav nav-pills">
+{#          <li class="active"><a href="#photos-1" data-filter="*">All</a></li>#}
+{#          <li><a href="#photos-2" data-filter=".filter-1">Photos of You</a></li>#}
+{#          <li><a href="#photos-3" data-filter=".filter-2">Scenery</a></li>#}
+{#          <li><a href="#photos-4" data-filter=".filter-3">Vacation</a></li>#}
+        </ul>
+        <br>
+                <div style="position: relative; height: 1000px;" class="isotope js-isotope vd_gallery">
+                  {% for image in picture_wall %}
+                    <div class="gallery-item  filter-2">
+                      <a rel="prettyPhoto[2]" href="{{ image.get_image_url }}" data-rel="prettyPhoto[2]">
+                                <img alt="example image" src="{{ image.get_image_url }}">
+                                <div class="bg-cover"></div>
+                        </a>
+                         <div class="vd_info">
+                              <h3 class="mgbt-xs-15"><span class="font-semibold">Sola</span> Aprecios</h3>
+                              <a rel="prettyPhoto[1]" class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="{{ image.get_image_url }}" data-rel="prettyPhoto[1]"><i class="fa fa-search"></i></a>
+{#                              <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-thumbs-up"></i></a>#}
+{#                              <a class="vd_bg-green vd_white mgr-10 btn vd_round-btn btn-xs" role="button" href="#"><i class="fa fa-comments"></i></a>#}
+                         </div>
+                    <div class="clearfix"></div>
+                  </div>
+                    {% endfor %}
+
+
+                </div>
+
+                <div class="clearfix"></div>
+
+      </div>
+      <!-- pd-20 -->
+    </div> <!-- photos tab -->
+{#    <div id="friends-tab" class="tab-pane">#}
+{#    	<div class="pd-20">#}
+{#        	<h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="fa fa-users mgr-10 profile-icon"></i> FRIENDS</h3>#}
+{#            <ul class="nav nav-pills">#}
+{#          <li class="active"><a href="#photos-1" data-toggle="tab">Friends</a></li>#}
+{#          <li><a href="#photos-2" data-toggle="tab">Pending Request</a></li>#}
+{#          <li><a href="#photos-3" data-toggle="tab">Blacklisted</a></li>#}
+{#        </ul>#}
+{#        	<div class="content-grid column-xs-3 column-sm-4 column-md-4 column-lg-6 height-xs-4 mgbt-xs-20">#}
+{#                       <div>#}
+{#<ul class="list-wrapper">#}
+{#                    <li> <a href="#">#}
+{#                    		<span class="menu-icon"><img src="img/avatar/avatar.jpg" alt="example image"></span>#}
+{#                         </a>#}
+{#                        <span class="menu-text"> Gabriella Montagna#}
+{#                            <span class="menu-info">#}
+{#                                <span class="menu-date">San Diego</span>#}
+{#                                <span class="menu-action">#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                        <i class="fa fa-check"></i>#}
+{#                                    </span>#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                        <i class="fa fa-times"></i>#}
+{#                                    </span>#}
+{#                                </span>#}
+{#                            </span>#}
+{#                        </span>#}
+{#                     </li>#}
+{#                    <li class="warning">#}
+{#                    		<a href="#">#}
+{#                    			<span class="menu-icon"><img src="img/avatar/avatar-2.jpg" alt="example image"></span>#}
+{#                            </a>#}
+{#                            <span class="menu-text">  Jonathan Fuzzy#}
+{#                            	<span class="menu-info">#}
+{#                                    <span class="menu-date">Seattle</span>#}
+{#                                    <span class="menu-action">#}
+{#                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                            <i class="fa fa-check"></i>#}
+{#                                        </span>#}
+{#                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                            <i class="fa fa-times"></i>#}
+{#                                        </span>#}
+{#                                    </span>#}
+{#                            	</span>#}
+{#                            </span>#}
+{#                     </li>#}
+{#                    <li> <a href="#">#}
+{#                    		<span class="menu-icon"><img src="img/avatar/avatar-3.jpg" alt="example image"></span>#}
+{#                         </a>#}
+{#                        <span class="menu-text">  Sakura Hinata#}
+{#                            <span class="menu-info">#}
+{#                                <span class="menu-date">Hawaii</span>#}
+{#                                <span class="menu-action">#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                        <i class="fa fa-check"></i>#}
+{#                                    </span>#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                        <i class="fa fa-times"></i>#}
+{#                                    </span>#}
+{#                                </span>#}
+{#                            </span>#}
+{#                        </span>#}
+{#                    </li>#}
+{#                    <li> <a href="#">#}
+{#                    		<span class="menu-icon"><img src="img/avatar/avatar-4.jpg" alt="example image"></span>#}
+{#                         </a>#}
+{#                        <span class="menu-text">  Rikudou Sennin#}
+{#                            <span class="menu-info">#}
+{#                                <span class="menu-date">Las Vegas</span>#}
+{#                                <span class="menu-action">#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                        <i class="fa fa-check"></i>#}
+{#                                    </span>#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                        <i class="fa fa-times"></i>#}
+{#                                    </span>#}
+{#                                </span>#}
+{#                            </span>#}
+{#                        </span>#}
+{#                    </li>#}
+{#                    <li> <a href="#">#}
+{#                    		<span class="menu-icon"><img src="img/avatar/avatar-5.jpg" alt="example image"></span>#}
+{#                         </a>#}
+{#                        <span class="menu-text">  Kim Kardiosun#}
+{#                            <span class="menu-info">#}
+{#                                <span class="menu-date">New York</span>#}
+{#                                <span class="menu-action">#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                        <i class="fa fa-check"></i>#}
+{#                                    </span>#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                        <i class="fa fa-times"></i>#}
+{#                                    </span>#}
+{#                                </span>#}
+{#                            </span>#}
+{#                        </span>#}
+{#                     </li>#}
+{#                    <li> <a href="#">#}
+{#                    		<span class="menu-icon"><img src="img/avatar/avatar-6.jpg" alt="example image"></span>#}
+{#                         </a>#}
+{#                        <span class="menu-text">   Brad Pita#}
+{#                            <span class="menu-info">#}
+{#                                <span class="menu-date">Seattle</span>#}
+{#                                <span class="menu-action">#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                        <i class="fa fa-check"></i>#}
+{#                                    </span>#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                        <i class="fa fa-times"></i>#}
+{#                                    </span>#}
+{#                                </span>#}
+{#                            </span>#}
+{#                        </span>#}
+{#                    </li>#}
+{#                    <li> <a href="#">#}
+{#                    		<span class="menu-icon"><img src="img/avatar/avatar-7.jpg" alt="example image"></span>#}
+{#                         </a>#}
+{#                        <span class="menu-text">  Celline Dior#}
+{#                            <span class="menu-info">#}
+{#                                <span class="menu-date">Los Angeles</span>#}
+{#                                <span class="menu-action">#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                        <i class="fa fa-check"></i>#}
+{#                                    </span>#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                        <i class="fa fa-times"></i>#}
+{#                                    </span>#}
+{#                                </span>#}
+{#                            </span>#}
+{#                        </span>#}
+{#                    </li>#}
+{#                    <li> <a href="#">#}
+{#                    		<span class="menu-icon"><img src="img/avatar/avatar-8.jpg" alt="example image"></span>#}
+{#                         </a>#}
+{#                        <span class="menu-text">  Goerge Bruno Marz#}
+{#                            <span class="menu-info">#}
+{#                                <span class="menu-date">Las Vegas</span>#}
+{#                                <span class="menu-action">#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Approve" class="menu-action-icon vd_green vd_bd-green">#}
+{#                                        <i class="fa fa-check"></i>#}
+{#                                    </span>#}
+{#                                    <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reject" class="menu-action-icon vd_red vd_bd-red">#}
+{#                                        <i class="fa fa-times"></i>#}
+{#                                    </span>#}
+{#                                </span>#}
+{#                            </span>#}
+{#                        </span>#}
+{#                    </li>#}
+{##}
+{#               </ul>#}
+{#                       </div>#}
+{#                       </div>#}
+{#        </div><!-- pd-20 -->#}
+{#    </div>  <!-- photos tab -->#}
+{#    <div id="groups-tab" class="tab-pane">#}
+{#    	<div class="pd-20">#}
+{#        <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i class="fa fa-leaf mgr-10 profile-icon"></i> GROUPS</h3>#}
+{#        	<div class="row">#}
+{#            	<div class="col-xs-12 col-sm-6">#}
+{#                    <div class="content-list content-large menu-action-right">#}
+{#                        <ul class="list-wrapper pd-lr-15">#}
+{#                        <li>#}
+{#                            <div class="menu-icon"><a href="#"><img src="img/groups/logo-01.jpg" alt="example image"></a></div>#}
+{#                            <div class="menu-text">#}
+{#                                <h4 class="mgbt-xs-0"><a href="#">Groupis Group</a></h4>#}
+{#                                <div class="menu-info">#}
+{#                                    <span class="menu-date"> 3467 members </span>#}
+{##}
+{#                                </div>#}
+{#                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidtation ullamco...</p>#}
+{#                            </div>#}
+{#                            <div class="menu-action">#}
+{#                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="Leave Group" class="menu-action-icon vd_red">#}
+{#                                    <i class="fa fa-times"></i>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                        </ul> <!-- list-wrapper -->#}
+{#                   </div> <!-- content-list -->#}
+{#                </div> <!-- col-xs-12 col-sm-6 -->#}
+{##}
+{#            	<div class="col-xs-12 col-sm-6">#}
+{#                    <div class="content-list content-large menu-action-right">#}
+{#                        <ul class="list-wrapper pd-lr-15">#}
+{#                        <li>#}
+{#                            <div class="menu-icon"><a href="#"><img src="img/groups/logo-02.jpg" alt="example image"></a></div>#}
+{#                            <div class="menu-text">#}
+{#                                <h4 class="mgbt-xs-0"><a href="#">Ztormin Community</a></h4>#}
+{#                                <div class="menu-info">#}
+{#                                    <span class="menu-date"> 12597 members </span>#}
+{##}
+{#                                </div>#}
+{#                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidtation ullamco...</p>#}
+{#                            </div>#}
+{#                            <div class="menu-action">#}
+{#                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="Leave Group" class="menu-action-icon vd_red">#}
+{#                                    <i class="fa fa-times"></i>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                        </ul> <!-- list-wrapper -->#}
+{#                   </div> <!-- content-list -->#}
+{#                </div> <!-- col-xs-12 col-sm-6 -->#}
+{##}
+{#            	<div class="col-xs-12 col-sm-6">#}
+{#                    <div class="content-list content-large menu-action-right">#}
+{#                        <ul class="list-wrapper pd-lr-15">#}
+{#                        <li>#}
+{#                            <div class="menu-icon"><a href="#"><img src="img/groups/logo-03.jpg" alt="example image"></a></div>#}
+{#                            <div class="menu-text">#}
+{#                                <h4 class="mgbt-xs-0"><a href="#">Book Lovers</a></h4>#}
+{#                                <div class="menu-info">#}
+{#                                    <span class="menu-date"> 67 members </span>#}
+{##}
+{#                                </div>#}
+{#                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidtation ullamco...</p>#}
+{#                            </div>#}
+{#                            <div class="menu-action">#}
+{#                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="Leave Group" class="menu-action-icon vd_red">#}
+{#                                    <i class="fa fa-times"></i>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                        </ul> <!-- list-wrapper -->#}
+{#                   </div> <!-- content-list -->#}
+{#                </div> <!-- col-xs-12 col-sm-6 -->#}
+{##}
+{##}
+{##}
+{##}
+{#            </div> <!-- row -->#}
+{#        </div> <!-- pd-20 -->#}
+{#    </div>  <!-- groups tab -->#}
+
+  </div>
+  <!-- tab-content -->
+</div>
+<!-- tabs-widget -->              </div>
+{#            <div class="col-md-12">#}
+
+{#            </div>#}
+            </div>
+            <!-- row -->
+
+          </div>
+                        </div>
+                    </div>
+                </div>
+                <!--vd_content-wrapper-->
+            </div>
+            <!--sidebar -->
+        </div>
+        <!--content-->
+
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 Yapjoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+    </div><!--vd_body-->
+
+<div class="modal fade" id="picture-upload" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Upload Image</h4>
+                    <hr />
+                    <form class="form-horizontal" action="." method="post" role="form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="alert alert-danger {% if not pictureWallForm.errors %}vd_hidden{% endif %}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                      {{ pictureWallForm.errors }}
+                  </div>
+                      <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>
+                  <div class="alert alert-success vd_hidden">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well done!</strong>. </div>
+                    <div class="form-group  mgbt-xs-20">
+                      <div class="col-md-12">
+                        <div class="label-wrapper sr-only">
+                          <label class="control-label" for="email">Upload Image</label>
+                        </div>
+                        <p>Select an image file to attach.</p>
+                        <div class="vd_input-wrapper {% if pictureWallForm.picture.errors %}vd_bd-red{% endif %}" id="email-input-wrapper"> <span class="menu-icon"> </span>
+
+                            {{ pictureWallForm.picture }}
+                        </div>
+                      {% if pictureWallForm.picture.errors %}<div class="vd_red" for="username">{{ pictureWallForm.picture.errors }}</div>{% endif %}
+                      </div>
+                    </div>
+                    <div id="vd_login-error" class="alert alert-danger hidden"><i class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field </div>
+                    <div class="form-group">
+                      <div class="col-md-12 text-center mgbt-xs-5">
+                        <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">Add Picture</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+{#            <div class="modal-footer">#}
+{##}
+{#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+      <div class="modal fade" id="picture-upload" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i>X</a>
+                    <!-- patch2 -->
+                    <h4 class="modal-title">Upload Image</h4>
+                    <hr />
+                    <form class="form-horizontal" action="." method="post" role="form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="alert alert-danger {% if not pictureWallForm.errors %}vd_hidden{% endif %}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                      {{ pictureWallForm.errors }}
+                  </div>
+                      <div class="alert alert-danger {% if not error_message %}vd_hidden{% endif %}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>{{ error_message }}</div>
+                  <div class="alert alert-success vd_hidden">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well done!</strong>. </div>
+                    <div class="form-group  mgbt-xs-20">
+                      <div class="col-md-12">
+                        <div class="label-wrapper sr-only">
+                          <label class="control-label" for="email">Upload Image</label>
+                        </div>
+                        <p>Select an image file to attach.</p>
+                        <div class="vd_input-wrapper {% if pictureWallForm.picture.errors %}vd_bd-red{% endif %}" id="email-input-wrapper"> <span class="menu-icon"> </span>
+
+                            {{ pictureWallForm.picture }}
+                        </div>
+                      {% if pictureWallForm.picture.errors %}<div class="vd_red" for="username">{{ pictureWallForm.picture.errors }}</div>{% endif %}
+                      </div>
+                    </div>
+                    <div id="vd_login-error" class="alert alert-danger hidden"><i class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field </div>
+                    <div class="form-group">
+                      <div class="col-md-12 text-center mgbt-xs-5">
+                        <button class="btn vd_bg-green vd_white width-100" type="submit" id="login-submit">Add Picture</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+{#            <div class="modal-footer">#}
+{##}
+{#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock content %}
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/static/js/bootbox.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.profile.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.yiilistview.js"></script>
+    <script type="text/javascript">
+    </script>
+{% endblock jquery %}

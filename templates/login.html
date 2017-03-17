@@ -1,0 +1,364 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <!-- patch1 -->
+    <link rel="icon" href="{% static "images/favicon.png" %}" type="image/png"
+          sizes="32x32">
+    <link rel="stylesheet" type="text/css" href="{% static "css/zocial.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery_002.js" %}"></script>
+    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>
+    <!-- patch4 -->
+    <meta name="description" content="An Intelligent Way to Plan Stress Free Wedding online">
+    <meta name="keywords"
+          content="Wedding,bride,groom,wedding planners,venues,caterers,yapjoy,bayareawedding,wedding fairs">
+    <meta name="author" content="yapjoy">
+
+    <meta name="ROBOTS" content="INDEX, FOLLOW">
+    <!-- patch4 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "font-awesome-4.4.0/css/font-awesome.css" %}">
+    <link href="{% static "css/styles.css" %}" rel="stylesheet" type="text/css"
+          media="all">
+</head>
+<body>
+<div id="bgvid">
+    <img src="{% static "images/background_1.jpg" %}">
+</div>
+<!-- <video autoplay loop poster="images/wedding.jpg" id="bgvid"> -->
+<!-- <source src="polina.webm" type="video/webm"> -->
+<!-- <source src="videos/yapjoy.mp4" type="video/mp4">
+</video> -->
+
+
+<section class="top-nav navbar-fixed-top home">
+
+    <nav class="navbar">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="clearfix"></div>
+                <a class="navbar-brand logo margin-top-10" href="/"><img src="{% static "images/unnamed.png" %}"></a>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</section>
+
+<!-- v27 -->
+
+<!-- Check dependencies
+Done to reflect password validation on forget password -->
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+
+
+<section class="home-section">
+    <div class="overlay"></div>
+    <div id="bgvid"></div>
+    <div class="]">
+        <div class="]">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <!-- v28 -->
+                        <!-- <video width="750" height="450" controls autoplay> -->
+
+                        <!-- <source src="movie.ogg" type="video/ogg"> -->
+
+
+                        <p class="subtitle2">Planning the perfect wedding doesnt have to be stressful</p>
+
+                        <p class="subtitle2"> &nbsp;1 Plan out your day <i class="fa fa-calendar fa-lg"></i></p>
+
+                        <p class="subtitle2"> &nbsp; &nbsp;2 Connect and share <i class="fa fa-user fa-lg"></i> + <i
+                                class="fa fa-user fa-lg"></i></p>
+
+                        <p class="subtitle2"> &nbsp; &nbsp; &nbsp;3 Have the perfect wedding!</p>
+
+                        <p class="bells"><img src="{% static "images/bells.png" %}" alt="bell image"
+                                              class="img-responsive">
+                        </p>
+                        <br>
+                        <br>
+                        <br>
+
+                    </div>
+                    <div class="col-md-4">
+                        <!-- sticky landing page -->
+                        <div>
+                            <section class="login-form">
+                                <h3>Already have an account?</h3>
+                                {% if InvalidDetails %}
+                                    <div class="flashes">
+                                        <div class="alert alert-danger">{{ InvalidDetails }}</div>
+                                    </div>
+                                {% endif %}
+                                <form action="." method="post">
+                                    {% csrf_token %}
+                                    <input value="" name="LoginForm[return]" id="LoginForm_return" type="hidden">
+
+                                    <div class="form-group">
+                                        {#                            <input placeholder="Enter Email" class="form-control" required="required" name="LoginForm[username]" id="LoginForm_username" type="email">#}
+                                        {{ form.username }}
+                                    </div>
+                                    <div class="form-group">
+                                        {#                            <input placeholder="Password" class="form-control" required="required" name="LoginForm[password]" id="LoginForm_password" type="password">                       #}
+                                        {{ form.password }}
+                                    </div>
+
+                                    <button type="submit" class="btn btn-blue log-in-btn">Log in</button>
+                                    <a href="/forgotPassword/" class="forget-pw">Forgot password</a>
+                                </form>
+
+                            </section>
+                            <section class="register-form">
+                                <h3>New to YapJoy?</h3>
+
+                                <p>Sign up now and begin planning your dream wedding!</p>
+                                <a class="btn btn-blue get-started-btn" onclick="$('#registerModal').modal('show');">Get
+                                    Started</a>
+
+                                <p class="text-center" style="margin-top: 5px;">----or----</p>
+
+                                <div><p>
+                                    <a href="/login/facebook/" class="zocial  facebook">Sign
+                                        in with
+                                        Facebook</a>
+                                </p>
+                                </div>
+
+
+                            </section>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="learn_more" id="learn_more">
+                            <br>
+                            <br>
+                            <br>
+                            <!-- <p class="subtitle2">YapJoy is revolutionizing the way engaged couples plan their wedding</p>
+                            <p class="subtitle1"><i class="fa fa-share fa-lg"></i>Invite chosen Friends and Family to participate in your wedding planning <i class="fa fa-calendar fa-lg"></i></p>
+                            <p class="subtitle1"><i class="fa fa-share fa-lg"></i>Search and connect with more couples who have similar interests <i class="fa fa-users fa-lg"></i><p>
+                            <p class="subtitle1"><i class="fa fa-share fa-lg"></i>Connect with & Get bids from venues, planners, florists, DJs, Photographers and more<i class="fa fa-cogs fa-lg"></i><p>
+                            <p class="subtitle1"><i class="fa fa-share fa-lg"></i>Create your own planning circle - Schedule and Assign Tasks for everyone<i class="fa fa-child fa-lg"></i><i class="fa fa-child fa-lg"></i><i class="fa fa-child fa-lg"></i></p>
+                            <p class="subtitle1"><i class="fa fa-share fa-lg"></i>Create & Share Your private Wedding Party Events<i class="fa fa-wifi fa-lg"></i></p>
+                            <p class="subtitle1"><i class="fa fa-share fa-lg"></i>Create ‘Day of Event’ seating charts & venue layouts to share with your guests<i class="fa fa-sitemap fa-lg"></i></p> -->
+                            <p class="subtitle2">YapJoy is revolutionizing the way engaged couples plan their
+                                wedding</p>
+
+                            <p class="subtitle1"><i class="fa fa-calendar fa-lg"></i>&nbsp;&nbsp;&nbsp;Invite chosen
+                                Friends and
+                                Family to participate in your wedding planning </p>
+
+                            <p class="subtitle1"><i class="fa fa-users fa-lg"></i>&nbsp;&nbsp;&nbsp;Search and connect
+                                with more
+                                couples who have similar interests
+
+                            <p>
+
+                            <p class="subtitle1"><i class="fa fa-cogs fa-lg"></i>&nbsp;&nbsp;&nbsp;Connect with & Get
+                                bids from
+                                venues, planners, florists, DJs, Photographers and more
+
+                            <p>
+
+                            <p class="subtitle1"><i class="fa fa-child fa-lg"></i>Create your own planning circle - Schedule and Assign
+                                Tasks
+                                for everyone</p>
+
+                            <p class="subtitle1"><i class="fa fa-wifi fa-lg"></i>&nbsp;&nbsp;&nbsp;Create & Share Your
+                                private
+                                Wedding Party Events</p>
+
+                            <p class="subtitle1"><i class="fa fa-sitemap fa-lg"></i>&nbsp;&nbsp;&nbsp;Create ‘Day of
+                                Event’
+                                seating charts & venue layouts to share with your guests <br /> <br /> <br />   </p>
+                        </div>
+                        <br />
+                        <!-- <h1 class="main-title">Planning the perfect wedding doesnt have to be stressful</h1>
+                        <p class="subtitle1">1. Plan out your day <i class="fa fa-calendar fa-lg"></i></p>
+                        <p class="subtitle2">2. Connect and share <i class="fa fa-user fa-lg"></i> + <i class="fa fa-user fa-lg"></i></p>
+                        <p class="subtitle3">3. Have the perfect wedding!</p>
+                        <p class="bells"><img src="/images/bells.png" alt="bell image" class="img-responsive"></p>
+
+                        <h1 class="main-title">Planning the perfect wedding doesnt have to be stressful</h1>
+                        <p class="subtitle1">1. Plan out your day <i class="fa fa-calendar fa-lg"></i></p>
+                        <p class="subtitle2">2. Connect and share <i class="fa fa-user fa-lg"></i> + <i class="fa fa-user fa-lg"></i></p>
+                        <p class="subtitle3">3. Have the perfect wedding!</p>
+                        <p class="bells"><img src="/images/bells.png" alt="bell image" class="img-responsive"></p> -->
+                        <br>
+                        <br>
+                        <br>
+
+
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="text-center">
+                            <div id="intro_video">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <video width="750" height="450" controls>
+                                    <source src="{% static "videos/yapjoy_intro.mp4" %}" type="video/mp4">
+                                    Your browser des not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+</section>
+<footer class="home">
+    <ul class="list-inline">
+        <li>&copy; 2015 Yapjoy</li>
+        {#<li><a href="#">Terms and Conditions</a></li>#}
+        {#<li><a href="#">Privacy</a></li>#}
+        {#<li><a href="#">Contact</a></li>#}
+        {#<li><a href="#">Careers</a></li>#}
+    </ul>
+
+</footer>
+
+
+<div class="modal fade" id="registerModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title">Register</h4>
+
+                <form action="." method="post" id="registerForm">
+                    {% csrf_token %}
+                    <div class="status">
+                        <h4>I am a...</h4>
+                        {{ registerform.type }}
+                    </div>
+                    <div class="form-group">
+                        {{ registerform.first_name }}
+                        <div class="red">{{ registerform.first_name.errors }}</div>
+                    </div>
+                    <div class="form-group">
+                        {{ registerform.last_name }}
+                        <div class="red">{{ registerform.last_name.errors }}</div>
+                    </div>
+                    <div class="form-group">
+                        {{ registerform.email }}
+                        <div class="red">{{ registerform.email.errors }}</div>
+                    </div>
+                    <div class="form-group" id="Password">
+                        {{ registerform.password }}
+                        <div class="red">{{ registerform.password.errors }}</div>
+                    </div>
+                    <span id="messageOne"></span>
+
+                    <div class="form-group" id="confirmPassword">
+                        {{ registerform.confirm_password }}
+                        <div class="red">{{ registerform.confirm_password.errors }}</div>
+                    </div>
+                    <span id="message"></span>
+
+                    <div class="checkbox">
+                        <label>
+                            {{ registerform.agree }} I accept the <a href="/terms_and_conditions/" target="_blank"><span>terms and conditions</span></a> and <a href="/privacy_policy/" target="_blank"><span>privacy policy</span></a>
+                            <div class="red">{{ registerform.agree.errors }}</div>
+                        </label>
+                    </div>
+                    <button style="visibility: hidden;" type="submit" class="btn btn-blue log-in-btn" id="verify">
+                        Verify
+                    </button>
+                    <button type="submit" class="btn btn-blue pull-right">Register</button>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--
+Can we put the reg form in a modal
+
+$('#registerForm').submit()
+                    -->
+<!-- v27 -->
+<!-- <script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script> -->
+<script type="text/javascript">
+    /*<![CDATA[*/
+    {% if registerform.errors %}
+        $(document).ready(function () {
+            $('#registerModal').modal('show');
+        });
+    {% endif %}
+    jQuery(function ($) {
+        $(function () {
+            $('.hoauthWidget a').click(function () {
+                var signinWin;
+                var screenX = window.screenX !== undefined ? window.screenX : window.screenLeft,
+                        screenY = window.screenY !== undefined ? window.screenY : window.screenTop,
+                        outerWidth = window.outerWidth !== undefined ? window.outerWidth : document.body.clientWidth,
+                        outerHeight = window.outerHeight !== undefined ? window.outerHeight : (document.body.clientHeight - 22),
+                        width = 480,
+                        height = 680,
+                        left = parseInt(screenX + ((outerWidth - width) / 2), 10),
+                        top = parseInt(screenY + ((outerHeight - height) / 2.5), 10),
+                        options = (
+                                'width=' + width +
+                                ',height=' + height +
+                                ',left=' + left +
+                                ',top=' + top
+                        );
+
+                signinWin = window.open(this.href, 'Login', options);
+
+                if (window.focus) {
+                    signinWin.focus()
+                }
+
+                return false;
+            });
+        });
+
+    });
+    /*]]>*/
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68785620-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</body>
+</html>

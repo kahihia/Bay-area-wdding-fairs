@@ -1,0 +1,269 @@
+{% extends "vendroid/base.html" %}
+{% load comments %}
+{% load static %}
+{% block tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+{% endblock %}
+{% block content %}
+    <style>
+    .widget.wedding-pro h1 {
+    background-color: #ff8561;
+    color: #fff;
+    font-size: 1.6em;
+    font-weight: 300;
+    padding: .25em 1em;
+    text-align: center;
+}
+</style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <h1>Profile</h1>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                          <!--(1) profile summary(image, name...) -->
+                                        <div class="panel widget light-widget">
+                                          <div class="panel-heading no-title"> </div>
+                                          <div class="panel-body">
+                                            <div class="text-center vd_info-parent"> <img alt="Profile image" src={{ professional.get_image_url }}> </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        {% if not request.user == professional.user %}
+                                                {% if not is_following %}
+
+                                                        <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input id="follow" name="follow" hidden="hidden">
+                                            <button class="btn vd_btn vd_bg-green btn-xs btn-block no-br">
+                                                Follow
+                                            </button>
+                                        </form>
+
+                                    {% else %}
+                                         <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input id="unfollow" name="unfollow" hidden="hidden">
+                                            <button class="btn vd_btn vd_bg-green btn-xs btn-block no-br">
+                                                <i class="fa fa-check-circle append-icon"></i>
+                                                {#                                        <i class="fa fa-user">asd</i>#}
+                                                Unfollow
+                                            </button>
+                                        </form>
+                                {% endif %}
+                                {% endif %}
+{#                                              <div class="col-xs-12"> <a class="btn vd_btn vd_bg-grey btn-xs btn-block no-br"><i class="fa fa-envelope append-icon"></i>Send Message</a> </div>#}
+                                            </div>
+                                                    </div>
+
+                                            <h2 class="font-semibold mgbt-xs-5">{{user.get_full_name}}</h2>
+                                            <h4>{{ professional.type }}</h4>
+                                              <!----fix me --->
+                                            <h4>{{ professional.looking_for }}</h4>
+{#                                            <p>fill profile describtion here???fix me????</p>#}
+
+                                          </div>
+
+
+                                        <!-- (2)friends under profile summary-->
+
+                                    </div>
+                                    </div>
+
+
+                                    <!-- (3)Main panel -->
+                                <div class="col-sm-5">
+                                                          <div class="panel widget light-widget">
+                                                            <div class="panel-body text-center">
+                                                                <div>
+                                                    <div class="menu">
+                                                        <form method="post" action="." enctype="multipart/form-data" id="form_post_id" >
+                                                    {% csrf_token %}
+
+                                                            <textarea name="Post_comment" id="Post_comment" class="no-bd" rows="3" placeholder="What are you doing?"></textarea>
+                                                            <div class="vd_textarea-menu vd_bg-yellow vd_bd-yellow">
+                                                                <ul class="nav nav-pills ">
+{#                                                                <li class="one-icon">#}
+{#                                                                    <a name="image">#}
+{#                                                                        <span class="menu-icon">#}
+{##}
+{#                                                                            <i class="fa fa-camera fa-fw"></i>#}
+{#                                                                        </span>#}
+{#                                                                    </a>#}
+{#                                                                </li>#}
+                                                                <li class="pull-right">
+                                                                    <a onclick="document.getElementById('form_post_id').submit(); return false;" id="form_button_submit" type="submit" style="border-left:1px solid rgba(255,255,255,.3)">
+                                                                        <span class="menu-icon">
+                                                                            <i class="fa fa-check fa-fw"></i>
+                                                                        </span>
+                                                                        <span class="menu-text">
+                                                                            Post
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+
+                                                                </ul>
+
+                                                        </div>
+                                                        </form>
+                                                        <script>
+                                                            function submitTheForm(){
+
+                                                            }
+                                                        </script>
+                                                    </div> <!-- child-menu -->
+                                                  </div>
+                                                        </div>
+                                                        </div>
+                                                                <div class="">
+                                                          <div class="content-list">
+                                                            <div data-rel="">
+                                                              <ul  class="list-wrapper">
+{#                                                                <li> <span class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></span> <span class="menu-text"> Someone has give you a surprise <span class="menu-info"><span class="menu-date"> ~ 12 Minutes Ago</span></span> </span>  </li>#}
+{#                                                                <li> <span class="menu-icon vd_blue"><i class=" fa fa-user"></i></span> <span class="menu-text"> Change your user profile details <span class="menu-info"><span class="menu-date"> ~ 1 Hour 20 Minutes Ago</span></span> </span> </li>#}
+{#                                                                <li> <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span></li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span>  </li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span> </li>#}
+{#                                                                <li>  <span class="menu-icon vd_red"><i class=" fa fa-cogs"></i></span> <span class="menu-text"> Your setting is updated <span class="menu-info"><span class="menu-date"> ~ 12 Days Ago</span></span> </span>  </li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><i class=" fa fa-book"></i></span> <span class="menu-text"> Added new article <span class="menu-info"><span class="menu-date"> ~ 19 Days Ago</span></span> </span> </li>#}
+{#                                                                <li>  <span class="menu-icon vd_green"><img alt="example image" src="img/avatar/avatar.jpg"></span> <span class="menu-text"> Change Profile Pic <span class="menu-info"><span class="menu-date"> ~ 20 Days Ago</span></span> </span>  </li>#}
+                                                                  <!--fix me link to version 2 feed-->
+                                                                  {% include 'vendroid/partial/_user_feed.html' %}
+                                                              </ul>
+                                                            </div>
+{#                                                            <div class="closing text-center" style=""> <a href="#">See All Activities <i class="fa fa-angle-double-right"></i></a> </div>#}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                    <div class="col-md-4">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-body">
+                                                <div class="pd-20">
+                                                    <!---fix me edit button-->
+                                                {% if request.user == user %}
+                                                    <div class="vd_info tr"><a href="/settings/"
+                                                                               class="btn vd_btn btn-xs vd_bg-yellow">
+                                                        <i class="fa fa-pencil append-icon"></i> Edit </a></div>
+                                                {% endif %}
+                                                    <h3 class="mgbt-xs-15 mgtp-10 font-semibold"><i
+                                                            class="icon-user mgr-10 profile-icon"></i> ABOUT</h3>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-xs-0">
+                                                               <div class="widget wedding-pro">
+                <h1>Wedding Professional</h1>
+                <div class="content">
+                    <div class="contact-info">
+                        <small>Company</small>
+                        <h4>{{ company.name }}</h4>
+                        <small>Contact</small>
+                        <h5>{{ professional.user.get_full_name }}</h5>
+                        {% if professional.subscribed == True %}
+
+                        <p class="location">{{ professional.get_full_address }}</p>
+
+                        <p class="phone"><i class="fa fa-phone"></i> {{ professional.phone }}</p>
+
+                        <p class="email"><i class="fa fa-envelope-o"></i> {{ professional.user.email }}</p>
+                        {% else %}
+                            <p class="email">Professional contact details are not visible.</p>
+                        {% endif %}
+                    </div>
+                    <div class="description">
+                        <h5 class="info-title">Description</h5>
+
+                        <p>{{ company.description }}</p>
+                    </div>
+                    <div class="company">
+                        <h5 class="info-title">Company Information</h5>
+
+                        <p>Employees: {{ company.employees }}</p>
+                        <p>Bids: {{ professional.bids_count }}</p>
+                        {% if professional.subscribed == True %}
+                        <p>Payment: {{ company.payment_terms }}</p>
+                        {% else %}
+                            <p class="email">Professional payment terms are not visible.</p>
+                        {% endif %}
+                    </div>
+                    <div class="wedding-pro-interest">
+                        <!-- patch3 -->
+                        <h5 class="info-title">Services & Products</h5>
+
+                        <p>{{ professional.looking_for }}</p>
+                    </div>
+
+                </div>
+
+            </div>
+                                                                <!-- col-sm-10 -->
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <hr class="pd-10"/>
+
+                                                    <!--(5) Profile Events-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--vd_content-wrapper-->
+            </div>
+            <!--sidebar -->
+        </div>
+        <!--content-->
+
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 Yapjoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+    </div><!--vd_body-->
+
+
+
+{% endblock content %}
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/static/js/bootbox.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.profile.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.yiilistview.js"></script>
+    <script type="text/javascript">
+    </script>
+{% endblock jquery %}

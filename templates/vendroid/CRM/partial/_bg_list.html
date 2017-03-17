@@ -1,0 +1,50 @@
+<div class="col-lg-12 col-md-12">
+<h2 class="grey">Planning List</h2>
+                                                            <ul class="vd_timeline">
+
+{#                                                                                  <li class="tl-item tl-item-date">#}
+{#                                                                                    <div class="tl-date"> My List </div>#}
+{#                                                                                  </li>#}
+                                                                {% for prod in products %}
+                                                                    <li class="tl-item {% if prod.id == product.id %}active-product{% endif %}" id="prod-active-id-{{ prod.id }}">
+                                                                        <div
+{#                                                                                {% if prod.id == product.id %}style="background-color: rgb(7,160,195) !important;" {% else %}#}
+                                                                                style="background-color: #d9d9d9;"
+{#                                                                                {% endif %}#}
+                                                                                class="tl-icon success"><i
+                                                                                class="fa fa-book"></i></div>
+                                                                        <div class="tl-label panel widget light-widget ">
+                                                                            <div class="panel-body">
+                                                                                <a
+                                                                                        style="cursor: pointer;"
+{#                                                                                        href="/demov2/plans/{{ prod.id }}/"#}
+                                                                                        onclick="changeProduct(product_cat_name_val='{{ prod.category.name }}', product_id_val='{{ prod.id }}', product_cat_id_val='{{ prod.category_id }}', product_title_val='{{ prod.title }}');"
+                                                                                >
+                                                                                    <h4 style="margin-top:15px;
+{#                                                                                            {% if prod.id == product.id %}color:  #07A6C3 !important;{% else %}#}
+                                                                                                color: #d9d9d9;
+{#                                                                                            {% endif %}#}
+                                                                                            ">{{ prod.title }}</h4>
+                                                                                </a>
+                                                                                {#                        <span>xx months left</span>#}
+                                                                                {#                        <!-- comments -->#}
+                                                                            </div>
+                                                                            <!-- panel-body -->
+                                                                        </div>
+                                                                        <!-- panel -->
+                                                                    </li>
+                                                                {% endfor %}
+                                                                <li class="tl-item">
+                                                                    <div style="color: rgb(7,160,195) !important;background-color: #07A6C3 !important;"  class="tl-icon success"><a
+                                                                            href="{% url "select" %}"><i
+                                                                            class="fa fa-plus" style="color: white !important;"></i></a></div>
+                                                                    <div class="tl-label panel widget light-widget ">
+                                                                        <div class="panel-body">
+                                                                        </div>
+                                                                        <!-- panel-body -->
+                                                                    </div>
+                                                                    <!-- panel -->
+                                                                </li>
+                                                            </ul>
+                                                            <br><br>
+                                                        </div>

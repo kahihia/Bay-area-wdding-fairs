@@ -1,0 +1,95 @@
+<style>
+    .circle-online {
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #a1a1a1;
+        border-radius: 25px;
+        background-color: green;
+        position: absolute;
+        top: 20px;
+        left: 7px;
+        z-index:99;
+    }
+    .circle-offline {
+        border: 1px solid #a1a1a1;
+        border-radius: 25px;
+        background-color: grey;
+        left: 7px;
+        margin: 5px;
+        padding: 5px;
+        position: absolute;
+        top: 20px;
+        z-index:99;
+    }
+    .white-bg {
+        background-color: #FFF;
+    }
+    .mega-image img {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+</style>
+<div id="">
+    {% if products %}
+        {% for p in products %}
+{#            <div class="row">#}
+                {#                <div class="col-sm-12">#}
+                {#                    <div class="col-sm-3">#}
+                {#                        <a class="" href="/profile/{{ p.user.userprofile.id }}/" target="_blank">#}
+                {#                            <img class="image-cropper" src="{{ p.user.userprofile.image.url }}">#}
+                {#                        </a>#}
+                {#                    </div>#}
+                {#                    <div class="col-sm-9">#}
+                {#                        <p>{{ p.user.get_full_name }}</p>#}
+                {#                        <p>{{ p.title }}</p>#}
+                {#                        <p>{{ p.created_at|date:"M d, Y" }}</p>#}
+                {#                    </div>#}
+                {#                </div>#}
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                    <div class="panel widget light-widget">
+                        <div class="panel-body">
+                            <h4>{{ p.user.get_full_name }}</h4>
+                            <div class="col-md-12" id="refreshConversation_friend">
+                                <h4><em id="get_friend profile mega-li">
+                                            <span class="mega-image">
+                                                <img width="85%" src="{{ p.user.userprofile.get_image_url }}"
+                                                     alt="example image">
+                                                <span>{{ p.user.userprofile.business_name }}</span>
+
+                                            </span>
+                                </em>
+                                </h4>
+{#                                <div class="col-md-3" style="width:20%;">#}
+{#                                    <img class="image-cropper-big" src="#}
+{#                                            {% with p.user.userprofile.get_yelp_profile_image as img %}{% if img %}{{ img }}{% else %}{{ p.user.userprofile.get_image_url }}{% endif %}{% endwith %}">#}
+{#                                </div>#}
+                                {% with p.user.userprofile.get_yelp_image as img %}{% if img %}<br/>
+                                    <img src="{{ img }}"/> {% if p.user.userprofile.city or p.user.userprofile.state %}|
+                                        {{ p.user.userprofile.city }}
+                                        {{ p.user.userprofile.state }}{% endif %}{% else %}
+                                    <p>Vendor's ratings image is not available with Yelp.
+                                        {% if p.user.userprofile.city or p.user.userprofile.state %}|
+                                            {{ p.user.userprofile.city }} {{ p.user.userprofile.state }}</p>{% endif %}
+                                {% endif %}{% endwith %}
+                                {% with p.user.userprofile.get_yelp_name_categories as cat %}{% if cat %}
+                                    <p>{{ cat }}</p>{% else %}
+                                    <p>Vendor's categories is not available at the moment or vendor have not added it
+                                        yet.</p>{% endif %}{% endwith %}
+                                {% with p.user.userprofile.get_yelp_description as desc %}{% if desc %}<p>{{ desc }}</p>
+                                {% else %}
+                                    <p>Vendor's description is not available at the moment or vendor have not added it
+                                        yet.</p>{% endif %}{% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{#            </div>#}
+
+        {% endfor %}
+        <div class="clearfix"></div>
+        <a class="btn" onclick="goNext();">
+            load more
+        </a>
+    {% endif %}
+</div>

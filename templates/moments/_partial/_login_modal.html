@@ -1,0 +1,98 @@
+{% load static %}
+{% load myfilters %}
+<div class="modal fade" id="loginmodal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <form class="form-horizontal" action="." method="post" role="form">
+                    <div class="col-md-12 text-center" style="margin-bottom: 20px;margin-top:20px;">
+                        <img src="{% static "images/logo/yapjoy-logo-blue-hd.png" %}" />
+                    </div>
+                    {% csrf_token %}
+                <div class="clearfix"></div>
+                    {% if InvalidDetails %}<div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>
+                        {{ InvalidDetails }}
+                    </div>
+                {% endif %}
+                    {% if error_message %}<div class="alert alert-danger vd_hidden">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
+                                class="icon-cross"></i></button>
+                        {#                        <span class="vd_alert-icon"><i#}
+                        {#                                class="fa fa-exclamation-circle vd_red"></i></span>#}
+                        {{ error_message }}</div>{% endif %}
+{#                    <div class="alert alert-success vd_hidden">#}
+{#                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i#}
+{#                                class="icon-cross"></i></button>#}
+{#                        <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well#}
+{#                        done!</strong>.#}
+{#                    </div>#}
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="form-group">
+
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+{#                                    <span class="menu-icon">#}
+{#                                        <i class="fa fa-envelope"></i> </span>#}
+
+                                    {{ form.username|addcss:"form-control required" }}
+
+
+                                </div>
+                                {% if form.username.errors %}
+                                    <div class="vd_red" for="username">{{ form.username.errors.0 }}</div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-sm-12 controls">
+                                <div class="vd_input-wrapper light-theme">
+{#                                    <span class="menu-icon"> <i class="fa fa-lock" aria-hidden="true"></i> </span>#}
+
+                                    {{ form.password|addcss:"form-control required" }}
+
+
+                                </div>
+                                {% if form.password.errors %}
+                                    <div class="vd_red" for="password">{{ form.password.errors.0 }}</div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 controls">
+                                <button style="background-color: #07A6C3; color: white;cursor: pointer;" class="btn btn-primary btn-block btn-blue" type="submit" id="login-submit">LOG IN
+                                </button>
+                            </div>
+{#                            <div class="col-md-12">#}
+{#                                <div class="row">#}
+{#                                    <div class="col-xs-12">#}
+{#                                        <div class="vd_checkbox pink">#}
+{#                                            <input type="checkbox" id="checkbox-1" value="1">#}
+{#                                            <label for="checkbox-1"> Remember me</label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+                        </div>
+
+                    </div>
+
+
+                </form>
+            <div class="clearfix"></div>
+
+            </div>
+            {#            <div class="modal-footer">#}
+            {##}
+            {#                </div>#}
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

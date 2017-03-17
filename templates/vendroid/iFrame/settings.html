@@ -1,0 +1,576 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+    $(function () {
+            $('#id_wedding_date').datepicker();
+{#            $("#id_wedding_date").datetimepicker({#}
+{#             'showTimepicker': false,#}
+{#            });#}
+        });
+    </script>
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+      <div class="vd_container">
+        <div class="vd_content clearfix">
+
+          <!-- vd_head-section -->
+
+          <div class="clearfix">
+
+          <!-- vd_title-section -->
+
+          <div class="vd_content-section clearfix">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-heading vd_bg-green">
+                    <h3 class="panel-title"> Settings </h3>
+                  </div>
+                  <div class="panel-body">
+{#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                    <ul class="nav nav-tabs">
+                      <li class="{% if not emailformSubmit and not privacyformSubmit %}active{% endif %}"><a href="#profileInfo" data-toggle="tab">Profile Info</a></li>
+                      <li class="{% if emailformSubmit or emailform.errors %}active{% endif %}"><a href="#account" data-toggle="tab">Account</a></li>
+                      <li class="{% if privacyformSubmit %}active{% endif %}"><a href="#privacy" data-toggle="tab">Privacy</a></li>
+
+
+                    </ul>
+                    <br>
+                    <div class="tab-content mgbt-xs-20">
+                         {% if successMessage %}
+                    <div class="flashes">
+                        <div class="alert alert-success">{{ successMessage }}</div>
+                    </div>
+                    {% endif %}
+                      <div class="tab-pane {% if not emailformSubmit and not privacyformSubmit %}active{% endif %}" id="profileInfo">
+
+                          <div class="col-sm-12">
+                <div class="panel widget light-widget">
+                  <div class="panel-heading no-title"> </div>
+                  <form class="form-horizontal" action="." method="post" enctype="multipart/form-data" role="form">
+                  {% csrf_token %}
+                    <div class="panel-body">
+{#                      <h2 class="mgbt-xs-20"> <span class="font-semibold">{{ user.get_full_name }}</span> </h2>#}
+{#                      <br>#}
+                      <div class="row">
+                        <div class="col-sm-3 mgbt-xs-20">
+                          <div class="form-group">
+                            <div class="col-xs-12">
+                              <div class="form-img text-center mgbt-xs-15"> <img alt="example image" src="{{ profile.get_image_url }}"> </div>
+                              <div class="form-img-action text-center mgbt-xs-20">
+                                  <input id="id_image" name="image" type="file">
+                                     {% if profileform.image.errors %}<p style="color: red;">{{ profileform.image.errors.0 }}</p>{% endif %}
+                              </div>
+                              <br>
+                              <div>
+                                <table class="table table-striped table-hover">
+                                  <tbody>
+                                    <tr>
+                                      <td style="width:60%;">Status</td>
+                                      <td>{% if user.is_active %}<span class="label label-success">Verified</span>{% else %}<span class="label label-danger">Not Verified</span>{% endif %}</td>
+                                    </tr>
+{#                                    <tr>#}
+{#                                      <td>User Rating</td>#}
+{#                                      <td><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i></td>#}
+{#                                    </tr>#}
+                                    <tr>
+                                      <td>Member Since</td>
+                                      <td> {{ user.date_joined }} </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-9">
+
+                          <!-- form-group -->
+
+
+                          <h3 class="mgbt-xs-15">Profile</h3>
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">First Name</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ profileform.first_name }}
+                                  {% if profileform.first_name.errors %}<p style="color: red;">{{ profileform.first_name.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Last Name</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ profileform.last_name }}
+                                  {% if profileform.last_name.errors %}<p style="color: red;">{{ profileform.last_name.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Gender</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                    {% for choice in profileform.gender %}
+                                  <span class="radio-info">
+                                    {{ choice.tag }}
+                                    <label for="optionsRadios3"> {{ choice.choice_label }} </label>
+                                  </span>
+                                    {% endfor %}
+                                    {% if profileform.gender.errors %}<p style="color: red;">{{ profileform.gender.errors.0 }}</p>{% endif %}
+                                    <div class="clearfix"></div>
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                              {% if profile.type == "Event" %}
+                                  <label class="col-sm-3 control-label">Event Date</label>
+                              {% else %}
+                            <label class="col-sm-3 control-label">Wedding Date</label>
+                              {% endif %}
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ profileform.wedding_date|addcss:"datetime-picker" }}
+                                    {% if profileform.wedding_date.errors %}<p style="color: red;">{{ profileform.wedding_date.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-12 -->
+{#                                <div class="col-xs-2">#}
+{#                                  <!-- btn-action col-sm-10 -->#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Age</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                   {{ profileform.age }}
+                                  {% if profileform.age.errors %}<p style="color: red;">{{ profileform.age.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+                        {% if profile.type == "Bride" or profile.type == "Groom" %}
+                            <div class="form-group">
+                            <label class="col-sm-3 control-label">Wedding Locacation</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                   {{ profileform.wedding_location }}
+                                  {% if profileform.wedding_location.errors %}<p style="color: red;">{{ profileform.wedding_location.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Budget</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                   {{ profileform.budget }}
+                                  {% if profileform.budget.errors %}<p style="color: red;">{{ profileform.budget.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                        {% endif %}
+
+                          <hr>
+                          <h3 class="mgbt-xs-15">Address</h3>
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Street</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                    {{ profileform.street }}
+                                    {% if profileform.street.errors %}<p style="color: red;">{{ profileform.street.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-12 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">City</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                    {{ profileform.city }}
+                                    {% if profileform.city.errors %}<p style="color: red;">{{ profileform.city.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">State</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                    {{ profileform.state|addcss:"form-control" }}
+                                    {% if profileform.state.errors %}<p style="color: red;">{{ profileform.state.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Zip</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                    {{ profileform.zip|addcss:"form-control" }}
+                                    {% if profileform.zip.errors %}<p style="color: red;">{{ profileform.zip.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-9 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                            <hr>
+                          <h3 class="mgbt-xs-15">Looking For</h3>
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Looking for</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+
+                                <select multiple="multiple" class="width-100" data-placeholder="Choose"
+                                            name="assigned_to" id="to">
+                                {% for o in looking_for_selected %}
+                                    <option  selected="selected" value="{{ o.open_search.id }}">{{ o.open_search.name }}</option>
+                                {% endfor %}
+                                        {% for lf in looking_for %}
+
+                                         <option value="{{ lf.id }}">{{ lf.name }}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                {% if looking_for_error %}<div style="color: red;">{{ looking_for_error }}</div>{% endif %}
+                                </div>
+                                <!-- col-xs-12 -->
+{#                                <div class="col-xs-2">#}
+{#                                </div>#}
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                        </div>
+                        <!-- col-sm-12 -->
+                      </div>
+                      <!-- row -->
+
+                    </div>
+                    <!-- panel-body -->
+                    <div class="pd-20">
+                        <input id="profileform" name="profileform" hidden="hidden">
+                        <button type="submit" class="btn vd_btn vd_bg-green pull-right"><span class="menu-icon"><i class="fa fa-fw fa-check"></i></span> Finish</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+
+                      </div>
+                      <div class="tab-pane {% if emailformSubmit %}active{% endif %}" id="account">
+
+                          <div class="col-sm-12">
+                              <h3 class="mgbt-xs-15">Account</h3>
+                              <form class="form-horizontal" action="." method="post" enctype="multipart/form-data" role="form">
+                  {% csrf_token %}
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ emailform.email }}
+                                {% if emailform.errors %}<p style="color: red;">{{ emailform.email.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-12 -->
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ passwordform.password }}
+                                    {% if passwordform.errors %}<p style="color: red;">{{ passwordform.password.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-12 -->
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Confirm Password</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ passwordform.confirm_password }}
+                        {% if passwordform.errors %}<p style="color: red;">{{ passwordform.confirm_password.errors.0 }}</p>{% endif %}
+                                </div>
+                                <!-- col-xs-12 -->
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+
+                                  <div class="pd-20">
+                        <input type="hidden" name="DeactivateAccount" value="1" />
+                        <input name="passwordformSignal" hidden />
+                        <button type="submit" class="btn vd_btn vd_bg-green pull-right"><span class="menu-icon"><i class="fa fa-fw fa-check"></i></span> Finish</button>
+                    </div>
+
+                          <!-- form-group -->
+                        </form>
+                          <hr>
+                          <h3 class="mgbt-xs-15">Request Account Delete</h3>
+                              <p>YapJoy does not hold any reformation regarding an account once it is deleted.</p>
+                              <p>Note: This operation is irreversible. Please make sure before deleting your account.</p>
+                          <div class="col-sm-12">
+
+                          <a href="/settings/delete/" class="btn vd_btn vd_bg-red pull-right"> Delete account</a>
+                          </div>
+                          </div>
+
+
+                      </div>
+                      <div class="tab-pane {% if privacyformSubmit %}active{% endif %}" id="privacy">
+                        <div class="col-sm-12">
+                              <h3 class="mgbt-xs-15">Notifications</h3>
+                              <form class="form-horizontal" action="." method="post" role="form">
+                  {% csrf_token %}
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Events (email)</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ privacyform.notification_events }}
+                                </div>
+                                <!-- col-xs-12 -->
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-sm-3 control-label">Tasks assigned to you (email)</label>
+                            <div class="col-sm-9 controls">
+                              <div class="row mgbt-xs-0">
+                                <div class="col-xs-12">
+                                  {{ privacyform.notification_tasks }}
+                                </div>
+                                <!-- col-xs-12 -->
+                              </div>
+                              <!-- row -->
+                            </div>
+                            <!-- col-sm-10 -->
+                          </div>
+                          <!-- form-group -->
+
+                                  <div class="pd-20">
+                        <input id="notification_sig" name="notification_sig" hidden="hidden" />
+                        <button type="submit" class="btn vd_btn vd_bg-green pull-right"><span class="menu-icon"><i class="fa fa-fw fa-check"></i></span> Finish</button>
+                    </div>
+
+                          <!-- form-group -->
+                        </form>
+                          <hr>
+                          </div>
+
+                      </div>
+                    </div>
+                    <br><br>
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-6 -->
+
+            </div>
+            <!-- row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+        </div>
+        <!-- .vd_content -->
+      </div>
+      <!-- .vd_container -->
+    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+            <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+  <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+    <script type="text/javascript">
+
+        if($("#to").length > 0){
+            $("#to").chosen();
+        }
+    </script>
+
+
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

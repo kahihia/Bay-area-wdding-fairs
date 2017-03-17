@@ -1,0 +1,154 @@
+{% load static %}
+{% load comments %}
+<div class="vd_content-wrapper" style="min-height: 931px;">
+    <div class="mb-content-wrapper-child" style="margin-top:0px;">
+        <div class="vd_content clearfix"></div>
+        <!--Main panel-->
+        <div class="row mb-row">
+            <div class="col-md-4 col-md-offset-4 mb-panel-col-md-8" style="padding:0px;">
+                <div class="panel" >
+                    <div class="panel-body mb-panel-body" style="padding:0px;">
+
+                        <div class="clearfix"></div>
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading vd_bg-green vd_bd-green" style="background-color: white !important;">
+                                    <h4 class="panel-title">
+                                        Team Introductory Video
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel collapse in" style="border:0px !important;" >
+                                    <div class="panel-body mb-panel-body" style="padding:0px;">
+                                        <div class="col-xs-12 mb-col-xs-12" style="padding-left:0px;padding-right:0px;">
+                                            <div>
+                                                <div id="ID_VideoShow">
+                                                    {% include "vendroid/demov2/vendors/dashboard/_partial_productV2/_partial_video.html" %}
+                                                    <div class="col-md-12 col-xs-12">
+                                                        <div class="col-md-3 col-sm-3 col-xs-3" style="padding:10px;" >
+                                                            <img src="{{ up.image.url }}" class="image-cropper" >
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-9 col-xs-9" style="padding:10px;margin-top:14px">
+                                                            <h3 style="cursor: pointer;" class="company__fonts" id="company__name__id">{{ company_name }}
+                                                            </h3>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            {{ up.city }}, {{ up.state }}
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading vd_bg-green vd_bd-green">
+                                            <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseThree" > Personalized Offering
+                                            </a> </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel  collapse in">
+                                            <div class="panel-body mb-panel-body" style=";padding:0px;">
+                                                <div class="col-md-12 col-xs-12" style="padding-left: 25px;">
+                                                    <h1 style="margin-top:15px;">${{ bid.get_total|floatformat:'0' }}</h1>
+                                                    {% for item in bid.items.all %}
+                                                        <h3 class="">{{ item.item }} (${{ item.price|floatformat:'0' }})</h3>
+                                                    {% endfor %}
+                                                    {% get_comment_list for bid as comment_list %}
+                                                    <p>
+                                                    <div class="panel widget light-widget ">
+                                                        <div class="panel-heading no-title"> </div>
+                                                        <div class="panel-body">
+                                                            {#                    <h3 class="mgtp--5"> Chat Box No Border</h3>#}
+                                                            <div class="content-list  content-image">
+                                                                <ul class="list-wrapper no-bd-btm">
+                                                                    {% for comment in comment_list %}
+                                                                        <li {% if comment.user.id == user.id %}class="align-right"{% endif %}>
+                                                                            <div>
+
+                                                                                {#                                <img alt="example image" src="img/avatar/avatar.jpg">#}
+                                                                                <div class="clearfix"></div>
+                                                                            </div>
+                                                                            <div class="menu-text">
+                                                                                <a style="color: #07A6C3;">{{ comment.user.get_full_name }}</a><br />
+                                                                                {{ comment.comment }}
+                                                                                <div class="menu-info">
+                                                                                    <span class="menu-date">{{ comment.submit_date|timesince }} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    {% endfor %}
+
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </p>
+
+                                                    {% get_comment_form for bid as form %}
+                                                    <form action = "{% comment_form_target %}" method = "post" id="comment_form">
+                                                        {% csrf_token %}
+                                                        {#        {{ form }}#}
+                                                        {% for field in form %}
+                                                            {% if field.is_hidden %}
+                                                                {{ field }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {#        {{ form.comment }}#}
+                                                       <div class="col-md-10 col-xs-10" style="margin-bottom:15px;">
+                                                            <input class="form-control" placeholder="Message..." cols="40" id="id_comment" maxlength="3000" name="comment" rows="1"></input>
+                                                        <input type="hidden" name="next" value="{{ request.path }}" />
+                                                        <input type="hidden" name="content_type" value="yapjoy_market.productbids" id="id_content_type" />
+                                                        <input type="hidden" name="object_pk" value="{{ bid.id }}" id="id_object_pk" />
+                                                        <input type="hidden" name="email" value="{{ user.email }}" id="id_email" />
+                                                        <input id="id_name" type="hidden" name="name" value="{{ user.get_full_name }}" />
+                                                       </div>
+                                                    <div class="col-md-2 col-xs-2">
+                                                        <input type = "submit" name = "submit" value = "Send" class="btn btn-primary btn-blue pull-right" >
+                                                    </div>
+                                                    <br />
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading vd_bg-green vd_bd-green">
+                                            <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseThree" > About Us
+                                            </a> </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel  collapse in">
+                                            <div class="panel-body mb-panel-body" style=";padding:0px;">
+                                                {% include "vendroid/demov2/vendors/dashboard/_partial_productV2/_partial_about_desc.html" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading vd_bg-green vd_bd-green">
+                                            <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseFour" > Package Deals <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFour" class="panel collapse in">
+                                            <div class="panel-body" style="padding:15px !important;">
+                                                {% include "vendroid/demov2/vendors/dashboard/_partial_productV2/_partial_deals.html" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading vd_bg-green vd_bd-green">
+                                            <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseFive" > Pictures <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i></a> </h4>
+                                        </div>
+                                        <div id="collapseFive" class="panel collapse in">
+                                            <div class="panel-body mb-panel-body">
+                                                {% include "vendroid/demov2/vendors/dashboard/_partial_productV2/_partial_photos.html" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--vd_content-wrapper-->
+        <!-- .vd_container -->
+    </div>
+</div>

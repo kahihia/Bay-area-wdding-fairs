@@ -1,0 +1,1569 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+{#    <script type="text/javascript" src="{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}"></script>#}
+
+        <style>
+    .red {
+        color: red;
+    }
+    textarea {
+        height: 80px;
+    }
+    .btn-brown {
+        background-color: #ba8c00 !important;
+    }
+    </style>
+    <style>
+    .vd_content-section {
+         margin-bottom: 400px;
+    }
+    #footer .vd_bottom {
+        background-color: #816100 !important;
+    }
+    .vd_top-menu-wrapper{
+        background-color: #816100 !important;
+    }
+    .vd_menu-search-submit {
+        background-color: black !important;
+    }
+</style>
+    <script>
+    $(function () {
+{#        alert('works well')#}
+            $('#id_dueDate').datepicker({
+              dateFormat: "yy-mm-dd"
+            });
+{#            $("#id_wedding_date").datetimepicker({#}
+{#             'showTimepicker': false,#}
+{#            });#}
+        });
+
+    </script>
+    <style>
+    .ui-widget-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .ui-front {
+        z-index: 100;
+    }
+    .errorlist {
+        color: red;
+    }
+    </style>
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/CRM/partial/_sidebar.html" %}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+                  <div class="vd_container">
+                    <div class="vd_content clearfix">
+
+                      <!-- vd_head-section -->
+
+                      <div class="clearfix">
+
+                      <!-- vd_title-section -->
+
+                      <div class="vd_content-section clearfix">
+
+
+
+
+                         <div class="row">
+                          <div class="col-sm-12">
+                            <div class="panel widget light-widget">
+                              <div class="panel-body" style="padding:40px;">
+                {#                    <div class="pull-right text-right">#}
+                {#                      <h3 class="font-semibold mgbt-xs-20">INVOICE</h3>#}
+                {#                      <table class="table table-bordered">#}
+                {#                        <tbody><tr>#}
+                {#                          <th>Invoice No.</th>#}
+                {#                          <th>Date</th>#}
+                {#                        </tr>#}
+                {#                        <tr>#}
+                {#                          <td>I-24051301</td>#}
+                {#                          <td>24 May 2013</td>#}
+                {#                        </tr>#}
+                {#                      </tbody></table>#}
+                {#                    </div>#}
+                                <div class="col-sm-2">
+                                    <div class="mgbt-xs-20"><img width="100%" alt="logo" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"></div>
+                                </div>
+                                <div class="col-sm-10">
+            {#                        <div class="">#}
+                                        <h3 class="font-semibold mgbt-xs-20">{{ wp.name }}</h3>
+                                        {% if not is_contracted %}
+                                            <a class="btn vd_btn vd_bg-soft-blue vd_white pull-right " title="Convert to the Contracted Vendor" onclick="convert({{wp.id}});"><i class="fa fa-repeat append-icon"></i>Convert</a>
+                                             <form action="" method="post">
+                                            {% csrf_token %}
+                                                <input hidden name="delete_contractor" id="delete_contractor" value="{{ pass_id }}" />
+                                            <button style="margin-right: 10px;" class="btn vd_btn vd_bg-red vd_white pull-right " title="Remove the contracted vendor"><i class="fa fa-trash-o append-icon"></i>Delete</button>
+                                            </form>
+
+                                        {% else %}
+{#                                            <a class="btn vd_btn vd_bg-soft-blue vd_white pull-right " title="Convert back to the Interested Vendor" onclick="convert_back({{ wp.id }});"><i class="fa fa-undo append-icon"></i>Convert Back</a>#}
+
+                                            <form action="" method="post">
+                                            {% csrf_token %}
+                                                <input hidden name="delete_contractor" id="delete_contractor" value="{{ pass_id }}" />
+                                            <button class="btn vd_btn vd_bg-red vd_white pull-right " title="Remove the contracted vendor"><i class="fa fa-trash-o append-icon"></i>Delete</button>
+                                            </form>
+                                        {% endif %}
+
+                                        {% if not is_contracted %}
+                                        <p>Status: <mark style="color:orangered">Interested </mark>
+{#                                            <i>({{ wp.status }})</i>#}
+                                        </p>
+                                        {% else %}
+                                        <p>Status: <mark style="color:green">Contracted </mark>
+{#                                            <i>({{ wp.status }})</i>#}
+                                        </p>
+                                        {% endif %}
+
+{#                                        <p>Email: {{ wp.email }}</p>#}
+{#                                        <p>Phone: {{ wp.phone }}</p>#}
+{#                                        <p>Assigned to: {{ wp.sales.get_full_name }}#}
+{#                                            {% if is_contracted %}#}
+                                                <form action="" method="post">
+                                    {% csrf_token %}
+                                <select name="assign_sales_person_2" id="assign_sales_person_2" style="width: 15%;">
+                                <option value="None" >Please Select</option>
+                                    {% for sales_person in staff %}
+
+                                                <option value="{{ sales_person.id }}" {% if wp.sales == sales_person %}selected{% endif %}>{% if sales_person.get_full_name %}{{ sales_person.get_full_name }}{% else %}{{ sales_person.email }}{% endif %}</option>
+
+                                                {% endfor %}
+                                </select>
+                                <input name="assign_sales_person" id="assign_sales_person" type="submit" value="Assign Sales Person">
+                                </form>
+{#                                            {% endif %}#}
+                                        </p>
+{#                        </div>#}
+                    </div>
+
+                                <hr>
+                                <br>
+
+                              </div>
+                              <!-- panel-body -->
+
+                            </div>
+                            <!-- Panel Widget -->
+                          </div>
+
+                        </div>
+                          <!-- col-md-6 -->
+
+
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="panel widget light-widget">
+                              <div class="panel-body">
+                                  <button class="btn vd_btn btn-brown" data-toggle="modal" href="#contractFormModal">
+                                      Edit Contractor (Below Table)
+                                  </button>
+                                  <br/><br>
+                                  <div class="col-md-6">
+                                      <h5 class="">Vendors Information</h5>
+                                  <table class="table table-bordered">
+                                    <tbody>
+                                        <tr class="">
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Business Category:</td>
+                                          <td class="col-sm-9">{{ wp.category }}</td>
+
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Company: </td>#}
+{#                                          <td class="col-sm-3">{{ wp.business_name }}</td>#}
+                                        </tr>
+
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Phone:</td>
+                                          <td class="col-sm-9">{{ wp.phone }}</td>
+
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Vendor Name: </td>#}
+{#                                          <td class="col-sm-3">{{ wp.name }}</td>#}
+                                        </tr>
+
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Status:</td>
+                                          <td class="col-sm-9">{{ wp.status }}</td>
+
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Email: </td>#}
+{#                                          <td class="col-sm-3">{{ wp.email }}</td>#}
+                                        </tr><tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Website:</td>
+                                          <td class="col-sm-9">{{ wp.website }}</td>
+
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Email: </td>#}
+{#                                          <td class="col-sm-3">{{ wp.email }}</td>#}
+                                        </tr>
+
+
+{#                            <tr>#}
+{#                              <td class="col-sm-3  vd_bg-soft-grey text-right">Sales:</td>#}
+{#                              <td class="col-sm-3">{{ wp.sales.get_full_name }}</td>#}
+{#                            </tr>#}
+                        </tbody>
+                      </table>
+
+                                      </div>
+
+                                  <div class="col-md-6">
+                                      <h5 class="">&nbsp;</h5>
+                                      <table class="table table-bordered">
+                                    <tbody>
+                                            <tr class="">
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Business Category:</td>#}
+{#                                          <td class="col-sm-3">{{ wp.category }}</td>#}
+
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Company: </td>
+                                          <td class="col-sm-9">{{ wp.business_name }}</td>
+                                        </tr>
+
+                                        <tr>
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Phone:</td>#}
+{#                                          <td class="col-sm-3">{{ wp.phone }}</td>#}
+
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Vendor Name: </td>
+                                          <td class="col-sm-9">{{ wp.name }}</td>
+                                        </tr>
+
+                                        <tr>
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Status:</td>#}
+{#                                          <td class="col-sm-3">{{ wp.status }}</td>#}
+
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Email: </td>
+                                          <td class="col-sm-9">{{ wp.email }}</td>
+                                        </tr>
+                                       </tbody>
+                                      </table>
+                                  </div>
+                              <div class="clearfix"></div>
+                                    <div class="col-md-6">
+                                        <h5 class="mgbt-xs-15">Show Information</h5>
+                                  <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Events:</td>
+                                          <td class="col-sm-9">
+{#                                              {{ wp.event.name }}#}
+                                          {% if not show_interested %}
+                                          {{ wp.event.name }} <br><p style="color:grey">{{ wp.event.date }}</p>
+                                        {% else %}
+                                              {% for event_obj in wp.event.all %}{{ event_obj.name }} <br><p style="color:grey">{{ event_obj.date }}</p>{% endfor %}
+                                          {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Comments:</td>
+                                          <td class="col-sm-9">{{ wp.comments }}</td>
+                                        </tr>
+                                        {% if is_contracted %}
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Booth:</td>
+                                          <td class="col-sm-9">{{ wp.booth }}</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Fashion Show Sponsorship:</td>
+                                          <td class="col-sm-9">{{ wp.is_fashionshow }}</td>
+                                        </tr>
+                                            <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Partner Vendor:</td>
+                                          <td class="col-sm-9">{{ wp.is_partner_vendor }}</td>
+                                        </tr><tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Backdrop Allowed (Y/N):</td>
+                                          <td class="col-sm-9">{% if wp.backdrop_allowed %}Yes{% else %}No{% endif %}</td>
+                                        </tr><tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Food & Beverage:</td>
+                                          <td class="col-sm-9">{% if wp.food %}{{ wp.food }}{% else %}No{% endif %}</td>
+                                        </tr><tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Grand Prize:</td>
+                                          <td class="col-sm-9">{% if wp.grand_prize %}{{ wp.grand_prize }}{% else %}No{% endif %}</td>
+                                        </tr>
+                                        {% endif %}
+                                    </tbody>
+                                  </table>
+                                    </div>
+                                  <div class="col-md-6">
+                                      {% if is_contracted  %}
+                                  <h5 class="mgbt-xs-15">Payment Information</h5>
+                                  <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Balance Due:</td>
+                                          <td class="col-sm-9">${{ wp.amount_due }} </td>
+                                        </tr>
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Total Amount:</td>
+                                          <td class="col-sm-9">${{ wp.total_amount }} </td>
+                                        </tr>
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Commission:</td>
+                                          <td class="col-sm-9">{% if wp.commission %}{{ wp.commission|default_if_none:"0"|floatformat:"1" }}% (${{ wp.get_percent_amount|floatformat:"1" }}){% else %}0% ($0){% endif %}</td>
+                                        </tr>
+
+{#                                        <tr>#}
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Payment Method:</td>#}
+{#                                          <td class="col-sm-9">{{ wp.payment_method }}</td>#}
+{#                                        </tr>#}
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Description:</td>
+                                          <td class="col-sm-9">{{ wp.description }}</td>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                                  {% endif %}
+                                  </div>
+                                <div class="clearfix"></div>
+
+
+                                  <div class="col-md-6">
+                                      <h5 class="mgbt-xs-15">Address Information</h5>
+                                  <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">City:</td>
+                                          <td class="col-sm-9">{{ wp.city }}</td>
+                                        </tr>
+
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Zip:</td>
+                                          <td class="col-sm-9">{{ wp.zip }}</td>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                                  </div>
+
+                                 <div class="col-md-6">
+                                      <h5 class="mgbt-xs-15">Assignee Information</h5>
+                                  <table class="table table-bordered">
+                                    <tbody>
+{#                                        <tr>#}
+{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Vendors Owner::</td>#}
+{#                                          <td class="col-sm-9">{{ wp.sales }}</td>#}
+{#                                        </tr>#}
+
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Modified By:</td>
+                                          <td class="col-sm-9">{% if wp.sales %}{{ wp.sales }} &nbsp; {% endif %}{{ wp.modified_at }}</td>
+                                        </tr>
+
+                                        <tr>
+                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Created By:</td>
+                                          <td class="col-sm-9">{% if wp.sales %}{{ wp.sales }} &nbsp; {% endif %}{{ wp.created_at }}</td>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                                 </div>
+                                </div>
+
+                                  <!--Note-->
+{#                                    <hr>#}
+{#                                  <div class="col-sm-12">#}
+
+                    <!--end of tasks-->
+                </div>
+              </div>
+            </div>
+            <!-- row -->
+                    {% if is_contracted %}
+                      <div class="row">
+
+
+
+                       <div class="col-md-12" {% if request.user.email == "jenessa@bayareaweddingfairs.com" %}hidden{% endif %}>
+                                      <div class="panel-heading vd_bg-grey">
+                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Invoices</h3>
+                                      </div>
+                                      <div class="panel-body table-responsive">
+{#                                        <form action="" method="POST">#}
+{#                                        {% csrf_token %}#}
+                                          <div class="dataTables_wrapper form-inline no-footer"
+                                               id="data-tables_wrapper">
+                                              <table aria-describedby="data-tables_info" role="grid"
+                                                     class="table table-striped dataTable no-footer" id="data-tables">
+                                                  <thead>
+                                                  <tr role="row">
+{#                                                      <th>Bulk</th>#}
+
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+                                                      <th>Offered Price</th>
+                                                      <th>List Price
+                                                      </th>
+                                                      <th>Electricity</th>
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+                                                      <th>Method</th>
+{#                                                      <th>PV Prize</th>#}
+                                                      <th>Total Amount</th>
+                                                      <th>
+                                                          Created at
+                                                      </th>
+                                                      <th>Edit</th>
+                                                      <th>Remove</th>
+                                                      <th>Create Invoice</th>
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+                                                  </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  {% for csv in invoices %}
+                                                      <tr role="row" class="gradeA odd">
+{#                                                      <td><input type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+                                                          <td>${{ csv.offered_price }}</td>
+                                                          <td>{% if csv.list_price %}${{ csv.list_price }}{% else %}$0{% endif %}</td>
+{#                                                          <td>{{ csv.csv }}</td>#}
+
+                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>
+{#                                                          <td>{{ csv.register.status }}</td>#}
+                                                          <td>{{ csv.payment_method }}</td>
+{#                                                          <td>{% if csv.pv_prize_offered %}{{ csv.pv_prize_offered }}{% else %}N/A{% endif %}</td>#}
+                                                          <td>${{ csv.get_total }}</td>
+                                                          <td>{{ csv.created_at }}</td>
+                                                      <td><form action="" method="POST">{% csrf_token %}<input id="edit_invoice" name="edit_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd_btn btn-brown" {% if csv.payment_method not in allow_payment_list %}Disabled{% endif %} type="submit">{% if  csv.payment_method == "Cash" %}Change to Check{% elif  csv.payment_method == "Check" %}Change to Cash{% else %}Edit{% endif %}</button></form></td>
+                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd_btn btn-brown" type="submit">Delete</button></form></td>
+                                                          <td><a href="{% url "event_invoice_bulk_create" %}?email={{ wp.email }}" class="btn vd_btn btn-brown">Create Invoice</a></td>
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+                                                      </tr>
+                                                  {% endfor %}
+                                                  </tbody>
+                                              </table>
+                                          <input hidden id="create_bulk_signal" name="create_bulk_signal" />
+{#                                                <button class="btn vd-bg-lightblue vd_white" type="submit">Combine and Send</button>#}
+                                          </div>
+{#                                        </form>#}
+                                      </div>
+                       <div class="clearfix"></div>
+                                  </div>
+
+                       <div {% if request.user.email == "jenessa@bayareaweddingfairs.com" %}hidden{% endif %} class="col-sm-12">
+                      <div class="panel widget light-widget">
+                          <div class="panel-body">
+                              <div class="col-md-12">
+                                  <h5 class="">Add Invoice Information</h5>
+                                  <form action="." method="POST">
+                                      {% csrf_token %}
+{#                                  {{ invoice_form.errors }}#}
+{#                                    {% if success_message %}<p style="color: green;" class="text-center">{{ success_message }}</p>{% endif %}#}
+                                      {% if message %}<div class="col-md-12 text-center" style="color: green;">{{ message }}</div>{% endif %}
+                                      <table class="table table-bordered">
+                                        <tbody>
+                                            <tr class="">
+                                              <td class="col-sm-3 vd_bg-soft-grey text-right">Email List Price:</td>
+                                              <td class="col-sm-3">{{ invoice_form.list_price }}{{ invoice_form.list_price.errors }}</td>
+                                                <td class="col-sm-3">{{ invoice_form.email_list }}{{ invoice_form.email_list.errors }}</td>
+                                              <td class="col-sm-3 vd_bg-soft-grey">Email List (Y): </td>
+
+                                            </tr>
+
+                                            <tr>
+                                              <td class="col-sm-3 vd_bg-soft-grey text-right">Offered Price:</td>
+                                              <td class="col-sm-3">{{ invoice_form.offered_price }}{{ invoice_form.offered_price.errors }}</td>
+                                              <td class="col-sm-3">{{ invoice_form.electricity_types }}{{ invoice_form.electricity_types.errors }}</td>
+                                              <td class="col-sm-3 vd_bg-soft-grey">Electricity (Y): </td>
+
+                                            </tr>
+
+                                            <tr>
+
+                                              <td class="col-sm-3 vd_bg-soft-grey text-right">Payment Method:</td>
+                                              <td class="col-sm-3">{{ invoice_form.payment_method }}{{ invoice_form.payment_method.errors }}</td>
+{#                                              <td class="col-sm-6">&nbsp;   </td>#}
+
+                                              <td class="col-sm-3">{{ invoice_form.pv_prize_offered }}{{ invoice_form.pv_prize_offered.errors }}</td>
+                                                <td class="col-sm-3 vd_bg-soft-grey">PV Prize offered:</td>
+                                            </tr>
+{#                                            <tr>#}
+{##}
+{#                                              #}
+{#                                              <td class="col-sm-6">&nbsp;   </td>#}
+{##}
+{##}
+{#                                            </tr>#}
+
+{#                                            <tr>#}
+{#                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Deposit: </td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.deposit }}{{ invoice_form.deposit.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_deposit }}{{ invoice_form.date_deposit.errors }}</td>#}
+{#                                                <td class="col-sm-3 vd_bg-soft-grey">Deposit Date: </td>#}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{##}
+{#                                              <td class="col-sm-3 col-md-offset-6 vd_bg-soft-grey text-right">Send Deposit Email Now:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.send_email_now }}{{ invoice_form.send_email_now.errors }}</td>#}
+{#                                              <td class="col-sm-6">&nbsp;   </td>#}
+{##}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey text-right">Sales:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.sales }}</td>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey text-right">Balance 1:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.balance1 }}{{ invoice_form.balance1.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_balance1 }}{{ invoice_form.date_balance1.errors }}</td>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey">Balance 1 Date:</td>#}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey text-right">Balance 2:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.balance2 }}{{ invoice_form.balance2.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_balance2 }}{{ invoice_form.date_balance2.errors }}</td>#}
+{#                                                <td class="col-sm-3  vd_bg-soft-grey">Balance 2 Date:</td>#}
+{##}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{#                                                <td class="col-sm-3  vd_bg-soft-grey text-right">Balance 3:</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.balance3 }}{{ invoice_form.balance3.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_balance3 }}{{ invoice_form.date_balance3.errors }}</td>#}
+{#                                                <td class="col-sm-3  vd_bg-soft-grey">Balance 3 Date:</td>#}
+{##}
+{#                                            </tr>#}
+                                        </tbody>
+                                      </table>
+                                      <button class="btn vd_btn btn-brown pull-right" type="submit" title="Convert to the Contracted Vendor" >Add Invoice Information</button>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+{#                      <div class="col-md-12">#}
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Bulk Invoices</h3>#}
+{#                                      </div>#}
+{#                                      <div class="panel-body table-responsive">#}
+{#                                        <form action="" method="POST">#}
+{#                                        {% csrf_token %}#}
+{#                                          <div class="dataTables_wrapper form-inline no-footer"#}
+{#                                               id="data-tables_wrapper">#}
+{#                                              <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Bulk</th>#}
+{#                                                      <th>Email#}
+{#                                                      </th>#}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th>Amount</th>#}
+{#                                                      <th>Status</th>#}
+{#                                                      <th>Payment date</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Created at#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for csv in bulk_invoices %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                      <td><input type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+{#                                                          <td>{{ csv.email }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{#                                                          <td>${{ csv.amount|intcomma }}</td>#}
+{#                                                          <td>{{ csv.status }}</td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.payment_date }}</td>#}
+{#                                                          <td>{{ csv.created_at }}</td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                          <input hidden id="create_bulk_signal" name="create_bulk_signal" />#}
+{#                                                <button class="btn vd-bg-lightblue vd_white" type="submit">Create Bulk</button>#}
+{#                                          </div>#}
+{#                                        </form>#}
+{#                                      </div>#}
+{#                       <div class="clearfix"></div>#}
+{#                                  </div>#}
+
+{#                          <div class="col-md-12">#}
+{#                                      <div class="panel-heading vd_bg-grey">#}
+{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Aggrements</h3>#}
+{#                                      </div>#}
+{#                                      <div class="panel-body table-responsive">#}
+{#                                          <div class="dataTables_wrapper form-inline no-footer"#}
+{#                                               id="data-tables_wrapper">#}
+{#                                                <form action="." method="POST">#}
+{#                                                    {% csrf_token %}#}
+{#                                                    <input hidden id="send_aggrement" name="send_aggrement" />#}
+{#                                                    <button class="btn vd-bg-lightblue vd_white pull-right">Send Agreement</button>#}
+{#                                                </form>#}
+{#                                            {% if aggrements %}#}
+{#                                              <table aria-describedby="data-tables_info" role="grid"#}
+{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
+{#                                                  <thead>#}
+{#                                                  <tr role="row">#}
+{#                                                      <th>Agreement No</th>#}
+{#                                                      <th>Sending Date#}
+{#                                                      </th>#}
+{#                                                      <th>CSV Path#}
+{#                                                      </th>#}
+{#                                                      <th>User</th>#}
+{#                                                      <th>#}
+{#                                                          Status#}
+{#                                                      </th>#}
+{#                                                      <th>#}
+{#                                                          Edit#}
+{#                                                      </th>#}
+{#                                                  </tr>#}
+{#                                                  </thead>#}
+{#                                                  <tbody>#}
+{#                                                  {% for aggrement in aggrements %}#}
+{#                                                      <tr role="row" class="gradeA odd">#}
+{#                                                          <td>{{ aggrement.id }}</td>#}
+{#                                                          <td>{{ aggrement.created_at }}</td>#}
+{#                                                          <td>{{ csv.csv }}</td>#}
+{#                                                          <td>{{ aggrement.register_event.email }}</td>#}
+{#                                                          <td>{{ aggrement.status }}</td>#}
+{#                                                          <td>{{ csv.register.status }}</td>#}
+{#                                                          <td>{{ csv.created_at }}</td>#}
+{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+{#                                                          <td>#}
+{#                                                              <form action="." method="post">#}
+{#                                                                  {% csrf_token %}#}
+{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+{#                                                              </form>#}
+{##}
+{#                                                          </td>#}
+{#                                                      </tr>#}
+{#                                                  {% endfor %}#}
+{#                                                  </tbody>#}
+{#                                              </table>#}
+{#                                            {% endif %}#}
+{#                                          </div>#}
+{#                                      </div>#}
+{#                       <div class="clearfix"></div>#}
+{#                                  </div>#}
+                      <div class="clearfix"></div>
+              </div>
+{% endif %}
+                      <div class="">
+                      <div class="panel widget light-widget">
+                          <div class="panel-body" >
+                      <div class="col-md-12">
+                          <div class="row">
+
+                                        <div class="">
+                                            <p>Notes (<a style="cursor: pointer;" onclick="$('#notesNewForm').toggle('hidden')">Add a Note</a>)</p>
+                                            {% if error_message %}
+                                                <div class="flashes">
+                                                    <div class="alert alert-danger">{{ error_message }}</div>
+                                                </div>
+                                            {% endif %}
+                                            <form action="" METHOD="post" id="notesNewForm" hidden>
+                                                {% csrf_token %}
+                                                {{ form.note }}
+{#                                                <br>#}
+                                                <input style="margin-top: 10px;" class="btn vd_btn btn-brown" type=submit value="submit" style="margin-top: 10px;" name="noteForm">
+                                            </form>
+
+
+                                            <div class="vd_bg-white-40">
+                                                {% for note in notes %}
+                                                    {% if forloop.counter0 == 0 %}
+                                                        <hr>
+                                                        <p>Sales/Owner : {{ wp.sales.get_full_name }}</p>
+                                                    {% endif %}
+                        {#                            <div class="container">#}
+                                                        <img style="width: 70px;" class="col-sm-4" src="{{note.exhibitor.user.userprofile.get_image_url}}" alt="add image if you want">
+                                                        <div class="col-sm-8">
+                                                            <span>{{ note.note }}</span> <a onclick="$('#note_edit_div_{{ note.id }}').toggle('hidden');" style="cursor: pointer;">Edit</a> <form action="" method="post">{% csrf_token %}<input hidden id="remove_note_id" name="remove_note_id" value="{{ note.id }}" /><button class="pull-right" type="submit">Remove</button></form>
+                                                            <div id="note_edit_div_{{ note.id }}" hidden>
+                                                                <form action="" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input id="edit_note_id" name="edit_note_id" value="{{ note.id }}" hidden />
+                                                                <textarea name="note_text" id="note_text">{{ note.note }}</textarea>
+                                                                <button style="margin-top: 10px;" class="btn vd_btn btn-brown pull-right" type=submit style="margin-top: 10px;">Update</button>
+                                                                <div class="clearfix"></div>
+                                                                </form>
+                                                            </div>
+                                                            <p>Note Writer: <i class="">{{ note.note_writer.get_full_name }}</i><br/>
+                        {#                                       Interested Vendor: <i class="vd">{{ note.exhibitor.user.get_full_name }}</i><br/>#}
+                                                            modified at: {{ note.created_at }}</p>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+{#                                                        <br/>#}
+                        {#                            </div>#}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <!--End note-->
+
+                                        <!--tasks-->
+{#                                        <br/>#}
+                                        <hr>
+                                        <div class="row">
+                                            <p>Tasks (<a style="cursor: pointer;" onclick="$('#taskForm').toggle('hidden')">Add a task</a>)</p>
+                                            {% if error_message %}
+                                                <div class="flashes">
+                                                    <div class="alert alert-danger">{{ error_message }}</div>
+                                                </div>
+                                            {% endif %}
+
+                                            <form action="." METHOD=POST name="taskForm" id="taskForm" hidden>
+                                                {% csrf_token %}
+                                                {{ taskForm.errors }}
+                                                <div class="col-sm-3" style="padding-left: 0px;">Subject:</div><div class="col-sm-9">{{ taskForm.subject }}</div><br/>
+                                                <div class="col-sm-3" style="padding-left: 0px;">Tasks:    </div><div class="col-sm-9">{{ taskForm.message }}</div><br/>
+                                                <div class="col-sm-3" style="padding-left: 0px;">Status:   </div><div class="col-sm-9">{{ taskForm.status }}</div><br/>
+                                                <div class="col-sm-3" style="padding-left: 0px;">Due Date: </div><div class="col-sm-9">{{ taskForm.dueDate }}</div><br/>
+                                                <div class="col-sm-3" style="padding-left: 0px;">Owner:    </div><div class="col-sm-9">{{ taskForm.sales}}</div><br/>
+                                                <input class="btn vd-bg-lightblue vd_white" style="margin-top: 5px; margin-left: 15px;" type=submit value="submit" name="taskForm">
+                                            </form>
+                                        {% if tasksComplete or tasksInProgress %}
+                                            <div class="vd_bg-white-40">
+                                                      <hr>
+                    {#                                  <p>Sales/Owner : {{ task.sales.get_full_name }}</p>#}
+                        {#                            <div class="container">#}
+                    {#                                    <img class="col-sm-4" src="{{task.exhibitor.user.userprofile.get_image_url}}" alt="add image if you want">#}
+                                                      <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                              <th>Subject</th>
+                                                              <th>Status</th>
+                                                              <th>Content</th>
+                                                              <th><mark style="color:orangered">Due Date</mark></th>
+                                                              <th>Ower</th>
+                                                              <th>Modified At</th>
+                                                              <th>Edit</th>
+                                                            </tr>
+
+                                                            {% for task in tasksInProgress %}
+                                                                <tr>
+                                                                  <td class="">{{ task.subject }}</td>
+                                                                  <td class="">{{ task.status }}</td>
+                                                                  <td class="">{{ task.message }}</td>
+                                                                  <td class="">{{ task.dueDate }}</td>
+                                                                  <td class="">{{ task.sales.get_full_name }}</td>
+                                                                  <td class="">{{ task.modified_at }}</td>
+                                                                  <td class="">
+                                                                      <button class="btn vd-bg-lightblue vd_white" onclick="editTaskForm({{ task.id }}, {{ wp.id }})" name="taskFormEdit">
+{#                                                                      <button class="btn vd-bg-lightblue vd_white" onclick="editTaskFormModal();" name="taskFormEdit">#}
+                                                                          Edit
+                                                                      </button>
+                                                                  </td>
+                                                                </tr>
+                                                            {% endfor %}
+
+                                                            {% for task in tasksComplete %}
+                                                                <tr>
+                                                                  <td class="">{{ task.subject }}</td>
+                                                                  <td class=""><mark style="color:green">{{ task.status }}</mark></td>
+                                                                  <td class="">{{ task.message }}</td>
+                                                                  <td class="">{{ task.dueDate }}</td>
+                                                                  <td class="">{{ task.sales.get_full_name }}</td>
+                                                                  <td class="">{{ task.modified_at }}</td>
+                                                                  <td class="">
+                                                                      <button class="btn vd-bg-lightblue vd_white" onclick="editTaskForm({{ task.id }}, {{ wp.id }})" name="taskFormEdit">
+{#                                                                      <button class="btn vd-bg-lightblue vd_white" onclick="editTaskFormModal();" name="taskFormEdit">#}
+                                                                          Edit
+                                                                      </button>
+                                                                  </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                      </table>
+                                            </div>
+                                          {% endif %}
+                                        </div>
+
+                                        <div class="col-sm-12" id="id_showTasks">
+
+
+{#                                        </div>#}
+{#                                      </div>#}
+                                  </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      <!-- .vd_content-section -->
+
+                    </div>
+                    <!-- .vd_content -->
+                  </div>
+                  <!-- .vd_container -->
+                </div>
+                                <!-- .vd_container -->
+                            </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+{#               </div>#}
+            </div>
+            <!-- .container -->
+
+        </div>
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+    </div>
+
+
+    <!--TaskForm-->
+    <div class="modal fade" id="editTaskFormModal" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog" style="background-color: white; height:400px;">
+            <div class="modal-body" id="editTaskFormModalBody">
+            </div>
+        </div>
+    </div>
+    <!--end of taskForm-->
+
+    <!--Contractor detail form--->
+    <div class="modal fade" id="contractFormModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="background-color: wheat">
+            <div class="modal-body" id="contractFormModalBody">
+                <div >
+    <h4 class="modal-title" style="text-align: center;" >Edit Contractor Information</h4>
+    <hr>
+    {% if error_message %}
+        <div class="flashes">
+            <div class="alert alert-danger">{{ error_message }}</div>
+        </div>
+    {% endif %}
+
+    <form class="form-horizontal contractorDetail" action="." method="post"
+           role="form" id="id_contratorForm">
+        {% csrf_token %}
+{#        <div class="col-sm-6">#}
+            <div class="form-group">
+                <div class="col-sm-12  controls">
+                    <div class="row mgbt-xs-0">
+                        <div class="col-xs-12">
+
+                            <div class="col-sm-6">
+    {#                            <div class="form-group">#}
+    {#                                <div class="col-sm-12 controls">#}
+    {#                                    <div class="row mgbt-xs-0">#}
+    {#                                        <div class="col-xs-12">#}
+    {#                                            {{ form.event }}#}
+    {#                                            {% if form.event.errors %}#}
+    {#                                                <div class="red">{{ form.event.errors }}</div>#}
+    {#                                            {% endif %}#}
+    {#                                        </div>#}
+    {#                                        <!-- col-xs-12 -->#}
+    {#                                    </div>#}
+    {#                                    <!-- row -->#}
+    {#                                </div>#}
+    {#                                <!-- col-sm-10 -->#}
+    {#                            </div>#}
+                                <div class="form-group">
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Name: {{ cont_form.name }}
+                                                {% if cont_form.name.errors %}
+                                                    <div class="red">{{ cont_form.name.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Phone: {{ cont_form.phone }}
+                                                {% if cont_form.phone.errors %}
+                                                    <div class="red">
+                                                        {{ cont_form.phone.errors }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                City: {{ cont_form.city }}
+                                                {% if cont_form.city.errors %}
+                                                    <div class="red">{{ cont_form.city.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Category: {{ cont_form.categories }}
+                                                {% if cont_form.categories.errors %}
+                                                    <div class="red">
+                                                        {{ cont_form.categories.errors }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                <!-- form-group -->
+                            <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Zip Code</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Website: {{ cont_form.website }}
+                                                {% if cont_form.website.errors %}
+                                                    {{ cont_form.website.errors }}{% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                            </div>
+
+                            <!--right col -6 -->
+                            <div class="col-sm-6">
+                                {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
+                                <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Business Name</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Business Name: {{ cont_form.business_name }}
+                                                {% if cont_form.business_name.errors %}
+                                                    <div class="red">
+                                                        {{ cont_form.business_name.errors }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+
+                                <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Email</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Email: {{ cont_form.email }}
+                                                {% if cont_form.email.errors %}
+                                                    <div class="red">{{ cont_form.email.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Zip Code</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Zip: {{ cont_form.zip }}
+                                                {% if cont_form.zip.errors %}
+                                                    {{ cont_form.zip.errors }}{% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                            <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Zip Code</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Commission:
+{#                                                {{ wp.get_percent_amount }} -- {{ wp.get_percent_amount|floatformat:"1" }}#}
+                                                <select id="select_commission" name="select_commission">
+                                                <option value="0" {% if wp.commission|floatformat:"1" == "0.0" or wp.commission|floatformat:"1" == "0" %}selected{% endif %} >(Please select)</option>
+                                                <option value="5" {% if wp.commission|floatformat:"1" == "5.0" %}selected{% endif %}>5%</option>
+                                                <option value="10" {% if wp.commission|floatformat:"1" == "10.0" %}selected{% endif %}>10%</option>
+                                                <option value="other" {% if wp.commission|floatformat:"1" != "0.0" and wp.commission|floatformat:"1" != "0" and wp.commission|floatformat:"1" != "5.0" and wp.commission|floatformat:"1" != "10.0"  %}selected{% endif %}>other</option>
+                                            </select>
+
+                                                {{ cont_form.commission }}
+                                                {% if cont_form.commission.errors %}
+                                                    {{ cont_form.commission.errors }}{% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+
+                                <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">How heard</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                How Heard: {{ cont_form.how_heard }}
+                                                {% if cont_form.how_heard.errors %}
+                                                    <div class="red">{{ cont_form.how_heard.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <!--whole col 12-->
+                            <div class="col-sm-12">
+{% if not wp.status == "Paid" %}
+
+
+
+
+
+    {% if is_contracted %}
+                                <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Comments</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Booth: {{ cont_form.booth }}
+                                                {% if cont_form.booth.errors %}
+                                                    <div class="red">{{ cont_form.booth.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Comments</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Fashionshow: {{ cont_form.is_fashionshow }}
+                                                {% if cont_form.is_fashionshow.errors %}
+                                                    <div class="red">{{ cont_form.is_fashionshow.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-xs-12">
+                                                Partner Vendor: {{ cont_form.is_partner_vendor }}
+                                                {% if cont_form.is_partner_vendor.errors %}
+                                                    <div class="red">{{ cont_form.is_partner_vendor.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-xs-12">
+                                                Backdrop Allowed: {{ cont_form.backdrop_allowed }}
+                                                {% if cont_form.backdrop_allowed.errors %}
+                                                    <div class="red">{{ cont_form.backdrop_allowed.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                     <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Comments</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Food & Beverage: {{ cont_form.food }}
+                                                {% if cont_form.food.errors %}
+                                                    <div class="red">{{ cont_form.food.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                        <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Comments</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Grand Prize: {{ cont_form.grand_prize }}
+                                                {% if cont_form.grand_prize.errors %}
+                                                    <div class="red">{{ cont_form.grand_prize.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                        <!-- row -->
+                                    </div>
+
+
+                                    <!-- col-sm-10 -->
+                                </div>
+                            {% endif %}
+                            {% endif %}
+
+                            <!-- form-group -->
+                                <div class="form-group">
+                    {#                                                                        <label class="col-sm-3 control-label">Comments</label>#}
+
+                                    <div class="col-sm-12 controls">
+                                        <div class="row mgbt-xs-0">
+                                            <div class="col-xs-12">
+                                                Comments: {{ cont_form.comments }}
+                                                {% if cont_form.comments.errors %}
+                                                    <div class="red">{{ cont_form.comments.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <!-- col-xs-12 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- col-sm-10 -->
+                                </div>
+                                <div class="form-group">
+
+                                </div>
+
+                                <!-- form-group -->
+                                <div align="center">
+                                    <input class="btn vd-bg-blue vd_white pull-right" type=submit value="submit" name="contratorForm" >
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{#        </div>#}
+    </form>
+</div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="modalEventsSelect" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form action="" method="post">
+        {% csrf_token %}
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+{#                <h4 class="modal-title" style="margin-bottom: 0px;">Select Evnet(s)</h4>#}
+{#                {% for event_name in events %}#}
+{##}
+{##}
+{#                    <input type="checkbox" id="event_name" name="event_name" value="{{ event_name.id }}" /> {{ event_name.name }} | {{ event_name.date }}<br />#}
+{#                {% endfor %}#}
+
+
+                <input hidden id="convert" name="convert" />
+
+
+
+            <div class="col-xs-12">
+            <h4>Select Events</h4>
+{#                                                                                    <b> Wedding Fair(s) Interested In (Please Select)<b style="color:red">*</b></b>#}
+{#                                                                                    <div class="col-sm-6">#}
+{#                                                                                        &nbsp;#}
+{#                                                                                    </div>#}
+{#                                                                                    </br>#}
+
+                                                                                    {#                                    <b><span style="margin-bottom: 10px;">Wedding Fair Interested In (Please Select)*</span></b><br />#}
+
+                                                                                    {% for event in summer_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Summer Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% for event in fall_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Fall Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% for event in winter_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Winter Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% for event in spring_events %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            </br><b class ="pull-left" style="color:#DAA520">Spring Wedding Fairs</b></br>
+                                                                                        {% endif %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
+                                                                                    {% if eventsCheck %}
+                                                                                    <div class="red">Please select at least one event</div>
+                                                                                    {% endif %}
+
+                                                                                        {# {{ form.event }}#}
+{#                                                                                        {% if form.event.errors %}#}
+{#                                                                                            <div class="red">#}
+{#                                                                                                {{ form.event.errors }}#}
+{#                                                                                            </div>#}
+{#                                                                                        {% endif %}#}
+
+                                                                                    {#                                    {% for event in events %}#}
+                                                                                    {#                                        <input value="{{ event.id }}" id="id_event" name="id_event" type="checkbox">#}
+                                                                                    {#                                        <label for="checkbox">{{ event.name }}</label><br />#}
+                                                                                    {#                                    {% endfor %}#}
+                                                                                    <div class="clearfix"></div>
+                                                                                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary pull-right" type="submit">Convert</button>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+    <!--End Contractor detail form--->
+{#    {% include "vendroid/CRM/partial/_taskFormContractorDetail.html" %}#}
+{#    {% include "vendroid/CRM/partial/_contractorDetail.html" %}#}
+
+    <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>#}
+    <script src="{% static "js/jquery.min.js" %}"></script>
+
+    <script type="text/javascript">
+        function convert_back(id){
+            console.log("convert back"+id);
+            $.ajax({
+                url: '/crm/invoices/contracted_detail/'+id+'/',
+                type: 'post', // http method
+                data: {convert_back: id},
+
+                success: function (msg) {
+                    if (msg = "success"){
+                        alert("Convert Back to Interested Vendor Success!");
+                        window.location="/crm/invoices/interested_detail/"+id+"/";
+                    }
+                    console.log("accept success");
+{#                    $('#refreshConversation_friend').html(friend);#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                   console.log("fail Convert Back to Interested Vendor "+errmsg+" "+err);
+                }
+            });
+        }
+
+        function convert(id){
+            $('#modalEventsSelect').modal('show');
+{#            console.log("convert"+id);#}
+{#            $.ajax({#}
+{#                url: '/crm/invoices/interested_detail/'+id+'/',#}
+{#                type: 'post', // http method#}
+{#                data: {convert: id},#}
+{##}
+{#                success: function (msg) {#}
+{#                    if (msg = "success"){#}
+{#                        alert("Convert to Contracted Vendor Success!");#}
+{#                        window.location="/crm/invoices/contracted_detail/"+id+"/";#}
+{#                    }#}
+{#                    console.log("accept success");#}
+{#                    $('#refreshConversation_friend').html(friend);#}
+{#                },#}
+{##}
+{#                error: function (xhr, errmsg, err) {#}
+{#                   console.log("fail  "+errmsg+" "+err);#}
+{#                }#}
+{#            });#}
+        }
+
+
+        function editTaskForm(taskId, wpId){
+{#            console.log("convert"+id);#}
+            $.ajax({
+                url: '{{ request.get_full_path }}',
+                type: 'post', // http method
+                data: {editTaskForm: taskId},
+
+                success: function (response) {
+{#                    console.log('success', response);#}
+
+{#                    $('#editTaskFormModal').html(response).dialog({modal: true}).dialog('open');#}
+                    $('#editTaskFormModalBody').html(response);
+                    $('#editTaskFormModal').modal('show');
+
+                },
+
+                error: function (xhr, errmsg, err) {
+                   console.log("fail "+errmsg+" "+err);
+                }
+            });
+
+
+        }
+
+{#        function editContractorForm(id){#}
+{#            console.log("contractor"+id);#}
+{#            $.ajax({#}
+{#                url: '{{ request.get_full_path }}',#}
+{#                type: 'post', // http method#}
+{#                data: {editContractorForm: id},#}
+{##}
+{#                success: function (response) {#}
+{#                    console.log('success', response);#}
+{#                    $('#contractFormModalBody').html(response);#}
+{#                    $('#contractFormModal').modal('show');#}
+{#                },#}
+{##}
+{#                error: function (xhr, errmsg, err) {#}
+{#                   console.log("fail "+errmsg+" "+err);#}
+{#                }#}
+{#            });#}
+{##}
+{#        }#}
+
+
+
+    </script>
+
+
+{% endblock content %}
+{% block script %}
+
+<script>
+{% if cont_form.errors %}
+{#            alert('working')#}
+            $('#contractFormModal').modal('show');
+        {% endif %}
+$('#id_commission').attr('hidden','hidden')
+{#var change_val = $('#select_commission').val();#}
+$('#select_commission').on('change',function(){
+    var change_val = $(this).val();
+    if(change_val == "other"){
+        $('#id_commission').removeAttr('hidden')
+    }
+    else{
+        $('#id_commission').attr('hidden','hidden')
+        $('#id_commission').val(change_val)
+    }
+})
+$(document).ready(function(){
+    var change_val = $('#select_commission').val();
+{#    alert(change_val)#}
+    if(change_val == "other"){
+        $('#id_commission').removeAttr('hidden')
+    }
+    else{
+        $('#id_commission').attr('hidden','hidden')
+{#        $('#id_commission').val(change_val)#}
+    }
+})
+</script>
+
+{% endblock script %}
+
+{#<div class="row">#}
+{#                  <div class="col-sm-12">#}
+{#                      <div class="panel widget light-widget">#}
+{#                          <div class="panel-body">#}
+{#                              <div class="">#}
+{#                                  <h5 class="">Add Invoice</h5>#}
+{#                                  <form action="." method="POST">#}
+{#                                      {% csrf_token %}#}
+{#                                  {{ invoice_form.errors }}#}
+{#                                      {% if message %}<div class="col-md-12 text-center" style="color: green;">{{ message }}</div>{% endif %}#}
+{#                                      <table class="table table-bordered">#}
+{#                                        <tbody>#}
+{#                                            <tr class="">#}
+{#                                              <td class="col-sm-3 vd_bg-soft-grey text-right">List Price:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.list_price }}{{ invoice_form.list_price.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.email_list }}{{ invoice_form.email_list.errors }}</td>#}
+{#                                              <td class="col-sm-3 vd_bg-soft-grey">Email List (Y): </td>#}
+{##}
+{#                                            </tr>#}
+{##}
+{#                                            <tr>#}
+{#                                              <td class="col-sm-3 vd_bg-soft-grey text-right">Offered Prize:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.offered_price }}{{ invoice_form.offered_price.errors }}</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.electricity_types }}{{ invoice_form.electricity_types.errors }}</td>#}
+{#                                              <td class="col-sm-3 vd_bg-soft-grey">Electricity (Y): </td>#}
+{##}
+{#                                            </tr>#}
+{##}
+{#                                            <tr>#}
+{##}
+{#                                              <td class="col-sm-3 col-md-offset-6 vd_bg-soft-grey text-right">Payment Method:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.payment_method }}{{ invoice_form.payment_method.errors }}</td>#}
+{#                                              <td class="col-sm-6">&nbsp;   </td>#}
+{##}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{##}
+{#                                              <td class="col-sm-3 col-md-offset-6 vd_bg-soft-grey text-right">PV Prize offered:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.pv_prize_offered }}{{ invoice_form.pv_prize_offered.errors }}</td>#}
+{#                                              <td class="col-sm-6">&nbsp;   </td>#}
+{##}
+{##}
+{#                                            </tr>#}
+{##}
+{#                                            <tr>#}
+{#                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Deposit: </td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.deposit }}{{ invoice_form.deposit.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_deposit }}{{ invoice_form.date_deposit.errors }}</td>#}
+{#                                                <td class="col-sm-3 vd_bg-soft-grey">Deposit Date: </td>#}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{##}
+{#                                              <td class="col-sm-3 col-md-offset-6 vd_bg-soft-grey text-right">Send Deposit Email Now:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.send_email_now }}{{ invoice_form.send_email_now.errors }}</td>#}
+{#                                              <td class="col-sm-6">&nbsp;   </td>#}
+{##}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey text-right">Sales:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.sales }}</td>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey text-right">Balance 1:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.balance1 }}{{ invoice_form.balance1.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_balance1 }}{{ invoice_form.date_balance1.errors }}</td>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey">Balance 1 Date:</td>#}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{#                                              <td class="col-sm-3  vd_bg-soft-grey text-right">Balance 2:</td>#}
+{#                                              <td class="col-sm-3">{{ invoice_form.balance2 }}{{ invoice_form.balance2.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_balance2 }}{{ invoice_form.date_balance2.errors }}</td>#}
+{#                                                <td class="col-sm-3  vd_bg-soft-grey">Balance 2 Date:</td>#}
+{##}
+{##}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{#                                                <td class="col-sm-3  vd_bg-soft-grey text-right">Balance 3:</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.balance3 }}{{ invoice_form.balance3.errors }}</td>#}
+{#                                                <td class="col-sm-3">{{ invoice_form.date_balance3 }}{{ invoice_form.date_balance3.errors }}</td>#}
+{#                                                <td class="col-sm-3  vd_bg-soft-grey">Balance 3 Date:</td>#}
+{##}
+{#                                            </tr>#}
+{#                                        </tbody>#}
+{#                                      </table>#}
+{#                                      <button class="btn vd_btn vd_bg-soft-blue vd_white pull-right" type="submit" title="Convert to the Contracted Vendor" >Add Invoice</button>#}
+{#                                  </form>#}
+{#                              </div>#}
+{#                          </div>#}
+{#                      </div>#}
+{#                  </div>#}
+{#              </div>#}

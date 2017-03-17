@@ -1,0 +1,86 @@
+{% load static %}
+
+
+<div class="social-image-wrap">
+    {% if up.instagram_url %}
+        <a target="_blank" href="{{ up.instagram_url }}">
+        <div class="social-img-list">
+            <img src="{% static "vendroid/img/instagram-img.png" %}">
+            <div class="social-rating">
+                <div class="overlay"></div>
+                <div class="rating">
+{#                    <h3>7 ratings</h3>#}
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endif %}
+    {% if up.youtube_url %}
+        <a target="_blank" href="{{ up.youtube_url }}">
+        <div class="social-img-list">
+            <img src="{% static "vendroid/img/youtube-img.png" %}">
+            <div class="social-rating">
+                <div class="overlay"></div>
+                <div class="rating">
+{#                    <h3>7 ratings</h3>#}
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endif %}
+    {% if up.facebook_url %}
+        <a target="_blank" href="{{ up.facebook_url }}">
+        <div class="social-img-list">
+            <img src="{% static "vendroid/img/facebook-img.png" %}">
+            <div class="social-rating">
+                <div class="overlay"></div>
+                <div class="rating">
+{#                    <h3>7 ratings</h3>#}
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endif %}
+    {% if up.pinterest_url %}
+        <a target="_blank" href="{{ up.pinterest_url }}">
+        <div class="social-img-list">
+            <img src="{% static "vendroid/img/pintrest-img.png" %}">
+            <div class="social-rating">
+                <div class="overlay"></div>
+                <div class="rating">
+{#                    <h3>7 ratings</h3>#}
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endif %}
+    {% if up.twitter_url %}
+        <a target="_blank" href="{{ up.twitter_url }}">
+        <div class="social-img-list">
+            <img src="{% static "vendroid/img/twitter-img.png" %}">
+            <div class="social-rating">
+                <div class="overlay"></div>
+                <div class="rating">
+{#                    <h3>7 ratings</h3>#}
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endif %}
+    {% if up.yelp_url %}
+        <a target="_blank" href="{{ up.yelp_url }}">
+        <div class="social-img-list">
+            <img src="{% static "vendroid/img/yelp-img.png" %}">
+            <div class="social-rating">
+                <div class="overlay"></div>
+                <div class="rating">
+{#                    <h3>7 ratings</h3>#}
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endif %}
+
+    <div class="clearfix"></div>
+</div>
+

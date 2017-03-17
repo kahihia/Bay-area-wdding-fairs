@@ -1,0 +1,39 @@
+{% load static %}
+<div class="panel-body" id="id_panel_body">
+    <div class="event-list-wrap">
+        <div class="col-md-9">
+            <h2>{{ u.user.get_full_name }}</h2>
+            <h4>{{ u.profession }}</h4>
+
+        </div>
+        <div class="">
+{#            <img src="{% static "images/options/dummyPic.png" %}" />#}
+            <img src="{{ u.get_image_url }}" />
+        </div>
+        <div class="col-md-12" style="margin-top:80px;">
+            <span class="fa fa-phone" aria-hidden="true">   {{ u.phone }} </span>
+            <hr />
+        </div>
+        <div class="col-md-12" style="margin-top:20px;">
+            <span class="fa fa-lock pull-left"></span><h4> {{ u.profession }}</h4>
+            <hr />
+        </div>
+        <div class="col-md-12" style="margin-top:20px;">
+            <a href="#" id="id_edit" ><h4 style="margin-left: 105px;">Edit Profile</h4></a>
+            <hr />
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $('#id_edit').on('click',function(){
+        var data = {
+            'action':'edit_profile'
+        }
+        ajax_call('/bg/profile/', "GET", data).done(function( data ) {
+
+            $("#id_card").html(data);
+        });
+    })
+</script>

@@ -1,0 +1,148 @@
+{% extends 'vendroid/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+{#                            <div class="vd_title-section clearfix">#}
+{#                                <div class="vd_panel-header no-menu">#}
+{#                                    <h1>Invite Users</h1>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="vd_content-section example-icon clearfix">
+                                <div class="row">
+                                    <section class="friends-section">
+        <div class="col-md-12">
+            <h3 class="section-title">Import Friends
+                {#            (<span id="groupCounter">6</span>)#}
+                {#                <small><!-- patch3 --><a href="/friends">Show All</a></small>#}
+            </h3>
+
+            <div class="col-md-12">
+                <!-- BEGIN Portlet PORTLET-->
+                <div class="portlet solid bg-white">
+                    </br>
+                    <div class="hidden">
+                        {{ contacts }}
+                    </div>
+                    <div class="portlet-body">
+                        <form method="post" name="inviteusers">
+                            <div style="max-height: 500px;overflow-y: auto;overflow-x: hidden;" class="invitesection">
+                                {% if users_list %}
+                                    <div class="memberlist">
+                                        <div class="clearfix"></div>
+                                        {% for contact in users_list %}
+                                            <div class="pull-left">
+                                                <div>{{ contact.email }} (On YapJoy)</div>
+{#                                                <div>{{ contact.email }}</div>#}
+                                            </div>
+
+                                            <div class="pull-right">
+                                                <a class="btn btn-primary pull-right user-connect"
+                                                   data-id="{{ contact.id }}">
+                                                    ADD FRIEND</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <hr/>
+                                        {% endfor %}
+                                        <a class="btn btn-primary pull-right"
+                                           id="nextInviteable">Next</a>
+                                    </div>
+                                {% endif %}
+
+                                <div class="inviteablelist" {% if users_list %}style="display: none;"{% endif %}>
+                                    <div class="clearfix"></div>
+                                    {% for contact in invite_ables %}
+                                        <div><input type="checkbox" name="email" value="{{ contact }}"
+                                                    /> {{ contact }}</div>
+                                        <hr/>
+                                    {% endfor %}
+                                    <div class="clearfix"></div>
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{ invite_ables }}" name="invite_ables"/>
+                                    <input type="submit" value="Invite ({{ invite_ables|length }} People)"
+                                           class="btn btn-primary bg-yellow" id="btnInvite"/>
+                                    <a href="/friends/"
+                                           class="btn btn-primary pull-right"/>Skip</a>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+{#            <div class="col-md-12">#}
+{#                <h3 class="section-title">Add more people</h3>#}
+{##}
+{#                <div class="search-bar">#}
+{##}
+{#                    <input name="searchone" id="searchField1" class="form-control" placeholder="Search people on yapjoy"#}
+{#                           type="text"></div>#}
+{##}
+{##}
+{#            </div>#}
+        </div>
+
+    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".emailchk").change(function () {
+                var n = $(".invitesection input:checkbox:checked").length;
+                if (n > 0) {
+                    $("#btnInvite").val('Invite (' + n + ' People)');
+                    $("#btnInvite").prop('disabled', false);
+                } else {
+                    $("#btnInvite").prop('disabled', true);
+                }
+            });
+            $("#nextInviteable").click(function () {
+                $(".inviteablelist").show();
+                $(".memberlist").hide();
+            });
+        });
+        $(document).on("click", ".user-connect", function () {
+            var user_id = $(this).attr('data-id');
+            var name = $(this).text();
+            var url = "/api_friends/"
+            var that = $(this);
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                data: {'user_id': user_id},
+                success: function (data) {
+                    that.html(data);
+                    return false;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log('Error')
+                    console.log(textStatus)
+                    console.log(XMLHttpRequest)
+
+                }
+            });
+        });
+    </script>
+{% endblock jquery %}

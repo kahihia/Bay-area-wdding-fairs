@@ -1,0 +1,122 @@
+{% extends "vendroid/demo/base_vendor.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{#{% load rest_framework %}#}
+{% block content %}
+    <style>
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+
+
+
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+        {% include "vendroid/demo/_partial/_header_yapjoy_theme_vendor.html" %}
+
+        <div class="content">
+            <div class="container">
+
+
+
+                <div class="vd_content-wrapper yp-content-wrap" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                           <div class="col-md-4 col-md-offset-4">
+                               <div class="panel panel-vendor-register">
+                                  <div class="panel-title">
+                                    <h4>My Events</h4>
+                                  </div>
+                                  <div class="panel-body">
+                                        <div class="event-list-wrap">
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                            <div class="my-event-list">
+                                                <h2 class="my-event-title">Jen and jhonson Wedding</h2>
+                                                <h3 class="my-event-date">April 4th 2015</h3>
+                                                <div class="dropdown text-right pull-right">
+                                                    <span class="fa fa-ellipsis-h  dropdown-toggle" id="menu1" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Change Detail</a></li>
+                                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave Event</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!--End my Event List-->
+
+                                        </div>
+
+                                  </div>
+                                </div>
+                           </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+
+
+    </div>
+{% endblock content %}
+
+{% block script %}
+
+
+{% endblock script %}

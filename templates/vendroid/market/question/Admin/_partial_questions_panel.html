@@ -1,0 +1,202 @@
+{% load myfilters %}
+<script>
+     var questionId = "";
+     if ({{ one_question_id }}) {
+         questionId = {{ one_question_id }};
+     } else {
+         questionId = 0;
+     }
+     console.log("question Id", questionId);
+
+</script>
+
+<div class="">
+        {% for obj in objs %}
+
+        {% endfor %}
+
+        <!--category-->
+        <h4 style="color:coral;">Steps to Add/Edit a Question</h4><hr/>
+        i). Choose a Category
+        <div class="dropdown">
+{#            <button class="btn btn-primary dropdown-toggle" id="ID_category" type="button" data-toggle="dropdown">#}
+{#                <span id="ID_category_dropdown">{{ categories|get_at_index:0 }}</span>#}
+{#                <span class="caret"></span>#}
+{#            </button>#}
+{#            <ul class="dropdown-menu" id="ID_category_menu">#}
+{#                {% for c in categories %}#}
+{#                <li>#}
+{#                  {{ c.name }}#}
+{#                </li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+            <select id="ID_category_menu">
+                {% for c in categories %}
+                    {% if c.name == currCategory %}
+                        <option selected="selected">
+                          {{ c.name }}
+                        </option>
+                    {% else %}
+                        <option>
+                          {{ c.name }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <br/>
+
+        <!--title-->
+        ii). Enter Question Title
+        <div class="">
+            <input type="text" onclick="" id="ID_title" value="{{ one_question.title }}">
+        </div>
+        <br/>
+
+        <!---Add a new option-->
+        iii). (Optional!) If you need to add a new option
+        <button class="btn append-icon fa fa-fw fa-plus-circle" data-target="#ID_NewOption" data-toggle="collapse"></button>
+        <div id="ID_NewOption" class="collapse" >
+            <div class="col-sm-12">
+                <div class="dropdown class-sm-10">
+                    <span>A. choose from existing answers</span><br/>
+                    <select id="ID_newAnswer_menu">
+                        {% for o in all_options %}
+                        <option>
+                           {{ o.option }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br/>
+                <span>B. or add a new one</span>
+                <input type="text" id="ID_newAnswer" placeholder="Please fill in a new answer*">
+                <br>
+                <span>C. Will it display date-time?</span>
+                <input type="checkbox" name="isDateTime" id="ID_DateTime" value="">
+                <br>
+                <span>D. Will it be a text-area?</span>
+                <input type="checkbox" name="isTextArea" id="ID_TextArea" value=""><br>
+                <a class="btn btn-primary pull-right vd_bg-white-40" onclick="addOption({{ one_question_id }})" style="color: orange">Add new answer</a>
+                <br><br/>
+            </div>
+        </div>
+        <br>
+
+        <!----options---->
+        iv). Answers
+{#        {% if one_question_options %}#}
+        <div id="ID_partial_answers">
+            {% include "vendroid/market/question/Admin/_partial_answers.html" %}
+        </div>
+{#        {% endif %}#}
+        <br/>
+
+        v) Is it allow multiple answers?  <input type="checkbox" name="isMulti" id="ID_Multiple" value=""><br>
+
+        vi) Choose question rank
+        <input type="text" name="rank" id="ID_Rank" value="{{ one_question.questionSequence }}"><br>
+        <!---Add new option---->
+        <hr>
+        <a class="btn btn-primary pull-right vd_bg-white-40" onclick="saveQuestion()" style="color: orange">Save Question</a>
+</div>
+
+
+<script type="text/javascript">
+    function saveQuestion() {
+        var category = $('select[id=ID_category_menu]').val().replace(/(^\s+|\s+$)/g, '');
+        var title = $('#ID_title').val();
+        var importance = $('#ID_Rank').val();
+
+        var allowedMultiple = "";
+        if($("#ID_Multiple").is(':checked')) {
+            allowedMultiple = "1";
+        } else {
+            allowedMultiple = "0";
+        }
+
+         console.log("questionId", questionId);
+         console.log("categoryId", category);
+         console.log("title", title);
+         console.log("importance", importance);
+         console.log("allowedMultiple", allowedMultiple);
+
+         $.ajax({
+             url: "",
+             type: "POST",
+             data: {'saveQuestionId': questionId,
+                    'category': category,
+                    'title': title,
+                    'allowedMultiple': allowedMultiple,
+                    'importance': importance
+             },
+
+             success: function (response) {
+                 console.log("response success");
+                 $("#ID_question_list").html(response);
+                 alert("save question successfull!");
+             },
+
+             error: function (xhr, errmsg, err) {
+                 alert("save question failed!");
+             }
+         });
+    };
+
+
+
+
+    //-----for answer-----//
+    function deleteOption(optionId){
+         console.log("delete questionId", questionId, optionId);
+
+         bootbox.confirm("<h3>Are you sure to remove this answer option from the question?</h3>", function (result) {
+             if (!result) return;
+             else {
+
+                 $.ajax({
+                     url: "",
+                     type: "POST",
+                     data: {'deleteOptionQuestionId': questionId, 'optionId': optionId},
+
+                     success: function (response) {
+                         console.log("response success");
+                         $("#ID_partial_answers").html(response);
+                     },
+
+                     error: function (xhr, errmsg, err) {
+                         alert("change answer failed");
+                     }
+                 });
+             }
+         });
+    };
+
+
+    function updateOption(oldId, newId, allowedDateTime, allowedTextArea) {
+{#        alert(allowedDateTime)#}
+{#        alert(allowedTextArea)#}
+         $.ajax({
+             url: "",
+             type: "POST",
+             data: {'updateOptionQuestionId': questionId,
+                    'oldOptionId': oldId,
+                    'newOptionId': newId,
+                    'allowedDateTime': allowedDateTime,
+                    'allowedTextArea': allowedTextArea
+             },
+
+             success: function (response) {
+{#                 alert("update question option success!");#}
+                 $("#ID_partial_answers").html(response);
+             },
+
+             error: function (xhr, errmsg, err) {
+                 alert("update question option failed!");
+             }
+         });
+    };
+
+</script>
+
+

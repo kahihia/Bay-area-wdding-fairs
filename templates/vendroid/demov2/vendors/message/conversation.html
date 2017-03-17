@@ -1,0 +1,79 @@
+{% if all_threads %}
+<ul class="list-wrapper pd-lr-15 list-unstyled" id="chatBox" style="list-style: none">
+    {% for t in all_threads %}
+        {% if t.sender == request.user %}
+            <li>
+                <div class="col-md-6 clearfix"></div>
+                <div class="col-md-6 npr" id="sender_send_message">
+                    <div class="vd_bg-blue chat-wrap">
+                        <div class="col-md-12">
+                            <p class="messages-content vd_white">
+                                {{ t.message }}
+                            </p>
+                        </div>
+                        <div class="col-md-12"></div>
+                        <div class="col-md-12">
+                            <div class="messages-from text-right">
+                                <p class="vd_white messages-content">
+                                     {{ t.created_at|date:"d M Y" }} {{ t.created_at|time:"H:i" }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </li>
+
+        {% else %}
+            <li>
+                <div class="col-md-6 npl">
+                    <div class="vd_bg-grey reciever-chat-wrap">
+                        <div class="col-md-12">
+                            <p class="messages-content vd_white">
+                                {{ t.message }}
+                            </p>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="messages-from text-right">
+                                <p class="vd_white messages-content">
+                                    {{ t.created_at|date:"d M Y" }} {{ t.created_at|time:"H:i" }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 clearfix"></div>
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<script>
+    function submitMessage(){
+         var message = $("#chatMsg").val();
+         var isEnough = {{ isEnoughcredit }}
+        {#             console.log("isEnough is ", isEnough, message);#}
+
+         if (isEnough == "0"){
+             alert("Sorry, you don't have enough credit to send message. Please refill your amount.")
+         } else {
+
+             $.ajax({
+                 url: "",
+                 type: "POST",
+                 data: {'message': message},
+
+                 success: function (response) {
+                     console.log("good callback");
+                     $("#refreshConversation").html(response);
+                 },
+
+                 error: function (xhr, errmsg, err) {
+                     alert("change answer failed");
+                 }
+             });
+         }
+    }
+</script>

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+            <section class="messages-section">
+    {% include 'messages/partial/_sidebar.html' %}
+
+
+     <div class="col-md-6 messages-read">
+        <h3 class="messages-subject"> {{ message.subject }}</h3>
+         {% for message in conversation %}
+        <section class="messages-reply">
+            <div class="messages-from">
+                <span class="time-stamp"> {{ message.created_at|timesince }} ago</span>
+                <span class="profile-thumb profile-sm" style="background-image: url( /static/images/tempPhoto.png)"></span>
+                <span class="user-name"> {{ message.sender.get_full_name }}</span>
+            </div>
+            <p class="messages-to"><span>To: </span> {{ message.receiver.get_full_name }}</p>
+            <p class="messages-content">
+                {{ message.message }}            </p>
+        </section>
+         {% endfor %}
+
+
+
+        <section class="messages-comment">
+            <span class="profile-thumb profile-sm" style="background-image: url(/static/images/tempPhoto.png)"></span>
+            <form method="post" action=".">
+                {% csrf_token %}
+                <div class="form-group">
+                    <span>To:</span>
+                    <select multiple="multiple" disabled="true" class="form-control" data-placeholder="To" name="to" id="to">
+                        <option value="{{ message.sender.id }}" selected="selected">{{ message.sender.get_full_name }}</option>
+                    </select>
+                </div>
+                <textarea name="message" class="form-control" required></textarea>
+                <button type="submit" class="btn btn-blue pull-right">Reply</button>
+            </form>
+        </section>
+
+
+    </div>
+</section>
+
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.mail.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/chosen.jquery.min.js" %}"></script>
+{#    <script type="text/javascript" src="/static/js/jquery.mail.js"></script>#}
+
+<script>
+var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+var imgCount = 0;
+function startTime() {
+    if(imgCount == imgArray.length) {
+        imgCount = 0;
+    }
+    $('#to').choosen();
+    document.getElementById("ad").src = imgArray[imgCount];
+    imgCount++;
+    setTimeout("startTime()", 5000);
+}
+</script>
+</html>
+
+{% endblock jquery %}

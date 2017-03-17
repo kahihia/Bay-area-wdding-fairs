@@ -1,0 +1,187 @@
+{% extends "vendroid/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load pagination_tags %}
+{% block content %}
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+                {% include "vendroid/partial/_sidebar.html" %}
+                {% include "vendroid/messages/partial/chat_list.html" %}
+
+                <!-- Middle Content Start -->
+
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
+
+                        <div class="vd_head-section clearfix">
+            <div class="vd_panel-header">
+            </div>
+            <!-- vd_panel-header -->
+          </div>
+
+                            <div class="vd_content-section clearfix">
+                                <div class="row">
+                                 <div class="col-sm-12">
+                                      <div class="panel widget light-widget">
+                                            <div class="panel-body">
+                                     <input name="search" id="searchField1" class="form-control"
+                   placeholder="Search Friend, professional or Interest" type="text">
+                                 </div>
+                                 </div>
+                                 </div>
+
+
+{#                                <div><h4>    </h4></div>#}
+
+
+                               <div class="col-sm-3">
+                                        <div class="panel widget light-widget">
+                                            <div class="panel-heading no-title"></div>
+                                            <div class="panel-body">
+
+                                                <div id="external-events">
+
+
+                    <h3 class="section-title">Filters <small style="color: #ff9800;"><a href="/directory/">All</a></small>
+
+                </h3>
+                <div class="controls">
+                    <ul class="list-wrapper pd-lr-10" style="list-style: None;">
+                        <li class="descript"><p>Status</p></li>
+                        <hr/>
+                        <li class="descript"><a href="/directory/?bride=1">Bride</a></li>
+                         <hr/>
+                        <li class="descript"><a href="/directory/?groom=1">Groom</a></li>
+                         <hr/>
+                        <li class="descript"><a href="/directory/?weddingprofessional=1">Wedding professional</a></li>
+                         <hr/>
+                    </ul>
+                </div>
+
+                                                </div>
+                                                <!-- #external-events -->
+
+                                            </div>
+                                            <!-- panel-body -->
+                                        </div>
+                                        <!-- panel -->
+                                    </div>
+
+
+
+
+
+                                <div class="col-sm-9 ">
+
+
+
+                            <div class="mgbt-xs-20">
+                  <div class="panel widget light-widget">
+                    <div class="panel-heading"> </div>
+                    <div class="panel-body">
+                    {% autopaginate userprofiles 10 %}
+                    {%  for userprofile in userprofiles %}
+                      <div class="content-list content-image">
+                        <ul class="list-wrapper pd-lr-10">
+                          <li>
+                            <div class="menu-icon"><img src="{{ userprofile.get_image_url }}" alt="N/A"></div>
+
+                            <div class="menu-text"> <strong><a href="{% if userprofile.type == "Professional" %}/professional/profile/{{ userprofile.id }}/{% else %}/profile/{{ userprofile.id }}/{% endif %}">{{ userprofile.user.get_full_name }}{% if userprofile.subscribed == True %} - <small style="color: #ff9800;">Featured</small>{% endif %}</a></strong>
+                              {% if userprofile.type == "Professional" %}<div class="menu-info"> <span class="menu-date">{{ userprofile.userprofile_company.name }}</span> </div>{% endif %}
+                                <div class="menu-info"> <span class="menu-date">{{ userprofile.type }}</span> </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- content-list -->
+                    {% endfor %}
+
+                    </div>
+                  </div>
+                            {% paginate %}
+                  <!-- panel -->
+
+                </div>
+                                </div>
+
+                                    </div>
+                                    <!-- col-md-x -->
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+
+                <!-- Middle Content End -->
+
+            </div>
+
+            <!-- .container -->
+
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src='{% static "vendroid/plugins/sparkline/jquery.sparkline.min.js" %}'></script>
+
+<script type="text/javascript" src="{% static "js/jquery.directory.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}s"></script>
+
+    <script>
+var imgArray = new Array("https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company1.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company2.png","https://s3-us-west-2.amazonaws.com/yapjoyimages/images/company3.png");
+var imgCount = 0;
+function startTime() {
+    if(imgCount == imgArray.length) {
+        imgCount = 0;
+    }
+    document.getElementById("ad").src = imgArray[imgCount];
+    imgCount++;
+    setTimeout("startTime()", 5000);
+}
+
+$('#searchField1').on('keypress', function (event) {
+         if(event.which === 13){
+
+            //Disable textbox to prevent multiple submit
+           parent.window.location.href = '/directory/?name='+ $('#searchField1').val()
+
+            //Do Stuff, submit, etc..
+         }
+   });
+</script>
+
+{% endblock script %}

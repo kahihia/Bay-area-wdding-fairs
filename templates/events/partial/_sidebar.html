@@ -1,0 +1,213 @@
+{% load fullcalendar_tags %}
+{% load static %}
+{% load myfilters %}
+
+<section class="events-nav">
+    <h3 class="section-title">Events</h3>
+    <a onclick="addEventModal();" class="add-btn"><i class="glyphicon glyphicon-plus"></i>
+        <span>Add Event</span></a>
+    {#    <a href="#addTodoModal" class="add-btn add-task" data-toggle="modal" ><i class="glyphicon glyphicon-plus"></i> <span>Add Task</span></a>#}
+
+    <section class="widget events">
+        <div id="event-list" class="list-view">
+            <div class="items">
+                {% for event in events_all %}
+                    <div class="media" id="media_{{ event.id }}">
+                        <div class="media-left">
+                            <i class="fa fa-calendar fa-3x"></i>
+                        </div>
+                        <div class="media-body">
+                            <small><h5 class="media-heading"><a
+                                   {% if event.user == user %} onclick="editEvent('{{ event.id }}');"{% else %}href="{{ event.user.userprofile.get_profile_url }}"{% endif %}>{{ event.title }} {% if not event.user == user %}(Assigned by {{ event.user.get_full_name }}){% endif %}</a></h5></small>
+                            <form action="." method="POST" id="eventDeleteForm_{{ event.id }}">
+                                {% csrf_token %}
+                                <input type="hidden" name="event_to_delete" value="{{ event.id }}"/>
+                               {% if event.user == user and not event.is_wedding%} <a onclick="deleteEvent('{{ event.id }}');" class="delete deleteEventBtn"><i
+                                        class="glyphicon glyphicon-trash"></i></a>{% endif %}
+                            </form>
+
+                            <p class="event-descript"></p>
+
+                            <p class="event-time">{{ event.start }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+
+    <div class="modal fade" id="viewEvent" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" id="viewEventModalBody">
+                    <h4 class="modal-title">{{ events_form.as_p }}</h4>
+                </div>
+                {#                <div class="modal-footer">#}
+                {##}
+                {#                </div>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+    <!------even form----->
+    <div class="modal fade" id="addEventModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <h4 class="modal-title">Add an Event</h4>
+
+
+                    <form class="form-horizontal" action="." method="post">
+                        {% csrf_token %}
+                        <input placeholder="Name" class="form-control" name="CalendarEvent[id]" id="CalendarEvent_id"
+                               value="169" type="hidden">
+
+                        <div class="form-group">
+                            <label for="first-name" class="col-sm-4 control-label">Name</label>
+
+                            <div class="col-sm-7">
+                                {{ events_form.subject }}
+                                <div class="red">{{ events_form.subject.errors }}</div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="first-name" class="col-sm-4 control-label">Start Time</label>
+
+                            <div class="col-sm-7">
+                                {{ events_form.start|addcss:"form-control startpicker" }}
+                                <div class="red">{{ events_form.start.errors }}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="first-name" class="col-sm-4 control-label">End Time</label>
+
+                            <div class="col-sm-7">
+                                {{ events_form.end|addcss:"form-control endpicker" }}
+                                <div class="red">{{ events_form.end.errors }}</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="first-name" class="col-sm-4 control-label">All Day?</label>
+
+                            <div class="col-sm-7">
+                                {{ events_form.all_day }}
+                                <div class="red">{{ events_form.all_day.errors }}</div>
+                            </div>
+                        </div>
+                        {% if not profile.type == "Professional" %}
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Include Friends:</label>
+
+                                <div class="col-sm-7">
+                                    <select multiple="multiple" class="form-control" data-placeholder="Choose"
+                                            name="assigned_to" id="to">
+                                        {% for friend in friends %}
+                                            {% if friend.user == request.user %}
+                                                <option value="{{ friend.friends.user.id }}">{{ friend.friends.user.get_full_name }}</option>
+                                            {% else %}
+                                                <option value="{{ friend.user.id }}">{{ friend.user.get_full_name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {#                                <div id="assigned_to_chosen" title="" style="width: 0px;"#}
+                                    {#                                     class="chosen-container chosen-container-multi">#}
+                                    {#                                    <ul class="chosen-choices">#}
+                                    {#                                        <li class="search-field"><input value="Choose" class="default"#}
+                                    {#                                                                        autocomplete="off" style="width: 70px;"#}
+                                    {#                                                                        type="text"></li>#}
+                                    {#                                    </ul>#}
+                                    {#                                    <div class="chosen-drop">#}
+                                    {#                                        <ul class="chosen-results">#}
+                                    {#                                            <li data-option-array-index="0" style="" class="active-result">Shazli#}
+                                    {#                                                Khan-Bawf#}
+                                    {#                                            </li>#}
+                                    {#                                            <li data-option-array-index="1" style="" class="active-result">Wasim Khan#}
+                                    {#                                            </li>#}
+                                    {#                                            <li data-option-array-index="2" style="" class="active-result">Piyush Seth#}
+                                    {#                                            </li>#}
+                                    {#                                        </ul>#}
+                                    {#                                    </div>#}
+                                    {#                                </div>#}
+                                    <!-- <span class="helper-text"><i class="fa fa-info-circle"></i> CTRL click to select multiple choices</span> -->
+                                </div>
+
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            {#        <label class="col-sm-4 control-label">Include Friends:</label>#}
+                            <div class="col-sm-12">
+                                {#            <select style="display: none;" multiple="multiple" class="form-control" data-placeholder="Choose" name="assigned_to_edit[]" id="assigned_to_edit">#}
+                                {#</select><div id="assigned_to_edit_chosen" title="" style="width: 0px;" class="chosen-container chosen-container-multi"><ul class="chosen-choices"><li class="search-field"><input value="Choose" class="default" autocomplete="off" style="width: 70px;" type="text"></li></ul><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>       <!-- <span class="helper-text"><i class="fa fa-info-circle"></i> CTRL click to select multiple choices</span> -->#}
+                                <button type="submit" class="btn btn-blue pull-right" style="margin-right: 53px;">
+                                    Submit
+                                </button>
+                                <button type="cancel" class="btn btn-gray pull-right" data-dismiss="modal"
+                                        style="margin-right: 30px;">Cancel
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="editEventModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <h4 class="modal-title">Edit Event</h4>
+
+
+                    <iframe id="addEventModaliFrame" height="355px" width="100%" src=""></iframe>
+
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+</section>
+<script>
+    function editEvent(id) {
+        var url = '/events/edit/' + id
+        $('#editEventModal').modal('show');
+        $("#addEventModaliFrame").attr('src', url);
+    }
+    function addEventModal() {
+        $('#addEventModal').modal('show');
+    }
+</script>
+
+

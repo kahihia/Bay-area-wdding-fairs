@@ -1,0 +1,115 @@
+<div class="vd_navbar vd_nav-width vd_navbar-tabs-menu vd_navbar-left">
+    <div class="navbar-menu clearfix">
+        <div class="vd_menu">
+            <ul>
+                {% if not request.user.userprofile.type == 'Professional' %}
+                <li {% if '/friends/' in request.path %}class="active"{% endif %}>
+                    <a href="/friends/">
+                        <span class="menu-icon"><i class="fa fa-group"></i></span>
+                        <span class="menu-text">Planning Circle</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                    {% if not request.user.userprofile.type == 'Other' %}
+                <li {% if '/plans/' in request.path %}class="active"{% endif %}>
+                    <a href="/plans/">
+                        <span class="menu-icon"><i class="fa fa-book"></i></span>
+                        <span class="menu-text">Planning Book</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                        {% endif %}
+                {% else %}
+                    <li {% if '/market/' in request.path %}class="active"{% endif %}>
+                    <a href="/market/">
+                        <span class="menu-icon"><i class="fa fa-book"></i></span>
+                        <span class="menu-text">Market</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                {% endif %}
+                <li {% if '/forum/' in request.path %}class="active"{% endif %}>
+                    <a href="/forum/">
+                        <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
+                        <span class="menu-text">Yapper</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                {% if not request.user.userprofile.type == "Professional" %}
+                <li {% if '/professionals/' in request.path %}class="active"{% endif %}>
+                    <a href="/professionals/">
+                        <span class="menu-icon"><i class="glyphicon glyphicon-list-alt"></i></span>
+                        <span class="menu-text">Wedding Professionals</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                 {% else %}
+                    <li {% if '/directory/' in request.path %}class="active"{% endif %}>
+                    <a href="/directory/">
+                        <span class="menu-icon"><i class="glyphicon glyphicon-list-alt"></i></span>
+                        <span class="menu-text">Directory</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                    <li {% if '/invoices/' in request.path %}class="active"{% endif %} >
+                    <a href="/invoices/">
+                        <span class="menu-icon"><i class="fa fa-file-text-o"></i></span>
+                        <span class="menu-text">Invoices List</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                {% endif %}
+                <li {% if '/events/' in request.path %}class="active"{% endif %}>
+                    <a href="/events/">
+                        <span class="menu-icon"><i class="fa fa-calendar"></i></span>
+                        <span class="menu-text">Events</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if '/tasks/' in request.path %}class="active"{% endif %}>
+                    <a href="/tasks/">
+                        <span class="menu-icon"><i class="fa fa-tasks"></i></span>
+                        <span class="menu-text">Tasks</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                <li {% if '/recommendations/' in request.path %}class="active"{% endif %}>
+                    <a href="/recommendations/">
+                        <span class="menu-icon"><i class="glyphicon glyphicon-thumbs-up"></i></span>
+                        <span class="menu-text">Recommendations</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+{#                <li {% if '/crm/data/purchase/' in request.path %}class="active"{% endif %}>#}
+{#                    <a href="{% url "invoices_data_purchase" %}">#}
+{#                        <span class="menu-icon"><i class="fa fa-database"></i></span>#}
+{#                        <span class="menu-text">User Base</span>#}
+{#                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>#}
+{#                    </a>#}
+{#                </li>#}
+                {% if not request.user.userprofile.type == "Professional" %}
+                <li {% if '/seatingCharts/' in request.path %}class="active"{% endif %}>
+                    <a href="/seatingCharts/">
+                        <span class="menu-icon"><i class="fa fa-tasks"></i></span>
+                        <span class="menu-text">Seating Charts</span>
+                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <!-- Head menu search form ends -->
+        </div>
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+    <div class="vd_menu vd_navbar-bottom-widget">
+        <ul>
+            <li>
+                <a href="/logout/">
+                    <span class="menu-icon"><i class="fa fa-sign-out"></i></span>
+                    <span class="menu-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

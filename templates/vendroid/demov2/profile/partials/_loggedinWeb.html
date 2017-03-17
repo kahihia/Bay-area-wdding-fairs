@@ -1,0 +1,71 @@
+{% load static %}
+<div class="panel-body" id="id_panel_body">
+    <div class="event-list-wrap">
+        <form action="." id="image_form" method="post" enctype="multipart/form-data"  >
+            <div class="col-md-12">
+                <h1>Join the YapJoy team</h1>
+                <h4>{{ event.name }}</h4>
+            </div>
+
+            <div class="col-md-12" style="margin-top:80px;">
+                <label>Name</label>
+                <input type="text" class="form-control" id="edit_full_name" value="{{ u.user.get_full_name }}" name="edit_full_name"/>
+
+            </div>
+            <div class="col-md-12" style="margin-top:20px;">
+                <label>Role</label>
+                <input type="text" class="form-control" value="{{ u.profession }}" id="edit_role" name="edit_role"/>
+
+            </div>
+            <div class="col-md-12" style="margin-top:20px;">
+                <label>Email</label>
+                <input type="email" class="form-control" value="{{ u.user.email }}" id="edit_email" name="edit_email"/>
+
+            </div>
+            <div class="col-md-12" style="margin-top:20px;">
+                <label>Phone</label>
+                <input type="text" class="form-control" value="{{ u.phone }}" id="edit_phone" name="edit_phone"/>
+
+            </div>
+            <br />
+            <div class="form-group">
+                <button id="id_save" class="btn btn-block btn-yapjoy-blue">Next</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+    $('#id_save').on('click',function(e){
+        e.preventDefault();
+        console.log('edit: ', $("#edit_full_name").val(),$("#edit_image").attr('src') )
+        var data = {
+            'full_name': $("#edit_full_name").val(),
+            'email':$("#edit_email").val(),
+            'role':$("#edit_role").val(),
+            'phone':$("#edit_phone").val(),
+            'action':'edit_profile'
+        };
+        console.log('form: ', data)
+        $.ajax({
+            url: '/family_share_link/'+ '{{ event.family_ref_code }}' +'/',
+            type: "POST",
+            data: data,
+            success: function (response) {
+                $("#id_card").html(response);
+{#                window.location.href = "/bg/profile/";#}
+
+            },
+            error: function(error) {
+                console.log("error: ", error);
+
+                return error
+            }
+        });
+
+
+    })
+</script>

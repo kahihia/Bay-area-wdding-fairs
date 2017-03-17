@@ -1,0 +1,81 @@
+<div>
+    <h4 class="modal-title" style="text-align: center;" >Edit Task</h4>
+    {% if error_message %}
+        <div class="flashes">
+            <div class="alert alert-danger">{{ error_message }}</div>
+        </div>
+    {% endif %}
+
+    <form action="." method=POST id="saveTaskForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="col-sm-3">Subject:</div><div class="col-sm-9">{{ taskForm.subject }}</div><br/>
+            <div class="col-sm-3">Tasks:    </div><div class="col-sm-9">{{ taskForm.message }}</div><br/>
+            <div class="col-sm-3">Status:   </div><div class="col-sm-9">{{ taskForm.status }}</div><br/>
+            <div class="col-sm-3">Due Date: </div><div class="col-sm-9">{{ taskForm.dueDate }}</div><br/>
+{#            <div class="col-sm-3">Owner:    </div><div class="col-sm-9">{{ taskForm.sales}}</div><br/>#}
+            <hr>
+            <br/>
+            <input class="btn vd-bg-lightblue pull-right" type=submit value="submit" >
+        </div>
+    </form>
+</div>
+
+{#<script type="text/javascript">#}
+{#    $(document).on('submit', '#saveTaskForm', function(event){#}
+{#        $('#editTaskFormModal').modal('hide');#}
+{##}
+{#        var taskid = {{ taskid }}#}
+{#        console.log(taskid);#}
+{#        event.preventDefault();#}
+{#        var form = $(this);#}
+{#        var data = form.serializeArray();#}
+{#        data.push({name: 'saveTaskFormID', value: taskid});#}
+{#        console.log(data);#}
+{##}
+{#        $.ajax({#}
+{#            type: form.attr('method'),#}
+{#            url: form.action,#}
+{#            data: data,#}
+{#            success: function(response) {#}
+{#                console.log(response);#}
+{##}
+{#                $('#id_showTasks').attr()#}
+{##}
+{#                console.log("success")#}
+{#            },#}
+{#            error: function (xhr, errmsg, err) {#}
+{#               console.log("fail "+errmsg+" "+err);#}
+{#            }#}
+{#        });#}
+{#    });#}
+{##}
+<script>
+        $(document).on('submit', '#saveTaskForm', function(event){
+{#            $('#editTaskFormModal').modal('hide');#}
+
+            var taskid = '{{ taskid }}';
+            console.log(taskid);
+            event.preventDefault();
+            var form = $(this);
+            var data = form.serializeArray();
+            data.push({name: 'saveTaskFormID', value: taskid});
+            console.log(data);
+
+            $.ajax({
+                type: form.attr('method'),
+                url: form.action,
+                data: data,
+                success: function(response) {
+    {#                console.log(response);#}
+{#                        data = $.parseJSON(response);#}
+    {#                $('#id_showTasks').attr()#}
+                        window.parent.location.reload();// = data.url;
+                    console.log("success")
+                },
+                error: function (xhr, errmsg, err) {
+                   console.log("fail "+errmsg+" "+err);
+                }
+            });
+        });
+</script>

@@ -1,0 +1,1095 @@
+{% extends "vendroid/base_bawf.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <style>
+{#        * {#}
+{#            font-family: "Times New Roman", Georgia, Serif;#}
+{#        }#}
+
+        @page {
+            size: A4;
+        {#  margin: 0;#}
+        }
+
+        @media print {
+            html, body {
+                width: 340mm;
+                height: 550mm;
+            }
+
+            h3 {
+                font-size: 15px !important;
+            }
+
+            /* ... the rest of the rules ... */
+        }
+    </style>
+    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+    {##}
+    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script>
+        $(function () {
+            $('#id_wedding_date').datepicker();
+            {#            $("#id_wedding_date").datetimepicker({#}
+            {#             'showTimepicker': false,#}
+            {#            });#}
+        });
+    </script>
+
+    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+    <!-- Specific Page Scripts Put Here -->
+
+    {#<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 40px;
+        }
+
+        .btn-brown {
+            background-color: #ba8c00 !important;
+        }
+    </style>
+    <style>
+        .vd_content-section {
+            margin-bottom: 5px;
+        }
+
+        #footer .vd_bottom {
+            background-color: #816100 !important;
+        }
+
+        .vd_top-menu-wrapper {
+            background-color: #816100 !important;
+        }
+
+        .vd_menu-search-submit {
+            background-color: black !important;
+        }
+    </style>
+    <div class="vd_body">
+    <!-- Header Start -->
+    {% include "vendroid/partial/_header_yj_bawf.html" %}
+    <!-- Header Ends -->
+    <div class="content">
+        <div class="container">
+            {#                {% include "vendroid/CRM/partial/_sidebar.html" %}#}
+
+            <!-- Middle Content Start -->
+
+            <div class="vd_content-wrapper">
+                <div class="">
+                    <div class="vd_content clearfix">
+
+                        <!-- vd_head-section -->
+
+                        <div class="clearfix">
+
+                            <!-- vd_title-section -->
+
+                            <div class="vd_content-section clearfix">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel widget">
+                                            <div class="panel-body">
+                                                {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                                                {#                    <ul class="nav nav-tabs">#}
+                                                {##}
+                                                {##}
+                                                {#                    </ul>#}
+                                                {#                    <br>#}
+                                                <div class="tab-content mgbt-xs-20">
+                                                    {% if successMessage %}
+                                                        <div class="flashes">
+                                                            <div class="alert alert-success">{{ successMessage }}</div>
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="tab-pane active" id="privacy">
+                                                        <div class="col-md-12 text-center" style="padding-bottom:0px;margin-bottom:0px;">
+                                                            <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"
+                                                                 width="12%"/>
+                                                            <div class="clearfix"></div>
+                                                            {#                              <br />#}
+                                                            {#                              <h3 style="color: #ba8c00;">REGISTERED EVENTS</h3>#}
+                                                            {#                              <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"  />#}
+                                                            <hr/>
+
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="row" style="padding-bottom:0px;margin-bottom:0px;">
+                                                                <div class="col-md-12">
+                                                                    <div class="panel-body table-responsive" style="padding-top:0px;padding-bottom:0px;">
+                                                                        <div class="dataTables_wrapper form-inline no-footer"
+                                                                             id="data-tables_wrapper">
+                                                                            <p>
+                                                                            <h3 class="text-center"
+                                                                                style="margin-bottom: 5px;">
+                                                                                Bay Area Wedding Fairs Agreement</h3>
+                                                                            <div  style="font-size: 15px !important;"  class="{% if notes %}col-md-3{% else %}col-md-6{% endif %}">
+                                                                                Business
+                                                                                Name:<b> {{ agreement.invoices.all.0.register.business_name }}</b><br/>
+                                                                                Name:<b> {{ agreement.invoices.all.0.register.name }}</b><br/>
+                                                                                Email: {{ agreement.email }}<br/>
+
+                                                                                Phone: {{ agreement.invoices.all.0.register.phone }}<br/>
+                                                                                City: {{ agreement.invoices.all.0.register.city }}<br/>
+                                                                            </div>
+                                                                            <div style="font-size: 15px !important;" class="{% if notes %}col-md-3{% else %}col-md-6{% endif %}">
+                                                                                {#                                              Amount Due: ${{ agreement.register_event.get_amount|intcomma }}<br />#}
+
+                                                                                Registration
+                                                                                Date: {{ agreement.invoices.all.0.register.created_at }}<br/>
+                                                                                PV Prize: ${% if inv.pv_prize_offered %}
+                                                                                {{ inv.pv_prize_offered }}{% else %}
+                                                                                0{% endif %}<br/>
+                                                                                Booth: {{ reg.booth }}<br/>
+                                                                                <b>Fashion Show Sponsor:</b> {% if reg.is_fashionshow %}Yes{% else %}No{% endif %},
+                                                                                <b>Partner Vendor:</b> {% if reg.is_partner_vendor %}Yes{% else %}No{% endif %},
+                                                                                <b>Backdrop Allowed:</b> {% if reg.backdrop_allowed %}Yes{% else %}No{% endif %}
+{#                                                                                <b>Backdrop Allowed:</b> {% if reg.backdrop_allowed %}Yes{% else %}No{% endif %}#}
+{#                                                                                <b>Email List:</b> {% if is_list %}Yes{% else %}No{% endif %}#}
+                                                                                <br />
+{#                                                                                Backdrop Allowed: {% if reg.backdrop_allowed %}Yes{% else %}No{% endif %}<br/>#}
+{#                                                                                Fashionshow sponsorship:#}
+{#                                                                                {% if reg.is_fashionshow %}Yes{% else %}#}
+{#                                                                                    No{% endif %}<br/>#}
+
+
+                                                                            </div>
+                                                                            {% if notes %}
+                                                                                <div  style="font-size: 15px !important;"  class="col-md-6">
+                                                                                    <div class="clearfix"></div>
+
+                                                                                    {#                                     <h3 class="text-center">Notes</h3>#}
+                                                                                    {% for note in notes %}
+                                                                                        {% if forloop.counter0 == 0 %}
+                                                                                            {#                                                        <hr>#}
+                                                                                            <p>Sales/Owner
+                                                                                                Notes: {{ wp.sales.get_full_name }}</p>
+                                                                                        {% endif %}
+                                                                                        {#                            <div class="container">#}
+                                                                                        <img style="width: 60px;"
+                                                                                             class="col-sm-4"
+                                                                                             src="{{ note.note_writer.userprofile.get_image_url }}"
+                                                                                             alt="add image if you want">
+                                                                                        <div class="col-sm-8"
+                                                                                                {#                                                             style="font-size: 5px;"#}
+                                                                                        >
+                                                                                            <span></span>
+                                                                                            <p>{{ note.note }}
+                                                                                                By {{ note.note_writer.get_full_name }}
+                                                                                                at {{ note.created_at }}
+                                                                                                {#                                       Interested Vendor: <i class="vd">{{ note.exhibitor.user.get_full_name }}</i><br/>#}
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <div class="clearfix"></div>
+                                                                                        {#                                                        <br/>#}
+                                                                                        {#                            </div>#}
+                                                                                    {% endfor %}
+
+                                                                                </div>
+                                                                            {% endif %}
+                                                                            <div class=""
+                                                                                 style="margin-top: 30px;">
+                                                                                {#                                      <div class="panel-heading vd_bg-grey">#}
+                                                                                {#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Invoices</h3>#}
+                                                                                {#                                      </div>#}
+
+                                                                                <div class="clearfix"></div>
+                                                                                <h3 class="text-center"
+                                                                                    style="margin-bottom: 5px;">
+                                                                                    Invoices</h3>
+                                                                                <div class="table-responsive">
+                                                                                    {#                                        <form action="" method="POST">#}
+                                                                                    {#                                        {% csrf_token %}#}
+                                                                                    <div style="font-size: 15px !important;" class="dataTables_wrapper form-inline no-footer"
+                                                                                         id="data-tables_wrapper">
+                                                                                        <table aria-describedby="data-tables_info"
+                                                                                               role="grid"
+                                                                                               class="table table-striped dataTable no-footer"
+                                                                                               id="data-tables">
+                                                                                            <thead>
+                                                                                            <tr role="row">
+                                                                                                {#                                                      <th>Bulk</th>#}
+
+                                                                                                {#                                                      <th>CSV Path#}
+                                                                                                {#                                                      </th>#}
+                                                                                                <th>Event</th>
+                                                                                                <th>Offered Price</th>
+{#                                                                                                <th>PV Price Offered</th>#}
+{#                                                                                                <th>List Price#}
+{#                                                                                                </th>#}
+                                                                                                <th>Electricity</th>
+                                                                                                <th>Email List</th>
+                                                                                                {#                                                      <th>#}
+                                                                                                {#                                                          Status#}
+                                                                                                {#                                                      </th>#}
+                                                                                                <th>Method</th>
+                                                                                                {#                                                      <th>PV Prize</th>#}
+                                                                                                <th>Total Amount</th>
+                                                                                                <th>
+                                                                                                    Created at
+                                                                                                </th>
+                                                                                                {#                                                      <th>Remove</th>#}
+                                                                                                {#                                                      <th>#}
+                                                                                                {#                                                          Edit#}
+                                                                                                {#                                                      </th>#}
+                                                                                            </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            {% for csv in invoices_agree %}
+                                                                                                <tr role="row"
+                                                                                                    class="gradeA odd">
+                                                                                                    {#                                                      <td><input type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
+                                                                                                    <td>{{ csv.register.event }}</td>
+                                                                                                    <td>
+                                                                                                        ${{ csv.offered_price }}</td>
+{#                                                                                                   <td>${% if csv.pv_prize_offered %}{{ csv.pv_prize_offered }}{% else %}0{% endif %}</td>#}
+
+{#                                                                                                    <td>#}
+{#                                                                                                        ${{ csv.list_price }}</td>#}
+                                                                                                    {#                                                          <td>{{ csv.csv }}</td>#}
+
+                                                                                                    <td>
+                                                                                                        {% if csv.electricity_types == "Amount" %}
+                                                                                                            $75{% else %}
+                                                                                                            {{ csv.electricity_types }}{% endif %}</td>
+                                                                                                    {#                                                          <td>{{ csv.register.status }}</td>#}
+                                                                                                    <td>{% if csv.list_price %}${{ csv.list_price }}{% elif csv.email_list %}Yes{% else %}No{% endif %}</td>
+                                                                                                    <td>{{ csv.payment_method }}</td>
+                                                                                                    {#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
+                                                                                                    <td>
+                                                                                                        ${{ csv.get_total }}</td>
+                                                                                                    <td>{{ csv.created_at }}</td>
+                                                                                                    {#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
+                                                                                                    {#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
+                                                                                                    {#                                                          <td>#}
+                                                                                                    {#                                                              <form action="." method="post">#}
+                                                                                                    {#                                                                  {% csrf_token %}#}
+                                                                                                    {#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
+                                                                                                    {#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
+                                                                                                    {#                                                              </form>#}
+                                                                                                    {##}
+                                                                                                    {#                                                          </td>#}
+                                                                                                </tr>
+                                                                                            {% endfor %}
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                        <input hidden
+                                                                                               id="create_bulk_signal"
+                                                                                               name="create_bulk_signal"/>
+                                                                                        {#                                                <button class="btn vd-bg-lightblue vd_white" type="submit">Combine and Send</button>#}
+                                                                                    </div>
+                                                                                    {#                                        </form>#}
+                                                                                </div>
+                                                                                <h3 class="text-center"
+                                                                                    style="margin-bottom: 5px;">Invoice
+                                                                                    Details</h3>
+                                                                                <div class="table-responsive">
+                                                                                    {#                                        <form action="" method="POST">#}
+                                                                                    {#                                        {% csrf_token %}#}
+                                                                                    <div  style="font-size: 15px !important;" class="dataTables_wrapper form-inline no-footer"
+                                                                                         id="data-tables_wrapper">
+                                                                                        <table aria-describedby="data-tables_info"
+                                                                                               role="grid"
+                                                                                               class="table table-striped dataTable no-footer"
+                                                                                               id="data-tables">
+                                                                                            <thead>
+                                                                                            <tr role="row">
+                                                                                                {#                                                      <th>Bulk</th>#}
+
+                                                                                                {#                                                      <th>CSV Path#}
+                                                                                                {#                                                      </th>#}
+{#                                                                                                <th>Invoice ID</th>#}
+                                                                                                <th>Event</th>
+                                                                                                <th>Payment Type</th>
+                                                                                                <th>Amount</th>
+                                                                                                <th>Invoice Date
+                                                                                                </th>
+                                                                                                {#                                                      <th>Electricity</th>#}
+                                                                                                {#                                                      <th>#}
+                                                                                                {#                                                          Status#}
+                                                                                                {#                                                      </th>#}
+                                                                                                {#                                                      <th>Method</th>#}
+                                                                                                {#                                                      <th>PV Prize</th>#}
+                                                                                                {#                                                      <th>Total Amount</th>#}
+                                                                                                {#                                                      <th>#}
+                                                                                                {#                                                          Created at#}
+                                                                                                {#                                                      </th>#}
+                                                                                                {#                                                      <th>Remove</th>#}
+                                                                                                {#                                                      <th>#}
+                                                                                                {#                                                          Edit#}
+                                                                                                {#                                                      </th>#}
+                                                                                            </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            {% for o in event_invoice_info.invoices.all %}
+                                                                                                {% if o.deposit %}
+                                                                                                    <tr>
+{#                                                                                                        <td>{{ event_invoice_info.id }}</td>#}
+                                                                                                        <td>{{ o.vendor_register.register.event }}</td>
+                                                                                                        <td>Today's
+                                                                                                            Payment
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            ${{ o.deposit }}</td>
+                                                                                                        <td>{{ event_invoice_info.deposit_date }}</td>
+                                                                                                    </tr>
+                                                                                                {% endif %}
+                                                                                                {% if o.balance1 %}
+                                                                                                    <tr>
+{#                                                                                                        <td>{{ event_invoice_info.id }}</td>#}
+                                                                                                        <td>{{ o.vendor_register.register.event }}</td>
+                                                                                                        <td>Future
+                                                                                                            Payment 1
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            ${{ o.balance1 }}</td>
+                                                                                                        <td>{{ event_invoice_info.balance1_date }}</td>
+                                                                                                    </tr>
+                                                                                                {% endif %}
+                                                                                                {% if o.balance2 %}
+                                                                                                    <tr>
+{#                                                                                                        <td>{{ event_invoice_info.id }}</td>#}
+                                                                                                        <td>{{ o.vendor_register.register.event }}</td>
+                                                                                                        <td>Future
+                                                                                                            Payment 2
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            ${{ o.balance2 }}</td>
+                                                                                                        <td>{{ event_invoice_info.balance2_date }}</td>
+                                                                                                    </tr>
+                                                                                                {% endif %}
+                                                                                                {% if o.balance3 %}
+                                                                                                    <tr>
+{#                                                                                                        <td>{{ event_invoice_info.id }}</td>#}
+                                                                                                        <td>{{ o.vendor_register.register.event }} </td>
+                                                                                                        <td>Future
+                                                                                                            Payment 3
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            ${{ o.balance3 }}</td>
+                                                                                                        <td>{{ event_invoice_info.balance3_date }}</td>
+                                                                                                    </tr>
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                        <input hidden
+                                                                                               id="create_bulk_signal"
+                                                                                               name="create_bulk_signal"/>
+                                                                                        {#                                                <button class="btn vd-bg-lightblue vd_white" type="submit">Combine and Send</button>#}
+                                                                                    </div>
+                                                                                    {#                                        </form>#}
+                                                                                </div>
+                                                                                <div class="clearfix"></div>
+                                                                            </div>
+                                                                            {#                                            <hr />#}
+{#                                                                            <div class="clearfix"></div>#}
+                                                                            {#                                          </p>#}
+
+
+
+                                                                            {#                                              <div class="col-md-12">#}
+                                                                            {#                                                  {% if agreement.status == "Viewed" %}#}
+                                                                            {##}
+                                                                            {#                                                  <form action="." method="post">#}
+                                                                            {#                                                      {% csrf_token %}#}
+                                                                            {#                                                      <input hidden id="decline" name="decline" />#}
+                                                                            {#                                                      <button class="btn vd_btn pull-right btn-default">Decline</button>#}
+                                                                            {#                                                  </form>#}
+                                                                            {#                                                  <form action="." method="post">#}
+                                                                            {#                                                      {% csrf_token %}#}
+                                                                            {#                                                      <input hidden id="accept" name="accept" />#}
+                                                                            {#                                                      <button class="btn vd_btn pull-right btn-brown" style="margin-right: 10px;">Accept</button>#}
+                                                                            {#                                                  </form>#}
+                                                                            {#                                                  {% elif agreement.status == "Accepted" %}#}
+                                                                            {#                                                      <div class="col-md-12 text-right" style="color: green;">#}
+                                                                            {#                                                          You have accepted this agreement#}
+                                                                            {#                                                      </div>#}
+                                                                            {#                                                  {% elif agreement.status == "Rejected" %}#}
+                                                                            {#                                                      <div class="col-md-12 text-right" style="color: red;">#}
+                                                                            {#                                                      You have rejected this agreemnet.#}
+                                                                            {#                                                      </div>#}
+                                                                            {#                                                  {% endif %}#}
+                                                                            {#                                                <div class="clearfix"></div>#}
+                                                                            {#                                                <p class="text-right">YOU PRE-AUTHORIZE BAWF to process your balance payments</p>#}
+                                                                            {#                                              </div>#}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                {#                    </div>#}
+                                                {#                    <br><br>#}
+                                                {##}
+                                                {##}
+                                                {##}
+                                                {##}
+                                                {##}
+                                                {##}
+                                                {##}
+                                                {##}
+                                                {##}
+                                                {#                  </div>#}
+                                                {#                </div>#}
+                                                {#                <div class="col-md-12">#}
+                                                {#                <div class="panel widget">#}
+                                                {#                  <div class="panel-body">#}
+                                                {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                                                {#                    <ul class="nav nav-tabs">#}
+                                                {##}
+                                                {##}
+                                                {#                    </ul>#}
+                                                {#                    <br>#}
+                                                <div class="tab-content mgbt-xs-20">
+                                                    {% if successMessage %}
+                                                        <div class="flashes">
+                                                            <div class="alert alert-success">{{ successMessage }}</div>
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="tab-pane active" id="privacy">
+                                                        {#                          <div class="col-md-12 text-center">#}
+                                                        {#                              <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png" width="20%" /><br />#}
+                                                        {#                              <div class="clearfix"></div>#}
+                                                        {#                              <br />#}
+                                                        {#                              <h3 style="color: #ba8c00;">INVOICES</h3>#}
+                                                        {#                              <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"  />#}
+                                                        {#                              <hr />#}
+                                                        {##}
+                                                        {#                          </div>#}
+                                                        <div class="">
+                                                            <div class="">
+                                                                <div class="">
+                                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
+                                                                    {#                    <ul class="nav nav-tabs">#}
+                                                                    {##}
+                                                                    {##}
+                                                                    {#                    </ul>#}
+                                                                    {#                    <br>#}
+                                                                    <div class="tab-content mgbt-xs-20">
+                                                                        {% if successMessage %}
+                                                                            <div class="flashes">
+                                                                                <div class="alert alert-success">{{ successMessage }}</div>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                        <div  style="font-size: 15px !important;" class="tab-pane active" id="privacy">
+                                                                            {#                          <div class="col-md-12 text-center">#}
+                                                                            {#                              <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png" width="20%" /><br />#}
+                                                                            {#                              <div class="clearfix"></div>#}
+                                                                            {#                              <br />#}
+                                                                            {#                              <h3 style="color: #ba8c00;">INVOICES</h3>#}
+                                                                            {#                              <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"  />#}
+                                                                            {#                              <hr />#}
+                                                                            {##}
+                                                                            {#                          </div>#}
+                                                                            <div class="col-sm-12">
+                                                                                <div class="panel widget light-widget">
+                                                                                    <div class="panel-body" style="padding-bottom:0px;padding-top:0px;">
+                                                                                        {#                    <div class="pull-right text-right">#}
+                                                                                        {#                      <h3 class="font-semibold mgbt-xs-20">INVOICE</h3>#}
+                                                                                        {#                      <table class="table table-bordered">#}
+                                                                                        {#                        <tbody><tr>#}
+                                                                                        {#                          <th>Invoice No.</th>#}
+                                                                                        {#                          <th>Date</th>#}
+                                                                                        {#                        </tr>#}
+                                                                                        {#                        <tr>#}
+                                                                                        {#                          <td>YJI-{{ invoice.id }}</td>#}
+                                                                                        {#                          <td>{{ today }}</td>#}
+                                                                                        {#                        </tr>#}
+                                                                                        {#                      </tbody></table>#}
+                                                                                        {#                    </div>#}
+                                                                                        {#                    <div class="mgbt-xs-20 text-center"><img style="width: 200px;" alt="logo" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"></div>#}
+                                                                                        {#                    <address class="text-center">#}
+                                                                                        {#                    2600 Kitty Hawk Road, suite #110<br>#}
+                                                                                        {#                    Livermore, CA 94551<br>#}
+                                                                                        {#                    <abbr title="Phone">P:</abbr> (510) 593-4426<br>#}
+                                                                                        {#                    <br>#}
+                                                                                        {#                    info@bayareaweddingfairs.com#}
+                                                                                        {#                    </address>#}
+                                                                                        {#                    <hr>#}
+                                                                                        {#                    <br>#}
+                                                                                        {#                    <div class="">#}
+                                                                                        {#                      <div class="row">#}
+                                                                                        {#                        <div class="col-xs-12">#}
+                                                                                        {##}
+                                                                                        {#                            {% if event.image %}<h3 class="text-center"><img src="{{ event.image }}" width="400px;" height="100%" /></h3>{% endif %}#}
+                                                                                        {#                            <h3 class="text-center">{{ event.name }}</h3>#}
+                                                                                        {#                            {% if event.description %}<div class="text-center">{{ event.description|safe }}</div>{% endif %}#}
+                                                                                        {#                          <address>#}
+                                                                                        {#                          <strong>Bill To:</strong><br>#}
+                                                                                        {#                          {{ invoice.user.get_full_name }}<br>#}
+                                                                                        {#                          {{ company.name }}<br>#}
+                                                                                        {#                          {{ profile.phone }}#}
+                                                                                        {#                          </address>#}
+                                                                                        {#                        </div>#}
+                                                                                        {#                        <div class="col-xs-4">#}
+                                                                                        {#                            &nbsp;#}
+                                                                                        {#                          <address>#}
+                                                                                        {#                          <strong>Ship To:</strong><br>#}
+                                                                                        {#                          John Doe<br>#}
+                                                                                        {#                          795 Folsom Ave, Suite 600<br>#}
+                                                                                        {#                          San Francisco, CA 94107<br>#}
+                                                                                        {#                          </address>#}
+                                                                                        {#                        </div>#}
+                                                                                        {#                        <div class="col-xs-2">#}
+                                                                                        {#                            &nbsp;#}
+                                                                                        {#                          <address>#}
+                                                                                        {#                          <strong>Due Date:</strong><br>#}
+                                                                                        {#                          24 July 2013#}
+                                                                                        {#                          </address>#}
+                                                                                        {#                        </div>#}
+                                                                                        {#                        <div class="col-xs-3">#}
+                                                                                        {#                          <div class="text-right">#}
+                                                                                        {#                          <strong>Due Balance:</strong><br>#}
+                                                                                        {#                          <span class="mgtp-5 vd_green font-md">${{ invoice.amount|intcomma }}</span>#}
+                                                                                        {#                          </div>#}
+                                                                                        {#                        </div>#}
+                                                                                        {#                      </div>#}
+                                                                                        {#                    </div>#}
+{#                                                                                      <div class="col-md-12">#}
+{#                                                                                            <div class="col-md-12">#}
+                                                                                                <table class="table table-condensed table-striped" style="margin-bottom:0px;">
+                                                                                            <thead>
+                                                                                            <tr>
+                                                                                                <th class="text-center"
+                                                                                                    style="width:20px;">
+                                                                                                    QTY
+                                                                                                </th>
+                                                                                                <th>DESCRIPTION</th>
+                                                                                                <th>TYPE OF AMOUNT</th>
+                                                                                                <th class="text-right"
+                                                                                                    style="width:120px;">
+                                                                                                    UNIT PRICE
+                                                                                                </th>
+                                                                                                <th class="text-right"
+                                                                                                    style="width:120px;">
+                                                                                                    TOTAL
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            {% for invoice_obj in invoices %}
+
+                                                                                                <tr>
+                                                                                                    <td class="text-center">
+                                                                                                        1
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <b>Event:</b> {{ invoice_obj.vendor_register.register.event }}<br/>
+                                                                                                    </td>
+                                                                                                    <td>Today's
+                                                                                                        Payment
+                                                                                                    </td>
+                                                                                                    {% if type == "Deposit" %}
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.deposit|intcomma }}</td>
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.deposit|intcomma }}</td>
+                                                                                                    {% elif type == "Balance1" %}
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.balance1|intcomma }}</td>
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.balance1|intcomma }}</td>
+                                                                                                    {% elif type == "Balance2" %}
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.balance2|intcomma }}</td>
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.balance2|intcomma }}</td>
+                                                                                                    {% elif type == "Balance3" %}
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.balance3|intcomma }}</td>
+                                                                                                        <td class="text-right">
+                                                                                                            ${{ invoice_obj.balance3|intcomma }}</td>
+                                                                                                    {% endif %}
+
+
+                                                                                                </tr>
+                                                                                            {% endfor %}
+                                                                                            {#                        <tr>#}
+                                                                                            {#                          <td class="text-center">1</td>#}
+                                                                                            {#                          <td>Prize</td>#}
+                                                                                            {#                          <td class="text-right">${{ invoice.prize|intcomma }}</td>#}
+                                                                                            {#                          <td class="text-right">${{ invoice.prize|intcomma }}</td>#}
+                                                                                            {#                        </tr>#}
+                                                                                            </tbody>
+                                                                                            <tfoot>
+                                                                                            <tr>
+                                                                                                <th colspan="2"
+                                                                                                    rowspan="3"
+                                                                                                    class="bdr"><br/>
+                                                                                                    {#                              {% if invoice.prize >= 0 %}Prize: ${{ invoice.prize|intcomma }}{% endif %}#}
+                                                                                                    <p class="font-normal">
+                                                                                                        &nbsp;</p></th>
+                                                                                                <th class="text-right pd-10">
+                                                                                                    Sub Total
+                                                                                                </th>
+                                                                                                <th class="text-right pd-10">
+                                                                                                    ${{ total_amount|intcomma }}</th>
+                                                                                                <th class="text-right pd-10">
+                                                                                                    ${{ total_amount|intcomma }}</th>
+                                                                                            </tr>
+                                                                                            {#                        <tr>#}
+                                                                                            {#                          <th class="text-right  pd-10 no-bd">&nbsp;</th>#}
+                                                                                            {#                          <th class="text-right  pd-10 vd_red no-bd">&nbsp;</th>#}
+                                                                                            {#                        </tr>#}
+                                                                                            {#                        <tr>#}
+                                                                                            {#                          <th class="text-right  pd-10 no-bd">&nbsp;</th>#}
+                                                                                            {#                          <th class="text-right  pd-10 no-bd">&nbsp;</th>#}
+                                                                                            {#                        </tr>#}
+                                                                                            {#                        <tr>#}
+                                                                                            {#                          <th colspan="2">Thank you for your business. Please remit the total amount due within 30 days.</th>#}
+                                                                                            {#                          <th class="text-right  pd-10">Total</th>#}
+                                                                                            {#                          <th class="text-right  pd-10 "><span class="vd_green font-sm font-normal">${{ invoice.amount|intcomma }}</span></th>#}
+                                                                                            {#                        </tr>#}
+                                                                                            </tfoot>
+                                                                                        </table>
+
+{#                                                                                            </div>#}
+{#                                                                                      </div>#}
+                                                                                        <div class="col-md-7 col-md-offset-1">
+                                                                                            {% if pv_price_list %}
+                                                                                        <div class="col-md-12" style="border: 2px solid #816100;font-size:15px !important;">
+
+                                                                                            <div class="col-md-12 text-center" style="font-size: 14px; margin-bottom: 10px;margin-top: 10px;">
+                                                                                                <b><u>Grand Prize Certificate</u></b>
+                                                                                            </div>
+                                                                                        <div class="col-md-6"style="font-size: 14px;"><b>Business Name:</b> {{ reg.business_name }}</div>
+                                                                                        <div class="col-md-6"style="font-size: 14px;"><b>Contact Name:</b> {{ reg.name }}</div>
+                                                                                        <div class="col-md-6"style="font-size: 14px;"><b>Phone:</b> {{ reg.phone }}</div>
+                                                                                        <div class="col-md-6"style="font-size: 14px;"><b>Email:</b> {{ reg.email }}</div>
+                                                                                        <div class="col-md-6"style="font-size: 14px;"><b>Prize Value:</b> ${{ pv_price_list.pv_prize_offered }}</div>
+                                                                                        <div class="col-md-6"style="font-size: 14px;"><b>Date:</b>
+{#                                                                                            {{ pv_price_list.created_at|date }}#}TBD
+                                                                                        </div>
+                                                                                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 5px;">
+                                                                                            I agree to provide above mentioned prize at a show decided later by Bay Area Wedding Fairs. Prizes should be valid for 18 months
+                                                                                            from time of award, based on existing schedule availability and must be serviceable in the greater bay area. Prizes are not redeemable for cash.
+                                                                                        </div>
+                                                                                        <div class="clearfix"></div>
+                                                                                        </div>
+                                                                                            {% endif %}
+                                                                                        <div class="clearfix"></div>
+
+                                                                                        </div>
+
+                                                                                        <div class="col-md-3  pull-right">
+                                                                                            <div class="col-md-12 pull-right text-right"
+                                                                                                 style="padding-right: 0px;">
+                                                                                                {#                          x:{{ invoice.status }} y:{{ event_list }} Cond:{% if invoice.status in event_list %}True{% endif %}#}
+                                                                                                {% if invoice.status not in event_list %}
+                                                                                                    {% if is_check %}
+                                                                                                        <form action=""
+                                                                                                              method="post"
+                                                                                                              id="invoice-form-check">
+                                                                                                            {% csrf_token %}
+                                                                                                            {{ form_check.agree }}
+                                                                                                            I agree to the terms and conditions and that the payment will be made via check.<br/><span
+                                                                                                                style="color:red;">{{ form_check.agree.errors }}</span>
+                                                                                                            <input name="invoice-form-check"
+                                                                                                                   id="invoice-form-check"
+                                                                                                                   hidden/>
+                                                                                                            <button class="btn vd_btn pull-right btn-brown">
+                                                                                                                I Agree
+                                                                                                            </button>
+                                                                                                        </form>
+                                                                                                    {% elif is_cash %}
+                                                                                                        <form action=""
+                                                                                                              method="post"
+                                                                                                              id="invoice-form-cash">
+                                                                                                            {% csrf_token %}
+                                                                                                            {{ form_check.agree }}
+                                                                                                            I agree to the terms and conditions and that the payment will be made via cash.<br/><span
+                                                                                                                style="color:red;">{{ form_check.agree.errors }}</span>
+                                                                                                            <input name="invoice-form-cash"
+                                                                                                                   id="invoice-form-cash"
+                                                                                                                   hidden/>
+                                                                                                            <button class="btn vd_btn pull-right btn-brown">
+                                                                                                                I Agree
+                                                                                                            </button>
+                                                                                                        </form>
+                                                                                                    {% else %}
+                                                                                                        {% if profile.stripe_id_bawf %}
+
+                                                                                                            <form action=""
+                                                                                                              method="post"
+                                                                                                              >
+                                                                                                            {% csrf_token %}
+                                                                                                            <input hidden
+                                                                                                                   id="customer_charge_signal"
+                                                                                                                   name="customer_charge_signal"/>
+                                                                                                            Customer: {{ profile.stripe_id_bawf }}<br />
+                                                                                                            Card: **** **** **** {{ last4 }}<br />
+                                                                                                                {% if error_message %}<div style="color: red;">{{ error_message }}</div>{% endif %}
+                                                                                                            <br/>
+                                                                                                            <button class="btn vd_btn pull-right btn-brown"
+                                                                                                                  >
+                                                                                                                Pay Now
+                                                                                                            </button>
+                                                                                                        </form>
+                                                                                                            {% else %}
+                                                                                                        <form action=""
+                                                                                                              method="post"
+                                                                                                              id="invoice-form">
+                                                                                                            {% csrf_token %}
+                                                                                                            <input hidden
+                                                                                                                   id="stripe_token"
+                                                                                                                   name="stripe_token"/>
+                                                                                                            Card
+                                                                                                            No: {{ form.number }}
+                                                                                                            <div style="color: red;">{{ form.number.errors.0 }}</div>
+                                                                                                            Expiry:
+                                                                                                            {{ form.month }}{{ form.month.errors }}
+                                                                                                            {{ form.year }}{{ form.year.errors }}
+                                                                                                            {#                              <br/>#}
+                                                                                                            {{ form.agree }}
+                                                                                                            I agree to
+                                                                                                            the <a
+                                                                                                                data-toggle="modal"
+                                                                                                                href="#agreement">terms
+                                                                                                            and
+                                                                                                            conditions</a>
+                                                                                                            <div style="color: red;">{{ form.agree.errors.0 }}</div>
+                                                                                                            {% if error_message %}<div style="color: red;">{{ error_message }}</div>{% endif %}
+                                                                                                            <div style="color: red;"
+                                                                                                                 id="stripe-error-message"></div>
+                                                                                                            <br/>
+                                                                                                            <button class="btn vd_btn pull-right btn-brown"
+                                                                                                                    id="submit-invoice">
+                                                                                                                Pay Now
+                                                                                                            </button>
+                                                                                                        </form>{% endif %}
+                                                                                                        <form action="."
+                                                                                                              method="post">
+                                                                                                            {% csrf_token %}
+                                                                                                            <input hidden
+                                                                                                                   id="decline"
+                                                                                                                   name="decline"/>
+                                                                                                            <button class="btn vd_btn pull-right btn-default"
+                                                                                                                    style="margin-right: 20px;">
+                                                                                                                Decline
+                                                                                                            </button>
+                                                                                                        </form>
+                                                                                                    {% endif %}
+                                                                                                  {% elif invoice.status == "Cancel" %}
+                                                                                                    <span style="color: red;"><b>This invoice was cancelled.</b></span>
+                                                                                                {% else %}
+                                                                                                    {% if not is_check and not is_cash %}
+                                                                                                        <p class="text-center pull-right"
+                                                                                                           style="color: green;">
+                                                                                                            <b>{{ invoice.get_deposit_date }}</b>
+                                                                                                        </p>
+                                                                                                    {% else %}
+
+                                                                                                        <p class="text-center pull-right"
+                                                                                                           style="color: green;">
+                                                                                                            <b>The agreement was signed digitally by {{ agreement.invoices.all.0.register.name }} {% if invoice.event_invoice.transaction_id_deposit_date %}at {{ invoice.event_invoice.transaction_id_deposit_date }} {% endif %}with {{ agreement.invoices.all.0.register.business_name }} and the amount will be paid via {% if is_check %}
+                                                                                                                check.{% elif is_cash %}cash{% endif %} {% if invoice.signing_date %}and Initial deposit was paid on {{ invoice.signing_date }}{% endif %}</b>
+                                                                                                            {% if request.user.is_superuser or request.user.is_staff %}
+                                                                                                                {% if is_check %}
+                                                                                                                {% if not invoice.check_no %}
+                                                                                                                    <form action=""
+                                                                                                                          method="post">
+                                                                                                                        {% csrf_token %}
+                                                                                                                        <input name="add-check-number"
+                                                                                                                               id="add-check-number"
+                                                                                                                               hidden/>
+                                                                                                                        <br/>Add
+                                                                                                                        Check
+                                                                                                                        No:
+                                                                                                                        <input id="check_no"
+                                                                                                                               name="check_no"/>
+                                                                                                                        <button class="vd_btn pull-right btn-brown">
+                                                                                                                            Submit
+                                                                                                                        </button>
+                                                                                                                    </form>
+                                                                                                                {% else %}
+                                                                                                                    <br/>
+                                                                                                                    Check
+                                                                                                                    No:
+                                                                                                                    {{ invoice.check_no }}
+                                                                                                                {% endif %}
+                                                                                                                    {% elif is_cash and invoice.status not in event_list2 %}
+
+                                                                                                                    <form action=""
+                                                                                                                          method="post">
+                                                                                                                        {% csrf_token %}
+                                                                                                                        <input name="mark-cash-paid"
+                                                                                                                               id="mark-cash-paid"
+                                                                                                                               hidden/>
+                                                                                                                        <br/>
+                                                                                                                        <button class="vd_btn pull-right btn-brown">
+                                                                                                                            Mark Paid
+                                                                                                                        </button>
+                                                                                                                    </form>
+                                                                                                                    {% endif %}
+                                                                                                            {% endif %}
+                                                                                                        </p>
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                                <div class="clearfix"></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- panel-body -->
+
+                                                                                         <div>
+                                                                                    {#                                                      style="font-size: 10px;"#}
+
+                                                                                <div class="clearfix"></div>
+                                                                                             <hr />
+                                                                                        <h3 class="text-center">Terms and
+                                                                                    Conditions</h3>
+
+                                                                                <p><b>Deposits & Payments</b>  A deposit is required to hold a space in any Bay Area Wedding Fairs (BAWF) trade shows. All deposits are Non-Refundable and Final. If you signed for multiple shows, deposits for all contracted shows must be received to hold space. Full payment is due 45 days prior to the show.<br/><b>Cancellations and Refunds</b> Deposits are non refundable. If
+
+cancelled within 45 days of the show, full balance is due. If a Fashion
+
+Show sponsor or Stage Services Provider cancels, the list price is
+
+due. To receive the Brides'/Grooms' List, you must be present at the
+
+entire show.<br/><b>Confidentiality
+                                                                                        Agreement</b> Booth pricing is category specific. This
+
+contract is a confidential document between BAWF and the exhibitor.
+
+A breach of the contract confidentiality agreement will result in this
+
+contract reverting to list price.<br/>
+                                                                                    <b>Booth Staffing & Operations</b> The booth must be staffed throughout
+
+the duration of the show. The booth can not be shared. Displaying
+
+advertisements for business not listed on this contract is prohibited.
+
+Promoting your business outside the boundary of your assigned booth
+
+is not allowed. Intoxication during the show hours is also not
+
+permitted. Refusal to comply with these terms will result in removal
+
+from the show without refund.<br/><b>Setup</b> Booth placements are entire discretion of BAWF. Booths are to
+
+be completely set-up 30 minutes prior to the start of the show. Late
+
+arrival will result in loss of booth space without refund. No pricing
+
+displayed on banners, backdrops, and posters allowed.<br/>
+                                                                                    <b>Tear Down</b> Tear down prior to the end of the show will result in $100
+
+fee. Tear must start as soon as the show ends and must be completed
+
+within an hour.<br/>
+
+                                                                                    <b>BAWF Rights, Indemnities and
+                                                                                        Limitations</b> All exhibitors must
+
+adhere completely by these terms and conditions and our policies and
+
+procedures at all times. Anyone not adhering to these terms will be
+
+asked to leave our shows immediately without refund. The exhibitor
+
+agrees to indemnify and hold harmless BAWF and BAWF assumes no
+
+liability, and offers no compensation of any kind for injury or loss or
+
+personal or property damage as a result of participating in this (or any)
+
+show. Exhibitors agree to use their own Business Liability Insurance
+
+for remedy in such cases. BAWF reserves all these above rights at all
+
+times.
+                                                                                    <br/>
+
+                                                                                    <b>Cancellations and Refunds</b> All Participation in Fairs are a Binding
+
+and Final decision for the Show dates requested upon Contract
+
+signing. Deposits are NEVER refundable. Prior to 45 days advanced
+
+notice, cancellation or rescheduling is completely at the discretion of
+
+Bay Area Wedding Fairs based on several factors reviewed on a case
+
+by case basis. If an Exhibitor cancels within 45 days of any show, the
+
+full balance remains due for that show and no rescheduling is
+
+available. If a Fashion Show Sponsor or Stage Services Provider
+
+cancels within 45 days, the Contract list price is due plus any
+
+expenses required to replace their services. To receive the Brides'/
+
+Grooms' List, you must be present at the entire show.
+                                                                                </p>
+
+                                                                            </div>
+
+                                                                                    </div>
+                                                                                    <!-- Panel Widget -->
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    {#                    <br><br>#}
+
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    {#                    <br><br>#}
+
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Panel Widget -->
+                                        </div>
+                                        <!-- Panel Widget -->
+                                    </div>
+                                    <!-- col-md-6 -->
+
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- .vd_content-section -->
+
+                        </div>
+                        <!-- .vd_content -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_container -->
+            </div>
+            <!-- .vd_content-wrapper -->
+
+            <!-- Middle Content End -->
+
+        </div>
+        <!-- .container -->
+
+        <!-- .content -->
+
+        <!-- Footer Start -->
+        <footer class="footer-1" id="footer">
+            <div class="vd_bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <div class="copyright">
+                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+
+    </div>
+
+
+    <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+
+    </div>
+{% endblock content %}
+{% block script %}
+
+    <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+    <script>
+
+
+        {#     {% if not is_customer %}#}
+        // alert('working');
+        var key = '{{ key }}';
+        Stripe.setPublishableKey(key);
+        $('#submit-invoice').on('click', function (event) {
+            event.preventDefault();
+            $('#submit-invoice').attr('disabled', true);
+            //alert('submit');
+            $("#stripe-error-message").html("");
+            if ($("#id_number").length == 1) {
+                // alert('inside');
+                var form = this;
+                var card = {
+                    number: $("#id_number").val(),
+                    expMonth: $("#id_month").val(),
+                    expYear: $("#id_year").val(),
+                    {#                    cvc: $("#id_verification_value").val()#}
+                };
+                //console.log(card);
+                Stripe.card.createToken(card, function (status, response) {
+                    if (status === 200) {
+                        console.log(status, response);
+                        //jQuery("#credit-card-errors").hide();
+                        //jQuery("#last_4_digits").val(response.card.last4);
+                        $("#stripe_token").val(response.id);
+                        //jQuery('#setupPayment').prop('disabled', false);
+                        {#                        $('#submit-invoice').removeAttr('disabled');#}
+                        $('#invoice-form').submit();
+                    } else {
+                        console.log(response.error);
+                        console.log(response.error.param);
+                        $("#stripe-error-message").text(response.error.message);
+                        $('#submit-invoice').removeAttr('disabled');
+                    }
+                });
+                return false;
+            }
+            return true;
+        });
+        {#        {% endif %}#}
+        {% if redirect %}
+            parent.window.location.href = '/dashboard/';
+        {% endif %}
+
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-68785620-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+{% endblock script %}

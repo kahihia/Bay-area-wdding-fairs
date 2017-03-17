@@ -1,0 +1,633 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{#    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+{#    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>#}
+{#    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{% endblock %}
+{% block content %}
+    <style>
+        .carousel-inner > .item > img {
+            margin: 0 auto;
+        }
+    </style>
+    {#    <script>#}
+    {#        $(function () {#}
+    {#            $("#id_end_date").datepicker();#}
+    {#        });#}
+    {#    </script>#}
+    <style>
+        .height-250 {
+            min-height: 330px !important;
+            /*max-height: 300px !important;*/
+        }
+
+        .answers-spacing h4 {
+            margin-bottom: 20px;
+        }
+    .large-links {
+        font-size:20px;
+        line-height: 30px;
+    }
+    .tabs .nav-tabs > li > a {
+        line-height: 10px !important;
+    }
+    .vd_timeline .tl-item {
+        height: 50px !important;
+    }
+    .vd_timeline .tl-item-date {
+        margin-bottom: 30px;
+    }
+    .tl-item .panel-body {
+        padding-left: 5px !important;
+    }
+    .tl-item .panel-body h4{
+        font-size: 15px;
+        margin-top: 14px;
+    }
+    </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="">
+                {#                {% include "vendroid/demo/_partial/_sidebar.html" %}#}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="">
+                        <div class="vd_content clearfix">
+                            {#                            <div class="vd_title-section clearfix">#}
+                            {#                                <div class="vd_panel-header no-menu">#}
+                            {#                                    <h1>My Planner</h1>#}
+                            {#                                    <h1 class="section-title pull-left">Vendor Checklist</h1>#}
+                            {##}
+                            {#                                    <!--Size scale buttons-->#}
+                            {#                                    <div class="vd_panel-menu pull-right"#}
+                            {#                                         data-step=5 data-position="left">#}
+                            {#                                                       <a class="btn btn-success "  href="/rsvp">Manage RSVP</a>#}
+                            {#                                    {% if not profile.type == "Professional" %}#}
+                            {#                                        {% if profile.check_subscription %}#}
+                            {#                                        <a style="margin-right: 15px;" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal"><i#}
+                            {#                                                class="fa fa-plus fa-fw"></i>Add Planning Book Item</a>#}
+                            {#                                        {% else %}#}
+                            {#                                        <a style="margin-right: 15px;" class="btn btn-success" onclick="openSubscriptionModalUser()"><i#}
+                            {#                                                class="fa fa-plus fa-fw"></i>Add Planning Book Item</a>#}
+                            {#                                        {% endif %}#}
+                            {#                                    {% else %}#}
+                            {#                                        <a style="margin-right: 15px;" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal"><i#}
+                            {#                                                class="fa fa-plus fa-fw"></i>Add Planning Book Item</a>#}
+                            {#                                    {% endif %}#}
+                            {#                                    </div>#}
+                            {#                                    <div class="clearfix"></div>#}
+                            {#                                  <small class="subtitle">Calendar page with drag and drop events. See <a href="http://arshaw.com/fullcalendar/">fullcalendar</a> for detail</small>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+                            {#            <section class="rec-list">#}
+                            <div class="clearfix">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel widget light-widget">
+                                            {#                                            <div class="panel-heading no-title">#}
+                                            {#                                                #}
+                                            {#                                                <div class="clearfix"></div>#}
+                                            {#                  <div class="vd_panel-menu">#}
+                                            {#  <div data-action="refresh" class="menu entypo-icon smaller-font" data-placement="bottom" data-toggle="tooltip" data-original-title="Refresh"> <i class="icon-cycle"></i> </div>#}
+                                            {#  <div class="menu entypo-icon smaller-font" data-placement="bottom" data-toggle="tooltip" data-original-title="Config">#}
+                                            {#    <div data-action="click-trigger" class="menu-trigger"> <i class="icon-cog"></i> </div>#}
+                                            {#    <div style="display: none;" class="vd_mega-menu-content  width-xs-2  left-xs" data-action="click-target">#}
+                                            {#      <div class="child-menu">#}
+                                            {#        <div class="content-list content-menu">#}
+                                            {#          <ul class="list-wrapper pd-lr-10">#}
+                                            {#            <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-user"></i></div> <div class="menu-text">Panel Menu</div> </a> </li>#}
+                                            {#          </ul>#}
+                                            {#        </div>#}
+                                            {#      </div>#}
+                                            {#    </div>#}
+                                            {#  </div>#}
+                                            {#  <div class="menu entypo-icon" data-placement="bottom" data-toggle="tooltip" data-original-title="Close" data-action="close"> <i class="icon-cross"></i> </div>#}
+                                            {#</div>#}
+                                            {#                                                <!-- vd_panel-menu -->#}
+                                            {##}
+                                            {#                                            </div>#}
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    {#                                                    <h2>Vendor Checklist</h2>#}
+                                                    <div class="col-md-3" style="border-right: 1px solid grey;min-height: 800px;width:20% !important;">
+                                                        <div class="panel vd_map-widget widget text-center">
+                                                            <h1 class="grey">{{ today }}</h1>
+                                                            <h1 class="grey">0 of {{ products.count }} booked
+
+                                                            </h1>
+                                                            <div class="row" style="margin-top:20px;">
+                                                                <div class="progress" style="height: 5px;">
+                                                              <div class="progress-bar" role="progressbar" aria-valuenow="5"
+                                                              aria-valuemin="0" aria-valuemax="100" style="width:5%;background-color: rgb(7, 160, 195);" >
+                                                                <span class="sr-only">5% Complete</span>
+                                                              </div>
+                                                            </div>
+                                                            </div>
+                                                            {#                  <div class="panel-heading vd_bg-blue">#}
+                                                            {#                    <h3 class="panel-title"> <span class="menu-icon"> <i class="icon-pie"></i> </span> New Vs Returning Visitors </h3>#}
+                                                            {#                    <div class="vd_panel-menu">#}
+                                                            {#  <div data-original-title="Config" data-toggle="tooltip" data-placement="bottom" class="nav-medium-button menu entypo-icon smaller-font">#}
+                                                            {#    <div class="menu-trigger" data-action="click-trigger"> <i class="icon-cog"></i> </div>#}
+                                                            {#    <div style="display: none;" data-action="click-target" class="vd_mega-menu-content  width-xs-2  left-xs">#}
+                                                            {#      <div class="child-menu">#}
+                                                            {#        <div class="content-list content-menu">#}
+                                                            {#          <ul class="list-wrapper pd-lr-10">#}
+                                                            {#            <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-user"></i></div> <div class="menu-text">Edit Profile</div> </a> </li>#}
+                                                            {#            <li> <a href="#"> <div class="menu-icon"><i class=" icon-trophy"></i></div> <div class="menu-text">My Achievements</div> </a> </li>#}
+                                                            {#            <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-envelope"></i></div> <div class="menu-text">Messages</div> </a> </li>#}
+                                                            {#            <li class="line"></li>#}
+                                                            {#            <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-tasks"></i></div> <div class="menu-text"> Tasks</div> </a> </li>#}
+                                                            {#            <li> <a href="#"> <div class="menu-icon"><i class=" icon-lock"></i></div> <div class="menu-text">Privacy</div> </a> </li>#}
+                                                            {#          </ul>#}
+                                                            {#        </div>#}
+                                                            {#      </div>#}
+                                                            {#    </div>#}
+                                                            {#  </div>#}
+                                                            {#</div>#}
+                                                            {#<!-- vd_panel-menu -->#}
+                                                            {##}
+                                                            {##}
+                                                            {#                  </div>#}
+{#                                                            <div class="panel-body">#}
+{#                                                                <div id="donut-chart" class="donut-chart"#}
+{#                                                                     style="height: 253px; padding: 0px; position: relative;">#}
+{#                                                                    <canvas height="506" width="542"#}
+{#                                                                            style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 271px; height: 253px;"#}
+{#                                                                            class="flot-base"></canvas>#}
+{#                                                                    <canvas height="506" width="542"#}
+{#                                                                            style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 271px; height: 253px;"#}
+{#                                                                            class="flot-overlay"></canvas>#}
+{#                                                                    <div class="legend">#}
+{#                                                                        <div style="position: absolute; width: 114px; height: 46px; top: 5px; right: 5px; background-color: rgb(255, 255, 255); opacity: 0.85;"></div>#}
+{#                                                                        <table style="position:absolute;top:5px;right:5px;;font-size:smaller;color:#545454">#}
+{#                                                                            <tbody>#}
+{#                                                                            <tr>#}
+{#                                                                                <td class="legendColorBox">#}
+{#                                                                                    <div style="border:1px solid #ccc;padding:1px">#}
+{#                                                                                        <div style="width:4px;height:0;border:5px solid rgb(31,174,102);overflow:hidden"></div>#}
+{#                                                                                    </div>#}
+{#                                                                                </td>#}
+{#                                                                                <td class="legendLabel">35% Complete#}
+{#                                                                                </td>#}
+{#                                                                            </tr>#}
+{#                                                                            <tr>#}
+{#                                                                                <td class="legendColorBox">#}
+{#                                                                                    <div style="border:1px solid #ccc;padding:1px">#}
+{#                                                                                        <div style="width:4px;height:0;border:5px solid rgb(248,93,44);overflow:hidden"></div>#}
+{#                                                                                    </div>#}
+{#                                                                                </td>#}
+{#                                                                                <td class="legendLabel">65% Incomplete#}
+{#                                                                                </td>#}
+{#                                                                            </tr>#}
+{#                                                                            </tbody>#}
+{#                                                                        </table>#}
+{#                                                                    </div>#}
+{#                                                                </div>#}
+{#                                                            </div>#}
+                                                            <!-- panel-body -->
+                                                        </div>
+                                                        {#                                                        <h4 class="text-center">XX Vendors Booked</h4>#}
+                                                        {#                                                        <h4 class="text-center">XX Remaining</h4>#}
+                                                        <div class="col-lg-12 col-md-12">
+                                                            <ul class="vd_timeline">
+{#                                                                                  <li class="tl-item tl-item-year">#}
+{#                                                                                    <div class="tl-year">2014</div>#}
+{#                                                                                  </li>#}
+                                                                                  <li class="tl-item tl-item-date">
+                                                                                    <div class="tl-date"> My List </div>
+                                                                                  </li>
+                                                                {#                 {% if demoplan.is_venue_done %}#}
+                                                                {#                  <li class="tl-item">#}
+                                                                {#                    <div class="tl-icon success"> <i class="fa fa-book"></i> </div>#}
+                                                                {#                    <div class="tl-label panel widget light-widget ">#}
+                                                                {#                    <div class="panel-body">#}
+                                                                {#                        <a href="/demo/plans/{{ id }}/venue/"><h4 style="margin-top:10px;">Venue</h4></a>#}
+                                                                {#                        <span>xx months left</span>#}
+                                                                {#                        <!-- comments -->#}
+                                                                {#                      </div>#}
+                                                                {#                      <!-- panel-body -->#}
+                                                                {#                    </div>#}
+                                                                {#                    <!-- panel -->#}
+                                                                {#                  </li>#}
+                                                                {#                    {% endif %}#}
+                                                                {% for prod in products %}
+                                                                    <li class="tl-item">
+                                                                        <div {% if prod.id == product.id %}style="background-color: rgb(7,160,195) !important;" {% else %}style="background-color: #BCB8B8 !important;"{% endif %} class="tl-icon success"><i
+                                                                                class="fa fa-book"></i></div>
+                                                                        <div class="tl-label panel widget light-widget ">
+                                                                            <div class="panel-body">
+                                                                                <a href="/demov2/plans/{{ prod.id }}/{{ user_id }}/">
+                                                                                    <h4 style="margin-top:10px; {% if prod.id == product.id %}color: rgb(7, 160, 195) !important;{% else %}color: #BCB8B8 !important;{% endif %}">{{ prod.title }}</h4>
+                                                                                </a>
+                                                                                {#                        <span>xx months left</span>#}
+                                                                                {#                        <!-- comments -->#}
+                                                                            </div>
+                                                                            <!-- panel-body -->
+                                                                        </div>
+                                                                        <!-- panel -->
+                                                                    </li>
+                                                                {% endfor %}
+                                                                {#                 {% if demoplan.is_dj_done %}#}
+                                                                {#                  <li class="tl-item">#}
+                                                                {#                    <div class="tl-icon success"> <i class="fa fa-book"></i> </div>#}
+                                                                {#                    <div class="tl-label panel widget light-widget ">#}
+                                                                {#                    <div class="panel-body">#}
+                                                                {#                        <a href="/demo/plans/{{ id }}/dj/"><h4 style="margin-top:10px;">Dj</h4></a>#}
+                                                                {#                        <span>xx months left</span>#}
+                                                                {#                        <!-- comments -->#}
+                                                                {#                      </div>#}
+                                                                {#                      <!-- panel-body -->#}
+                                                                {#                    </div>#}
+                                                                {#                    <!-- panel -->#}
+                                                                {#                  </li>#}
+                                                                {#                {% endif %}#}
+                                                                <li class="tl-item">
+                                                                    <div style="color: rgb(7,160,195) !important;background-color: #BCB8B8 !important;"  class="tl-icon success"><a href="/demov2/select/{{ user_id }}/"><i
+                                                                            class="fa fa-plus" style="color: rgb(7,160,195) !important;"></i></a></div>
+                                                                    <div class="tl-label panel widget light-widget ">
+                                                                        <div class="panel-body">
+{#                                                                            <a href="/demov2/select/"><h4#}
+{#                                                                                    style="margin-top:10px;">Take#}
+{#                                                                                Survey</h4></a>#}
+                                                                            {#                        <span>xx months left</span>#}
+                                                                            {#                        <!-- comments -->#}
+                                                                        </div>
+                                                                        <!-- panel-body -->
+                                                                    </div>
+                                                                    <!-- panel -->
+                                                                </li>
+                                                            </ul>
+                                                            <br><br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-9" style="width: 80% !important;">
+
+                                                        <div class="col-md-12">
+                                                            <h2 style="color: rgb(7,160,195);">{{ product.title }}</h2>
+                                                        </div>
+                                                        <div class="col-md-12" style="margin-top:35px;">
+                                                            <div class="tabs">
+                                                                <ul class="nav nav-tabs widget large-links">
+                                                                    <li class="active"><a href="#home-tab" id="plan-iframe-button"
+                                                                                          data-toggle="tab"> <span
+                                                                            class="menu-icon"></span> <i class="fa fa-list" aria-hidden="true"></i> Plan <span
+                                                                            class="menu-active">
+{#                                                                        <i#}
+{#                                                                            class="fa fa-caret-up">#}
+{#                                                                        #}
+{#                                                                    </i>#}
+                                                                    </span> </a></li>
+
+                                                                    <li class=""><a id="dream-iframe-button"
+                                                                            href="#posts-tab" data-toggle="tab"> <span class="menu-icon"></span> <i class="fa fa-cloud" aria-hidden="true"></i> Dream <span
+                                                                            class="menu-active">
+{#                                                                        <i#}
+{#                                                                            class="fa fa-caret-up"></i><#}
+                                                                        </span> </a></li>
+                                                                    <li class=""><a id="discover-iframe-button" href="#application-tab"
+                                                                                    data-toggle="tab"> <span
+                                                                            class="menu-icon"></span> <i class="fa fa-eye" aria-hidden="true"></i> Discover <span
+                                                                            class="menu-active">
+{#                                                                        <i#}
+{#                                                                            class="fa fa-caret-up"></i>#}
+                                                                    </span> </a></li>
+                                                                    <li class=""><a tabindex="-1" id="decide-iframe-button"
+                                                                                                                             href="#list-tab" data-toggle="tab"
+                                                                    > <span class="menu-icon"></span> <i class="fa fa-gavel" aria-hidden="true"></i> Decide <span
+                                                                            class="menu-active">
+{#                                                                        <i#}
+{#                                                                            class="fa fa-caret-up"></i>#}
+                                                                        </span> </a></li>
+                                                                    <a style="color: #BCB8B8;font-size:15px;" href="#" class="pull-right">Mark as Booked</a>
+
+                                                                    {#                          <li class="disabled"> <a#}
+                                                                    {#                                  href="#shortlist-tab" data-toggle="tab"#}
+                                                                    {#                          > <span class="menu-icon"></span> Shortlist <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                                                    {#                          <li class="disabled"> <a#}
+                                                                    {#                                  href="#bids-tab" data-toggle="tab"#}
+                                                                    {#                          > <span class="menu-icon"></span> Bids <span class="menu-active"><i class="fa fa-caret-up"></i></span> </a></li>#}
+                                                                </ul>
+                                                                <div class="tab-content active mgbt-xs-20">
+                                                                    <div class="tab-pane active answers-spacing"
+                                                                         id="home-tab">
+                                                                        {#                            {% if type == "venue" %}#}
+                                                                        {#                                {% if demoplan.is_venue_done_taken %}#}
+                                                                        {#                                    <iframe FRAMEBORDER="no" BORDER="0" SCROLLING="no" height="579px" style="border: 2px white solid;" width="100%"#}
+                                                                        {#                                            src="{% url "PlansResult" id type %}"></iframe>#}
+                                                                        {#                                {% else %}#}
+                                                                        {#                                    <iframe FRAMEBORDER="no" BORDER="0" SCROLLING="no" height="579px" style="border: 2px white solid;" width="100%"#}
+                                                                        {#                                            src="/demo/survey/venue/{{ id }}/1/"></iframe>#}
+                                                                        {#                                {% endif %}#}
+                                                                        {#                            {% elif type == "dj" %}#}
+                                                                        {#                                {% if demoplan.is_dj_done_taken %}#}
+                                                                        {#                                    <iframe FRAMEBORDER="no" BORDER="0" SCROLLING="no" height="579px" style="border: 2px white solid;" width="100%"#}
+                                                                        {#                                            src="{% url "PlansResult" id type %}"></iframe>#}
+                                                                        {#                                {% else %}#}
+                                                                        <iframe FRAMEBORDER="no" BORDER="0"
+                                                                                SCROLLING="no" height="579px"
+{#                                                                                style="border: 2px white solid;"#}
+                                                                                frameBorder="0"
+                                                                                width="100%"
+                                                                                id="plan-iframe-id"
+                                                                                src="/question/{{ product.category_id }}/{{ product.id }}/{{ user_id }}/"></iframe>
+                                                                        {#                                {% endif %}#}
+                                                                        {#                            {% endif %}#}
+                                                                        {#                            <br />#}
+                                                                        {#                            {% if type == "venue" %}#}
+                                                                        {#                            <h4 class="col-md-6">What do you need this Wedding Venue for?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.VenueQuestion1 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">Would you like this Venue to be indoors or outdoors?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.VenueQuestion2 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">How many guests are you expecting?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.VenueQuestion3 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">When would you like venue services?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.VenueQuestion4 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">We are looking for a venue within?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.VenueQuestion5 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">Anything else the wedding venue should know?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.VenueQuestion6 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">What is your budget for the DJ and related services?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.VenueQuestion7 }}</h4>#}
+                                                                        {#                            {% elif type == "dj" %}#}
+                                                                        {#                                <h4 class="col-md-6">How many guests are you expecting?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;&nbsp;{{ demoplan.DjQuestion1 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">What kind of music would you like?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;&nbsp;{{ demoplan.DjQuestion2 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">Is your Venue indoors or outdoors?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;&nbsp;{{ demoplan.DjQuestion3 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">Does your Venue provide sound equipment??</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;&nbsp;{{ demoplan.DjQuestion4 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">Please confirm the location?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;&nbsp;{{ demoplan.DjQuestion5 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">What additional equipment or services would you like, if any?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;&nbsp;{{ demoplan.DjQuestion6 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6"> Anything else the wedding DJ should know?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;&nbsp;{{ demoplan.DjQuestion7 }}</h4>#}
+                                                                        {#                            <h4 class="col-md-6">What is your budget for the DJ and related services?</h4>#}
+                                                                        {#                            <h4 class="col-md-6">&nbsp;{{ demoplan.DjQuestion8 }}</h4>#}
+                                                                        {#                            {% endif %}#}
+                                                                    </div>
+                                                                    <div class="tab-pane " id="posts-tab">
+                                                                        <iframe id="dream-iframe-id" height="600px"
+                                                                                style="border: 2px white solid;background-color: white;"
+                                                                                width="100%"
+                                                                                src=""></iframe>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="list-tab">
+                                                                        {#                                <iframe height="600px" style="border: 2px white solid;" width="100%" src="/dreams/17/"></iframe>#}                                                <iframe id="decide-iframe-id" height="600px"
+                                                                                style="border: 2px white solid;"
+                                                                                width="100%"
+                                                                                src=""></iframe>
+
+                                                                    </div>
+                                                                    <div class="tab-pane " id="application-tab"
+                                                                         style="background-color: #F3E8E9;">
+{#                                                                        shortlist#}
+                                                                        <iframe id="discover-iframe-id" height="600px"
+                                                                                style="border: 2px white solid;"
+                                                                                width="100%"
+                                                                                src=""></iframe>
+{#                                                                        <div id="carousel-example-generic"#}
+{#                                                                             class="carousel slide"#}
+{#                                                                             style="height: 600px;"#}
+{#                                                                             data-ride="carousel">#}
+{#                                                                            <!-- Indicators -->#}
+{#                                                                            <ol class="carousel-indicators">#}
+{#                                                                                <li data-target="#carousel-example-generic"#}
+{#                                                                                    data-slide-to="0"#}
+{#                                                                                    class="active"></li>#}
+{#                                                                                {% for o in recommendations %}#}
+{#                                                                                    <li data-target="#carousel-example-generic"#}
+{#                                                                                        data-slide-to="{{ forloop.counter }}"></li>#}
+                                                                                    {#                            <li data-target="#carousel-example-generic" data-slide-to="1" class="active"></li>#}
+                                                                                    {#                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>#}
+{#                                                                                {% endfor %}#}
+{#                                                                            </ol>#}
+{##}
+{#                                                                            <!-- Wrapper for slides -->#}
+{#                                                                            <div class="carousel-inner" role="listbox">#}
+{#                                                                                {% for o in recommendations %}#}
+{#                                                                                    <div class="item {% if forloop.counter == 1 %}active{% endif %}">#}
+{#                                                                                        <img src="{{ o.get_image_url }}"#}
+{#                                                                                             class="text-center"#}
+{#                                                                                             style="max-height: 540px;"#}
+{#                                                                                             alt="BackgroundImage">#}
+{#                                                                                        <div class="carousel-caption">#}
+{#                                                                                            <div class="clearfix"></div>#}
+{#                                                                                            <h3><br/>{{ o.yelp_name }}#}
+{#                                                                                            </h3>#}
+{#                                                                                            <p>San Fransisco, CA</p>#}
+{#                                                                                        </div>#}
+{#                                                                                    </div>#}
+{#                                                                                {% endfor %}#}
+                                                                                {#                            <div class="item">#}
+                                                                                {#                               <img src="{% static "images/tempPhoto.png" %}" alt="BackgroundImage">#}
+                                                                                {#                              <div class="carousel-caption">#}
+                                                                                {#                                ...#}
+                                                                                {#                              </div>#}
+                                                                                {#                            </div>#}
+{#                                                                                ...#}
+{#                                                                            </div>#}
+{##}
+{#                                                                            <!-- Controls -->#}
+{#                                                                            <a class="left carousel-control"#}
+{#                                                                               href="#carousel-example-generic"#}
+{#                                                                               role="button" data-slide="prev">#}
+{#                                                                                <span class="glyphicon glyphicon-chevron-left"#}
+{#                                                                                      aria-hidden="true"></span>#}
+{#                                                                                <span class="sr-only">Previous</span>#}
+{#                                                                            </a>#}
+{#                                                                            <a class="right carousel-control"#}
+{#                                                                               href="#carousel-example-generic"#}
+{#                                                                               role="button" data-slide="next">#}
+{#                                                                                <span class="glyphicon glyphicon-chevron-right"#}
+{#                                                                                      aria-hidden="true"></span>#}
+{#                                                                                <span class="sr-only">Next</span>#}
+{#                                                                            </a>#}
+{#                                                                        </div>#}
+                                                                    </div>
+                                                                    <div class="tab-pane" id="shortlist-tab"> Tab 5
+                                                                    </div>
+                                                                    <div class="tab-pane" id="bids-tab"> Tab 6</div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <!-- row -->
+                                            </div>
+                                            <!-- panel-body -->
+                                        </div>
+                                        <!-- Panel Widget -->
+
+
+                                    </div>
+                                </div>
+                                <!-- row -->
+
+
+                            </div>
+                        </div>
+                        {#            </section>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    {#    </section>#}
+    <!-- (7) Add task Form -->
+
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+
+    <!-- Flot Chart  -->
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.resize.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.pie.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.categories.min.js" %}"></script>
+
+    <script type="text/javascript">
+
+{##}
+{#        /* DONUT CHART */#}
+{#        var data_donut = [],#}
+{#                series = 3;#}
+{#        var data_donut = [#}
+{#            {label: "{{ percentage|floatformat:"1" }}% Completed", data: {{ percentage|floatformat:"1" }}},#}
+{#            {#}
+{#                label: "{{ percentage_remaining|floatformat:"1" }}% Incomplete",#}
+{#                data: {{ percentage_remaining|floatformat:"1" }}#}
+{#            }#}
+{#        ];#}
+{#        var revenue_donut_chart = $("#donut-chart");#}
+{##}
+{#        $("#donut-chart").bind("plotclick", function (event, pos, item) {#}
+{#            if (item) {#}
+{#                $("#clickdata").text(" - click point " + item.dataIndex + " in " + item.series.label);#}
+{#                plot.highlight(item.series, item.datapoint);#}
+{#            }#}
+{#        });#}
+{#        var plot_2 = $.plot(revenue_donut_chart, data_donut, {#}
+{#            series: {#}
+{#                pie: {#}
+{#                    radius: 0.7,#}
+{#                    innerRadius: 0.4,#}
+{#                    show: true#}
+{#                }#}
+{#            },#}
+{#            grid: {#}
+{#                hoverable: true,#}
+{#                clickable: true,#}
+{#            },#}
+{#            colors: ["#DF9DA9", "#BCB8B8 "]#}
+{#        });#}
+
+
+{#        var cityAreaData = [#}
+{#            500.70,#}
+{#            410.16,#}
+{#            210.69,#}
+{#            120.17,#}
+{#            64.31,#}
+{#            150.35,#}
+{#            130.22,#}
+{#            120.71,#}
+{#            100.32#}
+{#        ]#}
+        {#        $('#map1').vectorMap({#}
+        {#            map: 'world_mill_en',#}
+        {#            scaleColors: ['#C8EEFF', '#0071A4'],#}
+        {#            normalizeFunction: 'polynomial',#}
+        {#            focusOn: {#}
+        {#                x: 5,#}
+        {#                y: 0.56,#}
+        {#                scale: 1.7#}
+        {#            },#}
+        {#            zoomOnScroll: false,#}
+        {#            zoomMin: 0.85,#}
+        {#            hoverColor: false,#}
+        {#            regionStyle: {#}
+        {#                initial: {#}
+        {#                    fill: '#abe7c8',#}
+        {#                    "fill-opacity": 1,#}
+        {#                    stroke: '#abe7c8',#}
+        {#                    "stroke-width": 0,#}
+        {#                    "stroke-opacity": 0#}
+        {#                },#}
+        {#                hover: {#}
+        {#                    "fill-opacity": 0.8#}
+        {#                },#}
+        {#                selected: {#}
+        {#                    fill: 'yellow'#}
+        {#                },#}
+        {#                selectedHover: {}#}
+        {#            },#}
+        {#            markerStyle: {#}
+        {#                initial: {#}
+        {#                    fill: '#F85D2C',#}
+        {#                    stroke: '#F85D2C',#}
+        {#                    "fill-opacity": 0.9,#}
+        {#                    "stroke-width": 10,#}
+        {#                    "stroke-opacity": 0.5,#}
+        {#                    r: 3#}
+        {#                },#}
+        {#                hover: {#}
+        {#                    stroke: '#F85D2C',#}
+        {#                    "stroke-width": 14#}
+        {#                },#}
+        {#                selected: {#}
+        {#                    fill: 'blue'#}
+        {#                },#}
+        {#                selectedHover: {}#}
+        {#            },#}
+        {#            backgroundColor: '#ffffff',#}
+        {#            markers: [#}
+        {#                {latLng: [50, 0], name: 'France - 43145 views'},#}
+        {#                {latLng: [0, 120], name: 'Indonesia - 145 views'},#}
+        {#                {latLng: [-25, 130], name: 'Australia - 486 views'},#}
+        {#                {latLng: [0, 20], name: 'Africa - 12 views'},#}
+        {#                {latLng: [35, 100], name: 'China - 7890 views'},#}
+        {#                {latLng: [46, 105], name: 'Mongolia - 2123 views'},#}
+        {#                {latLng: [40, 70], name: 'Kyrgiztan - 87456 views'},#}
+        {#                {latLng: [58, 50], name: 'Russia - 4905 views'},#}
+        {#                {latLng: [35, 135], name: 'Japan - 87456 views'}#}
+        {#            ],#}
+        {#            series: {#}
+        {#                markers: [{#}
+        {#                    attribute: 'r',#}
+        {#                    scale: [3, 7],#}
+        {#                    values: cityAreaData#}
+        {#                }]#}
+        {#            },#}
+        {#        });#}
+    $('#discover-iframe-button').on('click',function(){
+        $('#discover-iframe-id').attr('src','/shortlist/{{ product.category.name }}/{{ product.id }}/')
+    })
+    $('#dream-iframe-button').on('click',function(){
+        $('#dream-iframe-id').attr('src','/dream/{{ product.id }}/')
+    })
+    $('#plan-iframe-button').on('click',function(){
+        $('#plan-iframe-id').attr('src','/question/{{ product.category_id }}/{{ product.id }}/')
+    })
+    $('#decide-iframe-button').on('click',function(){
+        $('#decide-iframe-id').attr('src','/vendors/shortlist/{{ product.category_id }}')
+    })
+    </script>
+
+{% endblock %}

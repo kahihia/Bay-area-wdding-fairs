@@ -1,0 +1,263 @@
+{% extends 'base_blank_iframe.html' %}
+{% load myfilters %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+    <style>
+    .red {
+        color: red;
+    }
+    .hover_img a { position:relative; }
+    .hover_img a span { position:absolute; display:none; z-index:99; }
+    .hover_img a:hover span { display:block; }
+    </style>
+
+<!-- patch3 -->
+
+
+{#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
+        <!-- Nav tabs -->
+
+
+        <div class="row">
+
+                      <section class="widget text-center" style="margin-bottom: 0px;margin-top: 0px; padding-bottom: 0px; min-height: 100%;">
+{#                            <h4>Subsctibe Now</h4>#}
+
+
+
+
+                                            <br />
+                                            <h3 class="margin-bottom-10">Only Subscribed members have full access to YapJoy. </h3>
+
+
+
+                                            <h3 class="margin-bottom-10">With just $30/month, you can.
+                                            </h3>
+                                            <div class="">
+                                                    <li>Setup your complete profile (Business Description, Yelp Reviews etc.)</li>
+    <li>Search through thousands of brides/grooms in our database</li>
+    <li>Message to 100 potential clients (You can buy more credits anytime)</li>
+    <li>and a lot more..</li>
+
+                                            </div>
+
+
+
+
+
+                        </section>
+                        <div class="clearfix"></div>
+
+
+
+
+                </div>
+        <div class="">
+            <div class="">
+        {% if successMessage %}
+        <div class="flashes">
+            <div class="alert alert-success">{{ successMessage }}</div>
+        </div>
+        {% endif %}
+            <div role="tabpanel" class="tab-pane {% if not emailformSubmit %}active{% endif %}" id="info">
+                <div class="flashes"></div>
+{#                <p class="helper-text"><i class="fa fa-info-circle"></i> Use a valid credit card, in order to avoid from blocking.</p>#}
+                <form role="form" action="." method="POST" id="depositForm" name="depositForm" style="margin-bottom: 10px;">
+            {% csrf_token %}
+            {% if not userprofile.stripe_id %}
+            <div class="form-body">
+{#                <div class="form-group ">#}
+{#                    <label>Name on card</label>#}
+{#                    {{ form.name }}#}
+{##}
+{#                        <div class="red text-center">{{ form.name.errors.0 }}</div>#}
+{#                </div>#}
+                <div class="form-group">
+                    <label>Card number</label>
+                    {{ form.number }}
+
+                        <div  class="red text-center"><div id="cardError">{{ form.number.errors.0 }}</div></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Expiry month</label>
+                    {{ form.month }}
+
+                            <div  class="red text-center"><div id="expMonthError">{{ form.month.errors.0 }}</div></div>
+
+                </div>
+                <div class="form-group">
+                    <label>Expiry year</label>
+                    {{ form.year }}
+                            <div  class="red text-center">{{ form.year.errors.0 }}</div>
+                </div>
+{#                <div class="form-group">#}
+{##}
+{#                    <label>CCV2</label>#}
+{#                    {{ form.verification_value }}#}
+{##}
+{##}
+{#                            <div  class="red text-center"><div id="cvcError">{{ form.verification_value.errors.0 }}</div></div>#}
+{##}
+{#                </div>#}
+
+            </div>
+                <input name="cc_form_submit" type="hidden" id="cc_form_submit"/>
+            {% else %}
+                <div class="form-body">
+                    <section class=" ">
+                            <ul class="list-unstyled">
+                                <div style="color: #3397a5">
+                                    <div class="items">
+                                        <li>
+                                             **** **** **** {{ is_customer }} <br>
+                                        <p>( <a href="/removeCard/" style="color: red;">EDIT</a> ) Existing Card Number</p>
+                                        <input hidden id="cc_form_submit_cus" name="cc_form_submit_cus">
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </ul>
+                        </section>
+
+                </div>
+
+
+            {% endif %}
+                <section>
+                    <div class="red"><div class="red text-center" id="stripe-error-message">{{ stripeError }}</div>
+                                            </div>
+                            <ul class="list-unstyled">
+                                <div style="color: #3397a5">
+                                    <div class="items">
+                                        <li class="text-center">
+                                         <input name="stripe_token" type="hidden" id="stripe_token"/>
+
+                                        <input hidden id="registerUser" name="registerUser"/>
+                                            <div class="pull-right">
+                                        <a style="margin-right: 30px;margin-top: 6px;" class="pull-left" onclick="parent.closeSubscribedModal();">Later
+                                        </a>
+                                        <button type="submit" id="paymentButton" class="btn btn-primary pull-right">BUY NOW
+                                        </button></div>
+
+
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </ul>
+                        </section>
+                <div class="clearfix"></div>
+
+
+        </form>
+            <div class="clearfix"></div>
+            </div>
+            <!-- end panel -->
+            <!-- end panel -->
+        </div>
+        </div>
+
+
+
+<!-- patch3 -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+{#        {% if not is_customer %}#}
+        // alert('working');
+        var key = "{{ key }}";
+        Stripe.setPublishableKey(key);
+        $("#depositForm").submit(function () {
+            $('#paymentButton').prop('disabled', true);
+            //alert('submit');
+            if ($("#id_number").length == 1) {
+                // alert('inside');
+                var form = this;
+                var card = {
+                    number: $("#id_number").val(),
+                    expMonth: $("#id_month").val(),
+                    expYear: $("#id_year").val(),
+{#                    cvc: $("#id_verification_value").val()#}
+                };
+                //console.log(card);
+                Stripe.card.createToken(card, function (status, response) {
+                    if (status === 200) {
+                        console.log(status, response);
+                        //$("#credit-card-errors").hide();
+                        //$("#last_4_digits").val(response.card.last4);
+                        $("#stripe_token").val(response.id);
+                        //$('#setupPayment').prop('disabled', false);
+                        form.submit();
+                    } else {
+                        console.log(response.error);
+                        console.log(response.error.param);
+                        if(response.error.param=='number'){
+                            $("#cardError").html(response.error.message);
+{#                            $("#cardError").css('color','#cb5a5e');#}
+{#                            $("#id_number").addClass('edited');#}
+                            $("#stripe-error-message").text('');
+                        }else if(response.error.param=='exp_month'){
+                            $("#expMonthError").html(response.error.message);
+{#                            $("#expMonthError").css('color','#cb5a5e');#}
+                            $("#cardError").html('Enter Card Number');
+{#                            $("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text('');
+                        }
+                        else if(response.error.param=='cvc'){
+                            $("#cvcError").html(response.error.message);
+{#                            $("#cvcError").css('color','#cb5a5e');#}
+{#                            $("#id_verification_value").addClass('edited');#}
+                            $("#expMonthError").html('Enter Expiration Month');
+{#                            $("#expMonthError").css('color','#999');#}
+                            $("#cardError").html('Enter Card Number');
+{#                            $("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text('');
+                        }
+                        else{
+                            $("#cvcError").html(response.error.message);
+{#                            $("#cvcError").css('color','#999');#}
+                            $("#expMonthError").html('Enter Expiration Month');
+{#                            $("#expMonthError").css('color','#999');#}
+                            $("#cardError").html('Enter Card Number');
+{#                            $("#cardError").css('color','#999');#}
+                            $("#stripe-error-message").text(response.error.message);
+                        }
+
+{#                        $("#paymentBlock").attr('style','border: 4px solid red');#}
+                        //$("#credit-card-errors").show();
+                        //$("#user_submit").attr("disabled", false);
+                        $(this).children('button[type=submit]').prop('disabled', false);
+                        $('#paymentButton').prop('disabled', false);
+                    }
+                });
+                return false;
+            }
+            return true;
+        });
+{#        {% endif %}#}
+{#        {% if form_w.errors or error or message %}#}
+{#            $(document).ready(function(){#}
+{#                $('#make-withdrawl').modal('show');#}
+{#            });#}
+{#        {% endif %}#}
+{#        {% if form_cc.errors or error %}#}
+{#            $(document).ready(function(){#}
+{#                $('#make-deposit').modal('show');#}
+{#            });#}
+{#        {% endif %}#}
+        {% if reload_window  %}
+            parent.location.href = "/";
+        {% endif %}
+{#        alert('this modal is loading');#}
+
+</script>
+{% endblock content %}
+{% block jquery %}
+
+
+
+{% endblock jquery %}

@@ -1,0 +1,54 @@
+#videos {
+    /*position: relative;*/
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#subscriber {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 238%;
+    z-index: 10;
+}
+#publisher {
+    position: relative;
+    width: 200px;
+    height: 160px;
+    /*bottom: 10px;*/
+    left: -13px;
+    z-index: 100;
+    border: 3px solid white;
+    border-radius: 3px;
+    bottom:-300px;
+}
+
+#videoCloseBtn {
+    position: relative;
+    z-index: 100;
+    bottom:-307px;
+}
+
+.modal-header{
+    background: #ffffff none repeat scroll 0 0;
+    padding-bottom: 28px;
+}
+.modal-footer{
+    background: #ffffff none repeat scroll 0 0;
+}
+.modal-body{
+    padding-bottom:300px;
+}
+.modal-dialog{
+    width:800px;
+}
+#notify-modal{
+    padding-bottom:1px;
+}
+#notify-dialog{
+    width:500px;
+    margin-right: 9px;
+    top:-18px;
+}

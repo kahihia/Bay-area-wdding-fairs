@@ -1,0 +1,130 @@
+<div class="modal fade" id="directoryAccessRegistrationModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="background-color: wheat">
+        <div class="modal-content">
+        <div class="modal-body">
+            <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+            <div class="col-md-10 col-md-offset-1">
+{#                <h4 class="modal-title" style="text-align: center;" >Edit Contractor Information</h4>#}
+{#                <hr>#}
+                 <form action="" method="post" id="profile_complete_form" >
+                     <input id="apply_now_profile" name="apply_now_profile" hidden />
+                                                    <p style="padding-top:20px;">Before applying to access YapJoy Directory, please upload:</p>
+                                                    <p class="text-left" style="padding-left: 20px;">- 1 minute "team introductory video"<br />
+                                                        - Profile Picture<br />
+                                                        - A description about your company<br />
+                                                        - 10+ photos that represents your work<br />
+                                                        - 2+ package deals<br />
+                                                        - Yelp account details
+                                                    </p>
+
+                                                    <div class="text-center">
+                                                        <button id="directory_access_button" class="btn blue-button" type="submit" style="margin-bottom: 10px;width:100%;">I am ready. Apply!</button>
+                                                        <a type="cancel"  data-dismiss="modal"
+                                            style="cursor: pointer;">Cancel
+                                    </a>
+                                                    </div>
+                                                </form>
+                <div class="col-md-12" hidden id="directory_access_button_success">
+                    <p>Your storefront is under review</p>
+                    <p>Please allow up to 48 hours before hearing back.</p>
+                    <p>In the mean time, you may continue to optimize your storefront.</p>
+                    <p>Thanks for your patience.<br />:)</p>
+                     <a type="cancel"  data-dismiss="modal" class="pull-right"
+                                            style="cursor: pointer;">Done
+                                    </a>
+                </div>
+
+
+
+            </div>
+
+        </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="EditProfileImage" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="background-color: wheat">
+        <div class="modal-body">
+            <div >
+                <h4 class="modal-title" style="text-align: center;" >Edit Profile Image</h4>
+                <hr>
+                <p>Please select a profile picture</p>
+
+
+                <p>
+                     <form action="" method="POST" id="profile_image_form" enctype="multipart/form-data" >
+                     <input id="change_profile_picture" name="change_profile_picture" hidden />
+
+ {{ profile__image__form.image }}
+                    {{ profile__image__form.image.errors }}
+                                                    <div class="text-center">
+                                                        <button id="update_image_button" class="btn blue-button" type="submit" style="margin-bottom: 10px;width:100%;">Update</button>
+                                                        <a type="cancel"  data-dismiss="modal"
+                                            style="cursor: pointer;">Cancel
+                                    </a>
+                                                    </div>
+                                                </form>
+                </p>
+{#                <button type="cancel" class="btn btn-gray pull-right" data-dismiss="modal"#}
+{#                                        style="margin-right: 30px;">Cancel#}
+{#                                </button>#}
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="AlbumPictureView" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="background-color: wheat">
+        <div class="modal-body">
+            <div >
+{#                <p>Picture View</p>#}
+                <form action="" method="POST" id="AlbumPictureRemoveForm" enctype="multipart/form-data" >
+                     <input id="AlbumPictureID" name="AlbumPictureID" hidden />
+
+
+                                                    <div class="">
+                                                        <button style="cursor:pointer;" class="pull-right" id="AlbumPictureRemove" type="submit" ><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                        <div class="clearfix"></div>
+                                                        <hr />
+
+                                                    </div>
+                                                </form>
+                <p><img id="AlbumPictureViewImage" src="" width="100%" /></p>
+
+
+                <p>
+
+                </p>
+{#                <button type="cancel" class="btn btn-gray pull-right" data-dismiss="modal"#}
+{#                                        style="margin-right: 30px;">Cancel#}
+{#                                </button>#}
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="listingError" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="background-color: wheat">
+        <div class="modal-body">
+            <div >
+<h1 class="text-center">Only approved profiles can view listings!</h1>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

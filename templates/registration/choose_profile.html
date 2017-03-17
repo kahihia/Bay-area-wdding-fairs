@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <!-- patch1 -->
+    <link rel="icon" href="{% static "images/favicon.png" %}" type="image/png"
+          sizes="32x32">
+    <link rel="stylesheet" type="text/css" href="{% static "css/zocial.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery_002.js" %}"></script>
+    <title>YapJoy - An Intelligent Way to Plan Stress Free Wedding online</title>
+    <!-- patch4 -->
+    <meta name="description" content="An Intelligent Way to Plan Stress Free Wedding online">
+    <meta name="keywords"
+          content="Wedding,bride,groom,wedding planners,venues,caterers,yapjoy,bayareawedding,wedding fairs">
+    <meta name="author" content="yapjoy">
+
+    <meta name="ROBOTS" content="INDEX, FOLLOW">
+    <!-- patch4 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "font-awesome-4.4.0/css/font-awesome.css" %}">
+    <link href="{% static "css/styles.css" %}" rel="stylesheet" type="text/css"
+          media="all">
+</head>
+<body>
+<div id="bgvid">
+    <img src="{% static "images/background_1.jpg" %}">
+</div>
+<section class="top-nav navbar-fixed-top home">
+    <nav class="navbar">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="clearfix"></div>
+                <a class="navbar-brand logo" href="/"><img
+                        src="{% static "images/unnamed.png" %}"></a>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</section>
+<!-- v27 -->
+<!-- Check dependencies
+Done to reflect password validation on forget password -->
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<section class="home-section">
+    <div class="overlay"></div>
+    <div id="bgvid"></div>
+    <div class="]">
+        <div class="]">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <!-- sticky landing page -->
+                        <div>
+                            <section class="login-form">
+                                <h3>Select a profile type</h3>
+                                {% if InvalidDetails %}
+                                    <div class="flashes">
+                                        <div class="alert alert-danger">{{ InvalidDetails }}</div>
+                                    </div>
+                                {% endif %}
+                                <form action="." method="post">
+                                    {% csrf_token %}
+                                    <input value="" name="LoginForm[return]" id="LoginForm_return" type="hidden">
+{#                                    <div class="form-group">#}
+{#                                        <input value="{{ user.username }}" class="form-control" readonly="True" disabled="disabled" />#}
+{#                                    </div>#}
+                                    <div class="form-group">
+                                        {{ form.type }}
+                                    </div>
+                                    <button type="submit" class="btn btn-blue log-in-btn">Select</button>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+</section>
+<footer class="home">
+    <ul class="list-inline">
+        <li>&copy; 2015 Yapjoy</li>
+    </ul>
+</footer>
+</body>
+</html>

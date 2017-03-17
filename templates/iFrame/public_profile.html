@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% load comments %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+            <section class="profile-section ">
+    <div class="col-md-8 col-md-offset-1 main-wrap">
+        <!-- <section class="main-header"
+                 style="background-image:url(/images/tempBg.jpg)"> -->
+      <!-- seth -->
+                  <section class="main-header"
+                  style="background-image: url({{ profile.get_cover_url }})">
+                 
+
+       <!-- seth -->
+        <!-- Old Code -->
+               
+
+        </section>
+        <section class="profile-info">
+            <span class="profile-thumb profile-lg" style="background-image: url({{ profile.get_image_url }})">
+              </span>
+            <div class="menu">
+                 <span class="user-name">{{ user.get_full_name }}</span>
+                <span class="pull-right">
+
+                                {% if not userprofile.type == "Professional" %}
+                                    {% if is_friend %}
+                                        <form action="." method="post">
+                                    {% csrf_token %}
+                                    <input id="remove_friend" name="remove_friend" value="{{ user.id }}" hidden="hidden" />
+                                  <button type="submit" class="btn btn-red">Unfriend</button>
+                                    </form>
+                                        {% else %}
+                                    <form action="." method="post">
+                                    {% csrf_token %}
+                                    <input id="add_friend" name="add_friend" value="{{ user.id }}" hidden="hidden" />
+                                  <button type="submit" class="btn btn-blue">Add as Friend</button>
+                                    </form>
+                                        {% endif %}
+                                {% else %}
+                                    <a onclick="sendMessage();"><p class="friends-already">Message</p></a>
+                                {% endif %}
+
+                <div class="flashes"></div>
+                </span>
+                <p class="gender"></p>
+                 <p class="title">
+                     {{ profile.type }}                 </p>
+
+                <!-- patch3 -->
+                <p>{{ profile.get_interests }}</p>
+                </div>
+        </section>
+        <section class="main-content">
+            <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+
+             <!--       <li role="presentation"><a href="#about" aria-controls="about" role="tab"
+                                               data-toggle="tab">About</a></li> -->
+                     <li role="presentation" class="active"><a href="#activity" aria-controls="activity" role="tab"
+                                                              data-toggle="tab">Activity</a></li>
+                    <li role="presentation"><a href="#friends" aria-controls="friendss" role="tab" data-toggle="tab">My Planner</a>
+
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="activity">
+                        <div class="wall-posting">
+
+                            {% if is_friend %}
+                                {% include 'partial/_feed.html' %}
+                            {% else %}
+                                <h4 class="text-center">Not Available</h4>
+                            {% endif %}
+
+                        </div>
+                        <!-- end wall -->
+                    </div>
+                    <!-- end activity -->
+                    <div role="tabpanel" class="tab-pane" id="about">about</div>
+                    <div role="tabpanel" class="tab-pane" id="friends">
+
+                        <div id="friend-list-detailed" class="list-view">
+                            <div class="text-center">
+                                <!-- patch2 -->
+                                <!-- patch2 -->
+
+                                <!-- patch2 -->
+                                <!-- patch2 -->
+                                 {% for product in products %}
+                            <div class="col-md-3 wrap">
+                                <div class="media height-250">
+
+                                    <div class="media-body text-center">
+                                        <h4><a href="/plans/{{ product.id }}/">{{ product.title }}</a></h4>
+
+                                        <p><a href="/plans/{{ product.id }}/">Budget: ${{ product.amount|intcomma }}</a>
+                                        </p>
+                                        <hr/>
+                                        <p class="status">
+                                            {{ product.description|truncatechars:"150" }}           </p>
+                                        {#                                        <hr />#}
+                                        {#                                         <div class="col-md-9 text-center" style="position: absolute; bottom: 5px;">#}
+                                        {#                                    <button class="btn btn-primary btn-block pull-right">Edit</button>#}
+                                        {#                                    </div>#}
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                                <!-- patch2 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end tab panel -->
+        </section>
+        <!-- end main-content -->
+    </div>
+    <!-- end col -->
+    <div class="col-md-3">
+
+        
+               
+        <!-- make task invisible to other users -->
+        <!-- patch1 -->
+        <section class="widget tasks">
+            <h4>Tasks</h4>
+            <ul class="list-unstyled">
+            {% if not is_friend %}
+                <div id="task-list" class="list-view">
+                    <div class="items">
+
+                        <li class="text-center">
+
+                            <p>Only friends can view</p>
+                        </li>
+
+                    </div>
+                </div>
+                {% else %}
+                       {% for task in tasks %}
+                        <div id="task-list" class="list-view">
+                            <div class="items">
+                                <li class="">
+                                    <a onclick="completeTask('{{ task.id }}');"><i id="complete_task_{{ task.id }}"
+                                                                                   class="{% if task.complete %}fa fa-check fa-lg success_green{% else %}fa fa-circle-o fa-lg{% endif %}"></i></a>
+
+                                    <p><a {% if task.complete %}class="success_green"{% endif %}
+                                          id="task_subject_{{ task.id }}" href="/tasks">{{ task.subject }}</a></p>
+
+                                </li>
+                            </div>
+                        </div>
+                    {% endfor %}
+            {% endif %}
+            </ul>
+        </section>
+
+                    
+         <!-- make task invisible to other users -->
+
+    <!-- make event invisible to other users -->
+    <!-- patch1 -->
+        <section class="widget events">
+            <h4>Events</h4>
+            {% if not is_friend %}
+            <div id="event-list" class="list-view">
+                <div class="items">
+                    <div class="media">
+                        <div class="media-body text-center">
+
+                            <p>Only friends can view</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                {% for event in events %}
+                    <div id="event-list" class="list-view">
+                        <div class="items">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="fa fa-calendar fa-3x"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-heading"><a href="/events/">{{ event.title }}</a></h5>
+
+                                    <p class="event-descript"></p>
+
+                                    <p class="event-time">{{ event.start }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+        </section>
+
+
+        <section class="widget recommendations">
+            <h4>Friends</h4>
+            <ul class="list-inline">
+                <div id="friend-list" class="list-view">
+                    <div class="items">
+                        <!-- patch2 -->
+                        <!-- patch2 -->
+                        {% if not is_friend %}
+                        <div class="media">
+                            <div class="media-body text-center">
+                                <p>Only friends can view</p>
+                            </div>
+                        </div>
+                        {% else %}
+                            {% for friend in friends %}
+                             <div class="media">
+                              <div class="media-left">
+                              <span class="profile-thumb profile-md" style="background-image: url({{ friend.user.userprofile.get_image_url }})"></span>
+                              </div>
+                              <div class="media-body">
+                                <h5 class="media-heading"> <a href="/profile/{{ friend.user.id }}">{{ friend.user.get_full_name }}</a></h5>
+                                    <p class="descript">{{ friend.user.userprofile.type }}</p>
+                                    <p class="descript">{{ friend.user.userprofile.looking_for }}</p>
+                              </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                        <!-- patch2 -->
+                    </div>
+                </div>
+            </ul>
+
+            <!--   <a href="#friends" class="view-all" aria-controls="friends" role="tab" aria-expanded="true" data-toggle="tab">View all</a> -->
+        </section>
+    </div>
+    <!-- end col -->
+</section>
+    <div class="modal fade" id="messageModal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                                <!-- patch2 -->
+                                <h4 class="modal-title">Send a message</h4>
+                                {% if message_success %}
+                                    <h3 class="success_green text-center">{{ message_success }}</h3>
+                                    <br />
+                                    <br />
+                                {% else %}
+                                <form action="." method="POST" style="margin-left: 10px; margin-right: 10px;">
+                                    {% csrf_token %}
+                                    <!-- seth -->
+                                    <div class="form-group">
+                                        {% if error %}<p class="red text-center">{{ error }}</p>{% endif %}
+
+                                        <label>Subject:</label>
+
+                                        {{ form.subject }}
+                                        <div class="red">{{ form.subject.errors }}</div>
+
+                                    </div>
+                                    <div class="form-group due">
+
+                                        <label>Message:</label>
+                                        {{ form.message }}
+                                        <div class="red">{{ form.message.errors }}</div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-12 margin-top-10 margin-bottom-10">
+                                            <input hidden="hidden" name="messageSend" id="messageSend" />
+                                            <button type="submit" class="btn btn-blue pull-right">Send</button>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="clearfix"></div>
+                                </form>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+{% endblock content %}
+{% block jquery %}
+<script type="text/javascript" src="/static/js/jquery.form.js"></script>
+<script type="text/javascript" src="/static/js/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.profile.js"></script>
+<script type="text/javascript" src="/static/js/jquery.yiilistview.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+{#jQuery(function($) {#}
+{#jQuery('#post-list').yiiListView({'ajaxUpdate':['post-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+{#jQuery('#friend-list-detailed').yiiListView({'ajaxUpdate':['friend-list-detailed'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+{#jQuery('#task-list').yiiListView({'ajaxUpdate':['task-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+{#jQuery('#event-list').yiiListView({'ajaxUpdate':['event-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+{#jQuery('#friend-list').yiiListView({'ajaxUpdate':['friend-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+{#});#}
+/*]]>*/
+{% if userprofile.subscribed %}
+function sendMessage() {
+
+    $('#messageModal').modal('show');
+    }
+
+    {% else %}
+    function sendMessage() {
+        bootbox.confirm("<h3>Only subscribed members can message, click ok to subscribe.</h3>", function (result) {
+                if (!result) {
+
+                }
+
+                else {
+                    openSubscriptionModal();
+                }
+                });
+        };
+
+
+    {% endif %}
+    {% if form.errors or message_success %}
+         $('#messageModal').modal('show');
+    {% endif %}
+    function completeTask(id) {
+            //  alert(id);
+
+            $.ajax({
+                url: '/tasks/complete/', // the endpoint
+                type: 'post', // http method
+                data: {id: id}, // data sent with the post request
+
+                // handle a successful response
+                success: function (response) {
+                    //alert("success"); // another sanity check
+                    if (response == "success") {
+                        var task_id = '#complete_task_' + id;
+                        $(task_id).removeClass('fa fa-circle-o fa-lg')
+                                .attr('class', 'fa fa-check fa-lg')
+                                .addClass('success_green');
+                        {#                                $('#delete_bin_'+id).addClass('success_green');#}
+                        $('#task_subject_' + id).addClass('success_green');
+                    }
+                    if (response == "successFalse") {
+                        var task_id = '#complete_task_' + id;
+                        $(task_id).removeClass('fa fa-check fa-lg')
+                                .attr('class', 'fa fa-circle-o fa-lg')
+                                .removeClass('success_green');
+                        {#                                $('#delete_bin_'+id).removeClass('success_green');#}
+                        $('#task_subject_' + id).removeClass('success_green');
+                    }
+
+
+                },
+
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+                    {#                            alert(err, errmsg);#}
+                }
+            });
+
+        }
+
+</script>
+{% endblock jquery %}

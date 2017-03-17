@@ -1,0 +1,125 @@
+{% extends "vendroid/demo/base_vendor.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% load rest_framework %}
+{% block content %}
+    <style>
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+
+
+
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <div class="vd_body">
+        {#        {% include "vendroid/demo/_partial/_header_yapjoy_theme_vendor.html" %}#}
+
+        <div class="content">
+            <div class="container">
+
+
+                <div class="vd_content-wrapper yp-content-wrap" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <div class="panel panel-vendor-register">
+                                    <div id="id_card">
+                                        <div class="panel-body" id="id_panel_body">
+                                            <div class="event-list-wrap">
+                                                <label id="id_profile_edit">
+                                                    <div class="col-md-12">
+
+                                                        <label style="font-size: 18px;">You have been invited to</label>
+
+                                                    </div>
+                                                </label>
+
+                                                <h2><a class="col-md-4 col-md-offset-4">{{ event.name }}</a></h2>
+
+
+                                                <div class="col-md-12" style="margin-top:80px;">
+
+                                                    <input type="email" placeholder="Email Address" class="form-control" required name="invited_email" id="id_invited_email" />
+                                                    <small id="id_error" class="form-text error"></small><br/>
+                                                    <small id="nameHelp" class="form-text text-muted">If you are new user you will recieve verification code</small>
+                                                    <button class="btn btn-yapjoy-blue pull-right" style="margin-top:20px;" id="id_next">Next</button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+
+
+    </div>
+{% endblock content %}
+{% block footer %}
+    {% include "vendroid/demov2/vendors/teamChat/_footer.html" %}
+{% endblock footer %}
+{% block script %}
+
+    <script>
+        function ajax_call(url, req_type, data){
+            var mes ;
+            mes = $.ajax({
+                url: url,
+                type: req_type,
+                data: data,
+                success: function (response) {
+                    return response
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                    return error
+                }
+            });
+            return mes;
+        }
+
+        $("#id_next").on('click', function(e){
+            console.log('next', $("#id_invited_email").val());
+            if ($("#id_invited_email").val() == ''){
+                $("#id_error").html('Please Enter the Email')
+                e.PreventDefault();
+            }else{
+
+                data =  {
+                    action: 'email_next',
+                    'email' : $("#id_invited_email").val(),
+                },
+                ajax_call('/vendor_share_link/'+'{{ event.vendor_ref_code }}'+'/', "GET", data).done(function( data ) {
+
+                    $("#id_card").html(data);
+                });
+            }
+        });
+
+    </script>
+{% endblock script %}

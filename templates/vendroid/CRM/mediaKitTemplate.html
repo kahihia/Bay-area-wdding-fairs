@@ -1,0 +1,309 @@
+{% extends "vendroid/base.html" %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+
+{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
+{##}
+{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+
+
+{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
+{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
+
+
+<!-- Specific Page Scripts Put Here -->
+
+<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <style>
+    .red {
+        color: red;
+    }
+    textarea {
+        height: 80px;
+    }
+    .btn-brown {
+        background-color: #ba8c00 !important;
+    }
+    </style>
+    <style>
+    .vd_content-section {
+         margin-bottom: 400px;
+    }
+    #footer .vd_bottom {
+        background-color: #816100 !important;
+    }
+    .vd_top-menu-wrapper{
+        background-color: #816100 !important;
+    }
+    .vd_menu-search-submit {
+        background-color: black !important;
+    }
+</style>
+    <div class="vd_body">
+        <!-- Header Start -->
+       {% include "vendroid/partial/_header_yj_bawf.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/CRM/partial/_sidebar.html" %}#}
+
+                <!-- Middle Content Start -->
+
+               <div class="vd_content-wrapper">
+        <div class="vd_content clearfix">
+
+          <!-- vd_head-section -->
+
+
+          <!-- vd_title-section -->
+
+          <div class="vd_content-section clearfix">
+
+            <div class="row">
+
+
+
+
+    <div style='width:100%; max-width:700px; margin:0 auto;'>
+        <div style='background:#000; float:left; width:100%; padding:10px; border-radius: 20px 20px 0px 0px;'><p
+                style='margin:0; float:left; width:100%; text-align:center; font-weight:normal; color:#fff; font-size:13px'>
+            {{ media_kit.opening_remarks }}</p></div>
+        <div style='background:#f1f1f1; font-weight:normal; font-size:14px; color:#303030;'>
+            <div style='float:left; width:99.6%; border:1px solid #aaaaaa;  margin:2px 0'>
+                <div style='float:left;width:45%; border-right:3px solid #c0c0c0; padding:2%'><a
+                        href='http://bayareaweddingfairs.com/' style=''><img
+                        src='{% static "vendroid/mediakit/img/logo.png" %}' width='100%'/></a></div>
+                <div style='float:right;width: 49%;text-align: center;font-size:30px;color:#606060;text-transform: capitalize;padding: 40px 0px;font-family:Avenir Next LT Pro Regular'
+                     class='top1'>MEDIA KIT
+                </div>
+                <div style='border-bottom :3px solid #c0c0c0; float:left; width:100%; margin-top:0px'></div>
+                <div style='float:left; width:98%; padding:1%'><img
+                        src='http://bayareaweddingfairs.com/BAWF_Content/banner.jpg' style='width:100%'/></div>
+                <div style='float:left;width:100%;padding:10px 0;font-family:Avenir Next LT Pro Regular;'>
+                    <p style='float:left;width:97%;line-height:25px;margin:0 0 10px 0;padding:0 10px;font-size:18px; color:##847D7D; font-family:Avenir Next LT Pro Regular;'></p>
+                    <p style='float:left;width:97%;line-height:25px;margin:0 0 10px 0;padding:0 10px;padding-bottom:10px; font-size:18px;font-family:Avenir Next LT Pro Regular'>
+                        Dear {{ media_kit.vendor_name }}, thank you for your interest in having
+                        {{ media_kit.business_name }} in the Bay Area's #1 Wedding Sales Experience, Bay Area Wedding
+                        Fairs. Below is information regarding Display Sizes, Available Extras and Our Preferred Vendor
+                        Program, the only one if its kind in the Industry. At the bottom of the page we will have your
+                        exclusive Pricing for your business.<br/><br/>Thank you again for your consideration of our
+                        Wedding Fairs!</p>
+                    <div style='border-bottom:1px solid #333; float:left; width:100%; margin-top:4px'></div>
+                    <div style='float:left;width:46%;padding:2%'>
+                        <ul style='float:left;width:100%;padding:0px 0px 10px;margin:10px 0 0;border-radius:5px 5px 0 0;border:1px solid #333;text-align:center; font-family:Avenir Next LT Pro Regular'>
+                            <h5 style='margin:0;background:#333 none repeat scroll 0 0;color:#fff;float:left;font-weight:300;letter-spacing:1px;padding:10px 0;text-align:center;width:100%;font-size:12px'>
+                                FAIR SCHEDULE <span class='aBn' data-term='goog_26995521' tabindex='0'><span
+                                    class='aQJ'>11AM-4PM (Evening 3PM-8PM)</span></span></h5>
+                            <li style='margin-left: 0; list-style:none; border-bottom: 1px solid #333; float: left; padding: 5px 0; text-align: center; width: 100%; line-height: 20px;'><span style='color:#ba8c00;font-weight:bold;font-size:20px;'>JULY</span> <span style='color:#ba8c00; font-weight:bold; font-size:20px;'>24<sup>th</sup></span> <br />Walnut Creek Marriott (Evening)</li>
+                <li style='margin-left: 0; list-style:none; border-bottom: 1px solid #333; float: left; padding: 5px 0; text-align: center; width: 100%; line-height: 20px;'><span style='color:#ba8c00;font-weight:bold;font-size:20px;'>AUGUST</span> <span style='color:#ba8c00; font-weight:bold; font-size:20px;'>21<sup>st</sup></span> <br />Palo Alto Crowne Plaza (Evening)</li>
+                <li style='margin-left: 0; list-style:none; border-bottom: 1px solid #333; float: left; padding: 5px 0; text-align: center; width: 100%; line-height: 20px;'><span style='color:#ba8c00;font-weight:bold;font-size:20px;'>SEPTEMBER</span> <span style='color:#ba8c00; font-weight:bold; font-size:20px;'>25<sup>th</sup></span> <br />Fairmont San Francisco</li>
+               <li style='margin-left: 0; list-style:none; border-bottom: 1px solid #333; float: left; padding: 5px 0; text-align: center; width: 100%; line-height: 20px;'><span style='color:#ba8c00;font-weight:bold;font-size:20px;'>OCTOBER</span> <span style='color:#ba8c00; font-weight:bold; font-size:20px;'>2<sup>nd</sup></span> <br />Walnut Creek Marriott</li>
+               <li style='margin-left: 0; list-style:none; border-bottom: 1px solid #333; float: left; padding: 5px 0; text-align: center; width: 100%; line-height: 20px;'><span style='color:#ba8c00;font-weight:bold;font-size:20px;'>OCTOBER</span> <span style='color:#ba8c00; font-weight:bold; font-size:20px;'>16<sup>th</sup></span> <br />Levi's® Stadium</li>
+		<li style='margin-left: 0; list-style:none; float: left; padding: 5px 0; text-align: center; width: 100%; line-height: 20px;'><span style='color:#ba8c00;font-weight:bold;font-size:20px;'>NOVEMBER</span> <span style='color:#ba8c00; font-weight:bold; font-size:20px;'>13<sup>th</sup></span> <br />Pleasanton Doubletree Hotel</li>
+                        </ul>
+                    </div>
+                    <div style='float:right;width:46%; padding:2%'>
+
+                        <h4 style='margin:0;font-weight:400;color:#666;float:left;width:100%;text-align:center;text-transform:uppercase;font-size:24px'>
+                            <strong style='font-style:italic;font-weight:500;color:#333'>Get a First Hand Look!</strong>
+                        </h4>
+
+                        <a href='https://www.youtube.com/watch?v=b0atolvkOI4&amp;feature=youtu.be'
+                           style='float:left;width:100%;margin:10px 0' target='_blank' class='playable'><img
+                                src='http://bayareaweddingfairs.com/BAWF_Content/video.jpg'
+                                style='float:left;width:100%' alt='' class='CToWUd'></a>
+
+                        <h6 style='line-height:22px;margin:20px 0; font-weight:400; float:left; width:100%; text-align:center; text-transform:uppercase;font-style:normal;font-weight:bold;font-size:16px'>
+                            Shows typically have 400+ <br>Brides &amp; Grooms</h6>
+
+                        <h6 style='line-height:22px;margin:10px 0;font-weight:400;float:left;width:100%;text-align:center;text-transform:uppercase;font-style:normal;font-weight:bold;font-size:16px'>
+                            900+ Total Attendees <br>(2500+ Attendees at the Levi's® Shows) </h6>
+
+                    </div>
+
+                </div>
+
+                <div style='background:#333;float:left;width:100%;padding:10px 0px; font-family:Avenir Next LT Pro Regular'>
+
+                    <h4 style='margin:0;color:#fff;font-weight:300;letter-spacing:5px;text-align:center;text-transform:uppercase;font-size:24px'>
+                        BOOTH PRICING & DISPLAY SIZES</h4>
+
+                </div>
+
+                <div style='float:left;width:97%;padding:10px; font-family:Avenir Next LT Pro Regular'>
+
+                    <p style='margin:0;float:left;line-height:25px;text-align:center;width:100%; font-family:Avenir Next LT Pro Regular; font-size: 18px;'>
+                        All displays features a 6' x 30" table covered with linen and 2 chairs.
+                        Displays are back to back and/or side to side with no divisions.
+                        Exhibitors are responsible for all their own displays</p>
+                    <img src='http://bayareaweddingfairs.com/BAWF_Content/img1.jpg'
+                         style='float:left;margin:10px 0;text-align:center;width:97%'>
+
+                    <p style='margin:0;float:left;line-height:25px;text-align:center;width:100%; font-size: 18px;'>We
+                        offer various levels of Discounting based on {{ media_kit.business_category }}. Some Categories
+                        qualify for 1st time exhibitor discounts; Some categories for Multiple Show Discounts; Some
+                        categories for Perishable Product discounts, etc. Ask your representative about your Business
+                        Category's available discounts and programs.</p>
+
+                </div>
+
+                <div style='background:#333;float:left;width:100%;padding:10px 0px; font-family:Avenir Next LT Pro Regular;'>
+
+                    <h4 style='margin:0;color:#fff;font-weight:300;letter-spacing:5px;text-align:center;text-transform:uppercase;font-size:24px'>
+                        Partner Vendor Program</h4>
+
+                </div>
+
+
+                <div style='float:left;width:97%;padding:10px; font-family:Avenir Next LT Pro Regular;'>
+
+                    <p style='margin:0;float:left;line-height:25px;width:100%; font-size: 18px;'>This is an Exclusive
+                        program for our top level exhibitors. This program provides Multimedia Exposure to Shopping
+                        Couples beyond our shows in addition to extra marketing &amp; display assistance, while
+                        attending our shows. You must contract 3 shows at one time in order to qualify to be a Partner
+                        Vendor. Partner Vendors also agree to provide 1 Grand Prize per season of their individual
+                        wedding service(s). </p>
+
+                </div>
+
+
+                <div style='float:left;width:97%;padding:10px; font-family:Avenir Next LT Pro Regular; '>
+
+                    <h5 style='color:#333;float:left;font-weight:normal;letter-spacing:1px;line-height:26px;text-transform:uppercase;width:95%;margin:0px 0px 20px 0px;font-size:16px'>
+                        Partner Vendors receive the following benefits free of charge:</h5>
+
+                    <p style='margin:0;float:left;line-height:25px;width:100%;font-size: 18px;'>1. Best Display Price in
+                        your Category <strong>(Save Hundreds per Show)</strong></p>
+                    <p style='margin:0;float:left;line-height:25px;width:100%; font-size: 18px;'>2. Free Bridal List for
+                        every Show <strong>(Normally $300 + Value) </strong></p>
+                    <p style='margin:0;float:left;line-height:25px;width:100%;font-size: 18px;'>3. Free Electricity if
+                        Needed on Deluxe Booths <strong>($225 Value)</strong></p>
+                    <p style='margin:0;float:left;line-height:25px;width:100%;font-size: 18px;'>4. Free Display Ad for 6
+                        Months on our Website <strong>($1800 Value)</strong></p>
+                    <p style='margin:0;float:left;line-height:25px;width:100%;font-size: 18px;'>5. Free Post Seasons
+                        E-blast to all Brides on our database<strong> ($1200 Value)</strong></p>
+                    <p style='margin:0;float:left;line-height:25px;width:100%; font-size: 18px;'>6. Free Vendor Profile
+                        on Social Media to over 25,000 Brides <strong>($1500 Value)</strong></p>
+                    <p style='margin:0;float:left;line-height:25px;width:100%; font-size: 18px;'>7. Free Access to
+                        YapJoy - New Wedding Planning Tool <strong> (Thousands of Brides/Grooms Reach) </strong></p>
+                    </ul>
+
+                    <h5 style='color:#333;float:left;font-weight:normal;letter-spacing:1px;line-height:26px;text-transform:uppercase;width:95%;margin:20px 0px 10px 0px;font-size:16px; color:#b51a00'>
+                        <strong>Over $5,000 in Show Savings &amp; Multimedia Exposure just for booking 3 shows &amp;
+                            providing A <br>ONE​ ​Time ​Prize​ ​for​ our Grand Prize with a Retail Value of <strong>{{ media_kit.prize_value }}</strong>
+                    </h5>
+
+                </div>
+
+                <div style='background:#ddbb46;float:left;width:99.7%;padding:10px 0px; border:1px solid #000; font-family:Avenir Next LT Pro Regular;'>
+
+                    <h4 style='margin:0;color:#000;font-weight:300;letter-spacing:1px;text-align:center;text-transform:uppercase;font-size:22px'>
+                        YOUR BAY AREA WEDDING FAIR SPECIAL PRICING OFFER</h4>
+
+                </div>
+
+                <div style='float:left;width:97%;padding:10px ; font-family:Avenir Next LT Pro Regular;'>
+
+                    <p style='float:left;line-height:25px;width:100%; font-size: 18px;'>
+                        {{ media_kit.vendor_name }}, for {{ media_kit.business_category }} Category we normally
+                        charge {{ media_kit.normal_price }} for a {{ media_kit.booth_offered }} Booth. However, we are currently
+                        offering the following Limited Time Promotions…</p>
+
+                    <ul style='float:left;width:90%;padding:0px;margin:0px 30px'>
+                        {% if media_kit.one_show_price %}
+
+                        <li style='margin-left:0;float:left;font-size:18px;list-style:disc;width:98%; line-height:25px'>
+                            For a {{ media_kit.booth_offered }} Booth at ONE show we will offer: <span
+                                style='color:#b51a00'><strong>{{ media_kit.one_show_price }} per show</strong></span>
+                        </li>
+
+                        {% endif %}
+                        {% if media_kit.two_show_price %}
+
+                        <li style='margin-left:0;float:left;font-size:18px;list-style:disc;width:98%; line-height:25px'>
+                            ​For a {{ media_kit.booth_offered }} Booth at TWO show we will offer: <span
+                                style='color:#b51a00'><strong>{{ media_kit.two_show_price }} per show</strong></span>
+                        </li>
+                    {% endif %}
+                    {% if media_kit.three_show_price %}
+
+
+                        <li style='margin-left:0;float:left;font-size:18px;list-style:disc;width:98%; line-height:25px'>
+                            For a {{ media_kit.booth_offered }} Booth at THREE or more shows we will offer: <span
+                                style='color:#b51a00'><strong>{{ media_kit.three_show_price }} per show</strong></span>
+                        </li>
+                    {% endif %}
+
+
+                    </ul>
+                    {% if media_kit.special_instructions_one %}<h5
+                        style='float:left;font-weight:normal;letter-spacing:1px;line-height:25px;width:95%;margin:15px 20px;font-size:18px; color:#b51a00;border: 1px solid grey;padding: 5px;'>
+                    <strong>{{ media_kit.special_instructions_one }}</strong></h5>
+                    {% endif %}
+
+                    {% if media_kit.special_instructions_two %}<h5
+                        style='float:left;font-weight:normal;letter-spacing:1px;line-height:28px;width:95%;margin:10px 20px;font-size:18px; color:#b51a00;border: 1px solid grey;padding: 5px;'>
+                    <strong>{{ media_kit.special_instructions_two }}</strong></h5> {% else %}<h5
+                        style='float:left;font-weight:normal;letter-spacing:1px;line-height:28px;width:95%;margin:10px 20px;font-size:18px; color:#b51a00;border: 1px solid grey;padding: 5px;'>
+                    <strong>Levi's® Stadium & Fairmont shows are priced $200 higher as they are our premium
+                        shows.</strong></h5>
+                    {% endif %}
+
+                    {% if media_kit.special_instructions_three %}<h5
+                        style='float:left;font-weight:normal;letter-spacing:1px;line-height:25px;width:95%;margin:15px 20px;font-size:18px; color:#b51a00;border: 1px solid grey;padding: 5px;'>
+                    <strong>{{ media_kit.special_instructions_three }}</strong></h5>
+                    {% endif %}
+                    <h5
+                        style='color:#333;float:left;font-weight:normal;letter-spacing:1px;line-height:28px;width:95%;margin:5px 20px 30px 20px;font-size:18px; color:#000; text-transform:uppercase; font-family:Avenir Next LT Pro Regular;'>
+                    <strong>AND... IF YOU BOOK 3 OR MORE SHOWS YOU QUALIFY FOR OUR
+                        PARTNER VENDOR PROGRAM LISTED ABOVE!</strong></h5>
+
+                </div>
+
+
+                <div style='background:#ddbb46;float:left;width:99.7%;padding:0px ; border:1px solid #000; font-family:Avenir Next LT Pro Regular;'>
+
+                    <div style='float:left;width:43%;  padding:0% 2%'><p
+                            style='float:left;line-height:20px;width:100%; font-size: 18px; color:#000'>Regards,</p>
+
+                        <h4 style='float:left;font-weight:normal;letter-spacing:1px;line-height:26px;width:95%;margin:10px 0px;font-size:17px; color:#000; text-transform:uppercase'>
+                            <strong>{{ media_kit.user.get_full_name }}</strong><br/> PARTNER RELATIONS DIRECTOR </h4>
+                    </div>
+
+                    <div style='float:right;width:49%;    padding: 7% 2% 0% 2%;'>
+
+                        <h4 style='float: left;font-weight: normal;letter-spacing: 1px;line-height: 26px;width: 100%;margin: 10px 0px;font-size: 17px;color: #000; word-wrap: break-word;'>
+                            Direct: {{ media_kit.user.userprofile.phone }} &nbsp; Fax: 925-443-3803 <a href="mailto:{{ media_kit.user.email }}">{{ media_kit.user.email }}</a>
+                            www.BayAreaWeddingFairs.com</h4>
+                    </div>
+
+
+                </div>
+
+
+                <div style='float:left;width:97%;padding:1% 3%;'>
+
+                    <h4 style='float: left;font-weight: normal;letter-spacing: 1px;line-height: 26px;width: 100%;margin: 10px 0px;font-size: 15px;color: #000; text-align:center; font-family:Avenir Next LT Pro Regular;'>
+                        Bay Area Wedding Fairs - 2600 Kitty Hawk Rd., Suite 110, Livermore CA 94551</h4>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+
+
+
+
+
+
+{% endblock content %}

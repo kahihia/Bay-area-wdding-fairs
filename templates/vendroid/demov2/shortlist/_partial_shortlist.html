@@ -1,0 +1,45 @@
+<div class="vd_content-section clearfix">
+    <div class="container" id="IdShortlist">
+        <div class="" style="height:300px;">
+            {% if shortlists %}
+                <ul style="list-style-type:none">
+                    {% for s in shortlists %}
+                        <div id="IdShortlist_{{ s.id }}">
+                        <li >
+                            <div class="row">
+                                <div class="col-sm-12" >
+                                    <div class="col-sm-2">
+                                        <img class="image-cropper" src="{{ s.vendor.get_image_url }}" title="{{ s.vendor.user}}">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h5>{{ s.vendor.user}}</h5><br/>
+                                        <b>{{ s.vendor.yelp_rate }}</b><div class="verticalLine" style="border-left: thick solid #ff0000;"></div>
+                                        <b>{{ s.vendor.city }}, {{ s.vendor.state }}</b>
+                                        <br/>
+                                        <p>
+                                            {{ s.vendor.description }}
+                                        </p>
+                                        <br/>
+                                        <a class="btn pull-right btn-default vd_bg-red" onclick="deletevendor({{ s.id }})" target="_blank">Delete</a>
+                                        <a class="btn pull-right btn-default vd_bg-yellow" href="/profile/{{ s.vendor.id }}" target="_blank">Bid</a>
+                                        <a class="btn pull-right btn-default vd_bg-green" href="/online_message/" target="_blank">Message</a>
+                                        <a class="btn pull-right btn-default vd_bg-blue" href="/online_message/" target="_blank">video</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                         </div>
+                    {% endfor %}
+                </ul>
+
+            {% else %}
+                <h3 style="">
+                Search for vendors and discover a few before deciding on one Schedule interviews with 3-5 vendors from you shortlist
+                </h3>
+            {% endif %}
+        </div>
+    <br>
+        <div class="clearfix"></div>
+    </div>
+</div>

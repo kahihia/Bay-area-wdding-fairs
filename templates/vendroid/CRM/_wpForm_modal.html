@@ -1,0 +1,139 @@
+{% load myfilters %}
+<!------WP form----->
+    <div class="modal fade" id="addWpFormModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+{#                {% if form.errors %}#}
+{#                <div id="form-error">#}
+{#                    <p>The operation could not be performed because one or more error(s) occurred.<br />Please resubmit the form after making the following changes:</p>#}
+{#                    <ul>#}
+{#                    {% for field in form %}#}
+{#                     {% if field.errors %}< li>{{ field.errors|striptags }}< /li>{% endif %}#}
+{#                    {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#                {% endif %}#}
+
+                <form class="form-horizontal" action="." method="post" id="id_wpForm">
+                        {% csrf_token %}
+                <div class="modal-body">
+                    <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                    <h4 class="modal-title">Add an Form</h4>
+
+                    <input placeholder="Name" class="form-control" name="wpForm" id="id_wpForm" type="hidden">
+
+                    <div class="form-group">
+                        <label for="first-name" class="col-sm-4 control-label">First Name</label>
+
+                        <div class="col-sm-7" id="id_firstname">
+                            {{ WpForm.firstname }}
+                            <div class="red">{{ WpForm.firstname.errors }}</div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="first-name" class="col-sm-4 control-label">Last Name</label>
+
+                        <div class="col-sm-7" id="id_lastname">
+                            {{ WpForm.lastname }}
+                            <div class="red">{{ WpForm.lastname.errors.as_text }}</div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="first-name" class="col-sm-4 control-label">Email</label>
+
+                        <div class="col-sm-7" id="id_email">
+                            {{ WpForm.email }}
+                            <div class="red">{{ WpForm.email.errors }}</div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="first-name" class="col-sm-4 control-label">Amount</label>
+
+                        <div class="col-sm-7" id="id_amount">
+                            {{ WpForm.amount }}
+                            <div class="red">{{ WpForm.amount.errors }}</div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="first-name" class="col-sm-4 control-label">Date</label>
+
+                        <div class="col-sm-7" id="id_date">
+                            {{ WpForm.date|addcss:"form-control datepicker" }}
+                            <div class="red">{{ WpForm.date.errors }}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="first-name" class="col-sm-4 control-label">Event</label>
+                        <div class="col-sm-7">
+                            {% if request.user.is_superuser %}
+                                <select class="form-control" data-placeholder="Choose" name="events_to" id="to">
+                                    <option value="" disabled selected>Choose...</option>
+                                    {% for event in events %}
+                                        <option value="{{ event.id }}">{{ event.subject }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="clearfix"></div>
+                            {% else %}
+                                {{ event_name }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if not request.user.is_superuser and request.user.userprofile.type == "Professional" %}
+                    <div class="form-group">
+                        <label for="first-name" class="col-sm-4 control-label">Accept</label>
+
+                        <div class="col-sm-7" id="id_accept">
+                            {{ WpForm.accept}}
+                            <div class="red">{{ WpForm.accept.errors }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-12">
+{#                        <button type="submit" class="btn btn-success pull-right" onclick="submit_wp_form" id="id_form_submit_button">#}
+                        <button type="submit" class="btn btn-success pull-right" id="id_form_submit_button">
+                            Create
+                        </button>
+                        <button type="cancel" class="btn btn-default pull-right" data-dismiss="modal"
+                                style="margin-right: 10px;">Cancel
+                        </button>
+                    </div>
+                </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    function addWpFormModal() {
+        $('#addWpFormModal').modal('show');
+    }
+
+{#$("#submitForm").on("click", function() {#}
+{##}
+{##}
+{#        $.post('/crm/createWpform/', $("#id_wpForm").serialize())#}
+{#        .done(function(data) {#}
+{#            if (data == "success") { window.alert("Successfully submitted!"); }#}
+{#            else { window.alert("Form with the same wedding professional is already existed !");}#}
+{#        })#}
+{#        .done(function() {window.alert("Submission success !");})#}
+{#        .fail(function() { window.alert("Submission failed !"); });#}
+{#    });#}
+</script>

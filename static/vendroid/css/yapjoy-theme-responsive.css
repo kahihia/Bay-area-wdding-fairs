@@ -1,0 +1,140 @@
+@media only screen and (max-width : 480px) {
+    .wrap-store-front {
+        width: 100%;
+        margin: auto;
+    }
+    .wrap-store-front .store-left-side {
+        width: 99%;
+        float: none;
+        margin: auto;
+    }
+    .wrap-store-front .store-right-side {
+        width: 99%;
+        float: none;
+        margin-left: 0px;
+        margin: auto;
+    }
+    .panel.yp-panel-video{
+        background: #fff;
+    }
+    .wrap-action-btns{
+        width: 150px;
+        margin: auto;
+        padding: 10px;
+    }
+    .yp-action-btn {
+        position: static;
+        width: 62px;
+        left: -80px;
+        height: 62px;
+        float: left;
+    }
+    .yp-action-btn.btn-yp-info{
+        float: left;
+    }
+    .yp-action-btn.btn-yp-upload-img{
+        float: right;
+    }
+    .panel.yp-panel-about .img-wrap {
+        float: none;
+        width: 60px;
+        margin-right: 10px;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+    .panel.yp-panel-about .info-content {
+        float: none;
+        width: auto;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .yp-panel-about .text-right{
+        text-align: center;
+    }
+    .yp-action-btn.btn-yp-link {
+        /* top: 64px; */
+        float: none;
+        margin: auto;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+    .social-form{
+        width: 300px;
+        margin: auto;
+    }
+    .yp-panel-link .link-step-2 {
+        padding: 6%;
+    }
+    .social-link-form .row-wrap-link .link-inputs {
+        width: 260px;
+        float: left;
+        position: relative;
+    }
+}
+
+@media only screen and (min-width : 481px) and (max-width: 768px)
+{
+    .wrap-store-front {
+        width: 100%;
+        margin: auto;
+    }
+    .wrap-store-front .store-left-side {
+        width: 99%;
+        float: none;
+        margin: auto;
+    }
+    .wrap-store-front .store-right-side {
+        width: 99%;
+        float: none;
+        margin-left: 0px;
+        margin: auto;
+    }
+    .panel.yp-panel-video{
+        background: #fff;
+    }
+    .wrap-action-btns{
+        width: 150px;
+        margin: auto;
+        padding: 10px;
+    }
+    .yp-action-btn {
+        position: static;
+        width: 62px;
+        left: -80px;
+        height: 62px;
+        float: left;
+    }
+    .yp-action-btn.btn-yp-info{
+        float: left;
+    }
+    .yp-action-btn.btn-yp-upload-img{
+        float: right;
+    }
+    .panel.yp-panel-about .img-wrap {
+        float: none;
+        width: 60px;
+        margin-right: 10px;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+    .panel.yp-panel-about .info-content {
+        float: none;
+        width: auto;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .yp-panel-about .text-right{
+        text-align: center;
+    }
+    .yp-action-btn.btn-yp-link {
+        /* top: 64px; */
+        float: none;
+        margin: auto;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+    .social-form{
+        width: 391px;
+        margin: auto;
+    }
+}

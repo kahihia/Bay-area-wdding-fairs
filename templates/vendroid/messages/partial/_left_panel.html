@@ -1,0 +1,33 @@
+<!--the left panel of messages--->
+{% load pagination_tags %}
+{% load humanize %}
+{% load myfilters %}
+<style>.affix {
+            top: 107px;
+            position: fixed !important;
+        }
+
+        .affix-bottom {
+            position: absolute;
+}</style>
+
+<!--left row col 4-->
+<div class="col-sm-4 sidebar-affix">
+    <div class="panel widget vd_summary-panel affix-top">
+        <div class="panel-body">
+            <h3 class="mgtp--5">Email </h3>
+            <hr />
+            <div class="content-list content-menu">
+                <ul class="list-wrapper">
+                    <a href="/messages/compose/" class="btn btn-block btn-success" data-toggle="modal"><i
+                            class="glyphicon glyphicon-plus"></i> <span>Compose</span></a>
+                    <li class="line"></li>
+                    <li> <a href="/messages/"> <i class="icon-mail vd_yellow" style="padding-right:10px;"></i>Inbox</a> </li>
+                    <li> <a href="/messages/draft"> <i class="fa fa-archive append-icon vd_yellow" style="padding-right:3px;"></i>Drafts</a> </li>
+                    <li> <a href="/messages/sent"> <i class="append-icon fa fa-fw fa-paper-plane-o vd_yellow" style="padding-right:3px;"></i>Sent Mail</a> </li>
+{#                    <li> <a href="/messages/draft/"> <div class=""></div> <div class="menu-text">Drafts</div> </a> </li>#}
+                </ul>
+            </div>
+          </div>
+    </div>
+</div>

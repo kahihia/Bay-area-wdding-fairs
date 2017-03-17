@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="friends-section">
+        <div class="col-md-2  left-col">
+            <section class="friends-nav">
+                <h3 class="section-title">Friends
+                    <small><!-- patch3 --><a href="/friends">Show All</a></small>
+                </h3>
+                <div class="flashes"></div>
+
+
+                <!-- seth -->
+
+                <!-- <a href="#" class="add-btn" data-toggle="modal" data-target="#addFriendModalOne"><i class="glyphicon glyphicon-plus"></i> <span>Add Friend</span></a> -->
+
+                <input type="text" id="search" name="search" placeholder="Search Friends"
+                       class="form-control friend-search">
+
+
+                <div id="friend-list" class="list-view">
+                    <div class="items">
+                        {% for friends in all_friends %}
+                            <div class="friend">
+                                <ul class="list-inline">
+                                    {% if friends.user == user %}
+
+                                        <li><span class="profile-thumb profile-sm"
+                                              style="background-image: url({{ friends.friends.user.userprofile.get_image_url }})"></span>
+                                    </li>
+                                    <li class="user-name"><p>
+                                        <a href="/profile/{{ friends.friends.user.userprofile.id }}/">{{ friends.friends.user.get_full_name }}</a>
+                                    </p>
+                                    {% else %}
+                                        <li><span class="profile-thumb profile-sm"
+                                              style="background-image: url({{ friends.user.userprofile.get_image_url }})"></span>
+                                    </li>
+                                    <li class="user-name"><p>
+                                        <a href="/profile/{{ friends.user.userprofile.id }}/">{{ friends.user.get_full_name }}</a>
+                                    </p>
+                                    {% endif %}
+                                        {% if friends.status == "Pending" and friends.user == user %}
+                                            <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input name="accept" value="{{ friends.id }}" hidden="hidden" />
+                                            <button type="submit" class="friend-status pull-left">Accept</button>
+                                            </form>
+                                            <form action="." method="POST">
+                                            {% csrf_token %}
+                                            <input name="reject" value="{{ friends.id }}" hidden="hidden" />
+                                            <button class='friend-reject pull-left'>Reject</button>
+                                            </form>
+
+
+                                        {% elif friends.status == "Pending" %}
+                                            <p>Request Sent</p>
+                                        {% elif friends.status == "Accepted" %}
+                                            <p>Friends</p>
+                                            {% endif %}
+
+                                    </li>
+                                    <li><p>
+                                        {% if friends.status == "Pending" and friends.user == user %}
+
+                                        {% elif friends.status == "Pending" %}
+                                            <a href="#" data-id="{{ friends.id }}" class="deleteFriendBtn"><i
+                                            class="glyphicon glyphicon-trash"></i></a>
+                                        {% elif friends.status == "Accepted" %}
+                                            <a href="#" data-id="{{ friends.id }}" class="deleteFriendBtn"><i
+                                            class="glyphicon glyphicon-trash"></i></a>
+
+                                        {% endif %}
+
+                                    </p>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="keys" style="display:none" title="/friends">
+                        <span>347</span><span>348</span><span>350</span></div>
+                </div>
+
+            </section>
+        </div>
+        <div class="col-md-9">
+            <h3 class="section-title">Import Friends
+                {#            (<span id="groupCounter">6</span>)#}
+                {#                <small><!-- patch3 --><a href="/friends">Show All</a></small>#}
+            </h3>
+
+            <div class="col-md-12">
+                <ul class="list-inline friend-list">
+                    <li><a href="#" class="add-btn" style="width: 160px;" data-toggle="modal" data-target="#addFriendModal"><i
+                            class="glyphicon glyphicon-plus"></i> <span>Invite Friend</span></a></li>
+                    {% if fb == 'connected' %}
+                    <li><a onclick="openSocialShareModal('/invite/');" style="width: 160px;" class="add-btn add-group"><i
+                            class="glyphicon glyphicon-plus"></i> <span>Facebook</span></a></li>
+                    {% elif fb == 'disconnected' %}
+                        <li><a href="/login/facebook/" style="width: 160px;" class="add-btn add-group" ><i
+                            class="glyphicon glyphicon-plus"></i> <span>Connect Facebook</span></a></li>
+                    {% endif %}
+                    <li><a href="/invites/?provider=google" style="width: 160px;" class="add-btn add-group"><i
+                            class="glyphicon glyphicon-plus"></i> <span>Gmail</span></a></li>
+                    <li><a href="/invites/?provider=live" style="width: 160px;" class="add-btn add-group"x`><i
+                            class="glyphicon glyphicon-plus"></i> <span>Live</span></a></li>
+                    <li><a href="/invites/?provider=yahoo" style="width: 160px;" class="add-btn add-group"><i
+                            class="glyphicon glyphicon-plus"></i> <span>Yahoo</span></a></li>
+
+
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <h3 class="section-title">Add more people</h3>
+
+                <div class="search-bar">
+
+                    <input name="searchone" id="searchField1" class="form-control" placeholder="Search people on yapjoy"
+                           type="text"></div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+    </div>
+    </div>
+
+  <div class="modal fade" id="addFriendModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/friends/" method="post">
+                    {% csrf_token %}
+
+                    <div class="modal-body">
+                        <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                        <h4 class="modal-title">Invite Friend or professional</h4>
+
+                        <p class="text-center">Enter email address to invite friend or professional</p>
+
+                        <div class="form-group"><input id="emails" name="emails" class="form-control" type="text"/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-blue">Invite Friend</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<div class="modal fade" id="share" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                <h4 class="modal-title" style="margin-bottom: 0px;">Invite Friends</h4>
+
+
+                    {#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
+                    {#        <!-- Nav tabs -->#}
+
+
+                    <iframe id="iframe_sub" src="" width="100%" height="584px"></iframe>
+
+                    <!-- end panel -->
+                    <!-- end panel -->
+
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="{% static "js/jquery.friends.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.search.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/bootstrap-tokenfield.min.js" %}"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#friend-list').yiiListView({
+                'ajaxUpdate': ['friend-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#friend-group-list').yiiListView({
+                'ajaxUpdate': ['friend-group-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#user-list').yiiListView({
+                'ajaxUpdate': ['user-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'list-view-loading',
+                'sorterClass': 'sorter',
+                'enableHistory': false
+            });
+            jQuery('#my_input_name').autocomplete({'minLength': '1', 'source': []});
+        });
+        //searchField
+        $('textarea').bind("enterKey",function(e){
+   //do stuff here
+});
+            $('#searchField1').on('keypress', function (event) {
+         if(event.which === 13){
+
+            //Disable textbox to prevent multiple submit
+           parent.window.location.href = '/directory/?name='+ $('#searchField1').val()
+
+            //Do Stuff, submit, etc..
+         }
+   });
+
+        /*]]>*/
+    function openSocialShareModal(url) {
+        $('#share').modal('show');
+        $('#iframe_sub').attr('src', url);
+    }
+    ;
+    </script>
+{% endblock jquery %}

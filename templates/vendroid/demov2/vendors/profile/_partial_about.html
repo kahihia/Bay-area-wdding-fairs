@@ -1,0 +1,136 @@
+{% load static %}
+
+
+
+<div id="openAboutMeEdit" hidden>
+    <div class="col-xs-12" style="margin-top:10px;">
+        <a class="pull-right" onclick="$('#openAboutMeEdit').toggle('hidden');$('#displayAboutMeEdit').toggle('hidden');"><i class="fa fa-times" aria-hidden="true"></i><br /></a>
+    </div>
+    <div class="col-xs-12" >
+        <div class="" >
+            <div class=" clearfix"></div>
+            <div class="">
+                    <textarea id="ID_textareaDesp" name="Notes" rows="3" cols="10">
+                        {{ description }}
+                    </textarea>
+                <a class="btn pull-right" onclick="saveDescription()">Save</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="" >
+            <div class=" clearfix"></div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12 controls">
+                        <div class="input-group input-border"> <span class="input-group-addon no-bd no-bg"><span class="fa fa-facebook-square"></span></span>
+                            <input type="text" pattern="^(https?://)?([a-zA-Z0-9]([a-zA-ZäöüÄÖÜ0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$" id="ID_FacebookUrl" name="facebook" value="{% if up.facebook_url %}{{ up.facebook_url }}{% endif %}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12 controls">
+                        <div class="input-group input-border"> <span class="input-group-addon no-bd no-bg"><span class="fa fa-twitter-square"></span></span>
+                            <input type="text" id="ID_TwitterUrl" name="twitter" value="{% if up.twitter_url %}{{ up.twitter_url }}{% endif %}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12 controls">
+                        <div class="input-group input-border"> <span class="input-group-addon no-bd no-bg"><span class="fa fa-pinterest-square"></span></span>
+                            <input type="text" id="ID_PinterestUrl" name="pinterest"  value="{% if up.pinterest_url %}{{ up.pinterest_url }}{% endif %}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12 controls">
+                        <div class="input-group input-border"> <span class="input-group-addon no-bd no-bg"><span class="fa fa-youtube-play"></span></span>
+                            <input type="text" id="ID_YouTubeUrl" name="youtube" value="{% if up.youtube_url %}{{ up.youtube_url }}{% endif %}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12 controls">
+                        <div class="input-group input-border"> <span class="input-group-addon no-bd no-bg"><span class="fa fa-instagram"></span></span>
+                            <input type="text" id="ID_InstagramUrl" name="instagram" value="{% if up.instagram_url %}{{ up.instagram_url }}{% endif %}">
+                        </div>
+                    </div>
+                </div>
+
+
+                <a class="btn pull-right" onclick="saveSocialUrl()">Save</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="" >
+        <div id="map" style="width: 100%;"></div>
+        {#                <script type="text/javascript">#}
+        {#                    $(function () {#}
+        {#                        $("#map").googleMap();#}
+        {#                        $("#map").addMarker({#}
+        {##}
+        {#                            address: "{{ up.get_full_map_address }}", // Postale Address#}
+        {#                            url: '{{ up.get_profile_url }}', // Link#}
+        {#                            title: '{{ up.user.get_full_name }}'#}
+        {#                        });#}
+        {#                    })#}
+        {#                </script>#}
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<script>
+    function saveDescription(){
+        var txt = $('#ID_textareaDesp').val().trim();
+        console.log("txt is ", txt);
+
+        if (txt.length == 0){
+            alert("Please enter something")
+        } else {
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: {'description': txt},
+
+                success: function (response) {
+                    $('#openAboutMeEdit').toggle('hidden');
+                    $('#displayAboutMeEdit').toggle('hidden');
+                    $('#displayAboutMeEdit').html(response);
+{#                    alert("change description successfull");#}
+                },
+
+                error: function (xhr, errmsg, err) {
+                    alert("change description failed");
+                }
+            });
+        }
+    }
+
+
+    function saveSocialUrl(){
+        $.ajax({
+            url: "",
+            type: "POST",
+            data: {'facebook_url':  $('#ID_FacebookUrl').val(),
+                'twitter_url': $('#ID_TwitterUrl').val(),
+                'pinterest_url': $('#ID_PinterestUrl').val(),
+                'youtube_url': $('#ID_YouTubeUrl').val(),
+                'instagram_url': $('#ID_InstagramUrl').val(),
+            },
+
+            success: function (response) {
+                $('#openAboutMeEdit').toggle('hidden');
+                    $('#displayAboutMeEdit').toggle('hidden');
+                    $('#displayAboutMeEdit').html(response);
+{#                alert("change social urls successfull");#}
+            },
+
+            error: function (xhr, errmsg, err) {
+                alert("change social urls failed");
+            }
+        });
+    }
+</script>
+

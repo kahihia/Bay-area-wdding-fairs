@@ -1,0 +1,345 @@
+{% extends "moments/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% block body %}
+    <body>
+{% endblock body %}
+{% block content %}
+    <link href={% static "singlePage/new.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <style>
+        .carousel-inner > .item > img {
+            margin: 0 auto;
+        }
+
+    </style>
+    <style>
+        .image-fit {
+            background-image:url({% static "images/loginv2/Delegate.gif" %});
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            background-position: bottom 0;
+        }
+        .image-fit-overlay {
+            background-image:url({% static "images/loginv2/Overlay3.png" %});
+            height:100%;
+            width:100%;
+            min-height:900px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background: linear-gradient(
+                    rgba(20,20,20, .5),
+                    rgba(20,20,20, .5))
+        }
+        .links-to-slides a {
+            color: white;
+            cursor: pointer;
+        }
+        {#    body {#}
+        {#        font-family: Calibri bold;#}
+        {#    }#}
+        .navbar-burger .navbar-header .navbar-toggle {
+            width: 80px;
+            color: white;
+        }
+        .navbar {
+            padding-top: 0px;
+        }
+        .btn-blue {
+            border-width: 3px;
+            border-color: rgb(242, 242, 242);
+            border-style: solid;
+            border-radius: 8px;
+            background-color: rgb(7, 160, 195);
+        {#            position: absolute;#}
+        {#            left: 1164px;#}
+        {#            top: 687px;#}
+            width: 100%;
+            color: white;
+        {#            height: 40px;#}
+        {#            z-index: 40;#}
+        }
+    </style>
+    <style>
+        .section-header .separator {
+            margin: 0em auto 2em;
+        }
+        .space-50{
+            height: 50px;
+            width: 100%;
+            display: block;
+            content: "";
+        }
+        .section .parallax > img{
+            width: 100%;
+            min-width: 0;
+            min-height: 0;
+        }
+        .pattern-image:after{
+            opacity: .2;
+            /*                 background: #111; */
+        }
+        .section-header h1{
+            text-shadow: -2px 2px 30px rgba(0, 0, 0, 0.25), -2px 4px 14px rgba(0, 0, 0, 0.1);
+        }
+        .section-header h5{
+            text-shadow: 0px 0px 11px rgba(0, 0, 0, 0.3);
+        }
+        .section-header .content{
+            top: 42%;
+        }
+        .section-we-are-1 .title{
+            max-width: 960px;
+        }
+        .card .icon ~ h3{
+            margin-bottom: 10px;
+        }
+        .section-with-hover .project .content{
+            text-align: center;
+        }
+        .section-with-hover .project .over-area{
+            background: rgba(0, 0, 0, .83);
+        }
+        .section-clients-2{
+            padding: 6em 0 1em;
+        }
+        .section-clients-2 .nav-text li {
+            margin: 0 15px 10px 15px;
+        }
+        .section-contact-3 .contact-container .address-container{
+            width: 28%;
+            background-color: #FFFFFF;
+            height: 470px;
+            top: 50px;
+            padding: 20px;
+        }
+        .section-contact-3 .address{
+            margin-top: 40px;
+        }
+        .section-we-made-3 .content{
+            padding: 0 15px;
+            text-align: center;
+        }
+        .section-we-made-3 .over-area .content h3{
+            margin: 5px 0 20px;
+        }
+        .section-we-made-3 .over-area .content p{
+            font-size: .9em;
+            color: #898989;
+        }
+        .section-we-made-3 .over-area .content h5{
+            margin-bottom: 0px;
+            margin-top: 20px;
+        }
+
+        .btn-black{
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .copyright a{
+            color: #FFFFFF;
+        }
+
+        .section-team-2 .team .member p {
+            font-size: .9em;
+            padding: 0 10px;
+        }
+
+        .card{
+            margin-bottom: 30px;
+        }
+        .section-with-hover .project .over-area.over-area-sm .content p {
+            font-size: .85em;
+        }
+        .section-with-hover .project .over-area.over-area-sm .content h4 {
+            font-size: 1.6em;
+        }
+        .logo{
+            display: block;
+            margin: 0 auto 10px;
+            width: 61px;
+            height: 61px;
+            border-radius: 50%;
+            border: 1px solid #333333;
+            overflow: hidden;
+        }
+        .logo img{
+            width: 100%;
+            height: 100%;
+        }
+        .loading .loading-container p {
+            font-size: 30px;
+            width: 220px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            height: 35px;
+        }
+        .loading .logo{
+            opacity: 0;
+            transition: all 0.9s;
+            -webkit-transition: all 0.9s;
+            -moz-transition: all 0.9s;
+        }
+        .loading .logo.visible{
+            opacity: 1;
+        }
+        .sharrre.btn{
+            color: #444444;
+            border-color: #444444;
+            font-weight: 400;
+        }
+        .address .col-md-6{
+            padding-right: 7px;
+            padding-left: 7px;
+        }
+        a.img-class{
+            opacity: 1;
+        }
+        a.img-class:hover{
+            opacity: .9;
+        }
+
+        .btn-lg{
+            padding: 14px 10px;
+        }
+        .error-border {
+            border: 2px double red !important;
+        }
+        @media (max-width: 1200px){
+            .section-contact-3 .contact-container .address-container{
+                height: 520px;
+            }
+        }
+        .selected a {
+            background-color: #07A6C3;
+            color: #FFF;
+        }
+        i.fa {
+            margin-top: 8px;
+        }
+    </style>
+
+    <nav class="navbar navbar-default navbar-transparent navbar-fixed-top navbar-burger" style="background-color: #f7f7f7;" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button id="menu-toggle" style="cursor: pointer; color: #07A6C3;" type="button" class="navbar-toggle" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">
+                    <b>Log in</b>
+                </button>
+                <a target="_blank" class="navbar-brand" style="padding:0px;">
+                    <img src="{% static "images/logo/yapjoy-logo-blue-hd.png" %}" style="width: 55%;margin-top:8px;"  />
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <div class="section section-header">
+            <div class="parallax pattern-image image-fit" id="image-fit-id">
+                <img src="{% static "images/loginv2/Overlay4.png" %}"/>
+                <div class="container">
+                    <div class="content">
+                        <div class="col-md-12 text-left small-views" style="margin-top: -290px;">
+                            <div class="col-md-12">
+                                    <div class="col-md-12 text-center" style="padding-right: 0px;"><h2 style="display:inline;    text-transform: none;font-size:40px;">6 Steps to Plan a Wedding without a Wedding Planner</h2></div>
+                                <div class="col-md-6">&nbsp;</div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-4 np text-right">
+
+                                </div>
+                            </div>
+                            <div class="col-md-11 links-to-slides" style="margin-left: 450px;
+    margin-top: 120px;
+    font-size: 24px;" id="links-to-slides-id">
+                                <div class="col-md-12 mark-blue selected">
+                                    <a class="selected" hidden >&nbsp:</a>
+                                    <a  onclick="$('#image-fit-id').css('background-image','url({% static "images/loginv2/Delegate.gif" %})');$('.step_text').hide();$('#no_1').show();">
+                                        1) Delegate   <span hidden id="no_1" class="step_text">Choose who is in charge of booking each wedding professional.</span>
+                                    </a></div>
+                                <div class="col-md-12 mark-blue"><a onclick="$('#image-fit-id').css('background-image','url({% static "images/loginv2/Dream.gif" %})');$('.step_text').hide();$('#no_2').show();">2) Dream   <span hidden id="no_2" class="step_text">Upload pictures to attract wedding professionals that share your vision.</span></a></div>
+                                <div class="col-md-12 mark-blue"><a onclick="$('#image-fit-id').css('background-image','url({% static "images/loginv2/Plan.jpeg" %})');$('.step_text').hide();$('#no_3').show();">3) Plan   <span hidden id="no_3" class="step_text">Take surveys to get matched with wedding professionals that fits your criteria.</span></a></div>
+                                <div class="col-md-12 mark-blue"><a onclick="$('#image-fit-id').css('background-image','url({% static "images/loginv2/Relax.gif" %})');$('.step_text').hide();$('#no_4').show();">4) Relax   <span hidden id="no_4" class="step_text">Wedding professionals build a vision around your plans and dreams.</span></a></div>
+                                <div class="col-md-12 mark-blue"><a onclick="$('#image-fit-id').css('background-image','url({% static "images/loginv2/Decide.gif" %})');$('.step_text').hide();$('#no_5').show();">5) Decide   <span hidden id="no_5" class="step_text" >Compare offers side-by-side from four different vendors.</span></a></div>
+                                <div class="col-md-12 mark-blue"><a onclick="$('#image-fit-id').css('background-image','url({% static "images/loginv2/Collaborate.gif" %})');$('.step_text').hide();$('#no_6').show();">6) Collaborate <span hidden id="no_6" class="step_text">Work together with your team of wedding professionals.</span></a></div>
+                                <div class="clearfix"></div>
+
+                                <div class="col-md-12" style="margin-top:20px;">Done!</div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="clearfix"></div>
+                                <div class="col-md-10 col-md-offset-1">
+                                    {#                                            <a href="#" onclick="modelGetStartedOpen()">Get Started</a>#}
+                                    <a style="color:white;cursor: pointer;margin-left:300px;"   id="req_button" >
+                                        <b>Get Started</b>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    </div> <!-- end wrapper -->
+
+    {#    </section>#}
+    <!-- (7) Add task Form -->
+    {% include "moments/_partial/_login_modal.html" %}
+    {% include "moments/_partial/_register_modal.html" %}
+{% endblock content %}
+{% block script %}
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+
+    <!-- Flot Chart  -->
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.resize.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.pie.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.categories.min.js" %}"></script>
+
+    <script type="text/javascript">
+        {% if form.errors or InvalidDetails %}
+            $(document).ready(function(){
+                jQuery('#loginmodal').modal('show');
+            })
+        {% endif %}
+        {% if req_form.errors %}
+            $('#registermodal').modal('show');
+        {% endif %}
+        $('#id_wedding_date').datepicker();
+        {% if request_success_form %}
+            notification("topright","success","fa fa-check-circle vd_green","Registeration Successful","Your request has been successfully submitted.");
+        {% endif %}
+        function modelGetStartedOpen(){
+            $('#registerModal').modal('show');
+        }
+        function modelLoginOpen(){
+            jQuery('#loginmodal').modal('show');
+        }
+        $('#req_button').on('click',function(){
+            {#        alert('working')#}
+            $('#registermodal').modal('show');
+        })
+        $('.mark-blue').on('click',function(){
+            $('.mark-blue').removeClass('selected')
+            $(this).attr('class','col-md-12 mark-blue selected')
+        })
+        $('.step_text').hide();
+        $('#no_1').show();
+    </script>
+{% endblock %}

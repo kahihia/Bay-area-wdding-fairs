@@ -1,0 +1,184 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+    <style>
+    .height-250 {
+    min-height: 330px !important;
+    /*max-height: 300px !important;*/
+    }
+    hr {
+        border: 0;
+        clear:both;
+        display:block;
+        width: 96%;
+        background-color:black;
+        height: 1px;
+    }
+
+    </style>
+
+    <div class="vd_body">
+        <!-- Header Start -->
+        {% include "vendroid/demo/_partial/_header.html" %}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="container">
+{#                {% include "vendroid/partial/_sidebar.html" %}#}
+                <!-- Middle Content Start -->
+                <div class="vd_content-wrapper">
+                    <div class="">
+                        <div class="vd_content clearfix">
+                            <div class="vd_title-section clearfix">
+                                <div class="vd_panel-header no-menu">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-6">
+                                                <div id="ID_panel">
+                                                {% include "vendroid/market/question/Admin/_partial_questions_panel.html" %}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div id="ID_question_list">
+                                                    {% include "vendroid/market/question/Admin/_partial_questions_list.html" %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/bootbox.min.js' %}"></script>
+
+<script type="text/javascript">
+    function removeQuestion(questionId){
+         console.log("remove question questionId", questionId);
+
+         bootbox.confirm("<h3>Are you sure you would like to remove this question?</h3>", function (result) {
+             if (!result) return;
+             else {
+                 $.ajax({
+                     url: "",
+                     type: "POST",
+                     data: {'removeQuestionId': questionId},
+
+                     success: function (response) {
+                         console.log("response success");
+                         $("#ID_question_list").html(response);
+                     },
+
+                     error: function (xhr, errmsg, err) {
+                         alert("change answer failed");
+                     }
+                 });
+             }
+         });
+    };
+
+
+    function viewQuestion(questionId){
+         console.log("view question questionId", questionId);
+
+         $.ajax({
+             url: "",
+             type: "POST",
+             data: {'viewQuestionId': questionId},
+
+             success: function (response) {
+                 console.log("response success");
+                 $("#ID_panel").html(response);
+             },
+
+             error: function (xhr, errmsg, err) {
+                 alert("change answer failed");
+             }
+         });
+    };
+
+
+    function addOption(questionId){
+         console.log("questionId", questionId);
+         var textAnswer = $("#ID_newAnswer").val().replace(/(^\s+|\s+$)/g, '');
+         var selectAnswer = $('select[id=ID_newAnswer_menu]').val().replace(/(^\s+|\s+$)/g, '');
+         var category = $('select[id=ID_category_menu]').val().replace(/(^\s+|\s+$)/g, '');
+         var title = $('#ID_title').val();
+         var answerSend = "";
+         var isNew = "";
+
+        if ((textAnswer == "") || (textAnswer == "Please fill in a new answer*")) {
+            answerSend = selectAnswer;
+            isNew = "0";
+        } else {
+            answerSend = textAnswer;
+            isNew = "1";
+        }
+
+        var allowedDateTime = "";
+        if($("#ID_DateTime").is(':checked')) {
+            allowedDateTime = "1";
+        } else {
+            allowedDateTime = "0";
+        }
+
+        var allowedTextArea = "";
+        if($("#ID_TextArea").is(':checked')) {
+            allowedTextArea = "1";
+        } else {
+            allowedTextArea = "0";
+        }
+
+        console.log("select Answer", selectAnswer);
+        console.log("text Answer", textAnswer);
+        console.log("final Answer", answerSend);
+        console.log("allowedDateTime", allowedDateTime);
+        console.log("allowedTextArea", allowedTextArea);
+
+{#         bootbox.confirm("<h3>Are you sure you want add this answer?</h3>", function (result) {#}
+{#             if (!result) return;#}
+{#             else {#}
+
+                 $.ajax({
+                     url: "",
+                     type: "POST",
+                     data: {'AddOptionQuestionId': questionId,
+                         'newOption': answerSend,
+                         'isNew': isNew,
+                         'category':category,
+                         'title':title,
+                         'allowedDateTime': allowedDateTime,
+                         'allowedTextArea': allowedTextArea
+                     },
+
+                     success: function (response) {
+                         console.log("response success");
+                         $("#ID_panel").html(response);
+                     },
+
+                     error: function (xhr, errmsg, err) {
+                         alert("change answer failed");
+                     }
+                 });
+{#             }#}
+{#         });#}
+    };
+
+
+
+</script>
+{% endblock %}

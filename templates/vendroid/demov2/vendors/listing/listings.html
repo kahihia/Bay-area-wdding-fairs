@@ -1,0 +1,452 @@
+{% extends "vendroid/demo/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block tags %}
+{% endblock %}
+{% block content %}
+    <style>
+    .open-status .panel-heading {
+        background-color: white !important;
+    }
+    .open-status .data-plan {
+        color: #07A6C3 !important;
+    }
+        .fa {
+            font-size:20px;
+            color: grey;
+        }
+        .fa-pencil-square-o {
+            font-size:35px !important;
+        }
+        {#                div.panel-heading.vd_bg-green.vd_bd-green {#}
+        {#                    background-color: white !important;#}
+        {#                    color: black !important;#}
+        {#                    border: 1px grey solid !important;#}
+        {#                }#}
+        {#                div.panel-heading.vd_bg-green.vd_bd-green a{#}
+        {#                    color: grey !important;#}
+        {#                }#}
+        .yelpSaveButton {
+            margin-bottom:15px;
+        }
+        .image-cropper {
+            max-width: 110px;
+            min-width: 110px;
+            max-height: 110px;
+            min-height: 110px;
+        {#            position: relative;#}
+        {#            overflow: hidden;#}
+        {#            border-radius: 50%;#}
+        {#            background: #eee no-repeat center;#}
+        {#            background-size: cover;#}
+        {#            border-color: darkgray;#}
+        }
+        #profile-image-id img:hover {
+            content: url('{% static "images/vendorProfile/Stock_Profile_Picture.png" %}');
+            cursor: pointer;
+        {#             position:absolute;#}
+        {#               left:50% ;#}
+        {#             right: 50% ;#}
+        {#            opacity:0.5;#}
+        {#             margin-top:    -111px;#}
+        {#             margin-left: -106px;#}
+        {#            z-index:15;#}
+        }
+        .images-mobile {
+            width: 120px;
+            min-width: 120px;
+            max-height: 120px;
+            min-height: 120px;
+            /* overflow: hidden; */
+            /* position: relative; */
+            max-width: 120px;
+        }
+        .panel {
+            border:none !important;
+            border-radius:none !important;
+        }
+        .blue-button {
+            background-color: #07A6C3;
+            color: white;
+        {#            border-radius: 20px;#}
+            margin-top: 10px;
+            width: 80%;
+            height: 60px;
+            line-height: 26px;
+        }
+        {#        ul.tab {#}
+        {#            list-style-type: none;#}
+        {#            margin: 0;#}
+        {#            padding: 0;#}
+        {#            overflow: hidden;#}
+        {#            border: 1px solid #ccc;#}
+        {#            background-color: #f1f1f1;#}
+        {#        }#}
+        {##}
+        {#        /* Float the list items side by side */#}
+        {#        ul.tab li {float: left;}#}
+        {##}
+        {#        /* Style the links inside the list items */#}
+        {#        ul.tab li a {#}
+        {#            display: inline-block;#}
+        {#            color: black;#}
+        {#            text-align: center;#}
+        {#            padding: 14px 16px;#}
+        {#            text-decoration: none;#}
+        {#            transition: 0.3s;#}
+        {#            font-size: 17px;#}
+        {#        }#}
+        {##}
+        {#        /* Change background color of links on hover */#}
+        {#        ul.tab li a:hover {#}
+        {#            background-color: #ddd;#}
+        {#        }#}
+        {##}
+        {#        /* Create an active/current tablink class */#}
+        {#        ul.tab li a:focus, .active {#}
+        {#            background-color: #ccc;#}
+        {#        }#}
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        {#        .social_icons_style {#}
+        {#                width: 20%;#}
+        {#                padding:0px;#}
+        {#                display: inline;#}
+        {#                margin-top:15px;#}
+        {#                align:center;#}
+        {#                width: 60% !important;#}
+        {#                align: center;#}
+        {#            }#}
+        .mb-content-wrapper-child {
+            min-height: 931px;
+            margin-top:50px;
+        }
+        .form-wizard .nav > li.active .menu-icon {
+            background: #07A6C3;
+        }
+        .panel-group .panel+.panel {
+            margin-top:0px;
+        }
+        .progress-img {
+            width: 50%;
+        }
+        .modal {
+            width: 98%;
+        }
+        @media only screen and (max-width: 500px) {
+            .yelpSaveButton {
+                margin-bottom:0px;
+            }
+            .blue-button {
+                background-color: #07A6C3;
+                color: white;
+            {#            border-radius: 20px;#}
+                margin-top: 10px;
+                width: 300px;
+                height: 60px;
+                line-height: 26px;
+            }
+            .images-mobile {
+                width:100%;
+                max-width:100%;
+                max-height:120px;
+                min-height:120px;
+            {#            height:auto;#}
+                overflow: hidden;
+                position: relative;
+            }
+            .progress-img {
+                width: 100%;
+            }
+            .mb-panel-col-md-8 {
+                padding-left:0px;
+                padding-right:0px;
+            }
+            .panel{
+            {#                border:none !important;#}
+            }
+
+            .mb-content-wrapper-child {
+                margin-top:0px;
+            }
+            .mb-panel-body{
+                padding:0px !important;
+            }
+            .mb-row {
+                margin-left: -17px !important;
+                margin-right: -17px !important;
+
+            }
+            .nav-justified {
+                width: 100%;
+            }
+            .nav-justified > li {
+            {#  float: left;#}
+                display: table-cell;
+            }
+            .yelp-heading {
+                font-size: 18px;
+            }
+            .mb-col-xs-12 {
+                padding:0px;
+            }
+            .image-cropper {
+                width: 70px;
+                height: 70px;
+                max-height: 70px;
+                min-height: 70px;
+                max-width:70px;
+                min-width:70px;
+            {#            position: relative;#}
+            {#            overflow: hidden;#}
+            {#            border-radius: 50%;#}
+            {#            background: #eee no-repeat center;#}
+            {#            background-size: cover;#}
+            {#            border-color: darkgray;#}
+            }
+            .company__fonts {
+                font-size: 16px;
+            }
+            .social_icons_style {
+                width: 20%;
+                padding:0px;
+                display: inline;
+                margin-top:15px;
+            }
+
+
+
+        }
+
+        {#   ul.experiences li {#}
+        {#    padding-left: 33px;#}
+        {#    margin-bottom: 2.5em;#}
+        {#    list-style: none;#}
+        {#    background: url('../img/misc/list-bullet-darkgray.png') no-repeat;#}
+        {#    border-left: 1px solid #yourcolor;#}
+        {# } #}
+        {#    @import "compass/css3";#}
+
+
+
+    </style>
+
+    <script type="text/javascript" src="{% static "vendroid/js/jquery.js" %}"></script>
+    <script>
+    function resizeIframe(obj) {
+        console.log('changing iframe')
+            var hei = obj.contentWindow.document.body.scrollHeight;// + 400;
+            obj.style.height = hei + 'px';
+        }
+{#         function openSubscriptionModal(){#}
+{#            $('#subscriptionPurchase').modal('show');#}
+{#        }#}
+{#    function resizeIframeAnswers(id) {#}
+{#        var iframe = 'plan-iframe-id-'+id#}
+{#        var iframe = document.getElementById('plan-iframe-id-'+id);#}
+{##}
+{#        if (iframe.contentDocument) // FF Chrome{#}
+{#        {#}
+{#            doc = iframe.contentDocument;#}
+{#            var hei = doc.body.scrollHeight;#}
+{#            iframe.style.height = hei + 'px';#}
+{#        }#}
+{#        else if ( iframe.contentWindow ) {#}
+{#            doc = iframe.contentWindow.document;#}
+{#            var hei = doc.body.scrollHeight;#}
+{#            iframe.style.height = hei + 'px';#}
+{#        }// IE#}
+{##}
+{#        iframe.contentWindow.document.body.scrollHeight;#}
+{##}
+{#        }#}
+{#        window.myFunction = function(args) {#}
+{#           doStuff();#}
+{#        }#}
+    </script>
+    {#    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+    <div class="vd_body">
+        {% include "vendroid/demo/_partial/_header_vendors.html" %}
+
+        <div class="content">
+            <div class="container">
+
+
+
+                <div class="vd_content-wrapper" style="min-height: 931px;">
+                    <div class="mb-content-wrapper-child" >
+                        <div class="vd_content clearfix"></div>
+                        <!--Main panel-->
+                        <div class="row mb-row">
+                            <div class="col-md-4 col-md-offset-4 mb-panel-col-md-8">
+                                <div class="panel" >
+                                    <div class="panel-body mb-panel-body" >
+                                           <h3 style="color: #BCB8B8;">{{ vendors.categories }}</h3>
+                                           <h4 style="color: #BCB8B8;">Bay Area</h4>
+                                           <h4 class="col-md-offset-1"><a style="cursor: pointer;color: #BCB8B8 !important;" onclick="openSubscriptionModal();">Credits: {{ profile.amount }}</a></h4>
+                                           <h4 class="col-md-offset-1" {% if not my_offers %}style="color: #07A6C3 !important;"{% else %}style="color: #BCB8B8 !important;"{% endif %}><a href="{% url "vendors__storelisting" %}" {% if not my_offers %}style="color: #07A6C3 !important;"{% else %}style="color: #BCB8B8 !important;"{% endif %}>{% if not my_offers %}<b>{% endif %}Leads - {{ listings_objects.count }}{% if not my_offers %}<b>{% endif %}</a></h4>
+                                           <h4 class="col-md-offset-1" {% if my_offers %}style="color: #07A6C3 !important;"{% else %}style="color: #BCB8B8 !important;" {% endif %}><a href="?myoffers=True" {% if my_offers %}style="color: #07A6C3 !important;"{% else %}style="color: #BCB8B8 !important;"{% endif %}>{% if my_offers %}<b>{% endif %}Offers <span style="background-color: {% if my_offers %}#07A6C3 !important{% else %}#BCB8B8 !important{% endif %};font-size: 15px !important;" class="badge {% if my_offers %}vd_bg-blue{% endif %}">{{ vendors_offers }}</span>{% if my_offers %}</b>{% endif %}</a></h4>
+
+                                    </div>
+                                </div>
+                                  <div class="panel" >
+                                    <div class="panel-body mb-panel-body" >
+                                                        <div class="panel-group" id="accordion">
+                                            <div class="panel panel-default">
+                                                {% for plan in listings_objects %}
+                                                <div id="panel_open_{{ plan.id }}" class="panel panel-default {% if plan.get_id_str in vendors_listing.get_vendor_sent_list %}{% elif plan.get_id_str in vendors_listing.get_vendor_viewed_list %}{% else %}open-status{% endif %}" {% if plan.get_id_str in vendors_listing.get_vendor_sent_list %}{% elif plan.id in vendors_listing.get_vendor_viewed_list %}{% else %}onclick="panel_open_clicked('{{ plan.id }}')"{% endif %}>
+                                                    <div class="panel-heading vd_bg-green vd_bd-green">
+                                                        <h4 class="panel-title "> <a data-toggle="collapse"
+                                                                                     href="#collapse{{ plan.id }}"
+                                                                                     data-id="{{ plan.id }}"
+                                                                                     data-url="{% url "vendors__listing_answer" vendors.categories_id plan.id plan.user_id %}"
+                                                                                     data-url-dreams="{% url "vendors__listing_dream" plan.id %}"
+                                                                                     class="data-plan"> {{ plan.created_at.date|date:"m/d/Y" }} <span id="panel_text_{{ plan.id }}" class="pull-right">
+{#                                                            {% if not my_offers %}#}
+                                                            {% if plan.get_id_str in vendors_listing.get_vendor_sent_list %}(sent){% elif plan.get_id_str in vendors_listing.get_vendor_viewed_list %}(viewed){% else %}(open){% endif %}
+{#                                                            {% else %}{{ plan.get_offers }}/4#}
+{#                                                        {% endif %}#}
+                                                        </span>
+{#                                                            <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>#}
+                                                        </a> </h4>
+
+                                                    </div>
+                                                    <div id="collapse{{ plan.id }}" class="panel collapse">
+
+                                                        <div class="panel-body mb-panel-body" style="padding:0px;">
+                                                             <iframe FRAMEBORDER="no" BORDER="0"
+                                                                                SCROLLING="no"
+                                                                                height="579px"
+                                                                                frameBorder="0"
+                                                                                width="100%"
+{#                                                                   data-id="{{ plan.id }}"#}
+                                                                                id="dream-iframe-id-{{ plan.id }}" onload="resizeIframe(this)"
+                                                                        ></iframe>
+                                                           <iframe FRAMEBORDER="no" BORDER="0"
+{#                                                                                SCROLLING="no"#}
+                                                                                height="auto"
+                                                                                frameBorder="0"
+                                                                                width="100%"
+{#                                                                   data-id="{{ plan.id }}"#}
+                                                                                id="plan-iframe-id-{{ plan.id }}" onload="resizeIframe(this)"
+                                                                        ></iframe>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--vd_content-wrapper-->
+                    <!-- .vd_container -->
+                </div>
+                <!-- .vd_content-wrapper -->
+            </div>
+        </div>
+    </div>
+    </div>
+    {% if packages %}
+    <div class="modal fade" id="subscriptionPurchase" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="background-color: wheat">
+            <div class="modal-body">
+                <h2 style="margin-top:10px;margin-bottom:20px;">Qualified Leads</h2>
+{#                <div class="panel col-md-4 col-xs-12" style="border:2px solid grey !important;border-radius: 25px;box-shadow: 0 0 5px 2px #fff;; padding:10px;margin:2px;width:32%;">#}
+{#                    <div class="text-center">#}
+{#                        <h4>Make 10 offers</h4>#}
+{#                        <p>LIMITED OFFER ENDING SOON</p>#}
+{#                        <span><h1 class="text-left" style="color: green;">10 tokens</h1></span>#}
+{#                        <p>paid annually</p>#}
+{#                        <p><b>Make up to 30 qualified offers every month</b></p>#}
+{##}
+{#                        <a class="btn" href="{% url "vendors__subscription" %}">GET STARTED</a>#}
+{#                        <p>One booking guaranteed, or your next 6 months is free!</p>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+                {% for package in packages %}
+                    <div onclick="window.location.href = '{% url "vendors__subscription" package.id %}'" style="cursor:pointer;" class="panel widget col-md-4 col-xs-12" style="border:2px solid grey !important;border-radius: 25px;box-shadow: 0 0 5px 2px #fff;padding:0px;margin:0px;">
+                      <div class="panel-heading" style="border-top-left-radius: 25px;border-top-right-radius: 25px; background-color: #07A6C3;">
+                        <h3 class="panel-title">  Make {{ package.token }} offers </h3>
+
+                      </div>
+                        <div class="panel-body-list" >
+                           <div class="col-md-8 col-xs-8"style=" margin-top: 20px; margin-bottom: 20px; margin-right: 0px; padding-right: 0px; width:auto;">
+                               <div class="col-md-12 col-xs-12"style=" padding:0px">{{ package.tokens }} tokens</div>
+                               <div class="col-md-12 col-xs-12"style=" padding:0px">${{ package.amount }}</div>
+                           </div>
+                           <div class="col-md-4 col-xs-4" style="margin-top: 20px; margin-bottom: 20px; padding: 0px; /* padding-right: 15px */"><img style="width:100%;height:auto;" src="https://yapjoy-static.s3.amazonaws.com/media/{{ package.image }}" /></div>
+
+    {#                        <a class="btn" href="{% url "vendors__subscription" %}">GET STARTED</a>#}
+    {#                        <p>One booking guaranteed, or your next 6 months is free!</p>#}
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
+{% endblock content %}
+
+{% block script %}
+    <script>
+{#    $('#subscriptionPurchase').modal('show');#}
+        $('.data-plan').on('click',function(){
+            var id_iframe = $(this).attr('data-id');
+            var id_iframe_url = $(this).attr('data-url');
+            var id_dream_iframe_url = $(this).attr('data-url-dreams');
+            $('#plan-iframe-id-'+id_iframe).attr('src',id_iframe_url)
+            $('#dream-iframe-id-'+id_iframe).attr('src',id_dream_iframe_url)
+
+        })
+      function openSubscriptionModal(){
+            $('#subscriptionPurchase').modal('show');
+        }
+{#        $('#subscriptionPurchase').modal('show');#}
+        function panel_open_clicked(id_passed){
+             $.ajax({
+                        url: '',
+                        type: 'post',
+                        data: {'add_id_viewed':id_passed},
+{#                        processData: false,#}
+{#                        contentType: false,#}
+
+                        success: function (response) {
+                            $('#panel_open_'+id_passed).removeClass('open-status')
+                            $('#panel_text_'+id_passed).html('(viewed)')
+
+                        },
+
+                        error: function (xhr, errmsg, err) {
+
+                        }
+                    })
+
+        }
+        function panel_sent_product(id_passed){
+            $('#panel_text_'+id_passed).html('(sent)')
+        }
+        function bid_open_clicked(id_passed){
+             $('#dream-iframe-id-'+id_passed).attr('hidden','hidden')
+        }
+    </script>
+
+{% endblock script %}

@@ -1,0 +1,371 @@
+{% extends "moments/base_yapjoy_splash_landing.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+
+{% block body %}
+
+    <body id="login-page" class="middle-layout no-nav-left no-nav-right  nav-top-fixed background-login     responsive front-layout   clearfix breakpoint-975" data-active="login-page " data-smooth-scrolling="1">
+{% endblock body %}
+{% block content %}
+    <style>
+    @media only screen and (max-width: 768px) {
+    .modal-dialog {
+                width: 94%;
+            }
+        }
+    </style>
+    <link href="{% static "fonts/sanfrancisco-font.css" %}" rel="stylesheet" type="text/css">
+    <style>
+        header {
+            height: 0px;
+        {#        position: fixed;#}
+        {#         overflow: inherit;#}
+        }
+        #content {
+            margin-top: 100px;
+        }
+        #front-1-services {
+            background-color: #f6f9fc !important;
+            padding-top: 0px;
+        }
+        .mgbt-md-20{
+            margin-bottom: 50px !important;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        #front-1-banner {
+            background: url('{% static "images/homev3/v2/Vendor_Desktop.jpg" %}');
+            background-size: cover;
+            background-clip: border-box;
+        }
+        @media only screen and (max-width: 500px) {
+            #front-1-banner {
+                background: url('{% static "images/homev3/v2/Vendor_Mobile.jpg" %}') no-repeat !important;
+                background-size: auto 100% !important;
+                min-height: 630px !important;
+                background-position: center !important;
+            }
+
+        }
+        #front-1-banner .vd_content {
+            height: auto;
+        }
+    </style>
+    <div class="vd_body splash-page">
+        <!-- Header Start -->
+{#        <header class="header-2" id="header">#}
+{#            <div class="vd_top-menu-wrapper" id="vd_top-menu-wrapper-id"#}
+{#                 style="background-color: transparent !important;"#}
+{#            >#}
+{#                <div class="container">#}
+{#                    <div class="vd_top-nav vd_nav-width col-md-offset-2">#}
+{#                        <div class="vd_panel-header">#}
+{##}
+{#                            <!-- logo -->#}
+{#                            <div class="vd_panel-menu visible-xs">#}
+{#                	<span class="visible-xs">#}
+{#	                    <i class="fa fa-bars"></i>#}
+{#                        <a  id="menu-toggle" style="cursor: pointer; color: white; border: 2px white solid; background-color: transparent;margin-right:10px;" type="button" class="top-login-link" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">Login</a>#}
+{#                    </span>#}
+{#                            </div>#}
+{#                            <!-- vd_panel-menu -->#}
+{#                        </div>#}
+{##}
+{#                        <!-- vd_panel-header -->#}
+{##}
+{#                    </div>#}
+{##}
+{#                    <div class="vd_container">#}
+{#                        <div class="row">#}
+{#                            <div class="col-sm-8 col-xs-12">#}
+{#                                <div class="vd_mega-menu-wrapper horizontal-menu">#}
+{#                                    <div class="vd_mega-menu">#}
+{##}
+{#                                        <!-- Head menu search form ends -->                         </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-sm-4 col-xs-12">#}
+{#                                <div class="vd_mega-menu-wrapper">#}
+{#                                    <div class="vd_mega-menu pull-left">#}
+{#                                        <ul class="mega-ul">#}
+{#                                            <li id="top-menu-1" class="one-icon mega-li">#}
+{#                                                <a  id="menu-toggle" style="cursor: pointer; color: white; border: 2px white solid; background-color: transparent;" type="button" class="btn btn-primary" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">Login</a>#}
+{#                                            </li>#}
+                                            {#                                            <li id="top-menu-2" class="one-icon mega-li">#}
+                                            {#                                                <a href="pages-register.html" class="btn vd_btn vd_btn-bevel vd_bg-yellow font-semibold">Register</a>#}
+                                            {#                                            </li>#}
+{##}
+{#                                        </ul>#}
+{#                                        <!-- Head menu search form ends -->#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <!-- container -->#}
+{#            </div>#}
+{#            <!-- vd_primary-menu-wrapper -->#}
+{##}
+{#        </header>#}
+        <!-- Header Ends -->
+        <div class="content">
+            <div class="splash-section-1 bg-yapjoy">
+                <div class="container">
+                    <div class="col-md-6 col-md-offset-3 top-menu-splash text-right">
+                        <a href="#" id="menu-toggle" type="button" class="top-login-link" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">Login</a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="text-center section-style-1 padding-top-30 padding-bottom-30">
+                        <h2>Storefront Selfie</h2>
+                        <h3>Create a lasting first impression</h3>
+                        <a href="{% url "vendors__storefront" %}" class="btn btn-splash">Setup your Storefront</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="splash-section-2 padding-top-30 padding-bottom-30">
+                <div class="container">
+                    <div class="home-boxes-1-wrap">
+                        <div class="left">
+
+                            <div class="home-box-list">
+                                <img src="{% static "vendroid/img/home-box-1.png" %}">
+                                <div class="home-box-content">
+                                    <h2 class="title">Michael Loeb</h2>
+                                    <h3 class="designation">Photographer</h3>
+                                    <div class="store-front">
+                                        <a href="#">
+                                            <img src="{% static "vendroid/img/arrow-frontstore.png" %}">&nbsp;&nbsp; STOREFRONT SELFIE
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="home-box-list">
+                            <img src="{% static "vendroid/img/home-box-1.png" %}">
+                            <div class="home-box-content">
+                                <h2 class="title">Michael Loeb</h2>
+                                <h3 class="designation">Photographer</h3>
+                                <div class="store-front">
+                                    <a href="#">
+                                        <img src="{% static "vendroid/img/arrow-frontstore.png" %}">&nbsp;&nbsp; STOREFRONT SELFIE
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+                        <div class="right">
+
+                            <div class="home-box-list">
+                                <img src="{% static "vendroid/img/home-box-2.png" %}">
+                                <div class="home-box-content">
+                                    <h2 class="title">The Movie Movers</h2>
+                                    <h3 class="designation">Video Projection Rentals</h3>
+                                    <div class="store-front">
+                                        <a href="#">
+                                            <img src="{% static "vendroid/img/arrow-frontstore.png" %}">&nbsp;&nbsp; STOREFRONT SELFIE
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="splash-section-3 padding-top-30 padding-bottom-30">
+                <div class="container">
+                    <div class="text-center yp-heading-wrap">
+                        <div class="heading-yp">
+                            <h2>Get your team behind one camera and tell<br/>
+                            people why you love doing what you do</h2>
+                        </div>
+
+                        <div class="heading-divider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="splash-section-4 padding-top-30 padding-bottom-30">
+                <div class="container">
+                    <div class="section-4-wrap text-center">
+                            <h2 class="section-heading-2">Just the basics</h2>
+                            <div class="home-boxes-2-wrap">
+                                <div class="home-boxes-list text-center">
+                                    <img src="{% static "vendroid/img/magic-img.png" %}">
+                                    <h2 class="title">No after effects</h2>
+                                </div>
+
+                                 <div class="home-boxes-list text-center">
+                                    <img src="{% static "vendroid/img/scissor.png" %}">
+                                    <h2 class="title">No splicing clips together</h2>
+                                    <h2 class="desc">(one continuous shot)</h2>
+                                </div>
+                            </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="splash-section-5 bg-yapjoy padding-top-30 padding-bottom-30">
+                <div class="container">
+                    <div class="text-center section-style-1">
+
+                        <h3>Share the smiles behind your business</h3>
+                        <a href="{% url "vendors__storefront" %}" class="btn btn-splash">Setup your Storefront</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="splash-section-6 padding-top-30 padding-bottom-30">
+                <div class="container">
+                    <div class="home-boxes-3-wrap">
+                         <div class="col-md-8 col-md-offset-2">
+                             <div class="col-md-6">
+                                 <h2 class="title">Contemplate</h2>
+                                 <h3 class="long-title color-1">Why do you love to do what you do?</h3>
+                                 <p class="descr">You may want to write some notes but it
+is important that you can communicate
+this without a script. </p>
+                             </div>
+                             <div class="clearfix"></div>
+                             <div class="col-md-6 text-right">
+                                 <img src="{% static "vendroid/img/circle-img.png" %}">
+                             </div>
+                             <div class="col-md-6 padding-top-30">
+                                 <h2 class="title">Practice</h2>
+                                 <h3 class="long-title  color-2">Give it a try now</h3>
+                                 <p class="descr">Pull out your phone and open your selfie
+camera.   At first it may be easiest to take
+a quick 10 second introduction.    </p>
+                             </div>
+                             <div class="clearfix"></div>
+
+                             <div class="col-md-6">
+                                 <h2 class="title">Improve</h2>
+                                 <h3 class="long-title color-3">Upload a new video anytime</h3>
+                                 <p class="descr">It may take a while before you become
+comfortable sharing with the camera
+what makes your business special.  </p>
+                             </div>
+
+                         </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="splash-section-7 padding-top-30 padding-bottom-30">
+                <div class="container">
+                    <div class="section-7-wrap text-center">
+                            <h2 class="section-heading-2">Always Double Check</h2>
+                            <div class="home-boxes-4-wrap">
+                                <div class="home-boxes-list text-center">
+                                    <img src="{% static "vendroid/img/torch.png" %}">
+                                    <h2 class="title">the shot is well lit</h2>
+                                </div>
+
+                                 <div class="home-boxes-list text-center">
+                                    <img src="{% static "vendroid/img/man-mic.png" %}">
+                                    <h2 class="title">your voice is projecting clearly</h2>
+
+                                </div>
+
+                                <div class="home-boxes-list text-center">
+                                    <img src="{% static "vendroid/img/smiling-face.png" %}">
+                                    <h2 class="title">No splicing clips together</h2>
+
+                                </div>
+
+                            </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="splash-section-8 bg-yapjoy padding-top-30 padding-bottom-30" style="position: relative;">
+                <div class="" style="background: #000; position: absolute; top:0px;left: 0px; height: 100%; width:100%;opacity: 0.8;"></div>
+                <div class="container">
+
+
+                        <div class="col-md-6 col-md-offset-3">
+
+                             <div class="col-md-3">
+                                <div class="heading-divider"></div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <div class="text-center section-style-2">
+                                    <h2>YapJoy Pre-Launch Promotion </h2>
+
+                                    <a href="{% url "vendors__storefront" %}" class="btn btn-splash">Setup your Storefront</a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="heading-divider"></div>
+                            </div>
+
+                        </div>
+
+                </div>
+            </div>
+
+
+            <div class="splash-section-9 padding-top-30 padding-bottom-30" style="position: relative;">
+
+                <div class="container ">
+                    <div class="content">
+                        <h2>People want to hear</h2>
+                        <h2>A story that led you to pursue your profession</h2>
+                        <h2>&</h2>
+                        <h2>Why you love to do what you do</h2>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="splash-section-10 padding-top-30 padding-bottom-30" style="position: relative;">
+
+                <div class="container ">
+                    <div class="content">
+                        <h2>Get Inspired</h2>
+                        <a href="">Simon Sinek: How great leaders inspire action</a><br/>
+                        <a href="">Julian Treasure: How to speak so that people want to listen</a><br/>
+                        <a href="">Ron Gutman: The hidden power of smiling</a><br/>
+                    </div>
+
+                    <h3 class="footer-email">info@yapjoy.com</h3>
+
+                </div>
+            </div>
+
+        </div>
+{#        {% include "moments/_partial/_login_modal.html" %}#}
+    </div>
+    <!-- content -->
+
+     {% include "moments/_partial/_login_modal.html" %}
+
+    <!-- Middle Content End -->
+    <script>
+        function modelLoginOpen(){
+            jQuery('#loginmodal').modal('show');
+        }
+        {% if form.errors or InvalidDetails %}
+            $(document).ready(function(){
+                jQuery('#loginmodal').modal('show');
+            })
+        {% endif %}
+    </script>
+{% endblock content %}

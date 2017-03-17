@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+    <section class="messages-section">
+        {% include 'messages/partial/_sidebar.html' %}
+        <div class="col-md-9">
+            <h3 class="section-title">Inbox</h3>
+            <ul class=" list-unstyled messages-list">
+                <li><a href="#" class="add-btn mark-all" id="mark-all"><span>Mark all as read</span></a> <a
+                        href="#" class="add-btn delete-btn" id="delete-all"><i
+                        class="glyphicon glyphicon-trash"></i> Delete</a></li>
+            </ul>
+
+
+            <div class="table table-striped messages" id="mail-list">
+                <table class="table messages">
+                    <thead>
+                    <tr>
+                        <th id="mail-list_c0">Mark</th>
+                        <th id="mail-list_c1">From</th>
+                        <th id="mail-list_c2">Subject</th>
+                        <th id="mail-list_c3">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for message in messages %}
+                    <tr {% if message.receiver_read == False %}style="background-color: #3397a5; color: white;"{% endif %} class="{% if message.receiver_read == True %}even{% else %}odd{% endif %}">
+
+                        <td class="checkbx"><input type="checkbox" class="checkMailMessage" data-id="91"/>
+                        </td>
+                        <td class="user"><a {% if message.receiver_read == False %}style="color: white;"{% endif %} href='/profile/{{ message.sender.userprofile.id }}/'>{{ message.sender.get_full_name }}</a></td>
+                        <td class="subject"><a {% if message.receiver_read == False %}style="color: white;"{% endif %} href='/messages/{{ message.id }}/'>{{ message.subject }}</a>
+                        </td>
+                        <td class="time-stamp"><span class='time-stamp'>{{ message.created_at|timesince }}</span></td>
+
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="keys" style="display:none" title="/mail"><span>91</span></div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+{% endblock content %}
+{% block jquery %}
+    <script type="text/javascript" src="/static/js/jquery.mail.js"></script>
+<script type="text/javascript" src="/static/js/jquery.yiigridview.js"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        jQuery(function ($) {
+            jQuery('#mail-list').yiiGridView({
+                'ajaxUpdate': ['mail-list'],
+                'ajaxVar': 'ajax',
+                'pagerClass': 'pager',
+                'loadingClass': 'grid-view-loading',
+                'filterClass': 'filters',
+                'tableClass': 'table table-striped messages',
+                'selectableRows': 1,
+                'enableHistory': false,
+                'updateSelector': '{page}, {sort}',
+                'filterSelector': '{filter}',
+                'pageVar': 'MailMessage_page'
+            });
+        });
+        /*]]>*/
+    </script>
+{% endblock jquery %}

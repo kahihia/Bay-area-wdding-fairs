@@ -1,0 +1,483 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+{% block header_tags %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script>
+        $(function() {
+            $( "#id_due" ).datepicker();
+        });
+    </script>
+{% endblock %}
+{% block content %}
+
+    <section class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="tasks-section">
+                    <div class="col-md-2 col-md-offset-1 left-col">
+                        <section class="tasks-nav">
+                            <!-- (1) Show All -->
+                            <h3 class="section-title">Tasks
+                                <small><a href="/tasks">Show All</a></small>
+                            </h3>
+
+                            <!-- (2) Removing task list seth -->
+                            <!--<a style= "display:none" href="#" class="add-btn " id="addTaskBtn"><i class="glyphicon glyphicon-plus"></i> <span>Add List</span></a>-->
+
+                            <!-- (3) Today Tasks -->
+                            <div class="task-list">
+                                <ul class="list-inline">
+                                    <li class="descript"><p><a href="/tasks?today=1">Today </a></p></li>
+                                    <li><i class="fa fa-chevron-right"></i></li>
+                                </ul>
+                            </div>
+
+                            <!-- (4) Completed Tasks-->
+                            <div class="task-list">
+                                <ul class="list-inline">
+                                    <li class="descript"><p><a href="/tasks?complete=1">Completed ({{ completed_task_count|intcomma }})</a></p></li>
+                                    <li><i class="fa fa-chevron-right"></i></li>
+                                </ul>
+                            </div>
+
+                            <!-- (5) Assigned -->
+                            <br>
+
+                            <h3 class="section-title">Assigned</h3>
+
+                            <div id="friend-list" class="list-view">
+                                {% for assign in assigns %}
+                                    <div class="items">
+                                        <div class="friend">
+                                            <ul class="list-inline">
+
+                                                <li><span class="profile-thumb profile-sm"
+                                                          style="background-image: url({{ assign.task.user.userprofile.get_image_url }})"></span>
+                                                </li>
+                                                <li class="user-name"><p><a
+                                                        href="/tasks?friend={{ assign.task.user.id }}&name={{ assign.task.user.get_full_name }}">{{ assign.task.user.get_full_name }}</a>
+                                                </p></li>
+                                                <li><i class="fa fa-chevron-right"></i></li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+                    </div>
+
+
+                    <!-- (6) Add task button-->
+                    <div class="col-md-9">
+                        <h7 class="section-title"></h7>
+                        <ul class=" list-unstyled todo-list">
+                            <li><a href="#addTodoModal" class="add-btn add-task" data-toggle="modal"><i
+                                    class="glyphicon glyphicon-plus"></i> <span>Add Task</span></a>
+                            </li>
+                            {% if name %}
+                                <small><a href="/tasks/">All Tasks</a> > {{ name }}</small>
+                                 <hr/>
+                            {% endif %}
+
+                            <div id="task-list" class="list-view">
+                                <div class="items">
+                                    <!--
+                                    <li class="">
+                                    <span class="task">
+                                        <a href="#!" data-id="" class="check markTask"><i class="fa  fa-lg"></i></a>
+                                        <p><a href="#!"  class="task-listen" data-id=""></a></p>
+                                        <p>Delete<span><a href="#!" class="deleteGroupBtn" data-id=""><i class="glyphicon glyphicon-trash trash"></i></a></p>
+                                    </span>
+                                    </li>
+                                    -->
+                                    {% for task in tasks_all %}
+                                            <li id="list_task_{{ task.id }}">
+                                    <span class="task">
+
+                                        <span class="col-md-12" style="padding-left: 0px;">
+                                             <a onclick="completeTask('{{ task.id }}');" class="check markTask"><i id="complete_task_{{ task.id }}"
+                                                class="{% if task.complete %}fa fa-check fa-lg success_green{% else %}fa fa-circle-o fa-lg{% endif %}"></i></a><span class="col-md-10"><p>
+
+                                            <a id="task_subject_{{ task.id }}" class="task-listen {% if task.complete %}success_green{% endif %}" onclick="editTask('{{ task.id }}');">{{ task.subject }} | {{ task.due }}</a> &nbsp;
+
+
+                                        </p></span>
+                                        <span class="col-md-1 " ><form action="." method="POST" id="taskDeleteForm_{{ task.id }}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="task_to_delete" value="{{ task.id }}"/>
+
+                                                <a id="delete_bin_{{ task.id }}" class="deleteGroupBtn pull-right {% if task.complete %}success_green{% endif %}" onclick="deleteTask('{{ task.id }}');"><i
+                                                    class="glyphicon glyphicon-trash"></i></a>
+                                            </form></span></span>
+
+                                    </span>
+                                            </li>
+                                        {% endfor %}
+                                {% for task in tasks_assigned_to_user %}
+                                            <li class="">
+                                    <span class="task">
+
+                                        <p>
+                                            <span class="profile-thumb profile-sm pull-left"
+                                                  style="background-image: url({{ task.user.userprofile.get_image_url }}); margin-right: 10px;"></span>
+                                            <small class="task-listen"><a
+                                                    href="{{ task.task.user.userprofile.get_profile_url }}">{{ task.task.user.get_full_name }}</a>: {{ task.task.subject }}
+                                                | {{ task.task.due }}</small>
+{#                                            {% if task.status == "Pending" %}#}
+{#                                                <a class="btn btn-red pull-right" color=>Reject</a><a class="btn btn-blue pull-right">Accept</a>{% endif %} &nbsp;#}
+                                    <br/>
+                                            <small>{{ task.task.notes }}</small>
+                                        </p>
+                                    </span>
+                                            </li>
+                                    {% endfor %}
+                                </div>
+                                <div class="keys" style="display:none" title="/tasks?friend=195"><span>158</span></div>
+                            </div>
+                        </ul>
+                    </div>
+                </section>
+
+
+                <!-- (7) Add task Form -->
+                <div class="modal fade" id="addTodoModal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                                <!-- patch2 -->
+                                <h4 class="modal-title">Add Task</h4>
+
+                                <form action="." method="POST">
+                                    {% csrf_token %}
+
+                                    <!-- seth -->
+                                    <div class="form-group">
+
+
+                                        <label>Task:</label>
+
+                                        {{ task_form.subject }}
+                                        {% if not profile.type == "Professional" %}
+                                        <select id="subjectSub" name="subjectSub" class="form-control">
+                                        <option value="Select" selected="selected">Select a task</option>
+                                           <optgroup label = "12+ months before">
+                                        <option value="Envision your wedding budget.">Envision your wedding budget.</option>
+                                        <option value="Invite 'planning team' on YapJoy">Invite 'planning team' on YapJoy</option>
+                                        <option value="Plan guest list. Create YapJoy Groups">Plan guest list. Create YapJoy Groups</option>
+                                        <option value="Look for ceremony & reception sites.">Look for ceremony & reception sites.</option>
+                                        <option value="Create a 'Wedding Party' Group.">Create a 'Wedding Party' Group.</option>
+                                        <option value="Time for an engagement party?">Time for an engagement party?</option>
+                                               </optgroup>
+                                            <optgroup label = "8-10 months before">
+                                        <option value="Bride: Shop for, & order your gown.">Bride: Shop for, & order your gown.</option>
+                                        <option value="Envision reception food.">Envision reception food.</option>
+                                        <option value="Arrange for Music Entertainment.">Arrange for Music Entertainment.</option>
+                                        <option value="Connect with wedding Professionals">Connect with wedding Professionals</option>
+                                        <option value="Connect with wedding Professionals Connect with  photographers">Connect with wedding Professionals Connect with  photographers</option>
+                                        <option value="Connect with videographers">Connect with videographers</option>
+                                        <option value="Connect with reception band or DJs">Connect with reception band or DJs</option>
+                                        <option value="Connect with & Search Florist">Connect with & Search Florist</option>
+                                        <option value="Research a wedding insurance policy.">Research a wedding insurance policy.</option>
+                                        <option value="Accommodations for out-of-towners.">Accommodations for out-of-towners.</option>
+                                        <option value="Register for gifts.">Register for gifts.</option>
+                                        <option value="Arrange rental companies.">Arrange rental companies.</option>
+                                               </optgroup>
+                                            <optgroup label = "6-8 months before">
+                                        <option value="Book ceremony musicians.">Book ceremony musicians.</option>
+                                        <option value="Order bridesmaid dresses.">Order bridesmaid dresses.</option>
+                                        <option value="Start planning honeymoon.">Start planning honeymoon.</option>
+                                        <option value="Send save-the-date via YapJoy Email.">Send save-the-date via YapJoy Email.</option>
+{#                                        <option value="aaaaaa">aaaaaaaa</option>#}
+                                               </optgroup>
+                                            <optgroup label = "4-6 months before">
+                                        <option value="Attend prewedding counseling.">Attend prewedding counseling.</option>
+                                        <option value="Shop for invitations">Shop for invitations</option>
+                                        <option value="Shop for wedding rings.">Shop for wedding rings.</option>
+                                        <option value="Shop for formalwear.">Shop for formalwear.</option>
+                                        <option value="Renew or get passports, if necessary.">Renew or get passports, if necessary.</option>
+                                        <option value="Envision your wedding cake.">Envision your wedding cake.</option>
+                                               </optgroup>
+                                             <optgroup label = "3 months before">
+                                        <option value="Order wedding cake.">Order wedding cake.</option>
+                                        <option value="Attend your shower.">Attend your shower.</option>
+                                        <option value="Groom: Rent the men's formalwear.">Groom: Rent the men's formalwear.</option>
+                                        <option value="Hire wedding-day transport">Hire wedding-day transport</option>
+                                               </optgroup>
+                                             <optgroup label = "2 months before">
+                                        <option value="Add guests to your Wedding Event">Add guests to your Wedding Event</option>
+                                        <option value="Write your vows.">Write your vows.</option>
+                                        <option value="Purchase gifts for parents & guests">Purchase gifts for parents & guests</option>
+                                        <option value="Look for hair stylist.">Look for hair stylist.</option>
+                                        <option value="Book makeup and go for a trial run.">Book makeup and go for a trial run.</option>
+                                               </optgroup>
+                                             <optgroup label = "1 month before">
+                                        <option value="Apply for a marriage license. ">Apply for a marriage license. </option>
+                                        <option value="Bride: Have final gown fitting.">Bride: Have final gown fitting.</option>
+                                        <option value="See if bridesmaids gowns are ready.">See if bridesmaids gowns are ready.</option>
+                                        <option value="Create wedding program for guests.">Create wedding program for guests.</option>
+                                        <option value="Gift baskets for out-of-town guests.">Gift baskets for out-of-town guests.</option>
+                                               </optgroup>
+                                             <optgroup label = "2 weeks before">
+                                        <option value="Review RSVPs on YapJoy dashboard">Review RSVPs on YapJoy dashboard</option>
+                                        <option value="Send guests reminders to RSVP">Send guests reminders to RSVP</option>
+                                        <option value="Send shot lists to photographer">Send shot lists to photographer</option>
+                                        <option value="Send shot lists to videographer">Send shot lists to videographer</option>
+                                        <option value="Deliver final song list to your DJ">Deliver final song list to your DJ</option>
+                                        <option value="Bride: Get your last haircut & color.">Bride: Get your last haircut & color.</option>
+                                               </optgroup>
+                                             <optgroup label = "1 week before">
+                                        <option value="Give reception site final head count.">Give reception site final head count.</option>
+                                        <option value="Give caterer final guest head count.">Give caterer final guest head count.</option>
+                                        <option value="Print place and table cards.">Print place and table cards.</option>
+                                        <option value="Call all wedding vendors to confirm.">Call all wedding vendors to confirm.</option>
+                                        <option value="Groom: Get your hair trimmed.">Groom: Get your hair trimmed.</option>
+                                        <option value="Attend bachelor/ette parties.">Attend bachelor/ette parties.</option>
+                                               </optgroup>
+                                             <optgroup label = "2-3 days before">
+                                        <option value="Bride: Have your gown pressed.">Bride: Have your gown pressed.</option>
+                                        <option value="Groom: Go for formalwear final fitting. ">Groom: Go for formalwear final fitting. </option>
+                                        <option value="Groom: Get groomsmen fitted">Groom: Get groomsmen fitted</option>
+                                        <option value="Determine wedding-party order">Determine wedding-party order</option>
+                                        <option value="Reconfirm final details with all vendors">Reconfirm final details with all vendors</option>
+                                        <option value="Confirm details with limousine">Confirm details with limousine</option>
+                                        <option value="Arrange for guests airport pickup">Arrange for guests airport pickup</option>
+                                               </optgroup>
+                                             <optgroup label = "Day before">
+                                        <option value="Give emergency contact to all vendors.">Give emergency contact to all vendors.</option>
+                                        <option value="Pay off any final balances">Pay off any final balances</option>
+                                               </optgroup>
+                                             <optgroup label = "Night before">
+                                        <option value="Rehearse ceremony. ">Rehearse ceremony. </option>
+                                        <option value="Give marriage license to officiant.">Give marriage license to officiant.</option>
+                                        <option value="Attend rehearsal dinner.">Attend rehearsal dinner.</option>
+                                               </optgroup>
+                                             <optgroup label = "Postwedding">
+                                        <option value="Prearrange for rental returns">Prearrange for rental returns</option>
+                                        <option value="Write and send thank-you notes">Write and send thank-you notes</option>
+                                        <option value="Take lots of photos & share on YapJoy">Take lots of photos & share on YapJoy</option>
+                                               </optgroup>
+
+                                        </select>
+                                        {% endif %}
+                                        <div class="red">{{ task_form.subject.errors }}</div>
+
+                                    </div>
+                                    <div class="form-group due">
+
+                                        <label>Due:</label>
+                                        <i class="fa fa-calendar"></i>
+                                        {{ task_form.due|addcss:"form-control datetime-picker" }}
+                                        <div class="red">{{ task_form.due.errors }}</div>
+                                    </div>
+                                    {% if not profile.type == "Professional" %}
+                                    <div class="form-group">
+                                        <label>Assign:</label>
+                                        <!-- patch4 -->
+                                        <!-- getFriendDropdownTask -->
+                                        <select style="display: none;" multiple="multiple" class="form-control"
+                                                data-placeholder="Choose" name="assigned_to_add" id="assigned_to_add">
+                                            {% for friend in friends %}
+                                                 {% if friend.user == request.user %}
+                                                    <option value="{{ friend.friends.user.id }}">{{ friend.friends.user.get_full_name }}</option>
+                                                {% else %}
+                                                    <option value="{{ friend.user.id }}">{{ friend.user.get_full_name }}</option>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <label>Notes:</label>
+                                        {{ task_form.notes }}
+                                        <div class="red">{{ task_form.notes.errors }}</div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12 margin-top-10">
+                                            <button type="submit" class="btn btn-blue pull-right">Create</button>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </form>
+
+                            </div>
+
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <div class="modal fade" id="edit_task_modal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="height:410px;">
+                            <div class="modal-body">
+                                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                                <!-- patch2 -->
+                                <h4 class="modal-title" style="padding-bottom: 0px; margin-bottom: 0px;">Edit Task</h4>
+                                <iframe id="edit_task_iframe" src="" width="100%" style="height: 374px;"></iframe>
+
+                            </div>
+
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+
+                <div class="modal fade" id="editTaskModal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body" id="editTaskBody">
+                                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>
+                                <h4 class="modal-title">View Task</h4>
+
+                                <form id="editForm" data-id="167">
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-gray" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-blue" id="editTaskSubmitBtn">Save</button>
+                                <!-- <button type="button" class="btn btn-gray" data-dismiss="modal">OK</button> -->
+                                <button style="display:none" type="button" class="btn btn-blue" id="editTaskSubmitBtn">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+            </div>
+            <!--div-row -->
+        </div>
+        <!-- div-container-fluid -->
+    </section>
+
+
+{% endblock %}
+
+
+{% block jquery %}
+    {#    <script type="text/javascript" src="{% static "js/jquery.tasks.js" %}"></script>#}
+
+    <script type="text/javascript" src="{% static "js/jquery.tasks.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.yiilistview.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.timepicker.js" %}"></script>
+
+
+    {#    <script type="text/javascript">#}
+    {#    /*<![CDATA[*/#}
+    {#    jQuery(function($) {#}
+    {#        jQuery('#task-group-list').yiiListView({'ajaxUpdate':['task-group-list'], 'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+    {#        jQuery('#friend-list').yiiListView({'ajaxUpdate':['friend-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+    {#        jQuery('#task-list').yiiListView({'ajaxUpdate':['task-list'],'ajaxVar':'ajax','pagerClass':'pager','loadingClass':'list-view-loading','sorterClass':'sorter','enableHistory':false});#}
+    {#        jQuery('#Task_due_date').datepicker({'showAnim':'slide','dateFormat':'mm/dd/yy'});#}
+    {#    });#}
+    {#    /*]]>*/#}
+    {#    </script>#}
+    <script>
+{#        $(document).ready(function(){#}
+{#            $('#id_due').datetimepicker();#}
+{#        })#}
+        {% if task_form.errors %}
+            $("#addTodoModal").modal('show');
+        {% endif %}
+
+        function editTask(id){
+            var url = '/tasks/edit/'+id
+            $('#edit_task_modal').modal('show');
+            $("#edit_task_iframe").attr('src',url);
+        }
+
+        function completeTask(id){
+          //  alert(id);
+
+            $.ajax({
+                        url: '/tasks/complete/', // the endpoint
+                        type: 'post', // http method
+                        data: {id:id}, // data sent with the post request
+
+                        // handle a successful response
+                        success: function (response) {
+                            //alert("success"); // another sanity check
+                            if (response == "success") {
+                                $('#list_task_'+id).attr('hidden','hidden');
+                                var task_id = '#complete_task_'+id;
+                                $(task_id).removeClass('fa fa-circle-o fa-lg')
+                                        .attr('class','fa fa-check fa-lg')
+                                        .addClass('success_green');
+                                $('#delete_bin_'+id).addClass('success_green');
+                                $('#task_subject_'+id).addClass('success_green');
+                            }
+                            if (response == "successFalse"){
+                                $('#list_task_'+id).attr('hidden','hidden');
+                                var task_id = '#complete_task_'+id;
+                                $(task_id).removeClass('fa fa-check fa-lg')
+                                        .attr('class','fa fa-circle-o fa-lg')
+                                        .removeClass('success_green');
+                                $('#delete_bin_'+id).removeClass('success_green');
+                                $('#task_subject_'+id).removeClass('success_green');
+                            }
+
+
+                        },
+
+                        // handle a non-successful response
+                        error: function (xhr, errmsg, err) {
+{#                            alert(err, errmsg);#}
+                        }
+                    });
+
+        }
+
+        function deleteTask(id) {
+            bootbox.confirm("<h3>Are you sure you wish to delete this task?</h3>", function (result) {
+                if (!result) return;
+                else {
+                    var formID = '#taskDeleteForm_' + id;
+                    $.ajax({
+                        url: $(formID).attr('action'), // the endpoint
+                        type: $(formID).attr('method'), // http method
+                        data: $(formID).serialize(), // data sent with the post request
+
+                        // handle a successful response
+                        success: function (response) {
+                            //alert("success"); // another sanity check
+                            if (response == "success") {
+                                $('#list_task_' + id).attr('hidden', 'hidden');
+                            }
+
+                        },
+
+                        // handle a non-successful response
+                        error: function (xhr, errmsg, err) {
+
+                        }
+                    });
+                }
+            });
+
+
+        }
+        ;
+        $('#subjectSub').on('change',function(){
+            $('#id_subject').val($(this).val());
+        });
+
+    </script>
+{% endblock %}

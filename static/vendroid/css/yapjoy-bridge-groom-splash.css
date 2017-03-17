@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'SFUI_Regular';
+    src: url('../fonts/SanFranciscoFont/sanfranciscodisplay-regular-webfont.woff') format('woff'),
+         url('../fonts/SanFranciscoFont/sanfranciscodisplay-regular-webfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+body.bride-groom-splash-layout{
+    font-family: 'SFUI_Regular';
+}
+.bride-groom-splash-layout .navbar-default.bg-white{
+    background: #ffffff;
+}
+
+.container{
+    width: 700px;
+}
+.yap-bride-groom-slide{
+    text-align: center;
+    color: #fff;
+}
+
+.yap-bride-groom-slide .title{
+    font-size: 30px;
+    text-transform: capitalize;
+}
+.yap-bride-groom-slide .designation-title{
+    font-size: 45px;
+    text-transform: capitalize;
+}
+
+.yap-bride-groom-slide .location{
+    font-size: 30px;
+    text-transform: capitalize;
+    margin-bottom: 30px;
+}
+.btn{
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+}
+.btn-yapjoy-blue{
+    background:#07a6c3;
+}
+.btn-yapjoy-blue:hover{
+    color:#fff;
+}
+.offer-event-service{
+
+}
+.offer-event-service .offer-holder{
+    width:200px;
+    float: right;
+}
+.offer-event-service .offer-text{
+    width: 115px;
+    float: left;
+}
+.offer-event-service .offer-text a{
+        color: #fff;
+    text-transform: capitalize;
+}
+.offer-event-service .offer-arrow{
+
+}
+
+.offer-event-service .offer-arrow .fa{
+    font-size: 44px;
+    color: #fff;
+    font-weight: lighter;
+}

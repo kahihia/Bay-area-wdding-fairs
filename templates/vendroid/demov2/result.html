@@ -1,0 +1,107 @@
+{% extends "vendroid/demo/iframe_base.html" %}
+{% load static %}
+{% block content %}
+    <style>
+    .select-images div img {
+        margin-bottom: 20px;
+    }
+    </style>
+    <style type="text/css">
+{#    background-image: url({% static "images/demo/Invite.png" %}) no-repeat; #}
+            .button-image{
+                background: url({% static "images/demo/Invite.png" %}) no-repeat;
+                cursor:pointer;
+                border: none;
+            }
+        </style>
+
+    <div class="">
+        <!-- Header Start -->
+{#        {% include "vendroid/demo/_partial/_header.html" %}#}
+        <!-- Header Ends -->
+        <div class="">
+<div class="" id="login-form" style="">
+{#	<a href="index.html" class="login-logo"><img src="{% static "images/bawf/bawf_logo.png" %}" width="20%"></a>#}
+		<div class="">
+			<div class="">
+				<div class="panel ">
+{#					<div class="panel-heading text-center">#}
+{#						#}
+{#					</div>#}
+{#                    {{ form.errors }}#}
+                    <form class="" action="." method="post" role="form">
+					<div class="panel-body select-images" style="height:570px;">
+
+
+
+                        <div class="col-sm-12 controls">
+
+                                                        <br />
+                            {% if type == "venue" %}
+                            <h4 class="col-md-7">What do you need this Wedding Venue for?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.VenueQuestion1 }}</h4>
+                            <h4 class="col-md-7">Would you like this Venue to be indoors or outdoors?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.VenueQuestion2 }}</h4>
+                            <h4 class="col-md-7">How many guests are you expecting?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.VenueQuestion3 }}</h4>
+                            <h4 class="col-md-7">When would you like venue services?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.VenueQuestion4 }}</h4>
+                            <h4 class="col-md-7">We are looking for a venue within?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.VenueQuestion5 }}</h4>
+                            <h4 class="col-md-7">Anything else the wedding venue should know?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.VenueQuestion6 }}</h4>
+                            <h4 class="col-md-7">What is your budget for the DJ and related services?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.VenueQuestion7 }}</h4>
+                            {% elif type == "dj" %}
+                                <h4 class="col-md-7">How many guests are you expecting?</h4>
+                            <h4 class="col-md-5">&nbsp;&nbsp;{{ demoplan.DjQuestion1 }}</h4>
+                            <h4 class="col-md-7">What kind of music would you like?</h4>
+                            <h4 class="col-md-5">&nbsp;&nbsp;{{ demoplan.DjQuestion2 }}</h4>
+                            <h4 class="col-md-7">Is your Venue indoors or outdoors?</h4>
+                            <h4 class="col-md-5">&nbsp;&nbsp;{{ demoplan.DjQuestion3 }}</h4>
+                            <h4 class="col-md-7">Does your Venue provide sound equipment??</h4>
+                            <h4 class="col-md-5">&nbsp;&nbsp;{{ demoplan.DjQuestion4 }}</h4>
+                            <h4 class="col-md-7">Please confirm the location?</h4>
+                            <h4 class="col-md-5">&nbsp;&nbsp;{{ demoplan.DjQuestion5 }}</h4>
+                            <h4 class="col-md-7">What additional equipment or services would you like, if any?</h4>
+                            <h4 class="col-md-5">&nbsp;&nbsp;{{ demoplan.DjQuestion6 }}</h4>
+                            <h4 class="col-md-7"> Anything else the wedding DJ should know?</h4>
+                            <h4 class="col-md-5">&nbsp;&nbsp;{{ demoplan.DjQuestion7 }}</h4>
+                            <h4 class="col-md-7">What is your budget for the DJ and related services?</h4>
+                            <h4 class="col-md-5">&nbsp;{{ demoplan.DjQuestion8 }}</h4>
+                            {% endif %}
+                        </div>
+                        <div class="clearfix"></div>
+{#                            <form acton="" method="post">#}
+{#                                {% csrf_token %}#}
+{#                                <input id="surveyVenue" name="surveyVenue" value="2" hidden />#}
+{#                                <button type="submit" id="invite-btn" class="btn btn-primary pull-right pink-background" style="margin-top: 20px;width: 120px;">Next</button>#}
+{#                            </form>#}
+
+
+
+
+
+					</div>
+{#					<div class="panel-footer">#}
+{#						<div class="clearfix">#}
+{#							<a href="extras-registration.html" class="btn btn-default pull-left">Register</a>#}
+{##}
+{#						</div>#}
+{#					</div>#}
+{#                        <div style="text-align: center !important;">#}
+{#                            <div class="panel-heading text-center">#}
+{#                                <h2 >Powered by <a href="https://www.yapjoy.com/">YapJoy</a> </h2>#}
+{#                            </div>#}
+{#                        </div>#}
+
+                    </form>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
+</div>
+
+
+{% endblock content %}

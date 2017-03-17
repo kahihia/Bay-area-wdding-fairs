@@ -1,0 +1,205 @@
+{% extends "moments/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load myfilters %}
+
+{% block body %}
+
+    <body id="login-page" class="middle-layout no-nav-left no-nav-right  nav-top-fixed background-login     responsive front-layout   clearfix breakpoint-975" data-active="login-page " data-smooth-scrolling="1">
+{% endblock body %}
+{% block content %}
+    <style>
+    @media only screen and (max-width: 768px) {
+    .modal-dialog {
+                width: 94%;
+            }
+        }
+    </style>
+    <link href="{% static "fonts/sanfrancisco-font.css" %}" rel="stylesheet" type="text/css">
+    <style>
+        header {
+            height: 0px;
+        {#        position: fixed;#}
+        {#         overflow: inherit;#}
+        }
+        #content {
+            margin-top: 100px;
+        }
+        #front-1-services {
+            background-color: #f6f9fc !important;
+            padding-top: 0px;
+        }
+        .mgbt-md-20{
+            margin-bottom: 50px !important;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        #front-1-banner {
+            background: url('{% static "images/homev3/v2/Vendor_Desktop.jpg" %}');
+            background-size: cover;
+            background-clip: border-box;
+        }
+        @media only screen and (max-width: 500px) {
+            #front-1-banner {
+                background: url('{% static "images/homev3/v2/Vendor_Mobile.jpg" %}') no-repeat !important;
+                background-size: auto 100% !important;
+                min-height: 630px !important;
+                background-position: center !important;
+            }
+
+        }
+        #front-1-banner .vd_content {
+            height: auto;
+        }
+    </style>
+    <div class="vd_body">
+        <!-- Header Start -->
+        <header class="header-2" id="header">
+            <div class="vd_top-menu-wrapper" id="vd_top-menu-wrapper-id"
+                 style="background-color: transparent !important;"
+            >
+                <div class="container">
+                    <div class="vd_top-nav vd_nav-width col-md-offset-2">
+                        <div class="vd_panel-header">
+                            <div class="logo">
+                                <a href="/"><img alt="logo" src="{% static "images/logo/logo-lg.png" %}"></a>
+                            </div>
+                            <!-- logo -->
+                            <div class="vd_panel-menu visible-xs">
+                	<span class="visible-xs">
+{#	                    <i class="fa fa-bars"></i>#}
+                        <a  id="menu-toggle" style="cursor: pointer; color: white; border: 2px white solid; background-color: transparent;margin-right:10px;" type="button" class="btn btn-primary" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">Login</a>
+                    </span>
+                            </div>
+                            <!-- vd_panel-menu -->
+                        </div>
+
+                        <!-- vd_panel-header -->
+
+                    </div>
+
+                    <div class="vd_container">
+                        <div class="row">
+                            <div class="col-sm-8 col-xs-12">
+                                <div class="vd_mega-menu-wrapper horizontal-menu">
+                                    <div class="vd_mega-menu">
+
+                                        <!-- Head menu search form ends -->                         </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-12">
+                                <div class="vd_mega-menu-wrapper">
+                                    <div class="vd_mega-menu pull-left">
+                                        <ul class="mega-ul">
+                                            <li id="top-menu-1" class="one-icon mega-li">
+                                                <a  id="menu-toggle" style="cursor: pointer; color: white; border: 2px white solid; background-color: transparent;" type="button" class="btn btn-primary" data-toggle="collapse" onclick="modelLoginOpen();"  data-target="#example">Login</a>
+                                            </li>
+                                            {#                                            <li id="top-menu-2" class="one-icon mega-li">#}
+                                            {#                                                <a href="pages-register.html" class="btn vd_btn vd_btn-bevel vd_bg-yellow font-semibold">Register</a>#}
+                                            {#                                            </li>#}
+
+                                        </ul>
+                                        <!-- Head menu search form ends -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- container -->
+            </div>
+            <!-- vd_primary-menu-wrapper -->
+
+        </header>
+        <!-- Header Ends -->
+        <div class="content">
+            <div id="front-1-banner"
+                    {#                 style="min-height: 870px;"#}
+                 class="vd_banner vd_bg-dark-green clearfix slide-waypoint" data-waypoint="home">
+                <div class="container">
+
+                    <div class="vd_content vd_info-parent clearfix">
+                        {#      <div class="word-header animated fadeInDownBig">#}
+                        {#        <h1 class="font-semibold text-center vd_white" style="margin-top:12%;"><strong>Work with engaged couples</strong> in Bay Area</h1>#}
+                        {#      </div>#}
+                        <div class="word-subheader" style="margin-top: 16%;">
+                            <h1 class="col-md-offset-2 vd_white dyto" style="font-size: 69px;font-family: 'San Francisco' !important;font-weight:200;color: #fff; ">Work with engaged<br />couples</h1>
+                            <h4 style="margin-top:50px;font-size:30px;font-family: 'San Francisco' !important;font-weight:400;" class="col-md-offset-2 vd_white tfwm">The community for wedding vendors<br />to work together</h4>
+                            <a href="{% url "vendors__storefront" %}"
+                                    {#                                    onclick="modelGetStartedOpen()"#}
+                               class="col-md-offset-2 btn vd_btn" style="background-color: #07A6C3; color: white; border-radius: 20px; margin-top: 50px;width:150px;height:40px;line-height: 26px;">Setup storefront</a>
+                        </div>
+                        <div class="word-subheader animated fadeInDownBig" style="opacity: 0;">
+                            <h3 class="text-center vd_white">Fast Deployment and 100% Full Control Admin Theme</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="front-1-services" class="vd_section clearfix slide-waypoint" data-waypoint="services">
+                <div class="container wedding-pre-container" style=" margin-top:50px;margin-bottom: 25px;">
+                    <div class="vd_content clearfix">
+                        {#                        <br />#}
+                        {#                        <br />#}
+                        <br />
+                        <div class="row mgtp-20">
+                            <div class="col-md-8  col-md-offset-2">
+                                <div class="col-md-6 mgbt-sm-20 mgbt-md-20">
+                                    <div class=" clearfix feature-1">
+                                        <p class="mgbt-xs-20"><img src="{% static "images/homev3/Eye.png" %}" style="width: 20%;" />
+                                        </p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;font-size:25px;">1) Discover</h2>
+                                        <h2 class="grey text-desc" style="font-family: 'San Francisco' !important;font-weight:200;font-size:25px;">Search through listings to find a<br />couple that shares your vision.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mgbt-sm-20 mgbt-md-20">
+                                    <div class="clearfix feature-2">
+                                        <p class="mgbt-xs-20"><img src="{% static "images/homev3/Connect.png" %}" style="width: 20%;" />
+                                        </p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;font-size:25px;">2) Connect</h2>
+                                        <h2 class="grey text-desc" style="font-family: 'San Francisco' !important;font-weight:200;font-size:25px;">Create and send a targeted bid<br />to get the conversation started.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mgbt-sm-20 mgbt-md-20">
+                                    <div class="clearfix feature-3">
+                                        <p class="mgbt-xs-20"><img src="{% static "images/homev3/Collaborate.png" %}" style="width: 20%;" /></p>
+                                        <h2 class="grey text-top" style="font-family: 'San Francisco' !important;font-weight:400;font-size:25px;">3) Collaborate</h2>
+                                        <h2 class="grey text-desc" style="font-family: 'San Francisco' !important;font-weight:200;font-size:25px;">Get hired and coordinate with<br />their team of wedding vendors.</h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-8  col-md-offset-2 text-center">
+                                <a href="{% url "vendors__storefront" %}"
+                                        {#                                    onclick="modelGetStartedOpen()"#}
+                                   class="col-md-offset-2 btn vd_btn" style="background-color: #07A6C3; color: white; border-radius: 20px;
+margin-top: 50px;
+width: 220px;
+height: 50px;
+line-height: 32px;">Setup storefront</a>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include "moments/_partial/_login_modal.html" %}
+    </div>
+    <!-- content -->
+
+    <!-- Middle Content End -->
+    <script>
+        function modelLoginOpen(){
+            jQuery('#loginmodal').modal('show');
+        }
+        {% if form.errors or InvalidDetails %}
+            $(document).ready(function(){
+                jQuery('#loginmodal').modal('show');
+            })
+        {% endif %}
+    </script>
+{% endblock content %}
