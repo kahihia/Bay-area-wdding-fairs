@@ -60,14 +60,14 @@
 {#                        <span class="menu-badge"><span class="badge vd_bg-red"></span></span>#}
 {#                    </a>#}
 {#                </li>#}
-            <li {% if '/crm/bridegroom/list/' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser and not request.user.email == "jenessa@bayareaweddingfairs.com" %}hidden{% endif %}>
+            <li {% if '/crm/bridegroom/list/' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser and not request.user.email == "jenessa@bayareaweddingfairs.com" %}{% if request.user.email == "a.masody@BayAreaWeddingFairs.com" %}{% else %}hidden{% endif %}{% endif %}>
                     <a href="/crm/bridegroom/list/">
                         <span class="menu-icon"><i class="fa fa-female"></i></span>
                         <span class="menu-text">REGISTERED BRIDES</span>
                         <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
                     </a>
                 </li>
-                <li {% if '/crm/invoices/eventsbg/' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser and not request.user.email == "jenessa@bayareaweddingfairs.com" %}hidden{% endif %}>
+                <li {% if '/crm/invoices/eventsbg/' in request.path %}class="active"{% endif %} {% if not request.user.is_superuser and not request.user.email == "jenessa@bayareaweddingfairs.com" %}{% if request.user.email == "a.masody@BayAreaWeddingFairs.com" %}{% else %}hidden{% endif %}{% endif %}>
                     <a href="/crm/invoices/eventsbg/">
                         <span class="menu-icon"><i class="fa fa-list"></i></span>
                         <span class="menu-text">BRIDES LIST</span>
