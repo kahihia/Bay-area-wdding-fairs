@@ -247,7 +247,7 @@ def invoice_add(request, id):
     })
 
 from yapjoy_registration.models import Company
-@login_required(login_url='/login/')
+@login_required(login_url='/crm/login/')
 @staff_member_required
 @csrf_exempt
 def event_management(request):
@@ -649,7 +649,7 @@ def event_management_iframe_bg_successv2(request):
     # return render(request, 'vendroid/bayareaweddingfairs_tickets/buy_tickets.html', context)
     return render(request, 'vendroid/CRM/event_success_iframe_bgv2.html', context=context)
 
-
+# @login_required(login_url='/crm/login/')
 @csrf_exempt
 def event_management_iframe(request):
     # user = request.user
@@ -2388,6 +2388,7 @@ def invoices_data_view(request, id):
         'csvdata':csvdata,
     })
 
+@login_required(login_url='/crm/login/')
 def invoicesdataview_list(request, id):
     try:
         user = request.user
@@ -2727,6 +2728,7 @@ def crm_view_agreement(request, code):
         'invoices':invoices,
         'code':code,
     })
+
 
 def crm_view_complete_agreement(request, code):
     print code
@@ -3285,7 +3287,7 @@ def Wizard_st1(request, email):
     }
     return render(request,'vendroid/CRM/iFrame/Wizard_st1.html', content)
 
-
+@login_required(login_url='/crm/login/')
 @csrf_exempt
 def ViewWpForm(request):
     req_user = request.user
@@ -5570,7 +5572,7 @@ def populate_Promocode_bg(request, id):
     }
     return JsonResponse(data)
 
-
+@login_required(login_url='/crm/login/')
 @csrf_exempt
 def edit_Promocode_bg(request):
     if request.method == 'POST':
@@ -5672,7 +5674,7 @@ def TasksList(request):
         'sales':users
     })
 
-
+@login_required(login_url='/crm/login/')
 def search(request):
     if request.is_ajax():
         search = request.GET.get('search', None)
@@ -5716,7 +5718,7 @@ def search(request):
 
     return render(request, 'vendroid/CRM/search.html')
 
-
+@login_required(login_url='/crm/login/')
 def search_contracted(request):
     if request.is_ajax():
         search = request.GET.get('search', None)
@@ -5744,7 +5746,7 @@ def search_contracted(request):
     else:
         return HttpResponse('')
 
-
+@login_required(login_url='/crm/login/')
 def search_bridegrooms(request):
     if request.is_ajax():
         search = request.GET.get('search', None)
@@ -5772,6 +5774,7 @@ def check_string(t):
         printable = set(string.printable)
         return filter(lambda x: x in printable, t)
 
+@login_required(login_url='/crm/login/')
 @csrf_exempt
 def csv_generate(request):
 
@@ -5864,7 +5867,7 @@ def ticketingPrice(request):
     }
     return render(request, 'vendroid/CRM/ticketPrice.html', context)
 
-
+@login_required(login_url='/crm/login/')
 def eventdata(request):
     event_data = None
     if request.is_ajax():
@@ -5880,7 +5883,7 @@ def eventdata(request):
     }
     return HttpResponse(json.dumps(data), content_type='application/json')
 
-
+@login_required(login_url='/crm/login/')
 def ticket_search(request):
     string = ''
     if request.is_ajax():
