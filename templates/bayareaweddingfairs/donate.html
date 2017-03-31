@@ -1,0 +1,403 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en-US">
+<!--
+	HTML tag with Open Graph attributes should looks like this
+	<html class="no-js" lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+-->
+<head>
+	<meta charset="UTF-8" />
+	<title>Unicum HTML Template</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Open Graph meta tags for social websites -->
+	<!--
+	<meta property="og:title" content="About Our Company">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="http://www.mysite.com/article/">
+	<meta property="og:image" content="http://www.mysite.com/articleimage.jpg">
+	<meta property="og:site_name" content="My Company Name">
+	<meta property="fb:app_id" content="">
+	<meta property="og:description" content="A description of our services and company profile.">
+	-->
+
+	<!-- CSS Animation libs styles -->
+	<link rel="stylesheet" href="{% static "market/css/libs/animate.min.css" %}" type="text/css" media="all">
+	<!-- Font Awesome icon library -->
+	<link href="{% static "market/css/libs/font-awesome.min.css" %}" rel="stylesheet" type="text/css" media="all">
+	<!-- Load primary stylesheet -->
+	<link rel="stylesheet" href="{% static "market/css/skin.css" %}" type="text/css" media="all">
+</head>
+<body class="home home-personal one-page preloader transparent-header parallax-footer">
+
+	<!--
+		Page preloader
+	-->
+	<div id="preloader">
+		<div class="timer"></div>
+	</div>
+
+	<!--
+		Main wrapper
+	-->
+	<div id="wrap">
+
+		<!--
+			Page header
+		-->
+		<header class="headroom" id="header">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+
+						<!--
+							Theme logo
+						-->
+						<a href="index-agency.html" class="logo"><img src="{% static "market/images/logo-yellow.png" %}" data-at2x="{% static "market/images/logo-yellow@2x.png" %}" alt="Unicum - Premium HTML template" /></a>
+
+						<!--
+							Navigation
+						-->
+						<nav id="header-nav" class="dl-menuwrapper" data-back-label="Back">
+
+							<!--
+								Toggle menu for mobile devices
+								this element is hidden for desktop and large monitors
+							-->
+							<a href="javascript:;" id="mobile-menu-toggler" class="dl-trigger"><span>Toggle Menu</span></a>
+
+							<ul id="header-menu" class="dl-menu">
+								<!--
+									First level menu
+								-->
+								<li>
+									<a href="#slider">
+										<!-- Animated line wrap additional tags -->
+										<span class="line_wrap">
+											<span class="line"></span>
+											Home
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#about">
+										<span class="line_wrap">
+											<span class="line"></span>
+											About Me
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#services">
+										<span class="line_wrap">
+											<span class="line"></span>
+											Services
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#portfolio">
+										<span class="line_wrap">
+											<span class="line"></span>
+											Portfolio
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#blog">
+										<span class="line_wrap">
+											<span class="line"></span>
+											Blog
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#clients">
+										<span class="line_wrap">
+											<span class="line"></span>
+											Clients
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#pricing">
+										<span class="line_wrap">
+											<span class="line"></span>
+											Pricing
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#contact">
+										<span class="line_wrap">
+											<span class="line"></span>
+											Contact <i class="submenu-icon"></i>
+										</span>
+									</a>
+
+									<!--
+										An example of second menu level
+									-->
+									<ul class="sub-menu dl-submenu">
+										<li><a class="external" href="blog-single.html">Blog Post</a></li>
+										<li><a class="external" href="header-scroll.html">Scroll Header</a></li>
+										<li><a class="external" href="header-simple.html">Simple Header</a></li>
+										<li><a class="external" href="footer-simple.html">Simple Footer</a></li>
+										<li><a class="external" href="sidebar-left.html">Left Side</a></li>
+										<li><a class="external" href="page.html">Page</a></li>
+										<li>
+											<a class="external" href="javascript:;">Right menu <i class="submenu-icon"></i></a>
+
+											<!--
+												An example of third menu level
+												it will appear on a right side
+											-->
+											<ul class="sub-menu dl-submenu appear-on-right">
+												<li><a class="external" href="javascript:;">Link 1</a></li>
+												<li><a class="external" href="javascript:;">Link 2</a></li>
+												<li><a class="external" href="javascript:;">Link 3</a></li>
+											</ul>
+
+										</li>
+										<li>
+											<a class="external" href="javascript:;">Left menu <i class="submenu-icon"></i></a>
+
+											<!--
+												An example of third menu level
+												it will appear on a left side
+											-->
+											<ul class="sub-menu dl-submenu appear-on-left">
+												<li><a class="external" href="javascript:;">Some link 1</a></li>
+												<li><a class="external" href="javascript:;">Some link 2</a></li>
+												<li><a class="external" href="javascript:;">Some link 3</a></li>
+											</ul>
+
+										</li>
+									</ul>
+
+								</li>
+							</ul>
+						</nav>
+
+					</div>
+				</div>
+			</div>
+
+		</header>
+
+		<!--
+			Content section area
+		-->
+
+        <div id="content-wrapper">
+
+			<!--
+				Home page slider
+
+			<!--
+				Contacts section
+			-->
+			<div class="section" id="contact">
+
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+
+							<!--
+								Contact section header
+							-->
+							<div class="row">
+								<div class="col-md-6">
+
+									<h2 class="h1 wow zoomInDown">Subscribe Now</h2>
+
+									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam. </p>
+
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+
+									<!--
+										Contact form block
+									-->
+									<form action="javascript:;" id="contact-form" class="form-yellow" method="post">
+
+										<div class="row">
+
+											<div class="col-md-6">
+												<input type="text" id="input-name" name="name" placeholder="Your Name" />
+											</div>
+
+											<div class="col-md-6">
+												<input type="email" id="input-email" name="email" placeholder="Email" />
+											</div>
+
+										</div>
+                                        <div class="row">
+
+											<div class="col-md-6">
+												<input type="text" id="input-name" name="name" placeholder="Credit Card Number" />
+											</div>
+
+											<div class="col-md-6">
+												<input type="email" id="input-email" name="email" placeholder="Card Expiry" />
+											</div>
+
+										</div>
+
+{#										<div class="row">#}
+{##}
+{#											<div class="col-md-6">#}
+{#												<input type="text" id="input-phone" name="phone" placeholder="Phone" />#}
+{#											</div>#}
+{##}
+{#											<div class="col-md-6">#}
+{#												<input type="text" id="input-subject" name="subject" placeholder="Subject" />#}
+{#											</div>#}
+{##}
+{#										</div>#}
+
+{#										<div class="row">#}
+{##}
+{#											<div class="col-md-12">#}
+{#												<textarea name="message" id="input-message" placeholder="Your Message"></textarea>#}
+{#											</div>#}
+{##}
+{#										</div>#}
+
+										<div class="row">
+
+											<div class="col-md-12">
+												<button type="submit" class="button yellow">Subscribe</button>
+											</div>
+
+										</div>
+
+									</form>
+
+								</div>
+								<div class="col-md-5 col-md-offset-1">
+
+									<!--
+										Contact information block
+									-->
+									<div class="contact-information">
+
+										<!--
+											Address
+										-->
+										<div class="item address">
+
+											<p>795 Fake Ave, Door 6 Wonder<br/>Land, CA 94107, Australia</p>
+
+										</div>
+
+										<!--
+											Phones and Fax
+										-->
+										<div class="item phones">
+
+											<p>
+												+440 875369208 - Central Office<br />
+												+440 353363114 - Fax
+											</p>
+
+										</div>
+
+										<!--
+											Email
+										-->
+										<div class="item email">
+
+											<p>
+												<a href="mailto:support@sitename.com">support@sitename.com</a><br />
+												<a href="mailto:info@sitename.com">info@sitename.com</a>
+											</p>
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<!--
+			Footer
+		-->
+		<footer id="footer">
+
+			<div id="footer-widgets" class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+
+						<a href="" class="footer-logo"><img src="{% static "market/images/logo-yellow.png" %}" data-at2x="{% static "market/images/logo-yellow@2x.png" %}" alt="Unicum - creative agency template" /></a>
+
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4">
+
+						<form class="subscribe-form" action="javascript:;" method="post">
+							<input type="email" placeholder="Your Email Address..." />
+							<input type="submit" />
+						</form>
+
+						<div class="social-icons">
+							<a href="http://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a>
+							<a href="http://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a>
+							<a href="http://plus.google.com" target="_blank"><i class="fa fa-google-plus"></i></a>
+							<a href="http://pinterest.com" target="_blank"><i class="fa fa-pinterest-p"></i></a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div id="bottom-bar">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+
+							<p>&copy;2015 Creative Agency <a href="">Unicum</a></p>
+							<p>Designed by <a href="http://themeforest.net/user/themefire/?ref=wplab">ThemeFire</a> / Developed by <a href="http://themeforest.net/user/wplab/?ref=wplab">WPlab.Pro</a></p>
+							<p>Only for <a href="http://themeforest.net/user/wplab/portfolio/?ref=wplab">Envato Market</a></p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</footer>
+
+	</div>
+
+	<!--
+		Theme's JavaScript
+		It is located at the bottom of the page to increase site's loading speed
+	-->
+	<!-- JQuery can be loaded from CDN, change SRC attribute into "//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" -->
+	<script src="{% static "market/js/libs/jquery.min.js" %}"></script>
+	<!--
+		Here we load all JS libs, packed into one single file to increase loading speed
+		in case you need to load libraries one-by one or you need to remove one of them,
+		see /js/libs/directory/, it contains all JS libs, used by theme
+	-->
+	<script src="{% static "market/js/all_in_one_libs.min.js" %}"></script>
+	<script src="{% static "market/js/libs/jquery.dlmenu.js" %}"></script>
+	<script src="{% static "market/js/front.js" %}"></script>
+
+</body>
+</html>

@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^', include('yapjoy_messages.urls')),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^shortlist/', include('yapjoy_shortlist.urls')),
-    url(r'^', include('yapjoy_market.urls')),
+    # url(r'^', include('yapjoy_market.urls')),
     url(r'^s3direct/', include('yapjoy_s3direct.urls')),
     url(r'^forum/', include('yapjoy_forum.urls')),
 
@@ -63,6 +63,7 @@ urlpatterns = patterns('',
     url(r'^invite/$', 'yapjoy_registration.views.invite_friends'),
     url(r'^invites/', include("django_contact_importer.contacts.urls")),
     url(r'^video/', include("yapjoy_video.urls")),
+    url(r'^market/', include("bayareaweddingfairs_market.urls")),
     #url(r'^video/', include("yapjoy_video.urls")),
 
 
