@@ -1262,7 +1262,7 @@ def event_invoice_bulk_create(request):
                 print reg_agg.email
                 print agreement_sent
             context = {
-                'message':"Click on the following link to view the agrement <br /><br /><a href='https://www.yapjoy.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(reg_agg.code),
+                'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(reg_agg.code),
                 'title':"Bay Area Wedding Fairs Agreement",
                 }
             html_content = render_to_string('email/bawf_native_email.html', context=context)
@@ -1553,7 +1553,7 @@ def event_invoice_bulk_create(request):
                 return HttpResponseRedirect('/crm/invoices/bulk/create/')
             agg_reg_resend = Register_Event_Aggrement.objects.get(id=resendAgreement)
             context = {
-                'message':"Click on the following link to view the agrement <br /><br /><a href='https://www.yapjoy.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(agg_reg_resend.code),
+                'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(agg_reg_resend.code),
                 'title':"Bay Area Wedding Fairs Agreement",
                 }
             html_content = render_to_string('email/bawf_native_email.html', context=context)
@@ -1717,7 +1717,7 @@ def event_invoice_bulk_create(request):
         invoice_req = EventInvoiceRequest.objects.get(id=invoice_resend_id)
         agree_req = Register_Event_Aggrement.objects.get(id=invoice_req.agreement_code)
         context = {
-            'message': "%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://www.yapjoy.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a>"%(invoice_req.event_invoice.register_event.name,invoice_req.event_invoice.register_event.business_name,invoice_req.code,agree_req.code),
+            'message': "%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a>"%(invoice_req.event_invoice.register_event.name,invoice_req.event_invoice.register_event.business_name,invoice_req.code,agree_req.code),
             'title': "Bay Area Wedding Fairs Agreement",
         }
         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -2019,7 +2019,7 @@ def check_for_invoices(self):
                                     }
                         else:
                             context = {
-                                    'message':"%s (%s)<br /><br />The agreement will automatically go into full effect within 24 hours of the send time posted on this email. Please make sure you review this agreement immediately and contact your representative if something has been omitted or is incorrectly stated. Once the 24 hour review period has passed and no concerns have been brought to our attention, all intents and concerns stated within this agreement will become fully bound. If you have posted immediate payment it also will complete within 24 hours of the posted email time. Therefore it is paramount that you review and accept this agreement within the specified time.<br /><br />Please click on the link below to review your full agreement. We look forward to working with you. Please reach out to your representative immediately if anything is confusing or incorrect within the agreement so it can be adjusted prior to the specified 24 hour binding period. <br /><br /><a href='http://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%( eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
+                                    'message':"%s (%s)<br /><br />The agreement will automatically go into full effect within 24 hours of the send time posted on this email. Please make sure you review this agreement immediately and contact your representative if something has been omitted or is incorrectly stated. Once the 24 hour review period has passed and no concerns have been brought to our attention, all intents and concerns stated within this agreement will become fully bound. If you have posted immediate payment it also will complete within 24 hours of the posted email time. Therefore it is paramount that you review and accept this agreement within the specified time.<br /><br />Please click on the link below to review your full agreement. We look forward to working with you. Please reach out to your representative immediately if anything is confusing or incorrect within the agreement so it can be adjusted prior to the specified 24 hour binding period. <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%( eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
                                     'title':"Bay Area Wedding Fairs Agreement",
                                     }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -4713,7 +4713,7 @@ def contracted_contractor_detail(request, id):
         agreement_id.code = id_generator(size=25)
         agreement_id.save()
         context = {
-            'message':"Click on the following link to view the agrement <br /><br /><a href='https://www.yapjoy.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a>"%(agreement_id.code),
+            'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a>"%(agreement_id.code),
             'title':"Bay Area Wedding Fairs Agreement",
             }
         html_content = render_to_string('email/bawf_native_email.html', context=context)
@@ -5319,7 +5319,7 @@ def bg_managementv2(request):
 
 
 
-                message = "Thank you for registering with Bay Area Wedding Fairs.<br /><br />%s<br /><br />If you like to save time and money, pre-pay online at <a href='http://bayareaweddingfairs.com/bridegroomtestregistration/'>http://bayareaweddingfairs.com/bridegroomtestregistration/</a>. Also, we encourage you to go to our <a href='https://www.facebook.com/baweddingfairs/events'>Facebook Events Page</a>, select the Fair and click on 'Join'. You will be entered in our weekly 'Las Vegas Giveaway' drawing (Winner will be announced on our Facebook page). <br /><br />NEED HELP IN PLANNING? Try our new Wedding Planning Platform <a href='https://www.yapjoy.com/'>YAPJOY</a>.<br /><br />if you have any questions, please email us at <a href='mailto:info@bayareaweddingfairs.com'>info@bayareaweddingfairs.com </a><br /><br />We look forward to seeing you at the Wedding Fair<br /><br />Thank You!<br /><br />Bay Area Wedding Fairs" % (
+                message = "Thank you for registering with Bay Area Wedding Fairs.<br /><br />%s<br /><br />If you like to save time and money, pre-pay online at <a href='http://bayareaweddingfairs.com/bridegroomtestregistration/'>https://bayareaweddingfairs.com/bridegroomtestregistration/</a>. Also, we encourage you to go to our <a href='https://www.facebook.com/baweddingfairs/events'>Facebook Events Page</a>, select the Fair and click on 'Join'. You will be entered in our weekly 'Las Vegas Giveaway' drawing (Winner will be announced on our Facebook page). <br /><br />NEED HELP IN PLANNING? Try our new Wedding Planning Platform <a href='https://www.yapjoy.com/'>YAPJOY</a>.<br /><br />if you have any questions, please email us at <a href='mailto:info@bayareaweddingfairs.com'>info@bayareaweddingfairs.com </a><br /><br />We look forward to seeing you at the Wedding Fair<br /><br />Thank You!<br /><br />Bay Area Wedding Fairs" % (
                 event_name)
                 send_bawf_email(sendTo=user_reg.email, message=message, title="",
                                 subject="Registration Successful!")
