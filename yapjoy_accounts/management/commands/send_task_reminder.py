@@ -24,7 +24,7 @@ class Command(NoArgsCommand):
                 if email:
                     print email, task.dueDate ,task.subject, task.message
                     context = {
-                        'message':"Dear %s,<br /><br />This is to remind you of the task assigned to you:<br /><br />Task Subject: %s<br />Task Message: %s<br />Due Date: %s<br />Lead/Contact: <a href='https://www.yapjoy.com/crm/invoices/interested_detail/%s'>%s</a><br />Status: %s<br />Email: %s<br />Phone: %s<br /><br />This is a system generated message, please donot repond to this email.<br /><br />Best<br />Bay Area Wedding Fairs in collaboration with YapJoy."%(task.sales.get_full_name(),task.subject,task.message, task.dueDate,str(task.exhibitor.id), task.exhibitor.name, task.status, task.exhibitor.email, task.exhibitor.phone),
+                        'message':"Dear %s,<br /><br />This is to remind you of the task assigned to you:<br /><br />Task Subject: %s<br />Task Message: %s<br />Due Date: %s<br />Lead/Contact: <a href='https://bayareaweddingfairs.herokuapp.com/crm/invoices/interested_detail/%s'>%s</a><br />Status: %s<br />Email: %s<br />Phone: %s<br /><br />This is a system generated message, please donot repond to this email.<br /><br />Best<br />Bay Area Wedding Fairs in collaboration with YapJoy."%(task.sales.get_full_name(),task.subject,task.message, task.dueDate,str(task.exhibitor.id), task.exhibitor.name, task.status, task.exhibitor.email, task.exhibitor.phone),
                         'title':"Bay Area Wedding Fairs - Task Reminder",
                         }
                     html_content = render_to_string('email/bawf_email.html', context=context)
