@@ -1965,7 +1965,8 @@ def check_for_invoices_automatic(self):
 
 
 def check_for_invoices(self):
-    for e in EventInvoice.objects.all():
+    event_invoices_objects = EventInvoice.objects.all().exclude(is_cancelled=True)
+    for e in event_invoices_objects:
         try:
             eir = None
             print '-----------------------------------------------------'
@@ -2013,12 +2014,12 @@ def check_for_invoices(self):
                         context = {}
                         if e.is_manual:
                             context = {
-                                    'message':"%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://www.yapjoy.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
+                                    'message':"%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
                                     'title':"Bay Area Wedding Fairs Agreement",
                                     }
                         else:
                             context = {
-                                    'message':"%s (%s)<br /><br />The agreement will automatically go into full effect within 24 hours of the send time posted on this email. Please make sure you review this agreement immediately and contact your representative if something has been omitted or is incorrectly stated. Once the 24 hour review period has passed and no concerns have been brought to our attention, all intents and concerns stated within this agreement will become fully bound. If you have posted immediate payment it also will complete within 24 hours of the posted email time. Therefore it is paramount that you review and accept this agreement within the specified time.<br /><br />Please click on the link below to review your full agreement. We look forward to working with you. Please reach out to your representative immediately if anything is confusing or incorrect within the agreement so it can be adjusted prior to the specified 24 hour binding period. <br /><br /><a href='https://www.yapjoy.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%( eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
+                                    'message':"%s (%s)<br /><br />The agreement will automatically go into full effect within 24 hours of the send time posted on this email. Please make sure you review this agreement immediately and contact your representative if something has been omitted or is incorrectly stated. Once the 24 hour review period has passed and no concerns have been brought to our attention, all intents and concerns stated within this agreement will become fully bound. If you have posted immediate payment it also will complete within 24 hours of the posted email time. Therefore it is paramount that you review and accept this agreement within the specified time.<br /><br />Please click on the link below to review your full agreement. We look forward to working with you. Please reach out to your representative immediately if anything is confusing or incorrect within the agreement so it can be adjusted prior to the specified 24 hour binding period. <br /><br /><a href='http://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%( eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
                                     'title':"Bay Area Wedding Fairs Agreement",
                                     }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -2076,7 +2077,7 @@ def check_for_invoices(self):
                         e.transaction_id_balance1_date = e.get_transaction_id_balance1_date()
                         e.save()
                         context = {
-                                    'message':"Dear %s (%s)<br /><br />You have been charged successfully with balance 1 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form."%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount),eir.get_event_b1()),
+                                    'message':"Dear %s (%s)<br /><br />You have been charged successfully with balance 1 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://bayareaweddingfairs.herokuapp.com/feedback/'> Support Feedback</a> form."%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount),eir.get_event_b1()),
                                     'title':"Bay Area Wedding Fairs Invoice Charged Successfully",
                                 }
                         html_content = render_to_string('email/bawf_email.html', context=context)

@@ -251,6 +251,7 @@ class EventInvoice(models.Model):
     transaction_id_balance2 = models.CharField(max_length=255, null=True, blank=True)
     transaction_id_balance3 = models.CharField(max_length=255, null=True, blank=True)
     is_manual = models.BooleanField(default=False)
+    is_cancelled = models.BooleanField(default=False)
     transaction_id_deposit_date = models.DateTimeField(null=True, blank=True)
     transaction_id_balance1_date = models.DateTimeField(null=True, blank=True)
     transaction_id_balance2_date = models.DateTimeField(null=True, blank=True)
