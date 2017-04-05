@@ -1974,7 +1974,7 @@ def check_for_invoices(self):
             print e.balance1_date, datetime.today().date()
             print e.balance2_date, datetime.today().date()
             print e.balance3_date, datetime.today().date()
-            req_inv = EventInvoiceRequest.objects.filter(event_invoice=e)
+            req_inv = EventInvoiceRequest.objects.filter(event_invoice=e).exclude(status=EventInvoiceRequest.CANCEL)
             deposit_req_inv = req_inv.filter(type=EventInvoiceRequest.DEPOSIT)
             balance1_req_inv = req_inv.filter(type=EventInvoiceRequest.BALANCE1)
             balance2_req_inv = req_inv.filter(type=EventInvoiceRequest.BALANCE2)
