@@ -725,7 +725,7 @@
                                                         <p>Sales/Owner : {{ wp.sales.get_full_name }}</p>
                                                     {% endif %}
                         {#                            <div class="container">#}
-                                                        <img style="width: 70px;" class="col-sm-4" src="{{note.exhibitor.user.userprofile.get_image_url}}" alt="add image if you want">
+                                                        <img style="width: 70px;" class="col-sm-4" src="{{note.note_writer.userprofile.get_image_url}}" alt="add image if you want">
                                                         <div class="col-sm-8">
                                                             <span>{{ note.note }}</span> <a onclick="$('#note_edit_div_{{ note.id }}').toggle('hidden');" style="cursor: pointer;">Edit</a> <form action="" method="post">{% csrf_token %}<input hidden id="remove_note_id" name="remove_note_id" value="{{ note.id }}" /><button class="pull-right" type="submit">Remove</button></form>
                                                             <div id="note_edit_div_{{ note.id }}" hidden>
