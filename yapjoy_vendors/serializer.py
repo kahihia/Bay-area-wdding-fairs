@@ -62,7 +62,11 @@ class VendorSerializerRegister(serializers.ModelSerializer):
 
         name = validated_data['full_name'].split(' ')
         print "validate: ", email, profession, validated_data
-        user = User.objects.create(username=email, email=email, first_name=name[0], last_name=name[1])
+        user = User.objects.get_or_create(email=email)[0]
+        user.username = email
+        user.first_name = name[0]
+        user.last_name = name[1]
+        user.save()
         verification_code = id_generator(size=6)
         VendorRegistration.objects.create(user=user,email=user.email,
                                           business_location=business_location,
