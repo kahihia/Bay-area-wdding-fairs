@@ -69,12 +69,16 @@ class SessionAuthentication(OriginalSessionAuthentication):
 # @login_required
 # @user_passes_test(lambda u: u.is_superuser)
 # @csrf_exempt
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 class TicketsAPI(APIView):
    # permission_classes = (AllowAny,)
+    permission_classes = (IsAdminUser,)
     authentication_classes = (CsrfExemptSessionAuthentication,TokenAuthentication,SessionAuthentication,)
 
     # @csrf_exempt
     def post(self, request, format=None):
+        print request.user
+
         print request.method
         if request.method == "POST":
             print request.POST
