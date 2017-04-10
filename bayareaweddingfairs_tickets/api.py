@@ -73,12 +73,12 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 class TicketsAPI(APIView):
    # permission_classes = (AllowAny,)
     permission_classes = (IsAdminUser,)
-    authentication_classes = (CsrfExemptSessionAuthentication,TokenAuthentication,SessionAuthentication,)
+    authentication_classes = (CsrfExemptSessionAuthentication,TokenAuthentication)
 
     # @csrf_exempt
     def post(self, request, format=None):
         print request.user
-
+        print request.POST
         print request.method
         if request.method == "POST":
             print request.POST
