@@ -25,6 +25,7 @@ from restless.http import Http201, Http404, Http400, HttpError, Http200
 from django.http import QueryDict
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.authtoken.models import Token
+
 @csrf_exempt
 def iOSLoginBAWF(request):
     if request.method == "POST":
@@ -61,8 +62,8 @@ def iOSLoginBAWF(request):
     return Http400("failed")
 
 
-@login_required
-@user_passes_test(lambda u: u.is_superuser)
+# @login_required
+# @user_passes_test(lambda u: u.is_superuser)
 @csrf_exempt
 def TicketsAPI(request):
     print request.method
