@@ -77,9 +77,9 @@ class TicketsAPI(APIView):
 
     # @csrf_exempt
     def post(self, request, format=None):
-        print request.user
-        print request.POST
-        print request.method
+        print "User: ",request.user
+        print "Data: ",request.POST
+        print "Method: ",request.method
         if request.method == "POST":
             print request.POST
             if "code" in request.POST:
