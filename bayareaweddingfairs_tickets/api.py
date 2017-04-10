@@ -16,7 +16,7 @@ from .models import EventTickets
 import stripe
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 import json
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
@@ -61,58 +61,67 @@ def iOSLoginBAWF(request):
 
     return Http400("failed")
 
+from rest_framework.authentication import SessionAuthentication as OriginalSessionAuthentication
 
+class SessionAuthentication(OriginalSessionAuthentication):
+    def enforce_csrf(self, request):
+        return
 # @login_required
 # @user_passes_test(lambda u: u.is_superuser)
-@csrf_exempt
-def TicketsAPI(request):
-    print request.method
-    if request.method == "POST":
-        print request.POST
-        if "code" in request.POST:
-            code = request.POST.get('code')
-            print code
-            ticket = get_object_or_404(EventTickets, code=code)
-            print ticket.email, ticket
-            dict_obj = {
-                'id':ticket.id,
-                'email':ticket.email,
-                'promocode_success':ticket.promocode_success,
-                'expire':ticket.expire,
-                'amount':ticket.amount,
-                'quantity':ticket.quantity,
-                'earlybird_ticket':ticket.earlybird_ticket,
-                'group_ticket':ticket.group_ticket,
-                'code':ticket.code,
-                'is_attended':ticket.is_attended,
-                'created_at':str(ticket.created_at),
-                'phone':ticket.phone,
-                'event':ticket.event.name,
-            }
-            print dict_obj
-            return Http200(serialize(dict_obj))
-        elif "code_update" in request.POST:
-            code = request.POST.get('code_update')
-            print code
-            ticket = get_object_or_404(EventTickets, code=code)
-            ticket.is_attended = True
-            ticket.save()
-            dict_obj = {
-                'email': ticket.email,
-                'promocode_success': ticket.promocode_success,
-                'expire': ticket.expire,
-                'amount': ticket.amount,
-                'quantity': ticket.quantity,
-                'earlybird_ticket': ticket.earlybird_ticket,
-                'group_ticket': ticket.group_ticket,
-                'code': ticket.code,
-                'is_attended': ticket.is_attended,
-                'created_at': str(ticket.created_at),
-                'phone': ticket.phone,
-                'event': ticket.event.name,
-                'id': ticket.event_id,
-            }
-            print dict_obj
-            return Http200(serialize(dict_obj))
-    print 'get'
-    return HttpResponse("No such method available.")
+# @csrf_exempt
+class TicketsAPI(APIView):
+   # permission_classes = (AllowAny,)
+    authentication_classes = (CsrfExemptSessionAuthentication,TokenAuthentication,SessionAuthentication,)
+
+    # @csrf_exempt
+    def post(self, request, format=None):
+        print request.method
+        if request.method == "POST":
+            print request.POST
+            if "code" in request.POST:
+                code = request.POST.get('code')
+                print code
+                ticket = get_object_or_404(EventTickets, code=code)
+                print ticket.email, ticket
+                dict_obj = {
+                    'id':ticket.id,
+                    'email':ticket.email,
+                    'promocode_success':ticket.promocode_success,
+                    'expire':ticket.expire,
+                    'amount':ticket.amount,
+                    'quantity':ticket.quantity,
+                    'earlybird_ticket':ticket.earlybird_ticket,
+                    'group_ticket':ticket.group_ticket,
+                    'code':ticket.code,
+                    'is_attended':ticket.is_attended,
+                    'created_at':str(ticket.created_at),
+                    'phone':ticket.phone,
+                    'event':ticket.event.name,
+                }
+                print dict_obj
+                return Http200(serialize(dict_obj))
+            elif "code_update" in request.POST:
+                code = request.POST.get('code_update')
+                print code
+                ticket = get_object_or_404(EventTickets, code=code)
+                ticket.is_attended = True
+                ticket.save()
+                dict_obj = {
+                    'email': ticket.email,
+                    'promocode_success': ticket.promocode_success,
+                    'expire': ticket.expire,
+                    'amount': ticket.amount,
+                    'quantity': ticket.quantity,
+                    'earlybird_ticket': ticket.earlybird_ticket,
+                    'group_ticket': ticket.group_ticket,
+                    'code': ticket.code,
+                    'is_attended': ticket.is_attended,
+                    'created_at': str(ticket.created_at),
+                    'phone': ticket.phone,
+                    'event': ticket.event.name,
+                    'id': ticket.event_id,
+                }
+                print dict_obj
+                return Http200(serialize(dict_obj))
+        print 'get'
+        return HttpResponse("No such method available.")

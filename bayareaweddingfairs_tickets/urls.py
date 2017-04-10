@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, include, url
 from .api import iOSLoginBAWF
-
+from .api import TicketsAPI
+from django.views.decorators.csrf import csrf_exempt
 urlpatterns = patterns('',
-                       url(r'^ios/data/', 'bayareaweddingfairs_tickets.api.TicketsAPI', name='TicketsAPI_ajax'),
+                       url(r'^ios/data/', csrf_exempt(TicketsAPI.as_view()), name='TicketsAPI_ajax'),
                        url(r'^ios/login/', iOSLoginBAWF, name='iOSLoginBAWF_ajax'),
                        url(r'^main/$', 'bayareaweddingfairs_tickets.views.Main'),
                        url(r'^buy/(?P<id>.+)/$', 'bayareaweddingfairs_tickets.views.BuyTickets'),
