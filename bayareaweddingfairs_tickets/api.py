@@ -73,13 +73,13 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 class TicketsAPI(APIView):
    # permission_classes = (AllowAny,)
     permission_classes = (IsAdminUser,)
-    authentication_classes = (CsrfExemptSessionAuthentication,TokenAuthentication)
+    authentication_classes = (CsrfExemptSessionAuthentication,TokenAuthentication,SessionAuthentication)
 
     # @csrf_exempt
     def post(self, request, format=None):
         print "User: ",request.user
         print "Data: ",request.POST
-        print "Method: ",request.method
+        # print "Method: ",request.method
         if request.method == "POST":
             print request.POST
             if "code" in request.POST:
@@ -111,19 +111,19 @@ class TicketsAPI(APIView):
                 ticket.is_attended = True
                 ticket.save()
                 dict_obj = {
-                    'email': ticket.email,
-                    'promocode_success': ticket.promocode_success,
-                    'expire': ticket.expire,
-                    'amount': ticket.amount,
-                    'quantity': ticket.quantity,
-                    'earlybird_ticket': ticket.earlybird_ticket,
-                    'group_ticket': ticket.group_ticket,
-                    'code': ticket.code,
-                    'is_attended': ticket.is_attended,
-                    'created_at': str(ticket.created_at),
-                    'phone': ticket.phone,
-                    'event': ticket.event.name,
-                    'id': ticket.event_id,
+                    'id':ticket.id,
+                    'email':ticket.email,
+                    'promocode_success':ticket.promocode_success,
+                    'expire':ticket.expire,
+                    'amount':ticket.amount,
+                    'quantity':ticket.quantity,
+                    'earlybird_ticket':ticket.earlybird_ticket,
+                    'group_ticket':ticket.group_ticket,
+                    'code':ticket.code,
+                    'is_attended':ticket.is_attended,
+                    'created_at':str(ticket.created_at),
+                    'phone':ticket.phone,
+                    'event':ticket.event.name,
                 }
                 print dict_obj
                 return Http200(serialize(dict_obj))
