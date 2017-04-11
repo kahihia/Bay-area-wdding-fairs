@@ -456,7 +456,7 @@
                                                           <td>${{ csv.get_total }}</td>
                                                           <td>{{ csv.created_at }}</td>
                                                       <td><form action="" method="POST">{% csrf_token %}<input id="edit_invoice" name="edit_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd_btn btn-brown" {% if csv.payment_method not in allow_payment_list %}Disabled{% endif %} type="submit">{% if  csv.payment_method == "Cash" %}Change to Check{% elif  csv.payment_method == "Check" %}Change to Cash{% else %}Edit{% endif %}</button></form></td>
-                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd_btn btn-brown" type="submit">Delete</button></form></td>
+                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd_btn btn-brown" type="submit" disable="disable">Delete</button></form></td>
                                                           <td><a href="{% url "event_invoice_bulk_create" %}?email={{ wp.email }}" class="btn vd_btn btn-brown">Create Invoice</a></td>
 {#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
 {#                                                          <td>#}
