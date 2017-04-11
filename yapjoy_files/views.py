@@ -969,7 +969,7 @@ def event_management_iframe_local(request):
 
 
     #coverging events by season
-    events = Event_fairs.objects.filter(Q(date__gte=datetime.now())& ~Q(name="Las Vegas GiveAway"))
+    events = Event_fairs.objects.filter(Q(Q(date__gte=datetime.now())& ~Q(name="Las Vegas GiveAway"))|Q(id=42))
     # spring_events = []
     # summer_events = []
     # fall_events = []
