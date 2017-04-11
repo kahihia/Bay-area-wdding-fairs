@@ -5187,7 +5187,7 @@ def bg_management(request):
 
 
     #coverging events by season
-    events = Event_fairs.objects.filter(Q(is_expired=False)).order_by('date')
+    events = Event_fairs.objects.filter(Q(is_expired=False)&Q(date__gte=datetime.today().date())).order_by('date')
     content = {
         'form':form,
         'events':events,
