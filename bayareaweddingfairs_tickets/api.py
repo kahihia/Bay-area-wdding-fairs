@@ -150,7 +150,7 @@ class iOSEvent(APIView):
             add_ticket = {
                 'event_name':event.name,
                 'event_date':event.date,
-                'tickets':total_amount,
+                'tickets':str(total_amount),
             }
             dict_obj.append(add_ticket)
 
