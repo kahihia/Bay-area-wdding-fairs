@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, include, url
-from .api import iOSLoginBAWF
-from .api import TicketsAPI
+from .api import TicketsAPI, iOSEvent, iOSLoginBAWF
 from django.views.decorators.csrf import csrf_exempt
 urlpatterns = patterns('',
                        url(r'^ios/data/', csrf_exempt(TicketsAPI.as_view()), name='TicketsAPI_ajax'),
                        url(r'^ios/login/', iOSLoginBAWF, name='iOSLoginBAWF_ajax'),
+                       url(r'^ios/events/', csrf_exempt(iOSEvent.as_view()), name='iOSEvents_ajax'),
                        url(r'^main/$', 'bayareaweddingfairs_tickets.views.Main'),
                        url(r'^buy/(?P<id>.+)/$', 'bayareaweddingfairs_tickets.views.BuyTickets'),
                        url(r'^promocode/', 'bayareaweddingfairs_tickets.views.PromoCode_Validate', name='promocode'),

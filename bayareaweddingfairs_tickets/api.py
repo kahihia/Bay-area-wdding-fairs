@@ -125,7 +125,28 @@ class TicketsAPI(APIView):
                     'phone':ticket.phone,
                     'event':ticket.event.name,
                 }
-                print dict_obj
+                print Http200(serialize(dict_obj))
                 return Http200(serialize(dict_obj))
         print 'get'
         return HttpResponse("No such method available.")
+
+from yapjoy_files.models import Event_fairs
+class iOSEvent(APIView):
+    # permission_classes = (AllowAny,)
+    permission_classes = (IsAdminUser,)
+    authentication_classes = (CsrfExemptSessionAuthentication,TokenAuthentication,SessionAuthentication)
+
+    # @csrf_exempt
+    def get(self, request):
+        dict_obj = []
+        tickets = EventTickets.objects.all().distinct('event_id')
+        events = Event_fairs.objects.filter(id__in=tickets.values_list('event_id',flat=True))
+        for event in events:
+           add_ticket = {
+               'event_name':event.name,
+               'event_date':event.date,
+               'tickets':str(tickets.filter(event=event).count()),
+           }
+           dict_obj.append(add_ticket)
+
+        return Http200(serialize(dict_obj))
