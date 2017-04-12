@@ -26,6 +26,9 @@ class EventTickets(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now_add=True)
 
+    def get_all_tickets(self):
+        return int(self.quantity)+int(self.group_ticket)+int(self.earlybird_ticket)
+
     def __str__(self):
         return self.email
 

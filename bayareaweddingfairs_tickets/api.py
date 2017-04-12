@@ -141,12 +141,17 @@ class iOSEvent(APIView):
         dict_obj = []
         tickets = EventTickets.objects.all().distinct('event_id')
         events = Event_fairs.objects.filter(id__in=tickets.values_list('event_id',flat=True))
+
         for event in events:
-           add_ticket = {
-               'event_name':event.name,
-               'event_date':event.date,
-               'tickets':str(EventTickets.objects.filter(event=event).count()),
-           }
-           dict_obj.append(add_ticket)
+            event_tickets = EventTickets.objects.filter(event=event)
+            total_amount = 0
+            for tick in event_tickets:
+                total_amount += tick.get_all_tickets()
+            add_ticket = {
+                'event_name':event.name,
+                'event_date':event.date,
+                'tickets':total_amount,
+            }
+            dict_obj.append(add_ticket)
 
         return Http200(serialize(dict_obj))
