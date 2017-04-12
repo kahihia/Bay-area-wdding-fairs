@@ -145,7 +145,7 @@ class iOSEvent(APIView):
            add_ticket = {
                'event_name':event.name,
                'event_date':event.date,
-               'tickets':str(tickets.filter(event=event).count()),
+               'tickets':str(EventTickets.objects.filter(event=event).count()),
            }
            dict_obj.append(add_ticket)
 
