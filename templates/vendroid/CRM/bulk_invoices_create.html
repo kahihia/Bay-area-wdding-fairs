@@ -351,10 +351,6 @@
                       <li>
                            <a
                                                                       class="btn btn-block
-{#                                                                      vd_btn#}
-{#                                                                      vd_btn vd_bg-green btn-block#}
-                                                                                    "
-{#                                                                      style="background-color: #ba8c00 !important"#}
                                                               href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"
                                                           style="-webkit-appearance: button;cursor: pointer;"
                                                               >View</a>
@@ -365,17 +361,7 @@
                                                               {% csrf_token %}
                                                               <input hidden id="invoice_resend_id" name="invoice_resend_id" value="{{ invoice.id }}" />
                                                               <input hidden id="resendoldagreement" name="resendoldagreement" value="{{ invoice.id }}" />
-{#                                                              {% if not invoice.status == "Paid" %}#}
-                                                                  <button
-{#                                                                      class="btn vd_btn vd_bg-green btn-block"#}class="btn-block"
-                                                                      type="submit"
-{#                                                                      style="background-color: #ba8c00 !important"#}
-{#                                                                      {% if not invoice.agreement_code %}disabled{% elif  invoice.status == "Paid" %}disabled{% elif invoice.status == "Signed" %}disabled{% endif %} #}
-                                                              >Resend</button>
-{#                                                              <li class="divider"></li>#}
-{#                                                              {% endif  %}#}
-
-
+                                                                  <button class="btn-block" type="submit" >Resend</button>
                                                           </form>
                             </li>
                                                       {% else %}
@@ -384,31 +370,17 @@
                                                               {% csrf_token %}
                                                               <input hidden id="invoice_recharge_id" name="invoice_recharge_id" value="{{ invoice.id }}" />
                                                               <button {% if invoice.status == "Paid" %}disabled{% endif %}
-{#                                                                      class="btn vd_btn vd_bg-green btn-block"#}
                                                                       type="submit" class="btn-block"
-{#                                                                      style="background-color: #ba8c00 !important"#}
                                                               >Charge</button>
                                                           </form>
                             </li>
                                                       {% endif %}
-{#                        <li class="divider"></li>#}
-{#                      <li><form action="" method="post">#}
-{#                                                              {% csrf_token %}#}
-{#                                                              <input hidden id="invoice_cancel_id" name="invoice_cancel_id" value="{{ invoice.id }}" />#}
-{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"#}
-{#                                                                      onclick="deleteAgreement(event);"#}
-{#                                                                      onclick="return confirm('Are you sure you wish to cancel this agreement?');"#}
-{#                                                                      class="btn btn-danger btn-block"#}
-{#                                                              >Cancel</button>#}
-{#                                                          </form></li>#}
                       {% if not invoice.status == "Cancel" %}
                       <li><form action="" method="post">
                                                               {% csrf_token %}
                                                               <input hidden id="invoice_cancel_id" name="invoice_cancel_id" value="{{ invoice.id }}" />
                                                               <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"
-{#                                                                      onclick="deleteAgreement(event);"#}
                                                                       onclick="return confirm('Are you sure you wish to cancel this agreement?');"
-{#                                                                      class="btn btn-danger btn-block"#}
                                                               >Cancel</button>
                                                           </form></li>
                           {% elif invoice.status == "Cancel" %}
@@ -416,9 +388,7 @@
                                                               {% csrf_token %}
                                                               <input hidden id="invoice_uncancel_id" name="invoice_uncancel_id" value="{{ invoice.id }}" />
                                                               <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"
-{#                                                                      onclick="deleteAgreement(event);"#}
                                                                       onclick="return confirm('Uncancel will change the status to pending?');"
-{#                                                                      class="btn btn-danger btn-block"#}
                                                               >Uncancel</button>
                                                           </form></li>
                           {% endif %}
@@ -426,33 +396,12 @@
                                                               {% csrf_token %}
                                                               <input hidden id="invoice_remove_id" name="invoice_remove_id" value="{{ invoice.id }}" />
                                                               <button {% if invoice.status == "Paid" %}disabled{% elif invoice.status == "Signed" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton" class="btn-block"
-{#                                                                      onclick="deleteAgreement(event);"#}
                                                                       onclick="return confirm('Are you sure you wish to delete this agreement?');"
-{#                                                                      class="btn btn-danger btn-block"#}
                                                               >Remove</button>
                                                           </form></li>
                       </ul>
                     </div>
                                                       </td>
-{#                                                          <td>#}
-{#                                                              <a onclick="edit_request_deposit()"></a>#}
-{#                                                          </td>#}
-{#                                                          <td><a href="{% url "invoices_view_pay" invoice.code %}" class="btn vd_btn btn-brown btn-block">View Invoice</a></td>#}
-{#                                                          <td>{{ invoice.registered_event.event.name }}</td>#}
-{#                                                          <td>{{ invoice.registered_event.business_name }}</td>#}
-{#                                                          <td>{{ invoice.registered_event.event.date }}</td>#}
-{#                                                          <td>{{ invoice.registered_event.created_at }}</td>#}
-{#                                                          <td>{% if invoice.is_signed %}Accepted{% else %}Not Accepted{% endif %}</td>#}
-{#                                                          <td>{{ invoice.status }}</td>#}
-
-{#                                                          <td>${{ invoice.amount|intcomma }}</td>#}
-{#                                                          <td><a data-toggle="modal" href="{% url "invoices_view_pay" invoice.id %}" o class="btn vd_btn btn-brown">View Invoice</a></td>#}
-{#                                                          {% if not invoice.is_signed %}#}
-{#                                                              <td><a onclick="openInvoiceModal('{{ invoice.id }}');" class="btn vd_btn btn-brown btn-block">Accept</a></td>#}
-{#                                                          {% else %}#}
-{#                                                              <td><a href="{% url "invoices_view_pay" invoice.id %}" class="btn vd_btn btn-brown btn-block">View Invoice</a></td>#}
-{#                                                          {% endif %}#}
-{#                                                      </td>#}
                                                       </tr>
                                                   {% endif %}
                                                   {% endfor %}
@@ -461,73 +410,6 @@
                                               </table>
 
                                           </div>
-
-{#                                        <div class="col-md-12">#}
-{#                                             <table aria-describedby="data-tables_info" role="grid"#}
-{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
-{#                                                  <thead>#}
-{#                                                  <tr role="row">#}
-{#                                                      <th>Mark</th>#}
-{#                                                      <th>Email</th>#}
-{##}
-{#                                                      <th>CSV Path#}
-{#                                                      </th>#}
-{#                                                      <th></th>#}
-{#                                                      <th>List Price#}
-{#                                                      </th>#}
-{#                                                      <th>Electricity</th>#}
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>Method</th>#}
-{#                                                      <th>PV Prize</th>#}
-{#                                                      <th>Total Amount</th>#}
-{#                                                      <th>#}
-{#                                                          Created at#}
-{#                                                      </th>#}
-{#                                                      <th>Remove</th>#}
-{#                                                      <th>#}
-{#                                                          Edit#}
-{#                                                      </th>#}
-{#                                                  </tr>#}
-{#                                                  </thead>#}
-{#                                                  <tbody>#}
-{#                                                  {% for invoice in event_invoices %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
-{#                                                          <td>{{ invoice.email }}</td>#}
-{#                                                          <td>${{ csv.offered_price }}</td>#}
-{#                                                          <td>${{ csv.list_price }}</td>#}
-{#                                                          <td>{{ csv.csv }}</td>#}
-{##}
-{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
-{#                                                          <td>{{ csv.register.status }}</td>#}
-{#                                                          <td>{{ csv.payment_method }}</td>#}
-{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
-{#                                                          <td>${{ csv.get_total }}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
-{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
-{#                                                          <td>#}
-{#                                                              <form action="." method="post">#}
-{#                                                                  {% csrf_token %}#}
-{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
-{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
-{#                                                              </form>#}
-{##}
-{#                                                          </td>#}
-{#                                                      </tr>#}
-{#                                                  {% endfor %}#}
-{#                                                  </tbody>#}
-{#                                              </table>#}
-{#                                        </div>#}
-{#                                      {% if event_invoices %}#}
-{#                                          <div class="col-md-12">#}
-{#                                          {% for o in event_invoices %}#}
-{#                                              {{ o }}#}
-{#                                          {% endfor %}#}
-{#                                          </div>#}
-{#                                          {% endif %}#}
 
 
                                       </div>
@@ -565,24 +447,7 @@
                                                       <th>
                                                           Signed Date
                                                       </th>
-{#                                                      <th>Resend / View</th>#}
-{#                                                      <th>Remove</th>#}
                                                       <th>Action</th>
-{#                                                      <th>Edit</th>#}
-{#                                                      <th>View Invoice</th>#}
-{#                                                      <th>#}
-{#                                                          Registration Date#}
-{#                                                      </th>#}
-{#                                                      <th>Terms and Conditions</th>#}
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>#}
-{#                                                          Amount#}
-{#                                                      </th>#}
-{#                                                      <th>#}
-{#                                                          Invoices#}
-{#                                                      </th>#}
                                                   </tr>
                                                   </thead>
                                                   <tbody>
@@ -590,9 +455,7 @@
                                                   {% for invoice in invoices_sent|dictsortreversed:"created_at" %}
                                                       {% if invoice.type == "Deposit" %}
                                                       {% else %}
-                                                           <tr role="row" class="gradeA odd"
-{#                                                          {% if invoice.status == "Failed" %}style="border: 2px solid red;"{% endif %}#}
-                                                      >
+                                                           <tr role="row" class="gradeA odd"  >
                                                           <td>{{ invoice.id }}</td>
                                                       <td>{{ invoice.event_invoice.register_event.business_name }}</td>
                                                           <td>{{ invoice.get_event }} </td>
@@ -602,35 +465,6 @@
                                                           <td>{% if invoice.type == "Deposit" %}({{ invoice.type }} / Agreement){% else %}{{ invoice.type }}{% endif %} amount invoice</td>
                                                           <td>{{ invoice.created_at|date:"Y-m-d" }}</td>
                                                           <td>{% if invoice.event_invoice.transaction_id_deposit_date %}{{ invoice.event_invoice.transaction_id_deposit_date|date:"Y-m-d" }}{% else %}N/A{% endif %}</td>
-{#                                                       <td>#}
-{#                                                      {% if invoice.type == "Deposit" %}#}
-{#                                                         <form action="" method="post">#}
-{#                                                              {% csrf_token %}#}
-{#                                                              <input hidden id="invoice_resend_id" name="invoice_resend_id" value="{{ invoice.id }}" />#}
-{#                                                              <input hidden id="resendoldagreement" name="resendoldagreement" value="{{ invoice.id }}" />#}
-{#                                                              {% if not invoice.status == "Paid" %}<button class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important" {% if not invoice.agreement_code %}disabled{% endif  %} >Resend</button>{% endif  %}#}
-{#                                                              <a class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important"#}
-{#                                                              href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"#}
-{#                                                              >View</a>#}
-{#                                                          </form>#}
-{#                                                      {% else %}#}
-{#                                                          <form action="" method="post">#}
-{#                                                              {% csrf_token %}#}
-{#                                                              <input hidden id="invoice_recharge_id" name="invoice_recharge_id" value="{{ invoice.id }}" />#}
-{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important">Charge</button>#}
-{#                                                          </form>#}
-{#                                                      {% endif %}#}
-{#                                                       </td>#}
-{#                                                      <td>#}
-{#                                                      <form action="" method="post">#}
-{#                                                              {% csrf_token %}#}
-{#                                                              <input hidden id="invoice_remove_id" name="invoice_remove_id" value="{{ invoice.id }}" />#}
-{#                                                              <button {% if invoice.status == "Paid" %}disabled{% endif %} name="agreementRemoveButton" id="agreementRemoveButton"#}
-{#                                                                      onclick="deleteAgreement(event);"#}
-{#                                                                      onclick="return confirm('Are you sure you wish to delete this agreement?');"#}
-{#                                                                      class="btn btn-danger" >Remove</button>#}
-{#                                                          </form>#}
-{#                                                      </td>#}
                                                       <td>
 
 
@@ -644,10 +478,6 @@
                       <li>
                            <a
                                                                       class="btn btn-block
-{#                                                                      vd_btn#}
-{#                                                                      vd_btn vd_bg-green btn-block#}
-                                                                                    "
-{#                                                                      style="background-color: #ba8c00 !important"#}
                                                               href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"
                                                           style="-webkit-appearance: button;cursor: pointer;"
                                                               >View</a>
@@ -659,17 +489,10 @@
                                                               <input hidden id="invoice_resend_id" name="invoice_resend_id" value="{{ invoice.id }}" />
                                                               <input hidden id="resendoldagreement" name="resendoldagreement" value="{{ invoice.id }}" />
 {#                                                              {% if not invoice.status == "Paid" %}#}
-                                                                  <button
-{#                                                                      class="btn vd_btn vd_bg-green btn-block"#}class="btn-block"
-                                                                      type="submit"
-{#                                                                      style="background-color: #ba8c00 !important"#}
-                                                                      {% if not invoice.agreement_code %}disabled
-{#{% elif  invoice.status == "Paid" %}disabled{% elif invoice.status == "Signed" %}disabled#}
+                                                                  <button class="btn-block" type="submit"
+                                                                          {% if not invoice.agreement_code %}disabled
 {% endif %}
                                                                   >Resend</button>
-{#                                                              <li class="divider"></li>#}
-{#                                                              {% endif  %}#}
-
 
                                                           </form>
                             </li>
