@@ -4,21 +4,6 @@
 {% load myfilters %}
 {% load humanize %}
 {% block content %}
-    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
-    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
-    {##}
-    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
-
-
-    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
-
-
-    <!-- Specific Page Scripts Put Here -->
-
     <style>
         .red {
             color: red;
@@ -46,44 +31,12 @@
         background-color: #ba8c00 !important;
         color: white !important;
     }
-    /* highlight results */
-{#    .ui-autocomplete span.hl_results {#}
-{#        background-color: #ffff66;#}
-{#    }#}
-{##}
-{#    /* loading - the AJAX indicator */#}
-{#    .ui-autocomplete-loading {#}
-{#        background: white url('../img/ui-anim_basic_16x16.gif') right center no-repeat;#}
-{#    }#}
-{##}
-{#    /* scroll results */#}
-{#    .ui-autocomplete {#}
-{#        max-height: 250px;#}
-{#        overflow-y: auto;#}
-{#        /* prevent horizontal scrollbar */#}
-{#        overflow-x: hidden;#}
-{#        /* add padding for vertical scrollbar */#}
-{#        padding-right: 5px;#}
-{#    }#}
-{##}
-{#    .ui-autocomplete li {#}
-{#        font-size: 16px;#}
-{#    }#}
-{##}
-{#    /* IE 6 doesn't support max-height#}
-{#    * we use height instead, but this forces the menu to always be this tall#}
-{#    */#}
-{#    * html .ui-autocomplete {#}
-{#        height: 250px;#}
-{#    }#}
     </style>
     <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
     <script>
-{#        $(document).ready(function(){#}
             function setupAgreement(){
                 var return_url = "/crm/invoices/bulk/create/?email={{ email }}";
                 var allVals = [];
-{#                alert('works');#}
                  $('#bulk_check:checked').each(function() {
                     allVals.push($(this).val());
                     });
@@ -95,21 +48,15 @@
                 $.ajax({
                     type: "post",
                     url: "",
-{#                    dataType: "json",#}
                     data: data,
                     success: function(data){
                         alert(data);
                         if(data="Done"){
                             window.location.href = return_url;
                         }
-{#                        alert('success')#}
                     },
-{#                    complete: function (xhr, status) { alert('complete: '+status); }#}
                     });
             }
-
-{#        })#}
-
     function show_fields(amount, amount_div, date, date_div, self_id, save_id){
         $(amount).removeAttr('hidden');
         $(amount_div).attr('hidden','hidden');
@@ -129,32 +76,19 @@
             <div class="container">
                 {% include "vendroid/CRM/partial/_sidebar.html" %}
                 <div class="clearfix"></div>
-
                 <!-- Middle Content Start -->
-
                 <div class="vd_content-wrapper">
                     <div class="vd_container">
                         <div class="vd_content clearfix">
-
                             <!-- vd_head-section -->
-
                             <div class="clearfix">
-
                                 <!-- vd_title-section -->
-
                                 <div class="vd_content-section clearfix">
-
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="panel widget">
                                                 <div class="panel-body">
-                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
-                                                    {#                    <ul class="nav nav-tabs">#}
-                                                    {##}
-                                                    {##}
-                                                    {#                    </ul>#}
                                                     <br>
-
                                                     <div class="tab-content mgbt-xs-20">
                                                         {% if successMessage %}
                                                             <div class="flashes">
@@ -163,13 +97,11 @@
                                                                     <a href=""
                                                                        class="pull-right"
                                                                        class="btn vd_btn vd_bg-green pull-right">
-
                                                                         View
                                                                     </a>
 
                                                                     <div class="clearfix"></div>
                                                                 </div>
-
                                                             </div>
                                                         {% endif %}
                                                         {% if errorMessage %}
@@ -179,7 +111,6 @@
                                                                     <a href=""
                                                                        class="pull-right"
                                                                        class="btn vd_btn vd_bg-green pull-right">
-
                                                                         View
                                                                     </a>
 
@@ -196,11 +127,7 @@
                                                                 <form class="form-horizontal" action="" method="post"
                                                                   role="form">
                                                                 {% csrf_token %}
-                                                                {#                                                                {{ form.errors }}#}
-                                                                {#                          {{ form.errors }}#}
                                                                 <div class="col-sm-12">
-                                                                    {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
-
                                                                     <div class="form-group">
                                                                         <label class="col-sm-3 control-label">Search Email</label>
 
@@ -218,13 +145,10 @@
                                                                             <!-- row -->
                                                                         </div>
                                                                     <div class="col-md-3">
-                                                                        {#                                                                                                <input id="notification_sig" name="notification_sig" hidden="hidden" />#}
                                                                         <button style="background-color: #ba8c00 !important;margin-bottom: 20px;"
                                                                                 type="submit"
                                                                                 class="btn vd_btn vd_bg-green pull-left">
                                                                             <span class="menu-icon">
-{#                                                                                <i#}
-{#                                                                                    class="fa fa-fw fa-check"></i>#}
                                                                             </span>
                                                                             Search
                                                                         </button>
@@ -1516,86 +1440,18 @@
 
                                           <div class="col-md-12">
                                               <hr />
-                                              <h4>Total: ${{ total|intcomma }}</h4>
+                                              <h4>Total: ${{ total|intcomma }}</h4><br />
+                                              <h4>Paid: ${{ paid_amount_requested_invoices|intcomma }}</h4>
+
                                               <hr />
                                           </div>
 
                                           <input hidden id="create_bulk_signal" name="create_bulk_signal" />
                                           <input hidden id="email_search" name="email_search" value="{{ email }}" />
                                                 <button type="submit" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;margin-bottom: 20px;" >Setup Invoice</button>
-{#                                          <a  data-toggle="modal" class="btn vd_btn vd_bg-green pull-right"#}
-{#                                              style="background-color: #ba8c00 !important;margin-bottom: 20px;"#}
-{#                                              href="#modal_wizard"  hidden>Create Invoice (Wizard)</a>#}
-{#                                              <a onclick="setupAgreement()" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;margin-bottom: 20px;">Send Agreement</a>#}
                                           </div>
 
                                         </form>
-{#                                        <div class="col-md-12">#}
-{#                                             <table aria-describedby="data-tables_info" role="grid"#}
-{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
-{#                                                  <thead>#}
-{#                                                  <tr role="row">#}
-{#                                                      <th>Mark</th>#}
-{#                                                      <th>Email</th>#}
-{##}
-{#                                                      <th>CSV Path#}
-{#                                                      </th>#}
-{#                                                      <th></th>#}
-{#                                                      <th>List Price#}
-{#                                                      </th>#}
-{#                                                      <th>Electricity</th>#}
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>Method</th>#}
-{#                                                      <th>PV Prize</th>#}
-{#                                                      <th>Total Amount</th>#}
-{#                                                      <th>#}
-{#                                                          Created at#}
-{#                                                      </th>#}
-{#                                                      <th>Remove</th>#}
-{#                                                      <th>#}
-{#                                                          Edit#}
-{#                                                      </th>#}
-{#                                                  </tr>#}
-{#                                                  </thead>#}
-{#                                                  <tbody>#}
-{#                                                  {% for invoice in event_invoices %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
-{#                                                          <td>{{ invoice.email }}</td>#}
-{#                                                          <td>${{ csv.offered_price }}</td>#}
-{#                                                          <td>${{ csv.list_price }}</td>#}
-{#                                                          <td>{{ csv.csv }}</td>#}
-{##}
-{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
-{#                                                          <td>{{ csv.register.status }}</td>#}
-{#                                                          <td>{{ csv.payment_method }}</td>#}
-{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
-{#                                                          <td>${{ csv.get_total }}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
-{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
-{#                                                          <td>#}
-{#                                                              <form action="." method="post">#}
-{#                                                                  {% csrf_token %}#}
-{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
-{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
-{#                                                              </form>#}
-{##}
-{#                                                          </td>#}
-{#                                                      </tr>#}
-{#                                                  {% endfor %}#}
-{#                                                  </tbody>#}
-{#                                              </table>#}
-{#                                        </div>#}
-{#                                      {% if event_invoices %}#}
-{#                                          <div class="col-md-12">#}
-{#                                          {% for o in event_invoices %}#}
-{#                                              {{ o }}#}
-{#                                          {% endfor %}#}
-{#                                          </div>#}
-{#                                          {% endif %}#}
 
                                       <form action="" method="post">
                                           {% csrf_token %}
