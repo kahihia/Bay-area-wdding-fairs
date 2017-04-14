@@ -4,27 +4,9 @@
 {% load myfilters %}
 {% load humanize %}
 {% block content %}
-    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
-    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
-    {##}
-    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
     <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
     <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
-    {#    <script>#}
-    {#        parent.location.href = "http://bayareaweddingfairs.com/bride-registration-success/"#}
-    {#    </script>#}
-
-    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
-
-
-    <!-- Specific Page Scripts Put Here -->
-
-    {#    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
     <style>
         .red {
             color: red;
@@ -40,387 +22,259 @@
         }
     </style>
     <div class="vd_body">
-        <!-- Header Start -->
-        {#        {% include "vendroid/partial/_header.html" %}#}
-        <!-- Header Ends -->
         <div class="content">
-            <div class="">
-                {#                {% include "vendroid/CRM/partial/_sidebar.html" %}#}
-                <div class="clearfix"></div>
+            <div class="clearfix" style="margin-bottom: 0px; padding-bottom: 0px;">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12" style="padding:0px;">
+                        <div class="panel widget" style="margin:0px;">
+                            <div class="panel-body" style="padding:0px; height:3500px;">
+                                <br>
+                                <div class="tab-content">
+                                    {% if successMessage %}
+                                        <div class="flashes">
+                                            <div class="alert alert-success">{{ successMessage }}</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if error_message %}
+                                        <div class="flashes">
+                                            <div class="alert alert-danger">{{ error_message }}</div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="tab-pane active" id="privacy">
+                                        <div class="col-md-12">
+                                            <div class="clearfix"></div>
+                                            <br/>
+                                            <div class="text-center">
+                                                <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png" style="margin-bottom: 20px;" />
+                                                <h2 style="color: rgb(185, 76, 112);margin-bottom:20px;">Save time and money and purchase tickets now !</h2>
+                                            </div>
+                                            <form method="post" action="" id="payment-form" >
+                                                {% csrf_token %}
+                                                <div class="col-md-6 col-md-offset-3 col-xs-12" style="font-size: 15px;">
+                                                    <div >
+                                                        <div class="table-responsive">
+                                                            <select class="form-control" id="id_event" name="event">
+                                                                <option value="0">Select Wedding Fair</option>
+                                                                {% for e in event %}
+                                                                    <option value="{{ e.id }}" data-date="{{ e.date }}">{{ e.name }} {{ e.date }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <input hidden id="0__price" value="0" />
+                                                            <input hidden id="0__earlybird_ticket" value="0" />
+                                                            <input hidden id="0__group_ticket" value="0" />
+                                                            <input hidden id="0__name" value="Select an event" />
+                                                            {% for e in event %}
+                                                                <input hidden id="{{ e.id }}__price" value="{{ e.amount }}" />
+                                                                <input hidden id="{{ e.id }}__earlybird_ticket" value="{{ e.earlybird_ticket }}" />
+                                                                <input hidden id="{{ e.id }}__group_ticket" value="{{ e.group_ticket }}" />
+                                                                <input hidden id="{{ e.id }}__name" value="{{ e.name }} - {{ e.date }}" />
+                                                            {% endfor %}
+                                                            <div>
+                                                                <h4 class="col-md-12 text-left" style="margin-top: 15px;margin-bottom:15px;">
+                                                                    Event: <a id="event_name">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                                </h4>
 
-                <!-- Middle Content Start -->
-
-                <div class="">
-                    <div class="">
-                        <div class=" clearfix">
-
-                            <!-- vd_head-section -->
-
-                            <div class="clearfix">
-
-                                <!-- vd_title-section -->
-
-                                <div class="clearfix" style="margin-bottom: 0px; padding-bottom: 0px;">
-
-                                    <div class="row">
-                                        <div class="col-md-12 col-xs-12" style="padding:0px;">
-                                            <div class="panel widget" style="margin:0px;">
-                                                <div class="panel-body" style="padding:0px; height:3500px;">
-                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
-                                                    {#                    <ul class="nav nav-tabs">#}
-                                                    {##}
-                                                    {##}
-                                                    {#                    </ul>#}
-                                                    <br>
-
-                                                    <div class="tab-content">
-
-                                                        {% if successMessage %}
-                                                            <div class="flashes">
-                                                                <div class="alert alert-success">{{ successMessage }}</div>
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if error_message %}
-                                                            <div class="flashes">
-                                                                <div class="alert alert-danger">{{ error_message }}</div>
-                                                            </div>
-                                                        {% endif %}
-                                                        <div class="tab-pane active" id="privacy">
-                                                            <div class="col-md-12">
-                                                                {#                                                                <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"#}
-                                                                {#                                                                     width="20%"/><br/>#}
-
-                                                                <div class="clearfix"></div>
-                                                                <br/>
-
-                                                                <div class="text-center">
-                                                                    <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png" style="margin-bottom: 20px;" />
-{#                                                                    {% if not hide_thanks %}#}
-                                                                        <h2 style="color: rgb(185, 76, 112);margin-bottom:20px;">Save time and money and purchase tickets now !</h2>
-{#                                                                    {% endif %}#}
-{#                                                                    <h4>Save time and money and purchase tickets now !</h4>#}
-                                                                </div>
-                                                                <form method="post" action="" id="payment-form" >
-                                                                    {% csrf_token %}
-                                                                    <div class="col-md-6 col-md-offset-3 col-xs-12" style="font-size: 15px;">
-                                                                        <div >
-                                                                            {#                                                                <div class="panel-heading" style="background-color: #ba8c00;">#}
-                                                                            {#                                                                    <h3 class="panel-title" style="color: white;">  Tickets </h3>#}
-                                                                            {#                                                                </div>#}
-                                                                            <div class="table-responsive">
-                                                                                <select class="form-control" id="id_event" name="event">
-                                                                                    <option value="0">Select Wedding Fair</option>
-                                                                                    {% for e in event %}
-                                                                                        <option value="{{ e.id }}" data-date="{{ e.date }}">{{ e.name }} {{ e.date }}</option>
-
-                                                                                    {% endfor %}
-                                                                                </select>
-                                                                                <input hidden id="0__price" value="0" />
-                                                                                    <input hidden id="0__earlybird_ticket" value="0" />
-                                                                                    <input hidden id="0__group_ticket" value="0" />
-                                                                                    <input hidden id="0__name" value="Select an event" />
-                                                                                {% for e in event %}
-                                                                                    <input hidden id="{{ e.id }}__price" value="{{ e.amount }}" />
-                                                                                    <input hidden id="{{ e.id }}__earlybird_ticket" value="{{ e.earlybird_ticket }}" />
-                                                                                    <input hidden id="{{ e.id }}__group_ticket" value="{{ e.group_ticket }}" />
-                                                                                    <input hidden id="{{ e.id }}__name" value="{{ e.name }} - {{ e.date }}" />
-                                                                                {% endfor %}
-                                                                                <div>
-                                                                                    <h4 class="col-md-12 text-left" style="margin-top: 15px;margin-bottom:15px;">
-                                                                                        Event: <a id="event_name">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                                                    </h4>
-
-                                                                                    <div id="standard_div">
-                                                                                    <div class="col-md-12 text-left" >
-                                                                                        STANDARD ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
-                                                                                        <option value="0" selected="selected">0</option>
-                                                                                        <option value="1">1</option>
-                                                                                        <option value="2">2</option>
-                                                                                        <option value="3">3</option>
-                                                                                        <option value="4">4</option>
-                                                                                        <option value="5">5</option>
-                                                                                        <option value="6">6</option>
-                                                                                        <option value="7">7</option>
-                                                                                        <option value="8">8</option>
-                                                                                        <option value="9">9</option>
-                                                                                        <option value="10">10</option>
-                                                                                        <option value="11">11</option>
-                                                                                        <option value="12">12</option>
-                                                                                        <option value="13">13</option>
-                                                                                        <option value="14">14</option>
-                                                                                        <option value="15">15</option>
-                                                                                        <option value="16">16</option>
-                                                                                        <option value="17">17</option>
-                                                                                        <option value="18">18</option>
-                                                                                        <option value="19">19</option>
-                                                                                        <option value="20">20</option>
-                                                                                    </select>
-                                                                                        <div class="clearfix"></div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12 text-left" style="margin-bottom:15px;">
-
-                                                                                        Price: <a id="event_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                                                    </div>
-                                                                                    </div>
-
-                                                                                    <div id="earlybird_div">
-
-                                                                                        <div class="col-md-12 text-left">
-                                                                                            EARLY BIRD DISCOUNTED ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="earlybird-event-quantity" id="id_form-earlybird-quantity" name="earlybirdTickets">
-                                                                                            <option value="0" selected="selected">0</option>
-                                                                                            <option value="1">1</option>
-                                                                                            <option value="2">2</option>
-                                                                                            <option value="3">3</option>
-                                                                                            <option value="4">4</option>
-                                                                                            <option value="5">5</option>
-                                                                                            <option value="6">6</option>
-                                                                                            <option value="7">7</option>
-                                                                                            <option value="8">8</option>
-                                                                                            <option value="9">9</option>
-                                                                                            <option value="10">10</option>
-                                                                                            <option value="11">11</option>
-                                                                                            <option value="12">12</option>
-                                                                                            <option value="13">13</option>
-                                                                                            <option value="14">14</option>
-                                                                                            <option value="15">15</option>
-                                                                                            <option value="16">16</option>
-                                                                                            <option value="17">17</option>
-                                                                                            <option value="18">18</option>
-                                                                                            <option value="19">19</option>
-                                                                                            <option value="20">20</option>
-                                                                                        </select>
-                                                                                            <div class="clearfix"></div>
-                                                                                        </div>
-                                                                                        <div class="col-md-12 text-left"  style="margin-bottom:15px;">
-                                                                                            Price: <a id="earlybirds_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                                                        </div>
-                                                                                    </div>
-
-
-
-                                                                                    <div id="group_div">
-
-                                                                                        <div class="col-md-12 text-left">
-                                                                                            GROUP DISCOUNTED TICKETS (4+):  <select style="width:80px;display: inline;" data-ga-interaction-id="group-event-quantity" id="id_form-group-quantity" name="groupTickets">
-                                                                                            <option value="0" selected="selected">0</option>
-                                                                                            <option value="4">4</option>
-                                                                                            <option value="5">5</option>
-                                                                                            <option value="6">6</option>
-                                                                                            <option value="7">7</option>
-                                                                                            <option value="8">8</option>
-                                                                                            <option value="9">9</option>
-                                                                                            <option value="10">10</option>
-                                                                                            <option value="11">11</option>
-                                                                                            <option value="12">12</option>
-                                                                                            <option value="13">13</option>
-                                                                                            <option value="14">14</option>
-                                                                                            <option value="15">15</option>
-                                                                                            <option value="16">16</option>
-                                                                                            <option value="17">17</option>
-                                                                                            <option value="18">18</option>
-                                                                                            <option value="19">19</option>
-                                                                                            <option value="20">20</option>
-                                                                                        </select>
-                                                                                            <div class="clearfix"></div>
-                                                                                        </div>
-                                                                                        <div class="col-md-12 text-left" style="margin-bottom:15px;">
-                                                                                            Price: <a id="group_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                                                        </div>
-
-
-                                                                                    </div>
-                                                                                    <div class="clearfix"></div>
-
-
-                                                                                </div>
-                                                                                {#                                                                    <table class="table table-hover">#}
-                                                                                {#                                                                        <thead>#}
-                                                                                {#                                                                        <tr>#}
-                                                                                {#                          <th>#</th>#}
-                                                                                {#                                                                            <th>EVENT</th>#}
-                                                                                {#                                                                            <th>TICKET TYPE</th>#}
-                                                                                {#                                                                            <th>PRICE</th>#}
-                                                                                {#                                                                            <th>QTY</th>#}
-                                                                                {#                          <th>Status</th>#}
-                                                                                {#                          <th>Action</th>#}
-                                                                                {#                                                                        </tr>#}
-                                                                                {#                                                                        </thead>#}
-                                                                                {#                                                                        <tbody>#}
-                                                                                {#                                                                        <tr>#}
-                                                                                {#                          <td>1</td>#}
-                                                                                {#                                                                            <td id="event_name">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</td>#}
-                                                                                {#                                                                            <td>Bride / Groom</td>#}
-                                                                                {#                                                                            <td class="center" id="event_amount">{{ event.amount }}</td>#}
-                                                                                {#                                                                            <td class="center">#}
-                                                                                {#                                                                                <select style="width: 40px;" class="form-control" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">#}
-                                                                                {#                                                                                    <option value="0" selected="selected">0</option>#}
-                                                                                {#                                                                                    <option value="1">1</option>#}
-                                                                                {#                                                                                    <option value="2">2</option>#}
-                                                                                {#                                                                                    <option value="3">3</option>#}
-                                                                                {#                                                                                    <option value="4">4</option>#}
-                                                                                {#                                                                                    <option value="5">5</option>#}
-                                                                                {#                                                                                    <option value="6">6</option>#}
-                                                                                {#                                                                                    <option value="7">7</option>#}
-                                                                                {#                                                                                    <option value="8">8</option>#}
-                                                                                {#                                                                                    <option value="9">9</option>#}
-                                                                                {#                                                                                    <option value="10">10</option>#}
-                                                                                {#                                                                                    <option value="11">11</option>#}
-                                                                                {#                                                                                    <option value="12">12</option>#}
-                                                                                {#                                                                                    <option value="13">13</option>#}
-                                                                                {#                                                                                    <option value="14">14</option>#}
-                                                                                {#                                                                                    <option value="15">15</option>#}
-                                                                                {#                                                                                    <option value="16">16</option>#}
-                                                                                {#                                                                                    <option value="17">17</option>#}
-                                                                                {#                                                                                    <option value="18">18</option>#}
-                                                                                {#                                                                                    <option value="19">19</option>#}
-                                                                                {#                                                                                    <option value="20">20</option>#}
-                                                                                {#                                                                                </select></td>#}
-                                                                                {#                                                                        </tr>#}
-                                                                                {##}
-                                                                                {#                                                                        </tbody>#}
-                                                                                {#                                                                    </table>#}
-                                                                                {#                      <br />#}
-
-                                                                            </div>
-
-                                                                            <div class="col-md-12" style="padding:0px;">
-                                                                               <div class="col-md-8 col-sm-8 col-xs-10 np">
-                                                                                    <input style="width: 96%" type="text" id="promocode" class="form-control pull-left" maxlength="255" name="promocode" placeholder="Type promocode here to get discount" />
-                                                                                   <div class="clearfix"></div>
-                                                                               </div>
-                                                                                <div class="col-md-4 col-sm-4 col-xs-2 np">
-                                                                                    <input type="button" class="btn vd_btn btn-brown pull-left"   id="apply_promocode" name="apply_promocode" value="Apply" />
-                                                                                </div>
-                                                                                <div class="clearfix"></div>
-                                                                               <div class="col-md-12 col-sm-12 col-xs-12 np">
-                                                                                    <div class="clearfix"></div>
-                                                                                <div id="error_promotion" style="color: red"></div>
-                                                                                <div id="success_promotion" style="color: green"></div>
-
-                                                                               </div>
-
-                                                                            </div><div class="clearfix"></div>
-                                                                            <div class="col-md-12 " style="padding:0px;margin-top:15px;">
-{#                                                                                <hr />#}
-                                                                                <div class="col-md-12 text-left" style="padding:0px;">
-                                                                                    <h4>                            Total: $<p style="display: inline;" id="total_ticket_price">0</p>
-                                                                                    </h4>
-                                                                                </div>
-{#                                                                                <hr />#}
-                                                                                {#                                                                                <div class="col-md-3 text-left">#}
-                                                                                {##}
-                                                                                {##}
-                                                                                {#                                                                                </div>#}
-
-                                                                                <input  type="hidden" name="hidden_total" value="$xx" id="hidden_total"/>
-                                                                            </div>
-
-
-                                                                        </div>
-                                                                        <!-- Panel Widget -->
-
-                                                                        <div class="panel widget">
-                                                                             <hr />
-
-                                                                            {{ form.as_p  }}
-
-                                                                            {#                                                                <input type="hidden" name="stripe_token" id="stripe_token">#}
-                                                                            <input type="hidden" name="total_amount" id="total_amount" />
-                                                                            <input type="hidden" name="stripe_token" id="stripe_token" />
-                                                                            <input type="hidden" name="event_date" id="event_date" />
-                                                                            <div id="error_email" style="color:red"></div>
-                                                                             <p style="font-size:20px;color:grey;">
-                                                                                    <input id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated below
-                                                                                    <br />
-                                                                                <div id="agree_error" style="color:red;"></div>
-                                                                                </p>
-                                                                            <input style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" type="submit" class="btn vd_btn btn-brown" value="BUY NOW" id="submit-form" />
-
-                                                                            <div class="text-left  font-small-policy" style="margin-top:10px;">
-                                                                                <b style="font-size: 15px;">
-                                                                                    Refund Policy:
-                                                                                </b>
-                                                                                <p style="font-size: 15px;">Tickets are non-refundable. However, tickets can be transferred to other events only if approved by Bay Area Wedding Fairs.</p>
-
-                                                                                <b style="font-size: 15px;">Waiver Release</b>
-
-                                                                                <p style="font-size: 15px;">Purchasing this Ticket provides entrance for one person into a Bay Area Wedding Fair. All Ticket sales are final unless pre-approved by Bay Area Wedding Fairs. Bay Area Wedding Fairs reserves the right to permit or refuse entrance for any reason it deems detrimental to the Event. Once the attendee enters the Event they acknowledge that the attendee/ticket holder is not covered by any liability policy or entity and agrees to hold Bay Area Wedding Fairs harmless for any physical, emotional, financial or any other form of damages as a result of attending the Event. Individual Exhibitors have sole responsibility of their personal, physical, promotional or financial interactions with each attendee/ticket holder. Bay Area Wedding Fairs may advertise certain attractions or promotions that due to circumstances beyond its control may not be available at any specific event. Last Minute Changes are due to exhibitor/provider failures and not Bay Area Wedding Fairs. No Refunds or remedies are available in these cases. Attendees must obey all laws and may be subject to the host property’s security requests. Failure to adhere to these requests and/or failure to abide by the rules stated herein may result in ejection from the event with no possibility of refund. Enjoy the Event!</p>
-
-
-                                                                            </div>
-
-                                                                        </div>
-
+                                                                <div id="standard_div">
+                                                                    <div class="col-md-12 text-left" >
+                                                                        STANDARD ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
+                                                                        <option value="0" selected="selected">0</option>
+                                                                        <option value="1">1</option>
+                                                                        <option value="2">2</option>
+                                                                        <option value="3">3</option>
+                                                                        <option value="4">4</option>
+                                                                        <option value="5">5</option>
+                                                                        <option value="6">6</option>
+                                                                        <option value="7">7</option>
+                                                                        <option value="8">8</option>
+                                                                        <option value="9">9</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="11">11</option>
+                                                                        <option value="12">12</option>
+                                                                        <option value="13">13</option>
+                                                                        <option value="14">14</option>
+                                                                        <option value="15">15</option>
+                                                                        <option value="16">16</option>
+                                                                        <option value="17">17</option>
+                                                                        <option value="18">18</option>
+                                                                        <option value="19">19</option>
+                                                                        <option value="20">20</option>
+                                                                    </select>
+                                                                        <div class="clearfix"></div>
                                                                     </div>
-                                                                </form>
-                                                                {#                                                                <p style="margin-top:25px;margin-bottom:25px;">#}
-                                                                {#                                                                    <a style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" href="https://bayareaweddingfairs.ticketleap.com/" target="_blank">Click Here to Get Tickets</a>#}
-                                                                {#                                                                </p>#}
+                                                                    <div class="col-md-12 text-left" style="margin-bottom:15px;">
+
+                                                                        Price: <a id="event_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="earlybird_div">
+
+                                                                    <div class="col-md-12 text-left">
+                                                                        EARLY BIRD DISCOUNTED ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="earlybird-event-quantity" id="id_form-earlybird-quantity" name="earlybirdTickets">
+                                                                        <option value="0" selected="selected">0</option>
+                                                                        <option value="1">1</option>
+                                                                        <option value="2">2</option>
+                                                                        <option value="3">3</option>
+                                                                        <option value="4">4</option>
+                                                                        <option value="5">5</option>
+                                                                        <option value="6">6</option>
+                                                                        <option value="7">7</option>
+                                                                        <option value="8">8</option>
+                                                                        <option value="9">9</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="11">11</option>
+                                                                        <option value="12">12</option>
+                                                                        <option value="13">13</option>
+                                                                        <option value="14">14</option>
+                                                                        <option value="15">15</option>
+                                                                        <option value="16">16</option>
+                                                                        <option value="17">17</option>
+                                                                        <option value="18">18</option>
+                                                                        <option value="19">19</option>
+                                                                        <option value="20">20</option>
+                                                                    </select>
+                                                                        <div class="clearfix"></div>
+                                                                    </div>
+                                                                    <div class="col-md-12 text-left"  style="margin-bottom:15px;">
+                                                                        Price: <a id="earlybirds_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div id="group_div">
+
+                                                                    <div class="col-md-12 text-left">
+                                                                        GROUP DISCOUNTED TICKETS (4+):  <select style="width:80px;display: inline;" data-ga-interaction-id="group-event-quantity" id="id_form-group-quantity" name="groupTickets">
+                                                                        <option value="0" selected="selected">0</option>
+                                                                        <option value="4">4</option>
+                                                                        <option value="5">5</option>
+                                                                        <option value="6">6</option>
+                                                                        <option value="7">7</option>
+                                                                        <option value="8">8</option>
+                                                                        <option value="9">9</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="11">11</option>
+                                                                        <option value="12">12</option>
+                                                                        <option value="13">13</option>
+                                                                        <option value="14">14</option>
+                                                                        <option value="15">15</option>
+                                                                        <option value="16">16</option>
+                                                                        <option value="17">17</option>
+                                                                        <option value="18">18</option>
+                                                                        <option value="19">19</option>
+                                                                        <option value="20">20</option>
+                                                                    </select>
+                                                                        <div class="clearfix"></div>
+                                                                    </div>
+                                                                    <div class="col-md-12 text-left" style="margin-bottom:15px;">
+                                                                        Price: <a id="group_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                                    </div>
+
+
+                                                                </div>
                                                                 <div class="clearfix"></div>
 
-                                                                {#                                                                <hr/>#}
-                                                                {#                                                                <h4>We will get back to you soon. In the meantime, if you have any questions, please email at info@bayareaweddingfairs.com</h4>#}
+
                                                             </div>
 
                                                         </div>
 
+                                                        <div class="col-md-12" style="padding:0px;">
+                                                            <div class="col-md-8 col-sm-8 col-xs-10 np">
+                                                                <input style="width: 96%" type="text" id="promocode" class="form-control pull-left" maxlength="255" name="promocode" placeholder="Type promocode here to get discount" />
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-4 col-xs-2 np">
+                                                                <input type="button" class="btn vd_btn btn-brown pull-left"   id="apply_promocode" name="apply_promocode" value="Apply" />
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 np">
+                                                                <div class="clearfix"></div>
+                                                                <div id="error_promotion" style="color: red"></div>
+                                                                <div id="success_promotion" style="color: green"></div>
+
+                                                            </div>
+
+                                                        </div><div class="clearfix"></div>
+                                                        <div class="col-md-12 " style="padding:0px;margin-top:15px;">
+                                                            {#                                                                                <hr />#}
+                                                            <div class="col-md-12 text-left" style="padding:0px;">
+                                                                <h4>                            Total: $<p style="display: inline;" id="total_ticket_price">0</p>
+                                                                </h4>
+                                                            </div>
+                                                            {#                                                                                <hr />#}
+                                                            {#                                                                                <div class="col-md-3 text-left">#}
+                                                            {##}
+                                                            {##}
+                                                            {#                                                                                </div>#}
+
+                                                            <input  type="hidden" name="hidden_total" value="$xx" id="hidden_total"/>
+                                                        </div>
+
+
                                                     </div>
+                                                    <!-- Panel Widget -->
+
+                                                    <div class="panel widget">
+                                                        <hr />
+
+                                                        {{ form.as_p  }}
+
+                                                        {#                                                                <input type="hidden" name="stripe_token" id="stripe_token">#}
+                                                        <input type="hidden" name="total_amount" id="total_amount" />
+                                                        <input type="hidden" name="stripe_token" id="stripe_token" />
+                                                        <input type="hidden" name="event_date" id="event_date" />
+                                                        <div id="error_email" style="color:red"></div>
+                                                        <p style="font-size:20px;color:grey;">
+                                                            <input id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated below
+                                                            <br />
+                                                        <div id="agree_error" style="color:red;"></div>
+                                                        </p>
+                                                        <input style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" type="submit" class="btn vd_btn btn-brown" value="BUY NOW" id="submit-form" />
+
+                                                        <div class="text-left  font-small-policy" style="margin-top:10px;">
+                                                            <b style="font-size: 15px;">
+                                                                Refund Policy:
+                                                            </b>
+                                                            <p style="font-size: 15px;">Tickets are non-refundable. However, tickets can be transferred to other events only if approved by Bay Area Wedding Fairs.</p>
+
+                                                            <b style="font-size: 15px;">Waiver Release</b>
+
+                                                            <p style="font-size: 15px;">Purchasing this Ticket provides entrance for one person into a Bay Area Wedding Fair. All Ticket sales are final unless pre-approved by Bay Area Wedding Fairs. Bay Area Wedding Fairs reserves the right to permit or refuse entrance for any reason it deems detrimental to the Event. Once the attendee enters the Event they acknowledge that the attendee/ticket holder is not covered by any liability policy or entity and agrees to hold Bay Area Wedding Fairs harmless for any physical, emotional, financial or any other form of damages as a result of attending the Event. Individual Exhibitors have sole responsibility of their personal, physical, promotional or financial interactions with each attendee/ticket holder. Bay Area Wedding Fairs may advertise certain attractions or promotions that due to circumstances beyond its control may not be available at any specific event. Last Minute Changes are due to exhibitor/provider failures and not Bay Area Wedding Fairs. No Refunds or remedies are available in these cases. Attendees must obey all laws and may be subject to the host property’s security requests. Failure to adhere to these requests and/or failure to abide by the rules stated herein may result in ejection from the event with no possibility of refund. Enjoy the Event!</p>
+
+
+                                                        </div>
+
+                                                    </div>
+
                                                 </div>
-                                                {#                                                <br><br>#}
+                                            </form>
+                                            {#                                                                <p style="margin-top:25px;margin-bottom:25px;">#}
+                                            {#                                                                    <a style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" href="https://bayareaweddingfairs.ticketleap.com/" target="_blank">Click Here to Get Tickets</a>#}
+                                            {#                                                                </p>#}
+                                            <div class="clearfix"></div>
 
-
-                                            </div>
+                                            {#                                                                <hr/>#}
+                                            {#                                                                <h4>We will get back to you soon. In the meantime, if you have any questions, please email at info@bayareaweddingfairs.com</h4>#}
                                         </div>
-                                        <!-- Panel Widget -->
+
                                     </div>
-                                    <!-- col-md-6 -->
 
                                 </div>
-                                <!-- row -->
-
                             </div>
-                            <!-- .vd_content-section -->
+                            {#                                                <br><br>#}
+
 
                         </div>
-                        <!-- .vd_content -->
                     </div>
-                    <!-- .vd_container -->
+                    <!-- Panel Widget -->
                 </div>
-                <!-- .vd_container -->
+                <!-- col-md-6 -->
+
             </div>
-            <!-- .vd_content-wrapper -->
-
-            <!-- Middle Content End -->
-
         </div>
         <!-- .container -->
-
-        <!-- .content -->
-
-        {#        <!-- Footer Start -->#}
-        {#        <footer class="footer-1" id="footer">#}
-        {#            <div class="vd_bottom ">#}
-        {#                <div class="container">#}
-        {#                    <div class="row">#}
-        {#                        <div class=" col-xs-12">#}
-        {#                            <div class="copyright">#}
-        {#                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved#}
-        {#                            </div>#}
-        {#                        </div>#}
-        {#                    </div>#}
-        {#                    <!-- row -->#}
-        {#                </div>#}
-        {#                <!-- container -->#}
-        {#            </div>#}
-        {#        </footer>#}
-        {#        <!-- Footer END -->#}
-
-
     </div>
-
-
-
-
 {% endblock content %}
 {% block script %}
 
@@ -452,15 +306,15 @@
 
             $('#event_name').html(event_name);
 
-{#            $('#id_form-0-quantity').get(0).selectedIndex = 0#}
+            {#            $('#id_form-0-quantity').get(0).selectedIndex = 0#}
             $('#id_form-earlybird-quantity ').get(0).selectedIndex = 0
             $('#id_form-group-quantity ').get(0).selectedIndex = 0
         }
         function event_selection_function(){
-             get_event();
-             $("#group_div").show();
-                $("#earlybird_div").show();
-                $("#standard_div").show();
+            get_event();
+            $("#group_div").show();
+            $("#earlybird_div").show();
+            $("#standard_div").show();
             if (earlybird <= 0.0)
             {
                 $("#earlybird_div").hide();
@@ -473,13 +327,13 @@
             {
                 $("#group_div").hide();
             }
-{#            else {#}
-{#               #}
-{#            }#}
+            {#            else {#}
+            {#               #}
+            {#            }#}
             $('input[name="hidden_total"]').val('');
             total_value = 0;
             total.text(total_value);
-{#            standard_quantity = $('#id_form-0-quantity :selected').text();#}
+            {#            standard_quantity = $('#id_form-0-quantity :selected').text();#}
             earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
             group_quantity = $('#id_form-group-quantity :selected').text();
             console.log(standard_quantity, earlybird_quantity, group_quantity);
@@ -487,10 +341,10 @@
         }
         $('#id_event').change(function(){
 
-           event_selection_function();
-           var event_date = $('#id_event').find(':selected').data('date');
-           $("#event_date").val(event_date);
-           console.log('event: ', event_date, $(this));
+            event_selection_function();
+            var event_date = $('#id_event').find(':selected').data('date');
+            $("#event_date").val(event_date);
+            console.log('event: ', event_date, $(this));
 
             var m_names = new Array("Jan. ", "Feb. ", "Mar. ",
                 "Apr. ", "May. ", "Jun. ", "Jul. ", "Aug. ", "Sep. ",
@@ -509,7 +363,7 @@
 
             }else{
                 $("#standard_div").hide();
-                 $("#earlybird_div").show();
+                $("#earlybird_div").show();
                 $("#group_div").show()
             }
 
