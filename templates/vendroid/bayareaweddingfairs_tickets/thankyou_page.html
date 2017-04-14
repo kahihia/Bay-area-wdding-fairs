@@ -51,6 +51,7 @@
                                                 <h4><b>{{ object.event.name|upper }}</b></h4>
                                                 <h4>{{ object.event.date }}</h4>
                                                 <h4><a target="_blank" href="{{ object.event.google_location }}">{{ object.event.location }}</a></h4>
+                                                <h4><a target="_blank" href="{{ object.event.google_location }}">{{ object.event.location }}</a></h4>
                                                 <h4>TICKETS</h4>
                                                 <h4><b>{% if object.quantity and not object.quantity == '0'  %}{{ object.quantity }} Standard Ticket<br />{% endif %}{% if object.earlybird_ticket and not object.earlybird_ticket == '0'  %}{{ object.earlybird_ticket }} Early Bird Ticket(s)<br />{% endif %}
                                                     {% if object.group_ticket  and not object.group_ticket == '0'  %}{{ object.group_ticket }} Group Ticket(s){% endif %}</b></h4>
