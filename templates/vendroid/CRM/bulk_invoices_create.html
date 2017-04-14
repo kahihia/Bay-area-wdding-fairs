@@ -769,73 +769,6 @@
 
                                           </div>
 
-{#                                        <div class="col-md-12">#}
-{#                                             <table aria-describedby="data-tables_info" role="grid"#}
-{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
-{#                                                  <thead>#}
-{#                                                  <tr role="row">#}
-{#                                                      <th>Mark</th>#}
-{#                                                      <th>Email</th>#}
-{##}
-{#                                                      <th>CSV Path#}
-{#                                                      </th>#}
-{#                                                      <th></th>#}
-{#                                                      <th>List Price#}
-{#                                                      </th>#}
-{#                                                      <th>Electricity</th>#}
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>Method</th>#}
-{#                                                      <th>PV Prize</th>#}
-{#                                                      <th>Total Amount</th>#}
-{#                                                      <th>#}
-{#                                                          Created at#}
-{#                                                      </th>#}
-{#                                                      <th>Remove</th>#}
-{#                                                      <th>#}
-{#                                                          Edit#}
-{#                                                      </th>#}
-{#                                                  </tr>#}
-{#                                                  </thead>#}
-{#                                                  <tbody>#}
-{#                                                  {% for invoice in event_invoices %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
-{#                                                          <td>{{ invoice.email }}</td>#}
-{#                                                          <td>${{ csv.offered_price }}</td>#}
-{#                                                          <td>${{ csv.list_price }}</td>#}
-{#                                                          <td>{{ csv.csv }}</td>#}
-{##}
-{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
-{#                                                          <td>{{ csv.register.status }}</td>#}
-{#                                                          <td>{{ csv.payment_method }}</td>#}
-{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
-{#                                                          <td>${{ csv.get_total }}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
-{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
-{#                                                          <td>#}
-{#                                                              <form action="." method="post">#}
-{#                                                                  {% csrf_token %}#}
-{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
-{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
-{#                                                              </form>#}
-{##}
-{#                                                          </td>#}
-{#                                                      </tr>#}
-{#                                                  {% endfor %}#}
-{#                                                  </tbody>#}
-{#                                              </table>#}
-{#                                        </div>#}
-{#                                      {% if event_invoices %}#}
-{#                                          <div class="col-md-12">#}
-{#                                          {% for o in event_invoices %}#}
-{#                                              {{ o }}#}
-{#                                          {% endfor %}#}
-{#                                          </div>#}
-{#                                          {% endif %}#}
-
 
                                       </div>
                        <div class="clearfix"></div>
@@ -905,69 +838,6 @@
                                                       </tr>
 
                                                       {% endif %}
-{#                                                      {% if invoice.balance1 %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <form action="" method="post">#}
-{#                                                            {% csrf_token %}#}
-{#                                                          <td>{{ invoice.vendor_register.register.event }}</td>#}
-{#                                                          <td><div id="edit_balance1_div_{{ invoice.id }}">${{ invoice.balance1 }}</div><input hidden id="edit_balance1_{{ invoice.id }}" name="amount" value="{{ invoice.balance1 }}" /></td>#}
-{#                                                          <td>{{ invoice.check_balance1 }}</td>#}
-{#                                                          <td>{{ invoice.check_balance1_paid }}</td>#}
-{#                                                          <td>Balance1 amount invoice</td>#}
-{#                                                          <td><div id="edit_balance1_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance1_date }}</div><input name="date"  hidden id="edit_balance1_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance1_date|date:"Y-m-d" }}" /></td>#}
-{#                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td>#}
-{#                                                              <a onclick="show_fields('#edit_balance1_{{ invoice.id }}','#edit_balance1_div_{{ invoice.id }}', '#edit_balance1_date_{{ invoice.id }}','#edit_balance1_date_div_{{ invoice.id }}', '#edit_balance1_button_{{ invoice.id }}','#edit_balance1_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance1_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>#}
-{#                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance1_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>#}
-{#                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />#}
-{#                                                                <input hidden value="balance1" name="edit_pending_invoice_type" />#}
-{#                                                          </td>#}
-{#                                                          </form>#}
-{#                                                      </tr>#}
-{#                                                      {% endif %}#}
-{#                                                      {% if invoice.balance2 %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <form action="" method="post">#}
-{#                                                            {% csrf_token %}#}
-{#                                                          <td>{{ invoice.vendor_register.register.event }}</td>#}
-{#                                                          <td><div id="edit_balance2_div_{{ invoice.id }}">${{ invoice.balance2 }}</div><input hidden id="edit_balance2_{{ invoice.id }}" name="amount" value="{{ invoice.balance2 }}" /></td>#}
-{#                                                          <td>{{ invoice.check_balance2 }}</td>#}
-{#                                                          <td>{{ invoice.check_balance2_paid }}</td>#}
-{#                                                          <td>Balance2 amount invoice</td>#}
-{#                                                          <td><div id="edit_balance2_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance2_date }}</div><input name="date"  hidden id="edit_balance2_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance2_date|date:"Y-m-d" }}" /></td>#}
-{#                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td>#}
-{#                                                              <a onclick="show_fields('#edit_balance2_{{ invoice.id }}','#edit_balance2_div_{{ invoice.id }}', '#edit_balance2_date_{{ invoice.id }}','#edit_balance2_date_div_{{ invoice.id }}', '#edit_balance2_button_{{ invoice.id }}','#edit_balance2_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance2_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>#}
-{#                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance2_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>#}
-{#                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />#}
-{#                                                                <input hidden value="balance2" name="edit_pending_invoice_type" />#}
-{#                                                          </td>#}
-{#                                                          </form>#}
-{#                                                      </tr>#}
-{#                                                      {% endif %}#}
-{#                                                      {% if invoice.balance3 %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <form action="" method="post">#}
-{#                                                            {% csrf_token %}#}
-{#                                                          <td>{{ invoice.vendor_register.register.event }}</td>#}
-{#                                                          <td><div id="edit_balance3_div_{{ invoice.id }}">${{ invoice.balance3 }}</div><input hidden id="edit_balance3_{{ invoice.id }}" name="amount" value="{{ invoice.balance3 }}" /></td>#}
-{#                                                          <td>{{ invoice.check_balance3 }}</td>#}
-{#                                                          <td>{{ invoice.check_balance3_paid }}</td>#}
-{#                                                          <td>Balance3 amount invoice</td>#}
-{#                                                          <td><div id="edit_balance3_date_div_{{ invoice.id }}">{{ invoice.event_invoice.balance3_date }}</div><input name="date"  hidden id="edit_balance3_date_{{ invoice.id }}" value="{{ invoice.event_invoice.balance3_date|date:"Y-m-d" }}" /></td>#}
-{#                                                          <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td>#}
-{#                                                              <a onclick="show_fields('#edit_balance3_{{ invoice.id }}','#edit_balance3_div_{{ invoice.id }}', '#edit_balance3_date_{{ invoice.id }}','#edit_balance3_date_div_{{ invoice.id }}', '#edit_balance3_button_{{ invoice.id }}','#edit_balance3_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance3_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>#}
-{#                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance3_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>#}
-{#                                                             <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />#}
-{#                                                                <input hidden value="balance3" name="edit_pending_invoice_type" />#}
-{#                                                          </td>#}
-{#                                                          </form>#}
-{#                                                      </tr>#}
-{#                                                      {% endif %}#}
                                                       {% endif %}
                                                   {% endfor %}
 
@@ -975,75 +845,6 @@
                                               </table>
 
                                           </div>
-
-{#                                        <div class="col-md-12">#}
-{#                                             <table aria-describedby="data-tables_info" role="grid"#}
-{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
-{#                                                  <thead>#}
-{#                                                  <tr role="row">#}
-{#                                                      <th>Mark</th>#}
-{#                                                      <th>Email</th>#}
-{##}
-{#                                                      <th>CSV Path#}
-{#                                                      </th>#}
-{#                                                      <th></th>#}
-{#                                                      <th>List Price#}
-{#                                                      </th>#}
-{#                                                      <th>Electricity</th>#}
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>Method</th>#}
-{#                                                      <th>PV Prize</th>#}
-{#                                                      <th>Total Amount</th>#}
-{#                                                      <th>#}
-{#                                                          Created at#}
-{#                                                      </th>#}
-{#                                                      <th>Remove</th>#}
-{#                                                      <th>#}
-{#                                                          Edit#}
-{#                                                      </th>#}
-{#                                                  </tr>#}
-{#                                                  </thead>#}
-{#                                                  <tbody>#}
-{#                                                  {% for invoice in event_invoices %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
-{#                                                          <td>{{ invoice.email }}</td>#}
-{#                                                          <td>${{ csv.offered_price }}</td>#}
-{#                                                          <td>${{ csv.list_price }}</td>#}
-{#                                                          <td>{{ csv.csv }}</td>#}
-{##}
-{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
-{#                                                          <td>{{ csv.register.status }}</td>#}
-{#                                                          <td>{{ csv.payment_method }}</td>#}
-{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
-{#                                                          <td>${{ csv.get_total }}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
-{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
-{#                                                          <td>#}
-{#                                                              <form action="." method="post">#}
-{#                                                                  {% csrf_token %}#}
-{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
-{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
-{#                                                              </form>#}
-{##}
-{#                                                          </td>#}
-{#                                                      </tr>#}
-{#                                                  {% endfor %}#}
-{#                                                  </tbody>#}
-{#                                              </table>#}
-{#                                        </div>#}
-{#                                      {% if event_invoices %}#}
-{#                                          <div class="col-md-12">#}
-{#                                          {% for o in event_invoices %}#}
-{#                                              {{ o }}#}
-{#                                          {% endfor %}#}
-{#                                          </div>#}
-{#                                          {% endif %}#}
-
-
                                       </div>
                        <div class="clearfix"></div>
                                   </div>
@@ -1053,14 +854,8 @@
                                                         <div class="col-md-12">
                                       <div class="panel-heading vd_bg-grey" style="margin-bottom: 15px;margin-top:15px;">
                                         <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Cards</h3>
-{#                                          <a onclick="$('#card-view').toggle('hidden');" class="pull-right" >Show</a>#}
                                       </div>
                                       <div id="card-view" class="panel-body">
-{#                                          {% if success_message_card %}#}
-{#                                              <div class="col-md-12 text-center" style="color: green">#}
-{#                                                    {{ success_message_card|safe }}#}
-{#                                              </div>#}
-{#                                          {% endif %}#}
                                       {% if not is_customer %}
                                       <div class="col-md-12">
                                           <a id="add_new_card" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Add Card</a>
@@ -1112,66 +907,6 @@
                                                         {% endif %}</div>
                     </div>
 </div>
-
-
-
-{#                                                        {{ agreement_sent }}#}
-{#                                                        {% if agreement_sent %}#}
-{#                                                            <div class="col-md-12">#}
-{#                                      <div class="panel-heading vd_bg-grey">#}
-{#                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Agreements</h3>#}
-{#                                      </div>#}
-{#                                      <div class="panel-body table-responsive">#}
-{#                                          <div class="dataTables_wrapper form-inline no-footer"#}
-{#                                               id="data-tables_wrapper">#}
-{#                                              <table aria-describedby="data-tables_info" role="grid"#}
-{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
-{#                                                  <thead>#}
-{#                                                  <tr role="row">#}
-{#                                                      <th>Agreement No</th>#}
-{#                                                      <th>Sending Date#}
-{#                                                      </th>#}
-{#                                                      <th>CSV Path#}
-{#                                                      </th>#}
-{#                                                      <th>User</th>#}
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>Resend</th>#}
-{#                                                      <th>#}
-{#                                                          Edit#}
-{#                                                      </th>#}
-{#                                                  </tr>#}
-{#                                                  </thead>#}
-{#                                                  <tbody>#}
-{#                                                  {% for agg in agreement_sent %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                          <td>{{ agg.id }}</td>#}
-{#                                                          <td>{{ agg.created_at }}</td>#}
-{#                                                          <td>{{ csv.csv }}</td>#}
-{#                                                          <td>{{ agg.email }}</td>#}
-{#                                                          <td>{{ agg.status }}</td>#}
-{#                                                          <td><form action="" method="post">{% csrf_token %}<input hidden id="resendAgreement" name="resendAgreement" value="{{ agg.id }}" /><input hidden id="email_search" name="email_search" value="{{ email }}" /><button class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important">Resend</button></form></td>#}
-{#                                                          <td>{{ csv.register.status }}</td>#}
-{#                                                          <td>{{ csv.created_at }}</td>#}
-{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
-{#                                                          <td>#}
-{#                                                              <form action="." method="post">#}
-{#                                                                  {% csrf_token %}#}
-{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
-{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
-{#                                                              </form>#}
-{##}
-{#                                                          </td>#}
-{#                                                      </tr>#}
-{#                                                  {% endfor %}#}
-{#                                                  </tbody>#}
-{#                                              </table>#}
-{#                                          </div>#}
-{#                                      </div>#}
-{#                       <div class="clearfix"></div>#}
-{#                                  </div>#}
-{#                                                        {% endif %}#}
                                                         {% if invoices %}
                                                         <div class="col-md-12">
                                       <div class="panel-heading vd_bg-grey">
@@ -1191,71 +926,35 @@
                                                       <th>Show</th>
                                                       <th>Payment Type</th>
                                                       <th>Payment Status</th>
-
-{#                                                      <th>CSV Path#}
-{#                                                      </th>#}
                                                       <th>Offered Price</th>
                                                       <th>PV Price Offered</th>
                                                       <th>Email List Price
                                                       </th>
                                                       <th>Electricity</th>
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>Method</th>#}
-{#                                                      <th>PV Prize</th>#}
                                                       <th>Total Amount</th>
-{#                                                      <th>Amount Due</th>#}
                                                       <th>
                                                           Created at
                                                       </th>
                                                       <th>Edit</th>
-{#                                                      <th>Remove</th>#}
-{#                                                      <th>#}
-{#                                                          Edit#}
-{#                                                      </th>#}
                                                   </tr>
                                                   </thead>
                                                   <tbody>
                                                   {% for csv in invoices|dictsortreversed:"created_at" %}
                                                       <tr role="row" class="gradeA odd">
                                                       <td>{% if not csv.is_complete %}
-{#                                                          {% if not csv.register.event.check_date %}N/A{% else %}#}
                                                               <input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" />
-{#                                                          {% endif %}#}
                                                       {% else %}Sent{% endif %}</td>
                                                           <td>{{ csv.id }}</td>
                                                           <td>{{ csv.register.event }}</td>
                                                           <td>{{ csv.payment_method }}</td>
                                                           <td>{{ csv.check_invoice_status_paid }}</td>
-{#                                                          <td>{{ csv.get_status }}</td>#}
                                                           <td>${{ csv.offered_price }}</td>
                                                           <td>${% if csv.pv_prize_offered %}{{ csv.pv_prize_offered }}{% else %}0{% endif %}</td>
                                                           <td>{% if csv.list_price %}${{ csv.list_price }}{% elif csv.email_list %}Yes{% else %}No{% endif %}</td>
-{#                                                          <td>{{ csv.csv }}</td>#}
-
                                                           <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>
-{#                                                          <td>{{ csv.register.status }}</td>#}
-{#                                                          <td>{{ csv.payment_method }}</td>#}
-{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
                                                           <td>${{ csv.get_total }}</td>
-{#                                                          <td>${{ csv.register.get_amount_due }}</td>#}
                                                           <td>{{ csv.created_at }}</td>
                                                           <td><a style="background-color: #ba8c00 !important" class="btn vd_btn vd_bg-green" href="/crm/invoices/contracted_detail/{{ csv.register.id }}/" >Edit</a></td>
-{#                                                          <td><form action="" method="post">#}
-{#                                                              <input hidden id="edit_invoice" name="edit_invoice" value="{{ invoice.id }}" />#}
-{#                                                              <button class="btn vd_btn vd_bg-green" type="submit" style="background-color: #ba8c00 !important">Edit</button>#}
-{#                                                          </form></td>#}
-{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
-{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
-{#                                                          <td>#}
-{#                                                              <form action="." method="post">#}
-{#                                                                  {% csrf_token %}#}
-{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
-{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
-{#                                                              </form>#}
-{##}
-{#                                                          </td>#}
                                                       </tr>
                                                   {% endfor %}
                                                   </tbody>
@@ -1401,83 +1100,6 @@
                        <div class="clearfix"></div>
                                   </div>
                                                         {% endif %}
-{#                                                        <form class="form-horizontal" action="." method="post"#}
-{#                                                                  role="form">#}
-{#                                                                {% csrf_token %}#}
-{#                                                                <div class="col-sm-6">#}
-                                                                    {#                              <h3 class="mgbt-xs-15">Notifications</h3>#}
-{##}
-{#                                                                    <div class="form-group">#}
-{#                                                                        <label class="col-sm-3 control-label">Email</label>#}
-{##}
-{#                                                                        <div class="col-sm-9 controls">#}
-{#                                                                            <div class="row mgbt-xs-0">#}
-{#                                                                                <div class="col-xs-12">#}
-{#                                                                                    {{ form.email }}#}
-{#                                                                                    {% if form.email.errors %}#}
-{#                                                                                        <div class="red">{{ form.email.errors.0 }}</div>#}
-{#                                                                                    {% endif %}#}
-{#                                                                                </div>#}
-{#                                                                                <!-- col-xs-12 -->#}
-{#                                                                            </div>#}
-{#                                                                            <!-- row -->#}
-{#                                                                        </div>#}
-{#                                                                        <!-- col-sm-10 -->#}
-{#                                                                    </div>#}
-{#                                                                    {% if not invoices_exist == 0 %}#}
-{#                                                                        <div class="form-group">#}
-{#                                                                            <label class="col-sm-3 control-label">Invoices</label>#}
-{##}
-{#                                                                            <div class="col-sm-9 controls">#}
-{#                                                                                <div class="row mgbt-xs-0">#}
-{#                                                                                    <div class="col-xs-12">#}
-{#                                                                                        {{ form.invoice_events }}#}
-{#                                                                                        {% if form.invoice_events.errors %}#}
-{#                                                                                            <div class="red">{{ form.invoice_events.errors.0 }}</div>#}
-{#                                                                                        {% endif %}#}
-{#                                                                                    </div>#}
-{#                                                                                    <!-- col-xs-12 -->#}
-{#                                                                                </div>#}
-{#                                                                                <!-- row -->#}
-{#                                                                            </div>#}
-{#                                                                            <!-- col-sm-10 -->#}
-{#                                                                        </div>#}
-{##}
-{#                                                                    {% else %}#}
-{#                                                                         <div class="form-group">#}
-{#                                                                            <label class="col-sm-3 control-label">Invoices</label>#}
-{##}
-{#                                                                            <div class="col-sm-9 controls">#}
-{#                                                                                <div class="row mgbt-xs-0">#}
-{#                                                                                    <div class="col-xs-12">#}
-{#                                                                                        <p>No available invoices for bulk.</p>#}
-{#                                                                                    </div>#}
-{#                                                                                    <!-- col-xs-12 -->#}
-{#                                                                                </div>#}
-{#                                                                                <!-- row -->#}
-{#                                                                            </div>#}
-{#                                                                            <!-- col-sm-10 -->#}
-{#                                                                        </div>#}
-{#                                                                    {% endif %}#}
-{##}
-{#                                                                    <div class="pd-20">#}
-                                                                        {#                                                                                                <input id="notification_sig" name="notification_sig" hidden="hidden" />#}
-{#                                                                        <button style="background-color: #ba8c00 !important;margin-top: 110px;"#}
-{#                                                                                type="submit"#}
-{#                                                                                class="btn vd_btn vd_bg-green pull-right">#}
-{#                                                                            <span class="menu-icon">#}
-{#                                                                                <i#}
-{#                                                                                    class="fa fa-fw fa-check"></i>#}
-{#                                                                            </span>#}
-{#                                                                            Submit#}
-{#                                                                        </button>#}
-{##}
-{#                                                                    </div>#}
-{##}
-{#                                                                    <!-- form-group -->#}
-{##}
-{#                                                                </div>#}
-{#                                                            </form>#}
                                                         </div>
 
                                                     </div>
