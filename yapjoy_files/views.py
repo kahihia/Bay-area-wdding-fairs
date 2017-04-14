@@ -508,23 +508,14 @@ def event_management_iframe_bg_successv2(request, id):
 
 @csrf_exempt
 def event_management_iframe_bg_successv2(request):
-    print id
     event = None
     hide_thanks = request.GET.get('nothanks')
-    # secret_key = 'sk_test_enH3Di38sTWreGlOZPBNML93'
-    # pub_key = 'pk_test_tZdpLY6bm1aDvhy9tBdfyMeV'
-    stripe.api_key = 'sk_test_z3b8Yfc0Mcuh0P3M7VDfGZkt'#settings.STRIPE_SECRET_KEY_BAWF
-    # global promocode_code
-    # event = Event_fairs.objects.get(id=id)
-    ticketform = CreditCardBAWFTicketForm(
-    #     initial={
-    #     'email': 'adeelpkpk@gmail.com',
-    #     'number': '4242424242424242',
-    #     'year': '2017',
-    #     'phone': '111-111-1111'
-    # }
-    )
-    print "in the but ticket"
+    """
+    Needs to be converted to Live keys via
+    settings.STRIPE_SECRET_KEY_BAWF
+    """
+    stripe.api_key = 'sk_test_z3b8Yfc0Mcuh0P3M7VDfGZkt'
+    ticketform = CreditCardBAWFTicketForm()
     valid_code = ""
     error_message = ""
     amount = 0
@@ -532,7 +523,6 @@ def event_management_iframe_bg_successv2(request):
     if request.method == 'POST':
         ticketform = CreditCardBAWFTicketForm(request.POST or None)
         if ticketform.is_valid():
-            print 'form'
             email = ticketform.cleaned_data.get('email')
             event = request.POST.get('event')
             phone = ticketform.cleaned_data.get('phone')
@@ -544,26 +534,16 @@ def event_management_iframe_bg_successv2(request):
             earlybird_ticket = request.POST.get('earlybirdTickets')
             group_ticket = request.POST.get('groupTickets')
             event_date = request.POST.get('event_date')
-            print quantity_tickets, earlybird_ticket, group_ticket, event_date
             event = Event_fairs.objects.get(id=event)
-
             group = 0
             easybird = 0
-            print "quantity: ", float(event.amount), float(int(quantity_tickets))
             if str(event_date) == str(datetime.now().date().strftime('%b. %d, %Y')):
                 amount = float(event.amount) * float(int(quantity_tickets))
             else:
                 amount = 0
-                print ('else')
-
-
             easybird = (float(event.earlybird_ticket) * float(int(earlybird_ticket)))
             group = float(event.group_ticket) * float(int(group_ticket))
             amount = amount + easybird + group
-            print "amount: ", amount
-
-
-
             try:
                 promo_code_discount = Promocode.objects.get(code=promocode)
                 if promo_code_discount.is_Available:
@@ -574,7 +554,6 @@ def event_management_iframe_bg_successv2(request):
             except Exception as e:
                 print e
             amount = int(amount * 100)
-            print "Amount in cents: ", amount
             charge = None
             if stripe_token:
                 charge = stripe.Charge.create(
@@ -583,70 +562,52 @@ def event_management_iframe_bg_successv2(request):
                     source=stripe_token,
                     description="Ticket purchased by %s, quatity: %s, amount: %s" % (email, quantity_tickets, amount)
                 )
-                print charge
-            print "data: ", phone, month, year, quantity_tickets, stripe_token, email, event, promocode, amount
-
-            # expire = str(month)+"/"+str(year)
             try:
                 if charge:
-                    # if promocode_code:
-                    #     valid_code = Promocode.objects.get(code=promocode_code)
-                    # else:
-                    #     promocode_code = ""
                     print "event: ",
                     code = id_generator()
                     qr = pyqrcode.create(code)
                     filename = '{}'.format((datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
-                    # filename = '{}'.format(datetime.now()).replace(" ", "").replace(".", "").replace(':', "")
                     filename = filename + '.png'
                     qr.png(filename, scale=7)
                     image_link = save_to_S3(filename)
                     ticket = EventTickets()
-
                     ticket.event = event
                     ticket.email = email
                     ticket.phone = phone
                     ticket.card = charge.stripe_id
                     ticket.amount = amount
-                    # ticket.expire = expire
                     ticket.quantity = quantity_tickets
                     ticket.earlybird_ticket = earlybird_ticket
                     ticket.group_ticket = group_ticket
-
                     ticket.code = code
                     ticket.path_upload = image_link
                     if promo_code_discount:
-                        print "valid"
                         ticket.promocode_success = promo_code_discount
-                        # else:
-
-                        # ticket.promocode_success = ""
-                        # print "ticket"
                     ticket.save()
-                    print "ticket: saved"
                     result = send_email_ticket_bawf(sender="info@bayareaweddingfairs.com", subject="Bay Area Wedding Fairs: Ticket",
                                              receive=email,
                                              title="Thank you for purchasing Bay Area Wedding Fairs Tickets",
                                              message='Your ticket reservation has been made against the following show: <br /><br />- %s<br /><br />Quantity of Standard tickets: %s<br />Quantity of EarlyBirds Discounted tickets: %s<br />Quantity of Group Discounted tickets: %s<br />Total amount processed: $%s<br />Promotion code (if any): %s<br /><br />We are looking forward to have you in the show, feel free to contact for any queries info@bayareaweddingfairs.com' % (
                                              event, ticket.quantity, ticket.earlybird_ticket, ticket.group_ticket,
                                              int(ticket.amount / 100), ticket.promocode_success), object=ticket,  link=image_link)
-                    # if result == True:
                     return render(request, "vendroid/bayareaweddingfairs_tickets/thankyou_page.html",{
                         'object':ticket,
                     } )
             except Exception as e:
                 print "exceptionBuyTickets: ", e.message
-
         else:
             print "form not valid"
+    """
+        Needs to be converted to Live keys via
+        settings.STRIPE_PUBLISHABLE_KEY_BAWF
+    """
     context = {
         'pub_key': 'pk_test_ic11SWVPcUHwZ1mDBEBTdSX1',
         'event': Event_fairs.objects.filter(date__gte=datetime.now().date()).filter(amount__isnull=False).exclude(id__in=[46,47,48,49,50,51,52]).order_by('date'),
         'form': ticketform,
         'hide_thanks': hide_thanks,
     }
-
-    # return render(request, 'vendroid/bayareaweddingfairs_tickets/buy_tickets.html', context)
     return render(request, 'vendroid/CRM/event_success_iframe_bgv2.html', context=context)
 
 # @login_required(login_url='/crm/login/')

@@ -4,34 +4,9 @@
 {% load myfilters %}
 {% load humanize %}
 {% block content %}
-    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
-    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
-    {##}
-    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
     <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
     <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
-{#    <script>#}
-{#        $(function () {#}
-{#            $('#id_wedding_date').datepicker();#}
-            {#            $("#id_wedding_date").datetimepicker({#}
-            {#             'showTimepicker': false,#}
-            {#            });#}
-{#            parent.iframesmall();#}
-{#            document.getElementById('iframewedding').style.height = '274px';#}
-{#        });#}
-{#    </script>#}
-
-    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
-
-
-    <!-- Specific Page Scripts Put Here -->
-
-{#    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
     <style>
         .red {
             color: red;
@@ -42,152 +17,68 @@
         }
     </style>
     <div class="vd_body">
-        <!-- Header Start -->
-{#        {% include "vendroid/partial/_header.html" %}#}
-        <!-- Header Ends -->
         <div class="content">
-            <div class="">
-{#                {% include "vendroid/CRM/partial/_sidebar.html" %}#}
-            <div class="clearfix"></div>
+            <div class="clearfix" style="margin-bottom: 0px; padding-bottom: 0px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel widget" style="margin:0px;">
+                            <div class="panel-body" style="min-height: 1056px;height:3000px;">
+                                <br>
+                                <div class="tab-content mgbt-xs-20">
 
-                <!-- Middle Content Start -->
+                                    {% if successMessage %}
+                                        <div class="flashes">
+                                            <div class="alert alert-success">{{ successMessage }}</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if error_message %}
+                                        <div class="flashes">
+                                            <div class="alert alert-danger">{{ error_message }}</div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="tab-pane active" id="privacy">
+                                        <div class="col-md-12 text-center">
+                                            <div class="clearfix"></div>
+                                            <br/>
+                                            <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png" style="margin-bottom: 40px;" />
+                                            <h2 style="color: rgb(185, 76, 112)">Please check your email for important information regarding your order.</h2>
+                                            <hr/>
+                                            <div class="col-md-6 col-md-offset-3 text-left">
+                                                <h1>Order Confirmation</h1>
+                                                <h4>Total: ${{ object.get_amount }}</h4>
+                                                <h4>Receipt emailed to: {{ object.email }}</h4>
+                                                <hr />
+                                                <h4><b>{{ object.event.name|upper }}</b></h4>
+                                                <h4>{{ object.event.date }}</h4>
+                                                <h4><a target="_blank" href="{{ object.event.google_location }}">{{ object.event.location }}</a></h4>
+                                                <h4>TICKETS</h4>
+                                                <h4><b>{% if object.quantity and not object.quantity == '0'  %}{{ object.quantity }} Standard Ticket<br />{% endif %}{% if object.earlybird_ticket and not object.earlybird_ticket == '0'  %}{{ object.earlybird_ticket }} Early Bird Ticket(s)<br />{% endif %}
+                                                    {% if object.group_ticket  and not object.group_ticket == '0'  %}{{ object.group_ticket }} Group Ticket(s){% endif %}</b></h4>
+                                                <hr />
+                                            </div>
 
-                <div class="">
-                    <div class="">
-                        <div class=" clearfix">
-
-                            <!-- vd_head-section -->
-
-                            <div class="clearfix">
-
-                                <!-- vd_title-section -->
-
-                                <div class="clearfix" style="margin-bottom: 0px; padding-bottom: 0px;">
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="panel widget" style="margin:0px;">
-                                                <div class="panel-body" style="min-height: 1056px;height:3000px;">
-                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
-                                                    {#                    <ul class="nav nav-tabs">#}
-                                                    {##}
-                                                    {##}
-                                                    {#                    </ul>#}
-                                                    <br>
-
-                                                    <div class="tab-content mgbt-xs-20">
-
-                                                        {% if successMessage %}
-                                                            <div class="flashes">
-                                                                <div class="alert alert-success">{{ successMessage }}</div>
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if error_message %}
-                                                            <div class="flashes">
-                                                                <div class="alert alert-danger">{{ error_message }}</div>
-                                                            </div>
-                                                        {% endif %}
-                                                        <div class="tab-pane active" id="privacy">
-                                                            <div class="col-md-12 text-center">
-{#                                                                <img src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"#}
-{#                                                                     width="20%"/><br/>#}
-
-                                                                <div class="clearfix"></div>
-                                                                <br/>
-
-                                                                <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png" style="margin-bottom: 40px;" />
-                                                                <h2 style="color: rgb(185, 76, 112)">Please check your email for important information regarding your order.</h2>
-                                                                <hr/>
-                                                               <div class="col-md-6 col-md-offset-3 text-left">
-                                                                    <h1>Order Confirmation</h1>
-                                                                <h4>Total: ${{ object.get_amount }}</h4>
-                                                                <h4>Receipt emailed to: {{ object.email }}</h4>
-                                                                <hr />
-                                                                <h4><b>{{ object.event.name|upper }}</b></h4>
-                                                                <h4>{{ object.event.date }}</h4>
-                                                                <h4><a target="_blank" href="{{ object.event.google_location }}">{{ object.event.location }}</a></h4>
-{#                                                                <p>From the event organizer<br /><br /><span style="color: grey;">Thank you for purchasing {{ object.event.name|upper }} Ticket(s). As a valid customer, you qualify for the Levis Stadium Wedding Fair Ticket Discount (50% OFF). Please register for the Levis Stadium Wedding Fair Here & use promo code LEVIS50OFF at the checkout<br /><br />Thank You !<br /><br />Bay Area Wedding Fair Team !</span></p>#}
-{#                                                                <hr />#}
-                                                                <h4>TICKETS</h4>
-                                                                <h4><b>{% if object.quantity and not object.quantity == '0'  %}{{ object.quantity }} Standard Ticket<br />{% endif %}{% if object.earlybird_ticket and not object.earlybird_ticket == '0'  %}{{ object.earlybird_ticket }} Early Bird Ticket(s)<br />{% endif %}
-                                                                    {% if object.group_ticket  and not object.group_ticket == '0'  %}{{ object.group_ticket }} Group Ticket(s){% endif %}</b></h4>
-                                                                <hr />
-                                                               </div>
-
-                                                            <div class="clearfix"></div>
-{#                                                                <h4>Let your friends know you are going</h4>#}
-                                                                <div class="text-center">
-                                                                    <h4>Tell your friends you are going to the wedding fair.</h4>
-                                                                    <h4>Click the button below, choose your fair and click ‘Join’.</h4>
-                                                                    <p style="margin-top:25px">
-                                                                        <a style="text-align: center; width: 35%;" href="https://www.facebook.com/baweddingfairs/events" target="_blank"><img class="size-full wp-image-5959 aligncenter" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/1442956760.png" alt="1442956760" width="25%" height="100%" srcset="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/1442956760-300x90.png 300w, http://bayareaweddingfairs.com/wp-content/uploads/2016/01/1442956760.png 550w" sizes="(max-width: 550px) 100vw, 550px"></a>
-                                                                    </p>
-                                                                </div>
-{#                                                                <h4>You will shortly get an email with your ticket information, for more information contact info@bayareaweddingfairs.com</h4>#}
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-{#                                                <br><br>#}
-
-
+                                            <div class="clearfix"></div>
+                                            <div class="text-center">
+                                                <h4>Tell your friends you are going to the wedding fair.</h4>
+                                                <h4>Click the button below, choose your fair and click ‘Join’.</h4>
+                                                <p style="margin-top:25px">
+                                                    <a style="text-align: center; width: 35%;" href="https://www.facebook.com/baweddingfairs/events" target="_blank"><img class="size-full wp-image-5959 aligncenter" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/1442956760.png" alt="1442956760" width="25%" height="100%" srcset="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/1442956760-300x90.png 300w, http://bayareaweddingfairs.com/wp-content/uploads/2016/01/1442956760.png 550w" sizes="(max-width: 550px) 100vw, 550px"></a>
+                                                </p>
                                             </div>
                                         </div>
-                                        <!-- Panel Widget -->
+
                                     </div>
-                                    <!-- col-md-6 -->
 
                                 </div>
-                                <!-- row -->
-
                             </div>
-                            <!-- .vd_content-section -->
-
                         </div>
-                        <!-- .vd_content -->
                     </div>
-                    <!-- .vd_container -->
+                    <!-- Panel Widget -->
                 </div>
-                <!-- .vd_container -->
+                <!-- col-md-6 -->
             </div>
-            <!-- .vd_content-wrapper -->
-
-            <!-- Middle Content End -->
-
         </div>
-        <!-- .container -->
-
-        <!-- .content -->
-
-{#        <!-- Footer Start -->#}
-{#        <footer class="footer-1" id="footer">#}
-{#            <div class="vd_bottom ">#}
-{#                <div class="container">#}
-{#                    <div class="row">#}
-{#                        <div class=" col-xs-12">#}
-{#                            <div class="copyright">#}
-{#                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <!-- row -->#}
-{#                </div>#}
-{#                <!-- container -->#}
-{#            </div>#}
-{#        </footer>#}
-{#        <!-- Footer END -->#}
-
-
     </div>
-
-
-
-
 {% endblock content %}
 {% block script %}
-
-
-
 {% endblock script %}
