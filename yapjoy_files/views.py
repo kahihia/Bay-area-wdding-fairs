@@ -1133,7 +1133,6 @@ from datetime import timedelta
 def event_invoice_bulk_create(request):
     form = InvoiceCreationBulkForm()
     invoices_exist = Invoice_Event.objects.filter(is_sent=False).count()
-    print "exist: ", invoices_exist
     successMessage = None
     amount = 0
     dateform = DateForm()
@@ -1146,7 +1145,6 @@ def event_invoice_bulk_create(request):
     agreement_sent = None
     success_message_card = None
     searchForm = SearchForm()
-
     invoices_sent = None  # EventInvoiceRequest.objects.select_related('event_invoice','event_invoice__register_event').all().order_by('-created_at')[:20]
     if "events_scope" in request.POST:
         events_scope = request.POST.get('events_scope')
@@ -1186,7 +1184,6 @@ def event_invoice_bulk_create(request):
             success_message_card = 'Card is successfully removed.'
         elif 'card_success_add' in request.GET:
             success_message_card = 'New card is added successfully.'
-        print 'inside request.get'
         email = request.GET['email']
         try:
             email = email.split(' ')[0]
@@ -1194,14 +1191,10 @@ def event_invoice_bulk_create(request):
             return HttpResponseRedirect('/crm/invoices/bulk/create/')
         invoices = InvoiceRegisterVendor.objects.select_related('register','register__event').filter(register__email__iexact=email)
         invoices_sent = EventInvoiceRequest.objects.select_related('event_invoice','event_invoice__register_event').filter(event_invoice__email__iexact=email).order_by('created_at')
-        # for inv in invoices:
-        #     amount += inv.get_total()
         searchForm = SearchForm(initial={
             'email':email,
         })
         agreement_sent = Register_Event_Aggrement.objects.filter(email__iexact=email).order_by('-created_at')
-        print "Agreement Count: ",agreement_sent.count()
-
     if request.is_ajax and "make_agreement" in request.POST:
         values_agreement = request.POST.getlist('agreements[]')
         email = request.POST.get('email')
@@ -1209,8 +1202,6 @@ def event_invoice_bulk_create(request):
             email = email.split(' ')[0]
         except:
             return HttpResponseRedirect('/crm/invoices/bulk/create/')
-        print "Email: ",email
-        print "agreements: ",values_agreement
         if values_agreement:
             reg_agg = Register_Event_Aggrement.objects.create(
                                                     email=email.strip(),
@@ -1219,9 +1210,6 @@ def event_invoice_bulk_create(request):
             for o in values_agreement:
                 reg_eve_add = InvoiceRegisterVendor.objects.get(id=o)
                 reg_agg.invoices.add(reg_eve_add)
-                print reg_eve_add.register.email
-                print reg_agg.email
-                print agreement_sent
             context = {
                 'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(reg_agg.code),
                 'title':"Bay Area Wedding Fairs Agreement",
@@ -1233,12 +1221,9 @@ def event_invoice_bulk_create(request):
             msg.send()
         else:
             return HttpResponse('Select Invoices to generate agreement.')
-        # message = "Agreement is sent successfully."
         return HttpResponse('Done')
     if request.is_ajax and "request_new_card" in request.POST:
-        print "POST is working for card request_new_card"
         request_new_card = request.POST.get('request_new_card')
-        print "request_new_card: ",request_new_card
         try:
             card_change = CardChange.objects.get(email__iexact=request_new_card)
             if card_change.is_expired:
@@ -1270,13 +1255,8 @@ def event_invoice_bulk_create(request):
         msg.send()
         return HttpResponse('Done')
     if request.method == "POST":
-        print "inside post"
-        print request.POST
-
         if "search_email" in request.POST:
-            print "inside search_email"
             searchForm = SearchForm(request.POST)
-            print "inside search form"
             if searchForm.is_valid():
                 data = searchForm.cleaned_data
                 email = data['email']
@@ -1284,94 +1264,37 @@ def event_invoice_bulk_create(request):
                     email = email.split(' ')[0]
                 except:
                     return HttpResponseRedirect('/crm/invoices/bulk/create/')
-                print "email: ",email
                 # try:
                 invoices = InvoiceRegisterVendor.objects.select_related('register','register__event').filter(register__email__iexact=email)
                 invoices_sent = EventInvoiceRequest.objects.select_related('event_invoice','event_invoice__register_event').filter(event_invoice__email__iexact=email).order_by('created_at')
                 agreement_sent = Register_Event_Aggrement.objects.filter(email__iexact=email).order_by('-created_at')
-                print "Agreement Count: ",agreement_sent.count()
-                # for inv in invoices:
-                #     amount += inv.get_total()
-                # except User.DoesNotExist:
-                #     errorMessage =  "Email does not exist"
-                # except Invoice_Event.DoesNotExist:
-                #     errorMessage =  "Email does not exist"
         elif "create_bulk_signal" in request.POST:
-            print "create bulk invoice"
             email = request.POST.get('email_search')
             try:
                 email = email.split(' ')[0]
             except:
                 return HttpResponseRedirect('/crm/invoices/bulk/create/')
             ids = request.POST.getlist('bulk_check')
-            print ids
             invoices = InvoiceRegisterVendor.objects.select_related('register','register__event').filter(register__email__iexact=email)
             invoices_sent = EventInvoiceRequest.objects.select_related('event_invoice','event_invoice__register_event').filter(event_invoice__email__iexact=email).order_by('created_at')
-            print invoices
             invoices_generate = InvoiceRegisterVendor.objects.filter(id__in=ids).order_by('register__event__date')
-            print email, invoices_generate
-            # for inv in invoices:
-            #     amount += inv.get_total()
             searchForm = SearchForm(initial={
                 'email':email,
             })
-            # form = InvoiceCreationBulkForm(request.POST)
-            # if form.is_valid():
-            #     data = form.cleaned_data
-            #     email = data['email']
-            #     # is_sent = data['is_sent']
-            #     invoice_events = data['invoice_events']
-            #     print email, invoice_events
-            #     total_amount = 0
-            #     code = id_generator()
-            #     bulk_invoice = BulkInvoices.objects.create(email=email, amount=total_amount, is_sent=True, code=code)
-            #     for o in invoice_events:
-            #         total_amount += o.amount
-            #         bulk_invoice.invoice_event.add(o)
-            #         o.is_sent = True
-            #         o.save()
-            #     print total_amount
-            #     bulk_invoice.amount = total_amount
-            #     bulk_invoice.save()
-            #     # if is_sent:
-            #     context = {
-            #         'message':"Click on the following link to view the invoice <br /><br /><a href='https://www.yapjoy.com/crm/invoices/accept/bulk/%s' target='_blank' class='btn'>Open Invoice</a>"%(bulk_invoice.code),
-            #         'title':"Bay Area Wedding Fairs Invoice",
-            #         }
-            #     html_content = render_to_string('email/bawf_email.html', context=context)
-            #     text_content = strip_tags(html_content)
-            #     msg = EmailMultiAlternatives("BayAreaWeddingFairs Invoice", text_content, 'info@bayareaweddingfairs.com', [bulk_invoice.email])
-            #     msg.attach_alternative(html_content, "text/html")
-            #     msg.send()
-            #     successMessage = "Bulk invoice request sent successfully."
-                # else:
-                #     successMessage = "Invoice is created successfully, but is not sent."
-                # return H  ttpResponseRedirect('/crm/invoices/bulk/')
         elif "no_of_ids" in request.POST:
-            print 'inside no_of_ids'
             no_of_ids = request.POST.get('no_of_ids')
             email = request.POST.get('email_search')
             try:
                 email = email.split(' ')[0]
             except:
                 return HttpResponseRedirect('/crm/invoices/bulk/create/')
-            # ids = request.POST.getlist('bulk_check')
-            print no_of_ids, email
             invoices = InvoiceRegisterVendor.objects.select_related('register','register__event').filter(register__email__iexact=email, is_complete=False)
-            print invoices
-            # no_of_ids = no_of_ids.split(',')
             total_ids = [str(x) for x in no_of_ids.split(',')]
-            print total_ids
             list_ids = []
             for o in total_ids:
                 if bool(o.strip()):
                     list_ids.append(o.strip())
-            # total_ids = map(int, total_ids)
-            print "Total Ids: ",list_ids
             invoices_generate = InvoiceRegisterVendor.objects.filter(id__in=list_ids)
-            print email, invoices_generate
-            # for inv in invoices:
-            #     amount += inv.get_total()
             searchForm = SearchForm(initial={
                 'email':email,
             })
@@ -1397,7 +1320,6 @@ def event_invoice_bulk_create(request):
                 ei.balance3_date = (balance3_date)
             ei.code = id_generator(size=50)
             ei.save()
-            print "707: ",total_ids
             for o in total_ids:
                 if bool(o.strip()):
                     o = o.strip()
@@ -1405,14 +1327,10 @@ def event_invoice_bulk_create(request):
                     balance1_str = 'balance1_%s'%(o)
                     balance2_str = 'balance2_%s'%(o)
                     balance3_str = 'balance3_%s'%(o)
-                    print deposit_str
                     deposit_amount = request.POST.get(deposit_str)
-                    print "print_de ", deposit_str, balance1_str, balance2_str, balance3_str
-                    print "print_me ", deposit_amount
                     balance1_amount = request.POST.get(balance1_str)
                     balance2_amount = request.POST.get(balance2_str)
                     balance3_amount = request.POST.get(balance3_str)
-                    print "issues: ",balance3_amount, balance2_amount, balance1_amount
                     eid = EventInvoiceDetail.objects.create(event_invoice=ei,
                                                             vendor_register_id=o,
                                                             deposit=(deposit_amount),
@@ -1432,14 +1350,11 @@ def event_invoice_bulk_create(request):
             invoice_recharge_id = request.POST.get('invoice_recharge_id')
             eir = None
             total_amount = 0
-            print "send balance 1"
-
             try:
                 eir = EventInvoiceRequest.objects.get(id=invoice_recharge_id)
             except Exception as err:
                 print err
             e = eir.event_invoice
-
             invoices_all_pay = e.invoices.all()
             for o in invoices_all_pay:
                 if eir.type == EventInvoiceRequest.DEPOSIT:
@@ -1450,8 +1365,6 @@ def event_invoice_bulk_create(request):
                     total_amount += o.balance2
                 if eir.type == EventInvoiceRequest.BALANCE3:
                     total_amount += o.balance3
-            # email = e.email
-            print total_amount
             user_ch = User.objects.get(username__iexact=e.email)
             profile_ch = user_ch.userprofile
             try:
@@ -1471,7 +1384,6 @@ def event_invoice_bulk_create(request):
                     e.transaction_id_balance2 = response.stripe_id
                 if eir.type == EventInvoiceRequest.BALANCE3:
                     e.transaction_id_balance3 = response.stripe_id
-
                 e.save()
                 context = {
                     'message': "%s (%s)<br /><br />You have been charged successfully with %s pending invoice for event (%s) of $%s.<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (
@@ -1503,7 +1415,6 @@ def event_invoice_bulk_create(request):
                                              ['info@bayareaweddingfairs.com', e.email], bcc=['adeel@yapjoy.com'])
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
-            print "invoice_recharge_id: ",invoice_recharge_id
             return HttpResponseRedirect('/crm/invoices/bulk/create/?email=%s' % (e.email))
         elif "resendAgreement" in request.POST:
             resendAgreement = request.POST.get('resendAgreement')
@@ -1522,48 +1433,30 @@ def event_invoice_bulk_create(request):
             msg = EmailMultiAlternatives("BayAreaWeddingFairs Agreement", text_content, 'info@bayareaweddingfairs.com', [agg_reg_resend.email,'wasim@yapjoy.com'])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            print "Email sent: %s"%(agg_reg_resend.id)
             return HttpResponseRedirect('/crm/invoices/bulk/create/?email=%s'%(email))
-        # elif "invoice_resend_id" in request.POST:
-        #     invoice_resend_id = request.POST.get('invoice_resend_id')
-        #     inv_resend = EventInvoiceRequest.objects.get(id=invoice_resend_id)
-        #     print inv_resend
-        #     print email
-        #     print invoice_resend_id
-        #     context = {
-        #                         'message':"Click on the following link to view the invoice <br /><br /><a href='https://www.yapjoy.com/invoices/pay/%s' target='_blank' class='btn'>Open Invoice</a>"%(inv_resend.code),
-        #                         'title':"Bay Area Wedding Fairs Invoice",
-        #                         }
-        #     html_content = render_to_string('email/bawf_email.html', context=context)
-        #     text_content = strip_tags(html_content)
-        #     msg_sender = EmailMultiAlternatives("BayAreaWeddingFairs Invoice", text_content, 'info@bayareaweddingfairs.com', ['info@bayareaweddingfairs.com',inv_resend.event_invoice.email])
-        #     msg_sender.attach_alternative(html_content, "text/html")
-        #     msg_sender.send()
-        #     return HttpResponseRedirect('/crm/invoices/bulk/create/?email=%s'%(inv_resend.event_invoice.email))
     invoices_id_list = None
     if invoices_generate:
         invoices_id_list = invoices_generate.values_list('id', flat=True)
     register_event = Register_Event.objects.filter(user__email=email)
     event_invoices = EventInvoice.objects.filter(email__iexact=email)
+    paid_amount_requested_invoices = 0
     if invoices:
         for inv in invoices:
             amount += inv.get_total()
+            if inv.check_invoice_status_paid() == "Paid":
+                paid_amount_requested_invoices += inv.get_total()
     customer_failed = None
     is_customer = None
     card_errors = None
-    # success_message_card = None
     profile = None
-    print 'email found is: ',email
     if email:
         try:
             user = User.objects.get(email__iexact=email)
             profile = user.userprofile
             if profile.stripe_id_bawf:
-                print 'checking customer'
                 stripe.api_key = settings.STRIPE_SECRET_KEY_BAWF
                 is_customer_data = stripe.Customer.retrieve(
                     profile.stripe_id_bawf)  # .cards.all(limit=1)['data'][0]['last4']
-                print 'is customer: ', is_customer_data.sources['data'][0]['last4']
                 is_customer = is_customer_data.sources['data'][0]['last4']
         except Exception as e:
             print 'inside customer exception: ',e
@@ -1592,15 +1485,10 @@ def event_invoice_bulk_create(request):
         stripe_token = request.POST.get('stripe_token')
         stripe.api_key = settings.STRIPE_SECRET_KEY_BAWF
         try:
-            print stripe_token
-            print user.email
-            print 'stripe token is found'
             stripe_customer = stripe.Customer.create(
                 email=user.email,
                 card=request.POST.get("stripe_token")
             )
-            print 'customer: ', stripe_customer
-
             if stripe_customer:
                 profile.stripe_id_bawf = stripe_customer.id
                 profile.save()
@@ -1609,18 +1497,12 @@ def event_invoice_bulk_create(request):
             print e
             card_errors = str(e)
     public_key = settings.STRIPE_PUBLISHABLE_KEY_BAWF
-    # print "Pending invoice email: ",email
-
     pending_invoices = EventInvoiceDetail.objects.select_related('event_invoice','event_invoice__register_event__event','event_invoice__register_event').filter(event_invoice__email__iexact=email)
-    # print "Pending invoices count: ",pending_invoices.count()
-    # for o in pending_invoices:
-    #     print 'Initial Deposit: ',o.deposit
     if 'edit_pending_invoice' in request.POST:
         edit_pending_invoice = request.POST.get('edit_pending_invoice')
         edit_pending_invoice_type = request.POST.get('edit_pending_invoice_type')
         amount = request.POST.get('amount')
         date = request.POST.get('date')
-        print edit_pending_invoice, edit_pending_invoice_type, amount, date
         eid_edit = EventInvoiceDetail.objects.get(id=edit_pending_invoice)
         amount = int(str(amount))
         if edit_pending_invoice_type == "deposit":
@@ -1701,9 +1583,7 @@ def event_invoice_bulk_create(request):
             eve_inv.have_invoices -= 1
             eve_inv.save()
             reg_ven.delete()
-            # eve_inv.record_amount_due()
             ri_vr = eir_remove.event_invoice.register_event
-            # ri_vr.record_amount_due()
             ri_vr.amount_due = ri_vr.get_amount_due()
             ri_vr.total_amount = ri_vr.get_amount_total()
             ri_vr.save()
@@ -1716,8 +1596,6 @@ def event_invoice_bulk_create(request):
         er_ei.delete()
         eir_remove.delete()
         return HttpResponseRedirect('?email=%s'%(email))
-        # ]InvoiceRegisterVendor
-        # InvoiceRegisterVendor
     elif "invoice_cancel_id" in request.POST:
         invoice_cancel_id = request.POST.get('invoice_cancel_id')
         inv_req = EventInvoiceRequest.objects.get(id=invoice_cancel_id)
@@ -1729,11 +1607,7 @@ def event_invoice_bulk_create(request):
         invoice_cancel_id = request.POST.get('invoice_uncancel_id')
         inv_req = EventInvoiceRequest.objects.get(id=invoice_cancel_id)
         inv_req.status = EventInvoiceRequest.PENDING
-        # inv_req.cancel_date = datetime.now()
-        # inv_req.cancelled_by_id = request.user.id
         inv_req.save()
-
-
     return render(request, 'vendroid/CRM/bulk_invoices_create.html', {
         'card_errors':card_errors,
         'public_key':public_key,
@@ -1749,6 +1623,7 @@ def event_invoice_bulk_create(request):
         'errorMessage':errorMessage,
         'invoices':invoices,
         'total':amount,
+        'paid_amount_requested_invoices':paid_amount_requested_invoices,
         'email':email,
         'invoices_generate_ids':invoices_id_list,
         'invoices_generate':invoices_generate,
