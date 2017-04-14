@@ -5,4 +5,6 @@ class EventTicketsAdmin(admin.ModelAdmin):
     list_display = ['event','email','quantity','code','is_attended','created_at']
     raw_id_fields = ['event']
 admin.site.register(EventTickets, EventTicketsAdmin)
-admin.site.register(Promocode)
+class PromocodeAdmin(admin.ModelAdmin):
+    list_display = ['code','amount_percent','is_Available','created_at']
+admin.site.register(Promocode, PromocodeAdmin)
