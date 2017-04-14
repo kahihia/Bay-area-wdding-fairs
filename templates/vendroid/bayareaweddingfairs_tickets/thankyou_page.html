@@ -109,8 +109,8 @@
 {#                                                                <p>From the event organizer<br /><br /><span style="color: grey;">Thank you for purchasing {{ object.event.name|upper }} Ticket(s). As a valid customer, you qualify for the Levis Stadium Wedding Fair Ticket Discount (50% OFF). Please register for the Levis Stadium Wedding Fair Here & use promo code LEVIS50OFF at the checkout<br /><br />Thank You !<br /><br />Bay Area Wedding Fair Team !</span></p>#}
 {#                                                                <hr />#}
                                                                 <h4>TICKETS</h4>
-                                                                <h4><b>{% if object.quantity and not object.quantity == '0'  %}{{ object.quantity }} Standard Ticket<br />{% endif %}{% if object.earlybird_ticket and not object.earlybird_ticket == '0'  %}{{ object.earlybird_ticket }} Early Bird Ticket<br />{% endif %}
-                                                                    {% if object.group_ticket  and not object.group_ticket == '0'  %}{{ object.group_ticket }} Group Ticket{% endif %}</b></h4>
+                                                                <h4><b>{% if object.quantity and not object.quantity == '0'  %}{{ object.quantity }} Standard Ticket<br />{% endif %}{% if object.earlybird_ticket and not object.earlybird_ticket == '0'  %}{{ object.earlybird_ticket }} Early Bird Ticket(s)<br />{% endif %}
+                                                                    {% if object.group_ticket  and not object.group_ticket == '0'  %}{{ object.group_ticket }} Group Ticket(s){% endif %}</b></h4>
                                                                 <hr />
                                                                </div>
 

@@ -758,6 +758,10 @@ class CreditCardBAWFTicketForm(forms.Form):
                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'email@example.com'}),
                              error_messages={'required': 'Please Provide Proper Email',
                                              'invalid': 'Please Enter Valid Email'})
+    phone = forms.CharField(max_length=255, label='Phone:',
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}),
+                            error_messages={'required': 'Please Provide Proper Phone',
+                                            'invalid': 'Please Enter Valid Phone'})
     today = datetime.now().date()
     MONTH_CHOICES = [
         ('1', '01 - January'),
@@ -774,20 +778,17 @@ class CreditCardBAWFTicketForm(forms.Form):
         ('12', '12 - December'),
     ]
     YEAR_CHOICES = [(y, y) for y in range(today.year, today.year + 21)]
-    number = forms.CharField(max_length=255, label='Number:',
+    number = forms.CharField(max_length=255, label='Card No:',
                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Card Number'}),
                              error_messages={'required': 'Please Provide Proper Number without any dash/"-"',
                                              'invalid': 'Please Enter Card Number without Spaces and Dashes'})
-    month = forms.ChoiceField(label='Month:',
+    month = forms.ChoiceField(label='Expiry Month:',
                               widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Expiry Month'}),
                               choices=MONTH_CHOICES)
-    year = forms.ChoiceField(label='Year:',
+    year = forms.ChoiceField(label='Expiry Year:',
                              widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Expiry Year'}),
                              choices=YEAR_CHOICES)
-    phone = forms.CharField(max_length=255, label='Phone:',
-                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}),
-                             error_messages={'required': 'Please Provide Proper Phone',
-                                             'invalid': 'Please Enter Valid Phone'})
+
     # stripe_token = forms.CharField(required=True,widget=forms.HiddenInput())
 
     def clean_email(self):
