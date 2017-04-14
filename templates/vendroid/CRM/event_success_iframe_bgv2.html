@@ -123,7 +123,7 @@
                                                                                     <input hidden id="{{ e.id }}__price" value="{{ e.amount }}" />
                                                                                     <input hidden id="{{ e.id }}__earlybird_ticket" value="{{ e.earlybird_ticket }}" />
                                                                                     <input hidden id="{{ e.id }}__group_ticket" value="{{ e.group_ticket }}" />
-                                                                                    <input hidden id="{{ e.id }}__name" value="{{ e.name }}" />
+                                                                                    <input hidden id="{{ e.id }}__name" value="{{ e.name }} - {{ e.date }}" />
                                                                                 {% endfor %}
                                                                                 <div>
                                                                                     <h4 class="col-md-12 text-left" style="margin-top: 15px;margin-bottom:15px;">
@@ -330,11 +330,11 @@
                                                                             <input type="hidden" name="event_date" id="event_date" />
                                                                             <div id="error_email" style="color:red"></div>
                                                                              <p style="font-size:20px;color:grey;">
-                                                                                    <input onclick="$('#submit-form').removeAttr('disabled');$('#submit-form').css('background-color','#db2681');$('#submit-form').val('BUY NOW');$('#agreement_check').attr('disabled','disabled');" id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated above
+                                                                                    <input id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated above
                                                                                     <br />
                                                                                 <div id="agree_error" style="color:red;"></div>
                                                                                 </p>
-                                                                            <input disabled style="text-transform: uppercase; background-color: grey; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" type="submit" class="btn vd_btn btn-brown" value="Buy Now" id="submit-form" />
+                                                                            <input style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" type="submit" class="btn vd_btn btn-brown" value="BUY NOW" id="submit-form" />
 
                                                                             <div class="text-left  font-small-policy" style="margin-top:10px;">
                                                                                 <b style="font-size: 15px;">
@@ -629,6 +629,7 @@
                 var email = $('#id_email').val();
                 var phone = $('#id_phone').val();
                 var number = $('#id_number').val();
+                var checked_box = $('#agreement_check').is(":checked");
 
                 if((email == '')) {
                     event.preventDefault();
@@ -651,6 +652,11 @@
                 if(total.text() == '0'){
                     event.preventDefault();
                     $('#error_email').html('Please Select the Quantity ');
+                    return false
+                }
+                if(checked_box == false){
+                    event.preventDefault();
+                    $('#error_email').html('Please accept the terms and conditions. ');
                     return false
                 }
 
