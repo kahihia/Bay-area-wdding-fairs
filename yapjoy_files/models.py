@@ -1179,6 +1179,68 @@ class InvoiceRegisterVendor(models.Model):
             else:
                 return "N/A"
 
+    def check_invoice_status_paid_amount(self):
+        try:
+            eid = EventInvoiceDetail.objects.get(vendor_register_id=self.id)
+            ei = eid.event_invoice
+            paid = 0
+            unpaid = 0
+            list_payment = [InvoiceRegisterVendor.CC]
+            if self.payment_method in list_payment:
+                print 'inside cc, ',self.id
+                if ei.deposit_date and eid.deposit:
+                    unpaid += 1
+                    if ei.transaction_id_deposit:
+                        paid += 1
+                if ei.balance1_date and eid.balance1:
+                    unpaid += 1
+                    if ei.transaction_id_balance1:
+                        paid += 1
+                if ei.balance2_date and eid.balance2:
+                    unpaid += 1
+                    if ei.transaction_id_balance2:
+                        paid += 1
+                if ei.balance3_date and eid.balance3:
+                    unpaid += 1
+                    if ei.transaction_id_balance3:
+                        paid += 1
+                print paid, unpaid
+                if paid == unpaid:
+                    return "Paid"
+                elif paid < unpaid:
+                    return "Unpaid"
+                else:
+                    return "N/A"
+            else:
+                print 'inside check, ', self.id
+                print ei.deposit_date, ei.id
+                print ei.transaction_id_deposit
+                if ei.deposit_date:
+                    unpaid += 1
+                    if ei.transaction_id_deposit:
+                        paid += 1
+                if ei.balance1_date:
+                    unpaid += 1
+                    if ei.transaction_id_balance1:
+                        paid += 1
+                if ei.balance2_date:
+                    unpaid += 1
+                    if ei.transaction_id_balance2:
+                        paid += 1
+                if ei.balance3_date:
+                    unpaid += 1
+                    if ei.transaction_id_balance3:
+                        paid += 1
+                print paid, unpaid
+                if paid == unpaid:
+                    return "Paid"
+                elif paid < unpaid:
+                    return "Unpaid"
+                else:
+                    return "N/A"
+        except:
+            return 0
+
 class MediaKit(models.Model):
     user = models.ForeignKey(User)
     vendor_name = models.CharField(max_length=500, null=True, blank=True)

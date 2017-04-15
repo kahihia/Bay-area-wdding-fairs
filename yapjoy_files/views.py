@@ -1443,7 +1443,7 @@ def event_invoice_bulk_create(request):
     if invoices:
         for inv in invoices:
             amount += inv.get_total()
-            if inv.check_invoice_status_paid() == "Paid":
+            if inv.check_invoice_status_paid_amount() == "Paid":
                 paid_amount_requested_invoices += inv.get_total()
     customer_failed = None
     is_customer = None
