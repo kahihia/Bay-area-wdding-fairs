@@ -350,10 +350,8 @@
                       <ul class="dropdown-menu" role="menu">
                       <li>
                            <a
-                                                                      class="btn btn-block
-                                                              href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank"
-                                                          style="-webkit-appearance: button;cursor: pointer;"
-                                                              >View</a>
+                                                                      class="btn btn-block"
+                                                              href="/invoices/deposit/view/{{ invoice.code }}/{{ invoice.get_agreement_code }}" {% if not invoice.agreement_code %}disabled{% endif  %} target="_blank" style="-webkit-appearance: button;cursor: pointer;" >View</a>
                       <li class="divider"></li>
                       </li>
                         {% if invoice.type == "Deposit" %}<li>
