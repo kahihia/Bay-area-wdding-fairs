@@ -8,14 +8,17 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^crm/', include('yapjoy_files.urls')),
-    url(r'^$',  'yapjoy_registration.views.redirect_view_select'),
 
-    url(r'^', include('yapjoy_events.urls')),
-    url(r'^tasks/', include('yapjoy_tasks.urls')),
-    url(r'^', include('yapjoy_directory.urls')),
+
+    url(r'^crm/', include('yapjoy_files.urls')),
+    url(r'^$', include('bayareaweddingfairs_site.urls')),
+    # url(r'^$',  'yapjoy_registration.views.redirect_view_select'),
+
+    # url(r'^', include('yapjoy_events.urls')),
+    # url(r'^tasks/', include('yapjoy_tasks.urls')),
+    # url(r'^', include('yapjoy_directory.urls')),
     # url(r'^(?i)notificationsV2/$', 'yapjoy_registration.views.notificationsV2', name='notificationsV2'),
-    url(r'^', include('yapjoy_messages.urls')),
+    # url(r'^', include('yapjoy_messages.urls')),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^shortlist/', include('yapjoy_shortlist.urls')),
     # url(r'^', include('yapjoy_market.urls')),
