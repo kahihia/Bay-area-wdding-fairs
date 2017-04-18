@@ -197,17 +197,9 @@
 
                                                         </div><div class="clearfix"></div>
                                                         <div class="col-md-12 " style="padding:0px;margin-top:15px;">
-                                                            {#                                                                                <hr />#}
-                                                            <div class="col-md-12 text-left" style="padding:0px;">
-                                                                <h4>                            Total: $<p style="display: inline;" id="total_ticket_price">0</p>
-                                                                </h4>
+                                                             <div class="col-md-12 text-left" style="padding:0px;">
+                                                            <h4>Total: $<p style="display: inline;" id="total_ticket_price">0</p></h4>
                                                             </div>
-                                                            {#                                                                                <hr />#}
-                                                            {#                                                                                <div class="col-md-3 text-left">#}
-                                                            {##}
-                                                            {##}
-                                                            {#                                                                                </div>#}
-
                                                             <input  type="hidden" name="hidden_total" value="$xx" id="hidden_total"/>
                                                         </div>
 
@@ -220,7 +212,6 @@
 
                                                         {{ form.as_p  }}
 
-                                                        {#                                                                <input type="hidden" name="stripe_token" id="stripe_token">#}
                                                         <input type="hidden" name="total_amount" id="total_amount" />
                                                         <input type="hidden" name="stripe_token" id="stripe_token" />
                                                         <input type="hidden" name="event_date" id="event_date" />
@@ -249,21 +240,14 @@
 
                                                 </div>
                                             </form>
-                                            {#                                                                <p style="margin-top:25px;margin-bottom:25px;">#}
-                                            {#                                                                    <a style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" href="https://bayareaweddingfairs.ticketleap.com/" target="_blank">Click Here to Get Tickets</a>#}
-                                            {#                                                                </p>#}
                                             <div class="clearfix"></div>
 
-                                            {#                                                                <hr/>#}
-                                            {#                                                                <h4>We will get back to you soon. In the meantime, if you have any questions, please email at info@bayareaweddingfairs.com</h4>#}
                                         </div>
 
                                     </div>
 
                                 </div>
                             </div>
-                            {#                                                <br><br>#}
-
 
                         </div>
                     </div>
@@ -306,7 +290,6 @@
 
             $('#event_name').html(event_name);
 
-            {#            $('#id_form-0-quantity').get(0).selectedIndex = 0#}
             $('#id_form-earlybird-quantity ').get(0).selectedIndex = 0
             $('#id_form-group-quantity ').get(0).selectedIndex = 0
         }
@@ -327,9 +310,7 @@
             {
                 $("#group_div").hide();
             }
-            {#            else {#}
-            {#               #}
-            {#            }#}
+
             $('input[name="hidden_total"]').val('');
             total_value = 0;
             total.text(total_value);
@@ -373,14 +354,11 @@
 
             total_value = (standard_quantity * event_price).toFixed(2);
             total_value = +total_value + +(earlybird_quantity * earlybird).toFixed(2);
-            console.log("earlybird",earlybird,+total_value + +(earlybird_quantity * earlybird).toFixed(2));
             total_value = +total_value + +(group_quantity * group).toFixed(2);
 
 
             $('input[name="hidden_total"]').val(total_value);
-            console.log('total: ',hidden_total.val());
             total.text(total_value);
-            console.log("Q change: ",total);
         }
 
         $(document).ready(function () {
@@ -388,9 +366,6 @@
             get_event();
             $("#id_email").resetForm();
 
-
-
-            console.log('total ready: ', total.text(), hidden_total.val());
             $('#error_email').html('');
 
 
@@ -398,7 +373,6 @@
                 standard_quantity = $('#id_form-0-quantity :selected').text();
                 earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
                 group_quantity = $('#id_form-group-quantity :selected').text();
-                console.log(standard_quantity, earlybird_quantity, group_quantity)
                 calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
             });
 
@@ -407,8 +381,9 @@
                 standard_quantity = $('#id_form-0-quantity :selected').text();
                 earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
                 group_quantity = $('#id_form-group-quantity :selected').text();
-
                 calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
+                var applyBtn = $("#apply_promocode").val();
+
             });
 
             $("#id_form-group-quantity").change(function () {
@@ -429,7 +404,6 @@
                 $('#error_promotion').html('');
 
                 var promotion = $("#promocode").val();
-                {#                alert(total.text());#}
                 if (total.text() != '0'){
                     if(promotion != ''){
 
@@ -440,19 +414,19 @@
                                 'promocode': promotion,
                                 'total_text':total.text(),
                                 'quantity': $('#id_form-0-quantity :selected').text(),
+                                'eventid' : $("#id_event option:selected").val(),
+                                'earlyquantity' : $("#id_form-earlybird-quantity option:selected").val(),
+                                'groupquantity' : $("#id_form-group-quantity option:selected").val()
 
                             },
 
                             success: function (data) {
-                                console.log('in error promo ajax: ', data);
                                 if (data['response'] == 'error'){
 
-                                    console.log('in error promo ajax');
                                     $('#error_promotion').html('Promotion Code is not Valid');
 
                                 }
                                 if(data['response'] == 'success'){
-                                    console.log('in success promo ajax');
                                     $('#success_promotion').html('Promotion code is applied successfully, total amount is reduced to: '+ (data['discount']).toFixed(2));
                                     total.text((data['discount']).toFixed(2));
                                     $(this).prop('disabled', true);
@@ -487,19 +461,15 @@
 
                 if((email == '')) {
                     event.preventDefault();
-                    {#                    $('#id_email').prop('required',true);#}
                     $('#error_email').html('Email is required');
                     return false
                 }
                 if((number == '')) {
                     event.preventDefault();
-                    {#                    $('#id_number').prop('required',true);#}
                     $('#error_email').html('Card Number is required');
                     return false
                 }
                 if((phone == '')) {
-
-                    {#                    $('#id_phone').prop('required',true);#}
                     $('#error_email').html('Phone is required');
                     return false
                 }
@@ -519,39 +489,26 @@
                     if ($("#id_number").length == 1) {
                         var key = '{{ pub_key }}';
                         Stripe.setPublishableKey(key);
-                        {#                        $('#submit-form').attr('disabled','disabled');#}
-                        // alert('inside');
                         var form = this;
                         var card = {
                             number: $("#id_number").val(),
                             expMonth: $("#id_month").val(),
                             expYear: $("#id_year").val(),
-                            {#                    cvc: $("#id_verification_value").val()#}
                         };
 
                         Stripe.card.createToken(card, function (status, response) {
 
-                            {#                            alert(response);#}
                             if (status === 200) {
-                                console.log(status, response);
-                                //jQuery("#credit-card-errors").hide();
-                                //jQuery("#last_4_digits").val(response.card.last4);
                                 $("#stripe_token").val(response.id);
-                                //jQuery('#setupPayment').prop('disabled', false);
-                                {#                        $('#submit-invoice').removeAttr('disabled');#}
-                                {#                                return#}
+
                                 $("#payment-form").submit();
                             } else {
-                                alert(response.error.message)
-                                console.log(response.error);
-                                console.log(response.error.param);
                                 $("#error_email").text(response.error.message);
-                                {#                                $('#submit-form').removeAttr('disabled');#}
                             }
                         });
                         return false;
                     }else{
-                        alert('in else')
+                        console.log('in else')
                     }
                 }
 
@@ -559,6 +516,7 @@
                 $('#error_email').css("color",'green')
 
             });
+
 
         });
 
