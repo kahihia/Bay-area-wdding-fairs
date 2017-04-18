@@ -29,8 +29,13 @@ def PromoCode_Validate(request):
         promocode_code = request.GET.get('promocode')
         total = request.GET.get('total_text')
         quantity = request.GET.get('quantity')
+        eventID = request.GET.get('eventid')
+        earlyQuantity = request.GET.get('earlyquantity')
+        groupQuantity = request.GET.get('groupquantity')
         total = float(total)
-        print promocode_code, total, discount, quantity
+        print promocode_code, total, discount, quantity, eventID, earlyQuantity, groupQuantity
+        event = Event_fairs.objects.get(id=eventID)
+        print "evevnt: ", event.earlybird_ticket, event.group_ticket
         try:
             validcode = Promocode.objects.get(code=promocode_code)
             v = validcode
@@ -38,8 +43,10 @@ def PromoCode_Validate(request):
                 amount = v.amount_percent
                 type = v.type
                 if (v.type == 'amount') & (total != ''):
-                    print "amount", amount
-                    discount = total - float(amount)
+                    earlyPrice = float(event.earlybird_ticket) - float(amount)
+                    groupPrice = float(event.group_ticket) - float(amount)
+                    total = earlyPrice * int(earlyQuantity) + groupPrice * int(groupQuantity)
+                    discount = total
 
                 elif (v.type == 'percent') & (total != ''):
 

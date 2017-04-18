@@ -21,13 +21,6 @@ import boto
 from django.db.models import F, FloatField, Sum
 
 from django.db.models import Sum
-# def superuser_warning(request, warning):
-#     content = {
-#             'warning': warning
-#     }
-#     template_name = "vendroid/superuser.html"
-#     return render(request, template_name, content)
-
 
 @login_required(login_url='/login/')
 @staff_member_required
@@ -548,7 +541,10 @@ def event_management_iframe_bg_successv2(request):
                 promo_code_discount = Promocode.objects.get(code=promocode)
                 if promo_code_discount.is_Available:
                     if promo_code_discount.type == Promocode.AMOUNT:
-                        amount -= float(promo_code_discount.amount_percent)
+                        new_earlyBirdPrice = float(event.earlybird_ticket) - float(promo_code_discount.amount_percent)
+                        new_groupPrice = float(event.group_ticket) - float(promo_code_discount.amount_percent)
+                        amount = float(new_groupPrice) * int(group_ticket) + float(new_earlyBirdPrice) * int(earlybird_ticket)
+
                     elif promo_code_discount.type == Promocode.PERCENT:
                         amount = (amount / 100) * float(promo_code_discount.amount_percent)
             except Exception as e:
@@ -610,19 +606,10 @@ def event_management_iframe_bg_successv2(request):
     }
     return render(request, 'vendroid/CRM/event_success_iframe_bgv2.html', context=context)
 
-# @login_required(login_url='/crm/login/')
+
 @csrf_exempt
 def event_management_iframe(request):
-    # user = request.user
-    # profile = user.userprofile
-    # initial = {
-    #     'name':'%s'%(user.get_full_name()),
-    #     'phone':profile.phone,
-    #     'email':user.email,
-    #     'city':profile.city,
-    #     'zip':profile.zip,
-    #     'business_name':profile.userprofile_company.name,
-    # }
+
     is_completed = None
     error_message = None
     eventsIDList = None
@@ -630,7 +617,6 @@ def event_management_iframe(request):
     eventsCheck = None
     how_heard = None
     form = registration_event_form()
-
 
     if request.method == "POST":
         print "inside post"
@@ -650,15 +636,6 @@ def event_management_iframe(request):
             print data
 
             if eventsIDList:
-                # for e in events:
-                #     try:
-                #         eventget = request.POST.get('id_event_'+e.id)
-                #     except:
-                #         eventget = ""
-                #         print "get none", 'id_event_'+e.id, e.name, e.date
-                #
-                #     print eventget
-
                 name = data['name']
                 business_name = data['business_name']
                 phone = data['phone']
@@ -5040,8 +5017,8 @@ def bg_management(request):
     return render(request, 'vendroid/CRM/bgReg.html', content)
 
 conn = boto.connect_s3(
-        aws_access_key_id=AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        aws_access_key_id='AKIAIXFGL3W7R47QWV2A',
+        aws_secret_access_key='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',
     )
 bucket = conn.get_bucket(AWS_STORAGE_BUCKET_NAME)
 import sys
