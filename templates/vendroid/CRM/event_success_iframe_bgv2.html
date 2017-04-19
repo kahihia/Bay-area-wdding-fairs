@@ -383,6 +383,9 @@
                 group_quantity = $('#id_form-group-quantity :selected').text();
                 calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
                 var applyBtn = $("#apply_promocode").val();
+                if(applyBtn == 'Applied'){
+                    applyPromoCode();
+                }
 
             });
 
@@ -392,8 +395,10 @@
                 group_quantity = $('#id_form-group-quantity :selected').text();
 
                 calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
-
-
+                 var applyBtn = $("#apply_promocode").val();
+                 if(applyBtn == 'Applied'){
+                    applyPromoCode();
+                }
             });
 
 
@@ -406,40 +411,7 @@
                 var promotion = $("#promocode").val();
                 if (total.text() != '0'){
                     if(promotion != ''){
-
-                        $.ajax({
-                            url: "/bayareaweddingfairs/tickets/promocode/",
-                            type: "GET",
-                            data: {
-                                'promocode': promotion,
-                                'total_text':total.text(),
-                                'quantity': $('#id_form-0-quantity :selected').text(),
-                                'eventid' : $("#id_event option:selected").val(),
-                                'earlyquantity' : $("#id_form-earlybird-quantity option:selected").val(),
-                                'groupquantity' : $("#id_form-group-quantity option:selected").val()
-
-                            },
-
-                            success: function (data) {
-                                if (data['response'] == 'error'){
-
-                                    $('#error_promotion').html('Promotion Code is not Valid');
-
-                                }
-                                if(data['response'] == 'success'){
-                                    $('#success_promotion').html('Promotion code is applied successfully. Your updated amount is: '+ (data['discount']).toFixed(2));
-                                    total.text((data['discount']).toFixed(2));
-                                    $(this).prop('disabled', true);
-                                    $('#apply_promocode').attr('disabled', 'disabled');
-                                    $('#apply_promocode').val('Applied');
-                                }
-                            },
-
-                            error: function(error) {
-                                console.log("error: "+error.message);
-
-                            }
-                        })
+                        applyPromoCode();
                     }
                     else{
                         $('#error_promotion').html('Please Enter the Promotion Code');
@@ -450,6 +422,44 @@
                 }
 
             });
+
+            function applyPromoCode()
+            {
+                $.ajax({
+                    url: "/bayareaweddingfairs/tickets/promocode/",
+                    type: "GET",
+                    data: {
+                        'promocode': $("#promocode").val(),
+                        'total_text':total.text(),
+                        'quantity': $('#id_form-0-quantity :selected').text(),
+                        'eventid' : $("#id_event option:selected").val(),
+                        'earlyquantity' : $("#id_form-earlybird-quantity option:selected").val(),
+                        'groupquantity' : $("#id_form-group-quantity option:selected").val()
+
+                    },
+
+                    success: function (data) {
+                        if (data['response'] == 'error'){
+
+                            $('#error_promotion').html('Promotion Code is not Valid');
+
+                        }
+                        if(data['response'] == 'success'){
+                            $('#success_promotion').html('Promotion code is applied successfully. Your updated amount is: '+ (data['discount']).toFixed(2));
+                            total.text((data['discount']).toFixed(2));
+                            $(this).prop('disabled', true);
+                            $('#apply_promocode').attr('disabled', 'disabled');
+                            $('#apply_promocode').val('Applied');
+                        }
+                    },
+
+                    error: function(error) {
+                        console.log("error: "+error.message);
+
+                    }
+                })
+
+            }
 
             $('#submit-form').click(function(event) {
                 {#                event.preventDefault();#}
