@@ -427,7 +427,7 @@
 
                                 }
                                 if(data['response'] == 'success'){
-                                    $('#success_promotion').html('Promotion code is applied successfully, total amount is reduced to: '+ (data['discount']).toFixed(2));
+                                    $('#success_promotion').html('Promotion code is applied successfully. Your updated amount is: '+ (data['discount']).toFixed(2));
                                     total.text((data['discount']).toFixed(2));
                                     $(this).prop('disabled', true);
                                     $('#apply_promocode').attr('disabled', 'disabled');
