@@ -123,7 +123,8 @@
         </header>
         <!-- END: HEADER -->
 
-        <!-- REVOLUTION SLIDER -->
+        {% cache 50000 slider_bawf_index_page %}
+            <!-- REVOLUTION SLIDER -->
         <div id="slider">
             <div id="rev_slider_30_1_wrapper" class="rev_slider_wrapper fullscreen-container" data-alias="POLO Homepage" style="background-color:transparent;padding:0px;">
                 <!-- START REVOLUTION SLIDER 5.1 fullscreen mode -->
@@ -220,6 +221,7 @@
             <!-- END REVOLUTION SLIDER -->
         </div>
         <!-- END REVOLUTION SLIDER -->
+        {% endcache %}
 
         <!-- WELCOME -->
         <section class="p-b-0">
