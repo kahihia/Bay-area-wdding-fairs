@@ -202,8 +202,8 @@ var INSPIRO = {};
 
             var pageInAnimation = $body.attr('data-animation-in') || "fadeIn",
                 pageOutAnimation = $body.attr('data-animation-out') || "fadeOut",
-                pageLoaderStylePath = $body.attr('data-animation-icon-path') || "/static/bawf/images/svg-loaders/",
-                pageLoaderStyle = $body.attr('data-animation-icon') || "oval.svg",
+                pageLoaderStylePath = $body.attr('data-animation-icon-path') || "https://bayareaweddingfairs-static.s3.amazonaws.com/static/bawf/images/svg-loaders/",
+                pageLoaderStyle = $body.attr('data-animation-icon') || "ring.svg",
                 pageInDuration = $body.attr('data-speed-in') || 1000,
                 pageOutDuration = $body.attr('data-speed-out') || 500;
 
