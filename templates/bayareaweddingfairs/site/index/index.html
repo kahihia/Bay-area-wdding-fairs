@@ -1,7 +1,8 @@
 {% load static %}
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
-
+{% cache 50000 index_page_bawf %}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -1035,7 +1036,7 @@
     <!-- Custom js file -->
     <script src="{% static "bawf/theme/js/custom.js" %}"></script>
 
-
+{% endcache %}
 
 </body>
 
