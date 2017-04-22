@@ -254,6 +254,7 @@ INSTALLED_APPS = (
     'yapjoy_vendors',
     'yapjoy_teamschat',
     's3direct',
+    'bayareaweddingfairs_site',
     # 'ckeditor_uploader',
     # 'friendship',
 
