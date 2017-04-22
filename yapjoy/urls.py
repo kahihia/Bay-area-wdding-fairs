@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 
 
     url(r'^crm/', include('yapjoy_files.urls')),
-    url(r'^$', include('bayareaweddingfairs_site.urls')),
+    url(r'^', include('bayareaweddingfairs_site.urls')),
     # url(r'^$',  'yapjoy_registration.views.redirect_view_select'),
 
     # url(r'^', include('yapjoy_events.urls')),
