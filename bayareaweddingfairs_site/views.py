@@ -26,7 +26,7 @@ def ShopVendors(request):
     return render(request, "bayareaweddingfairs/shopVendors/index.html", context)
 
 def OurShows(request):
-    events_list = Event_fairs.objects.filter(date__gte=datetime.now())
+    events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
     events = sort_months(events_list)
     return render(request, "bayareaweddingfairs/ourShows/index.html",{
         'events':events,
