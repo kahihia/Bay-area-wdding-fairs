@@ -1,0 +1,57 @@
+{% load static %}
+<header id="header" class="header-dark header-transparent header-navigation-light">
+    <div id="header-wrap">
+        <div class="container">
+
+            <!--LOGO-->
+            <div id="logo">
+                <a href="/" class="logo" data-dark-logo="{% static "images/bawf/bawf_logo.png" %}">
+                    <img style="height:50px;margin-top:5px;" src="{% static "images/bawf/bawf_logo.png" %}" alt="Polo Logo">
+                </a>
+            </div>
+            <!--END: LOGO-->
+
+            <!--MOBILE MENU -->
+            <div class="nav-main-menu-responsive">
+                <button class="lines-button x">
+                    <span class="lines"></span>
+                </button>
+            </div>
+            <!--END: MOBILE MENU -->
+
+            <!--TOP SEARCH -->
+            <div id="top-search"> <a id="top-search-trigger"><i class="fa fa-search"></i><i class="fa fa-close"></i></a>
+                <form action="" method="get" data-toggle="validator">
+                    <input type="text" name="q" id="q" class="form-control" value="" placeholder="Start typing & press  &quot;Enter&quot;" required>
+                </form>
+            </div>
+            <!--END: TOP SEARCH -->
+
+            <!--NAVIGATION-->
+            <div class="navbar-collapse collapse main-menu-collapse navigation-wrap">
+                <div class="container">
+                    <nav id="mainMenu" class="main-menu mega-menu">
+                        <ul class="main-menu nav nav-pills">
+                            <li><a href="/"><i class="fa fa-home"></i></a>
+                            </li>
+                            <li><a href="{% url "index__our_events" %}">UPCOMMING WEDDING SHOWS</a></li>
+                            <li><a href="#">TICKETS & REGISTRATION</a></li>
+                            <li><a href="#">BECOME AN EXHIBITOR</a></li>
+                            <li><a href="{% url "index__shop_vendors" %}">SHOP VENDORS</a></li>
+                            <li class="dropdown"> <a href="#">MORE <i class="fa fa-angle-down"></i> </a>
+                                <ul class="dropdown-menu">
+                                    <li> <a href="#">OUR BLOGS</a></li>
+                                    <li> <a href="#">LAS VEGAS GIVEAWAY</a></li>
+                                    <li> <a href="#">CONTACT</a></li>
+
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!--END: NAVIGATION-->
+        </div>
+    </div>
+</header>

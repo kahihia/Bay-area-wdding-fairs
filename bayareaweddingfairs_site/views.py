@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from .models import *
 
+from yapjoy_files.models import Event_fairs
+from collections import OrderedDict
+from datetime import datetime
 
 def Index(request):
-    return render(request, "bayareaweddingfairs/site/index/index.html")
-
+    return render(request, "bayareaweddingfairs/site/home/home.html")
 
 def ShopVendors(request):
     vendorShopsList = []
@@ -22,4 +24,17 @@ def ShopVendors(request):
         'vendorShopsList': vendorShopsList
     }
     return render(request, "bayareaweddingfairs/shopVendors/index.html", context)
-    # return render(request, "bayareaweddingfairs/site/index/shopVendors.html", context)
+
+def OurShows(request):
+    events_list = Event_fairs.objects.filter(date__gte=datetime.now())
+    events = sort_months(events_list)
+    return render(request, "bayareaweddingfairs/ourShows/index.html",{
+        'events':events,
+    })
+
+def sort_months(events):
+    January, February, March, April, May, June, July, August, September, October, November, December = ([] for i in range(12))
+    list_months = ['', January, February, March, April, May, June, July, August, September, October, November, December]
+    for event in events:
+        list_months[event.date.month].append(event)
+    return list_months

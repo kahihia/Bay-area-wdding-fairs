@@ -1,0 +1,64 @@
+{% extends 'bayareaweddingfairs/site/base/base_inner_layout.html' %}
+{% load static %}
+
+{% block title %}
+    Bay Area WeddingFairs | home
+{% endblock title %}
+
+{% block css_links %}
+{% endblock css_links %}
+
+{% block content %}
+
+    <!-- WRAPPER -->
+    <div class="wrapper">
+
+
+       <!-- PAGE TITLE -->
+<section id="page-title" class="page-title-parallax page-title-center text-dark" style="background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/media/images/siteImagesMin/slider-cake-back-min.jpg');">
+	<div class="container">
+		<div class="page-title col-md-8">
+			<h1>UPCOMING EVENTS</h1>
+			<span>Bay Area Wedding Fairs</span>
+		</div>
+	</div>
+</section>
+<!-- END: PAGE TITLE -->
+
+<!-- SECTION -->
+<section>
+	<div class="container">
+		<!--Addresses-->
+		<div class="row m-b-60">
+			<div class="col-md-12">
+                {% for event_list in events %}
+                    {% if event_list %}
+				<h3>{{ event_list.0.date|date:"M" }}</h3>
+				<div class="list-group">
+                {% for event in event_list %}
+					<a href="#" class="list-group-item">
+                        <div class="col-md-2" style="margin-top:12px;">
+                            {{ event.date }}
+                        </div>
+                        <div class="col-md-10">
+                            <h4 class="list-group-item-heading">{{ event.name }}</h4>
+                            <p class="list-group-item-text">{{ event.location }}</p>
+                        </div>
+                    <span class="clearfix"></span>
+					</a>
+                    {% endfor %}
+				</div>
+                    {% endif %}
+                {% endfor %}
+			</div>
+		</div>
+		<!--END: Addresses-->
+	</div>
+</section>
+<!-- END: SECTION -->
+
+
+    </div>
+    <!-- END: WRAPPER -->
+    <!-- GO TOP BUTTON -->
+{% endblock content %}

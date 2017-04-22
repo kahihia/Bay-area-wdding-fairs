@@ -1,0 +1,98 @@
+{% load static %}
+{% load cache %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="shortcut icon" href="{% static "images/favicon_bawf.ico" %}">
+    <title>{% block title %}{% endblock title %}</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "bawf/theme/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "bawf/theme/vendor/fontawesome/css/font-awesome.min.css" %}" type="text/css" rel="stylesheet">
+    <link href="{% static "bawf/theme/vendor/animateit/animate.min.css" %}" rel="stylesheet">
+
+    <!-- Vendor css -->
+    <link href="{% static "bawf/theme/vendor/owlcarousel/owl.carousel.css" %}" rel="stylesheet">
+    <link href="{% static "bawf/theme/vendor/magnific-popup/magnific-popup.css" %}" rel="stylesheet">
+
+    <!-- Template base -->
+    <link href="{% static "bawf/theme/css/theme-base.css" %}" rel="stylesheet">
+
+    <!-- Template elements -->
+    <link href="{% static "bawf/theme/css/theme-elements.css" %}" rel="stylesheet">
+
+    <!-- Responsive classes -->
+    <link href="{% static "bawf/theme/css/responsive.css" %}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+
+    <!-- Template color -->
+    <link href="{% static "bawf/theme/css/color-variations/blue.css" %}" rel="stylesheet" type="text/css" media="screen" title="blue">
+
+    <!-- LOAD GOOGLE FONTS -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,800,700,600%7CRaleway:100,300,600,700,800" rel="stylesheet" type="text/css" />
+
+    <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
+    <link rel="stylesheet" property="stylesheet" href="{% static "bawf/theme/vendor/rs-plugin/css/settings.css" %}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{% static "bawf/theme/css/rs-plugin-styles.css" %}" type="text/css" />
+    {% block css_links %}
+
+    {% endblock css_links %}
+    <!-- CSS CUSTOM STYLE -->
+    <link rel="stylesheet" type="text/css" href="{% static "bawf/theme/css/custom.css" %}" media="screen" />
+
+    <!--VENDOR SCRIPT-->
+    <script src="{% static "bawf/theme/vendor/jquery/jquery-1.11.2.min.js" %}"></script>
+    <script src="{% static "bawf/theme/vendor/plugins-compressed.js" %}"></script>
+
+</head>
+
+<body class="wide">
+
+
+    <!-- WRAPPER -->
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        {% block header %}
+            {% include 'bayareaweddingfairs/site/_partials/_top_navigation.html' %}
+        {% endblock header %}
+        <!-- END: HEADER -->
+
+        {% block content %}
+        {% endblock content %}
+
+        <!-- FOOTER -->
+        {% include 'bayareaweddingfairs/site/_partials/_home_footer.html' %}
+        <!-- END: FOOTER -->
+
+    </div>
+    <!-- END: WRAPPER -->
+
+    <!-- GO TOP BUTTON -->
+    <a class="gototop gototop-button" href="#"><i class="fa fa-chevron-up"></i></a>
+
+    <!--Jquery plugin Links Block--->
+    {% block jquery_links %}
+    {% endblock jquery_links %}
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="{% static "bawf/theme/js/theme-functions.js" %}"></script>
+
+    <!-- Custom js file -->
+    <script src="{% static "bawf/theme/js/custom.js" %}"></script>
+
+    {% block jquery_page_scripts %}
+    {% endblock jquery_page_scripts %}
+
+</body>
+
+</html>

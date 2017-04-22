@@ -1,428 +1,98 @@
+{% extends 'bayareaweddingfairs/site/base/home_base.html' %}
 {% load static %}
-{% load cache %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+{% block title %}
+    Bay Area WeddingFairs | home
+{% endblock title %}
 
-    {% cache 50000 index_page_bawf_header %}
-    <link rel="shortcut icon" href="{% static "images/favicon_bawf.ico" %}">
-    <title>BayAreaWeddingFairs</title>
+{% block css_links %}
+    <style>
+        .white {
+            color: white !important;
+        }
+        .black {
+            color: black;
+        }
+    </style>
+{% endblock css_links %}
 
-    <!-- Bootstrap Core CSS -->
-    <link href="{% static "bawf/theme/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
-    <link href="{% static "bawf/theme/vendor/fontawesome/css/font-awesome.min.css" %}" type="text/css" rel="stylesheet">
-    <link href="{% static "bawf/theme/vendor/animateit/animate.min.css" %}" rel="stylesheet">
-
-    <!-- Vendor css -->
-    <link href="{% static "bawf/theme/vendor/owlcarousel/owl.carousel.css" %}" rel="stylesheet">
-    <link href="{% static "bawf/theme/vendor/magnific-popup/magnific-popup.css" %}" rel="stylesheet">
-
-    <!-- Template base -->
-    <link href="{% static "bawf/theme/css/theme-base.css" %}" rel="stylesheet">
-
-    <!-- Template elements -->
-    <link href="{% static "bawf/theme/css/theme-elements.css" %}" rel="stylesheet">
-
-    <!-- Responsive classes -->
-    <link href="{% static "bawf/theme/css/responsive.css" %}" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-	<![endif]-->
-
-
-    <!-- Template color -->
-    <link href="{% static "bawf/theme/css/color-variations/blue.css" %}" rel="stylesheet" type="text/css" media="screen" title="blue">
-
-    <!-- LOAD GOOGLE FONTS -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,800,700,600%7CRaleway:100,300,600,700,800" rel="stylesheet" type="text/css" />
-
-    <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
-    <link rel="stylesheet" property="stylesheet" href="{% static "bawf/theme/vendor/rs-plugin/css/settings.css" %}" type="text/css" media="all" />
-    <link rel="stylesheet" href="{% static "bawf/theme/css/rs-plugin-styles.css" %}" type="text/css" />
-
-    <!-- CSS CUSTOM STYLE -->
-    <link rel="stylesheet" type="text/css" href="{% static "bawf/theme/css/custom.css" %}" media="screen" />
-
-    <!--VENDOR SCRIPT-->
-    <script src="{% static "bawf/theme/vendor/jquery/jquery-1.11.2.min.js" %}"></script>
-    <script src="{% static "bawf/theme/vendor/plugins-compressed.js" %}"></script>
-    {% endcache %}
-</head>
-
-<body class="wide">
+{% block content %}
 
 
     <!-- WRAPPER -->
     <div class="wrapper">
 
-        <!-- HEADER -->
-        <header id="header" class="header-dark header-transparent header-navigation-light">
-            <div id="header-wrap">
-                <div class="container">
 
-                    <!--LOGO-->
-                    <div id="logo">
-                        <a href="index.html" class="logo" data-dark-logo="{% static "images/bawf/bawf_logo.png" %}">
-                            <img style="height:50px;margin-top:5px;" src="{% static "images/bawf/bawf_logo.png" %}" alt="Polo Logo">
-                        </a>
-                    </div>
-                    <!--END: LOGO-->
-
-                    <!--MOBILE MENU -->
-                    <div class="nav-main-menu-responsive">
-                        <button class="lines-button x">
-                            <span class="lines"></span>
-                        </button>
-                    </div>
-                    <!--END: MOBILE MENU -->
-
-                    <!--TOP SEARCH -->
-                    <div id="top-search"> <a id="top-search-trigger"><i class="fa fa-search"></i><i class="fa fa-close"></i></a>
-                        <form action="" method="get" data-toggle="validator">
-                            <input type="text" name="q" id="q" class="form-control" value="" placeholder="Start typing & press  &quot;Enter&quot;" required>
-                        </form>
-
-
-
-
-                    </div>
-                    <!--END: TOP SEARCH -->
-
-                    <!--NAVIGATION-->
-                    <div class="navbar-collapse collapse main-menu-collapse navigation-wrap">
-                        <div class="container">
-                            <nav id="mainMenu" class="main-menu mega-menu">
-                                <ul class="main-menu nav nav-pills">
-                                    <li><a href="index.html"><i class="fa fa-home"></i></a>
-                                    </li>
-                                    <li><a href="#">UPCOMMING WEDDING SHOWS</a></li>
-                                    <li><a href="#">TICKETS & REGISTRATION</a></li>
-                                    <li><a href="#">BECOME AN EXHIBITOR</a></li>
-                                    <li><a href="#">SHOP VENDORS</a></li>
-                                    <li class="dropdown"> <a href="#">MORE <i class="fa fa-angle-down"></i> </a>
-                                        <ul class="dropdown-menu">
-                                            <li> <a href="#">OUR BLOGS</a></li>
-                                            <li> <a href="#">LAS VEGAS GIVEAWAY</a></li>
-                                            <li> <a href="#">CONTACT</a></li>
-
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <!--END: NAVIGATION-->
-                </div>
-            </div>
-        </header>
-        <!-- END: HEADER -->
-
-            <!-- REVOLUTION SLIDER -->
+        <!-- REVOLUTION SLIDER -->
         <!-- PAGE TITLE -->
-<section id="page-title" class="page-title-parallax page-title-center text-dark" style="background-image:url(images/parallax/page-title-parallax.jpg);">
-    <div class="container">
-        <div class="page-title col-md-8">
-            <h1>Portfolio</h1>
-            <span>Portfolio Masonry with details - three columns version</span>
-        </div>
-    </div>
-</section>
-<!-- END: PAGE TITLE -->
-
-<!-- SECTION -->
-<section>
-    <div class="container portfolio">
-
-        <!--Portfolio Filter-->
-        <div class="filter-active-title">Show All</div>
-        <ul class="portfolio-filter" id="portfolio-filter" data-isotope-nav="isotope">
-						<li class="ptf-active" data-filter="*">Show All</li>
-						<li data-filter=".artwork">Artwork</li>
-						<li data-filter=".banner">Banner</li>
-						<li data-filter=".beauty">Beauty</li>
-						<li data-filter=".marketing">Marketing</li>
-						<li data-filter=".design">Design</li>
-					</ul>
-        <!-- END: Portfolio Filter -->
-
-        <!-- Portfolio Items -->
-        <div id="isotope" class="isotope portfolio-items" data-isotope-item-space="3" data-isotope-mode="masonry" data-isotope-col="3" data-isotope-item=".portfolio-item">
-
-
-            {% for shopItem in vendorShopsList %}
-                <div class="portfolio-item design artwork">
-                    <div class="portfolio-image effect social-links">
-                        <img src="/{{ shopItem.shop.shopVendorImage }}" alt="">
-
-                        <div class="image-box-content">
-                            <p>
-                                <a href="" data-lightbox-type="image" title="{{ shopItem.shop.shopVendorName }}"><i class="fa fa-expand"></i></a>
-                                <a href="portfolio-page-basic.html"><i class="fa fa-link"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="portfolio-description">
-                        <h4 class="title">{{ shopItem.shop }}</h4>
-                    </div>
-                    <div class="portfolio-date">
-                    </div>
-
-                    <div class="portfolio-details">
-                        {% for item in shopItem.itemsList %}
-                            <a href="">{{ item }}</a><br />
-                        {% endfor %}
-
-
-                    </div>
-                </div>
-            {% endfor %}
-
-
-        </div>
-        <!-- END: Portfolio Items -->
-
-
-    </div>
-
-    <hr class="space">
-
-</section>
-
-
-        <!-- FOOTER -->
-        <footer class="background-dark text-grey" id="footer">
-            <div class="footer-content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="footer-logo float-left">
-                                <img alt="" src="{% static "bawf/images/logo-sm-dark.png" %}">
-                            </div>
-                            <p style="margin-top: 12px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, sem quis lacinia faucibus, orci ipsum gravida tortor, vel interdum mi sapien ut justo. Nulla varius consequat magna, id molestie ipsum volutpat quis. Suspendisse consectetur fringilla luctus. Fusce id mi diam, non ornare orci. Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="seperator seperator-dark seperator-simple"></div>
-                    <div class="row">
-
-
-                        <div class="col-md-4">
-                            <div class="widget clearfix widget-contact-us" style="background-image: url('{% static "bawf/images/world-map.png" %}'); background-position: 50% 55px; background-repeat: no-repeat">
-                                <h4 class="widget-title">Contact us</h4>
-                                <ul class="list-large list-icons">
-                                    <li><i class="fa fa-map-marker"></i>
-                                        <strong>Address:</strong> 795 Folsom Ave, Suite 600
-                                        <br>San Francisco, CA 94107</li>
-                                    <li><i class="fa fa-phone"></i><strong>Phone:</strong> (123) 456-7890 </li>
-                                    <li><i class="fa fa-envelope"></i><strong>Email:</strong> <a href="mailto:first.last@example.com">first.last@example.com</a>
-                                    </li>
-                                    <li><i class="fa fa-clock-o"></i>Monday - Friday: <strong>08:00 - 22:00</strong>
-                                        <br>Saturday, Sunday: <strong>Closed</strong>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="widget clearfix widget-tweeter">
-     <h4 class="widget-title">Recent Tweets</h4>
-</div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="widget clearfix widget-newsletter">
-                                <form id="widget-subscribe-form" action="include/subscribe-form.php" role="form" method="post" class="form-inline">
-                                    <h4 class="widget-title">Newsletter</h4>
-                                    <small>Stay informed on our latest news!</small>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
-                                        <input type="email" aria-required="true" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
-                                        <span class="input-group-btn">
-											<button type="submit" id="widget-subscribe-submit-button" class="btn btn-primary">Subscribe</button>
-										</span>
-                                    </div>
-                                </form>
-                                <script type="text/javascript">
-                                    jQuery("#widget-subscribe-form").validate({
-                                        submitHandler: function(form) {
-                                            jQuery(form).ajaxSubmit({
-                                                dataType: 'json',
-                                                success: function(text) {
-                                                    if (text.response == 'success') {
-                                                        $.notify({
-                                                            message: "You have successfully subscribed to our mailing list."
-                                                        }, {
-                                                            type: 'success'
-                                                        });
-                                                        $(form)[0].reset();
-
-                                                    } else {
-                                                        $.notify({
-                                                            message: text.message
-                                                        }, {
-                                                            type: 'warning'
-                                                        });
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    });
-                                  </script>
-                            </div>
-
-                        </div>
-
-
-
-                    </div>
-
-
+        <section id="page-title" class="page-title-parallax page-title-center text-dark" style="background-image:url(https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/media/images/siteImagesMin/unspecified-min.jpeg);">
+            <div class="container">
+                <div class="page-title col-md-8">
+                    <h1 class="white">SHOP VENDORS</h1>
+                    <span class="white">Bay Area Wedding Fairs</span>
                 </div>
             </div>
-            <div class="copyright-content">
-                <div class="container">
-                    <div class="row">
-                        <div class="copyright-text col-md-6"> &copy; 2016 POLO - Best HTML5 Template Ever. All Rights Reserved. <a target="_blank" href="http://www.inspiro-media.com">INSPIRO</a>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="social-icons">
-                                <ul>
-                                    <li class="social-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li class="social-google"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li class="social-pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                    <li class="social-vimeo"><a href="#"><i class="fa fa-vimeo-square"></i></a></li>
-                                    <li class="social-linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li class="social-dribbble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                    <li class="social-youtube"><a href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                    <li class="social-rss"><a href="#"><i class="fa fa-rss"></i></a></li>
-                                </ul>
+        </section>
+        <!-- END: PAGE TITLE -->
+
+        <!-- SECTION -->
+        <section>
+            <div class="container portfolio">
+
+                <!--Portfolio Filter-->
+{#                <div class="filter-active-title">Show All</div>#}
+{#                <ul class="portfolio-filter" id="portfolio-filter" data-isotope-nav="isotope">#}
+{#                    <li class="ptf-active" data-filter="*">Show All</li>#}
+{#                    <li data-filter=".artwork">Artwork</li>#}
+{#                    <li data-filter=".banner">Banner</li>#}
+{#                    <li data-filter=".beauty">Beauty</li>#}
+{#                    <li data-filter=".marketing">Marketing</li>#}
+{#                    <li data-filter=".design">Design</li>#}
+{#                </ul>#}
+                <!-- END: Portfolio Filter -->
+
+                <!-- Portfolio Items -->
+                <div id="isotope" class="isotope portfolio-items" data-isotope-item-space="3" data-isotope-mode="masonry" data-isotope-col="3" data-isotope-item=".portfolio-item">
+
+
+                    {% for shopItem in vendorShopsList %}
+                        <div class="portfolio-item design artwork">
+                            <div class="portfolio-image effect social-links">
+                                <img src="{% static shopItem.shop.shopVendorImage %}" alt="">
+
+                                <div class="image-box-content">
+                                    <p>
+                                        <a href="" data-lightbox-type="image" title="{{ shopItem.shop.shopVendorName }}"><i class="fa fa-expand"></i></a>
+                                        <a href="portfolio-page-basic.html"><i class="fa fa-link"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="portfolio-description">
+                                <h4 class="title">{{ shopItem.shop }}</h4>
+                            </div>
+                            <div class="portfolio-date">
+                            </div>
+
+                            <div class="portfolio-details">
+                                {% for item in shopItem.itemsList %}
+                                    <a href="">{{ item }}</a><br />
+                                {% endfor %}
+
+
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
+
+
                 </div>
+                <!-- END: Portfolio Items -->
+
+
             </div>
-        </footer>
-        <!-- END: FOOTER -->
 
-    </div>
-    <!-- END: WRAPPER -->
-    <!-- GO TOP BUTTON -->
-    <a class="gototop gototop-button" href="#"><i class="fa fa-chevron-up"></i></a>
+            <hr class="space">
+
+        </section>
 
 
-
-    <!-- SLIDER REVOLUTION 5.x SCRIPTS  -->
-{#    <script type="text/javascript" src="{% static "bawf/theme/vendor/jquery/jquery-1.11.2.min.js" %}"></script>#}
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/source/revolution.extension.carousel.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/source/revolution.extension.navigation.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.tools.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.navigation.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.enablelog.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.tools.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.actions.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.video.min copy.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.slideanims.min.js" %}"></script>
-
-
-    <script type="text/javascript">
-        var tpj = jQuery;
-
-        var revapi30;
-        tpj(document).ready(function() {
-            if (tpj("#rev_slider_30_1").revolution == undefined) {
-                revslider_showDoubleJqueryError("#rev_slider_30_1");
-            } else {
-                revapi30 = tpj("#rev_slider_30_1").show().revolution({
-                    sliderType: "standard",
-                    jsFileLocation: "bawf/theme/vendor/rs-plugin/js/",
-                    sliderLayout: "fullscreen",
-                    dottedOverlay: "none",
-                    delay: 9000,
-                    navigation: {
-                        keyboardNavigation: "off",
-                        keyboard_direction: "horizontal",
-                        mouseScrollNavigation: "off",
-                        onHoverStop: "on",
-                        touch: {
-                            touchenabled: "on",
-                            swipe_threshold: 75,
-                            swipe_min_touches: 50,
-                            swipe_direction: "horizontal",
-                            drag_block_vertical: false
-                        },
-                        arrows: {
-                            style: "hermes",
-                            enable: true,
-                            hide_onmobile: true,
-                            hide_under: 600,
-                            hide_onleave: true,
-                            hide_delay: 200,
-                            hide_delay_mobile: 1200,
-                            tmp: '<div class="tp-arr-allwrapper">	<div class="tp-arr-imgholder"></div>	<div class="tp-arr-titleholder">{{title}}</div>	</div>',
-                            left: {
-                                h_align: "left",
-                                v_align: "center",
-                                h_offset: 0,
-                                v_offset: 0
-                            },
-                            right: {
-                                h_align: "right",
-                                v_align: "center",
-                                h_offset: 0,
-                                v_offset: 0
-                            }
-                        }
-                    },
-                    responsiveLevels: [1240, 1024, 778, 480],
-                    visibilityLevels: [1240, 1024, 778, 480],
-                    gridwidth: [1240, 1024, 778, 480],
-                    gridheight: [868, 768, 960, 720],
-                    lazyType: "smart",
-                    shadow: 0,
-                    spinner: "off",
-                    stopLoop: "off",
-                    stopAfterLoops: -1,
-                    stopAtSlide: -1,
-                    shuffle: "off",
-                    autoHeight: "off",
-                    fullScreenAutoWidth: "off",
-                    fullScreenAlignForce: "off",
-                    fullScreenOffsetContainer: "",
-                    fullScreenOffset: "",
-                    disableProgressBar: "on",
-                    hideThumbsOnMobile: "off",
-                    hideSliderAtLimit: 0,
-                    hideCaptionAtLimit: 0,
-                    hideAllCaptionAtLilmit: 0,
-                    debugMode: false,
-                    fallbacks: {
-                        simplifyAll: "off",
-                        nextSlideOnWindowFocus: "off",
-                        disableFocusListener: false,
-                    }
-                });
-            }
-        }); /*ready*/
-
-    </script>
-
-    <!-- Theme Base, Components and Settings -->
-    <script src="{% static "bawf/theme/js/theme-functions.js" %}"></script>
-
-    <!-- Custom js file -->
-    <script src="{% static "bawf/theme/js/custom.js" %}"></script>
-
-{#    {% endcache %}#}
-
-</body>
-
-</html>
+{% endblock %}
