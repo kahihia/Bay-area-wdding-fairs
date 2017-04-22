@@ -84,7 +84,7 @@ class UserInfo(models.Model):
     # csvFile_url = models.CharField(max_length=255, null=True, blank=True)
     # def get_file_url(self):
     #     return "%s%s"%(settings.MEDIA_URL, self.csvFile)
-
+from tinymce.models import HTMLField
 class Event_fairs(models.Model):
     name = models.CharField(max_length=1000, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -94,8 +94,8 @@ class Event_fairs(models.Model):
     amount = models.CharField(max_length=255, null=True, blank=True)
     earlybird_ticket = models.CharField(max_length=255, blank=True, null=True)
     group_ticket = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(null=True, blank=True)
-    grandPrizeDescription = models.TextField(null=True, blank=True)
+    description = HTMLField(null=True, blank=True)
+    grandPrizeDescription = HTMLField(null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     google_location = models.CharField(max_length=255, null=True, blank=True)
     # season = models.CharField(max_length=20, null=True, blank=True)

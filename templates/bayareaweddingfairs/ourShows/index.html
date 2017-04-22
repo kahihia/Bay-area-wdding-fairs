@@ -43,7 +43,7 @@
 				<h3>{{ event_list.0.date|date:"M" }}</h3>
 				<div class="list-group">
                 {% for event in event_list %}
-					<a href="#" class="list-group-item">
+					<a data-target="#modal-3" data-toggle="modal" href="#" class="list-group-item">
                         <div class="col-md-2" style="margin-top:12px;">
                             {{ event.date }}
                         </div>
@@ -64,6 +64,35 @@
 </section>
 <!-- END: SECTION -->
 
+    <div class="modal fade" id="modal-3" tabindex="-1" role="modal" aria-labelledby="modal-label-3" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+				<h4 id="modal-label-3" class="modal-title">Large Modal</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row mb20">
+					<div class="col-sm-12">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium atque architecto quae ullam rem labore veritatis temporibus asperiores, ad eaque odit commodi inventore dolore perspiciatis, nam dicta est eos id quod excepturi.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 xs-box" id="updates">
+
+					</div>
+					<div class="col-sm-6" id="grand">
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button data-dismiss="modal" class="btn btn-b" type="button">Close</button>
+				<button class="btn btn-b" type="button">Save Changes</button>
+			</div>
+		</div>
+	</div>
+</div>
 
     </div>
     <!-- END: WRAPPER -->
