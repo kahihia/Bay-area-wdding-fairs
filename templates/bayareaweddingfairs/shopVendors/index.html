@@ -28,8 +28,8 @@
         <section id="page-title" class="page-title-parallax page-title-center text-dark" style="background-image:url(https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/media/images/siteImagesMin/unspecified-min.jpeg);">
             <div class="container">
                 <div class="page-title col-md-8">
-                    <h1 class="white">SHOP VENDORS</h1>
-                    <span class="white">Bay Area Wedding Fairs</span>
+                    <h1 class="white" style="color: white;">SHOP VENDORS</h1>
+                    <span class="white" style="color: white;">Bay Area Wedding Fairs</span>
                 </div>
             </div>
         </section>
@@ -60,12 +60,12 @@
                             <div class="portfolio-image effect social-links">
                                 <img src="{% static shopItem.shop.shopVendorImage.url %}" alt="">
 
-                                <div class="image-box-content">
-                                    <p>
-                                        <a href="" data-lightbox-type="image" title="{{ shopItem.shop.shopVendorName }}"><i class="fa fa-expand"></i></a>
-                                        <a href="portfolio-page-basic.html"><i class="fa fa-link"></i></a>
-                                    </p>
-                                </div>
+{#                                <div class="image-box-content">#}
+{#                                    <p>#}
+{#                                        <a href="{% static shopItem.shop.shopVendorImage.url %}" data-lightbox-type="image" title="{{ shopItem.shop.shopVendorName }}"><i class="fa fa-expand"></i></a>#}
+{#                                        <a href=""><i class="fa fa-link"></i></a>#}
+{#                                    </p>#}
+{#                                </div>#}
                             </div>
                             <div class="portfolio-description">
                                 <h4 class="title">{{ shopItem.shop }}</h4>
@@ -96,3 +96,19 @@
 
 
 {% endblock %}
+{% block jquery_links %}
+
+    <!--Pages Plugin Links Goes Here-->
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/source/revolution.extension.carousel.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/source/revolution.extension.navigation.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.tools.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.navigation.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.enablelog.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/jquery.themepunch.tools.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.actions.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.video.min copy.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.slideanims.min.js" %}"></script>
+
+{% endblock jquery_links %}
