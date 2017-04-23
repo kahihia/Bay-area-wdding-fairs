@@ -163,4 +163,4 @@ def BrideGroomRegistration(request):
     return render(request, "bayareaweddingfairs/site/BGRegister/BGRegister.html", content)
 
 def VendorRegistration(request):
-    pass
+    return HttpResponse('Awaiting')
