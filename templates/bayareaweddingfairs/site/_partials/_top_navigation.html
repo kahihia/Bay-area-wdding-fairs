@@ -35,8 +35,8 @@
                             <li><a href="/"><i class="fa fa-home"></i></a>
                             </li>
                             <li><a href="{% url "index__our_events" %}">UPCOMMING WEDDING SHOWS</a></li>
-                            <li><a href="#">TICKETS & REGISTRATION</a></li>
-                            <li><a href="#">BECOME AN EXHIBITOR</a></li>
+                            <li><a href="{% url "index__bride_groom_registration" %}">TICKETS & REGISTRATION</a></li>
+                            <li><a href="{% url "index__vendor_registration" %}">BECOME AN EXHIBITOR</a></li>
                             <li><a href="{% url "index__shop_vendors" %}">SHOP VENDORS</a></li>
                             <li class="dropdown"> <a href="#">MORE <i class="fa fa-angle-down"></i> </a>
                                 <ul class="dropdown-menu">
@@ -46,7 +46,6 @@
 
                                 </ul>
                             </li>
-
                         </ul>
                     </nav>
                 </div>

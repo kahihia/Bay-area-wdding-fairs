@@ -342,6 +342,7 @@ class registration_event_form(forms.ModelForm):
             'website': forms.TextInput(attrs={'placeholder': 'Website'}),
             'zip': forms.TextInput(attrs={'placeholder': 'Zip Code*'}),
             'amount_due': forms.Textarea(attrs={'placeholder': 'Amount Due'}),
+            'comments': forms.Textarea(attrs={'cols': '20'}),
             # 'commission': forms.TextInput(attrs={'placeholder': 'Commission'}),
             # 'booth': for,
             # 'is_fashionshow': forms.Textarea(attrs={'placeholder': 'is Fashionshow'}),
