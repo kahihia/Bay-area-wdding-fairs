@@ -10,6 +10,10 @@
         .white {
             color: white;
         }
+        .map_canvas {
+            width: 100%;
+            height: 200px;
+        }
     </style>
 {% endblock css_links %}
 
@@ -19,82 +23,154 @@
     <div class="wrapper">
 
 
-       <!-- PAGE TITLE -->
-<section id="page-title" class="page-title-parallax page-title-center" style="background-color: #cccccc;"
-{#         style="background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/media/images/siteImagesMin/slider-cake-back-min.jpg');"#}
->
-	<div class="container">
-		<div class="page-title col-md-8">
-			<h1 class="white">UPCOMING EVENTS</h1>
-			<span class="white">Bay Area Wedding Fairs</span>
-		</div>
-	</div>
-</section>
-<!-- END: PAGE TITLE -->
+        <!-- PAGE TITLE -->
+        <section id="page-title" class="page-title-parallax page-title-center" style="background-color: #cccccc;">
+            <div class="container">
+                <div class="page-title col-md-8">
+                    <h1 class="white">UPCOMING EVENTS</h1>
+                    <span class="white">Bay Area Wedding Fairs</span>
+                </div>
+            </div>
+        </section>
+        <!-- END: PAGE TITLE -->
 
-<!-- SECTION -->
-<section>
-	<div class="container">
-		<!--Addresses-->
-		<div class="row m-b-60">
-			<div class="col-md-12">
-                {% for event_list in events %}
-                    {% if event_list %}
-				<h3>{{ event_list.0.date|date:"M" }}</h3>
-				<div class="list-group">
-                {% for event in event_list %}
-					<a data-target="#modal-3" data-toggle="modal" href="#" class="list-group-item">
-                        <div class="col-md-2" style="margin-top:12px;">
-                            {{ event.date }}
+        <!-- SECTION -->
+        <section>
+            <div class="container">
+                <!--Addresses-->
+                <div class="row m-b-60">
+                    <div class="col-md-12">
+                        {% for event_list in events %}
+                            {% if event_list %}
+                                <h3>{{ event_list.0.date|date:"M" }}</h3>
+                                <div class="list-group">
+                                    {% for event in event_list %}
+                                        <a onclick="get_information('{{ event.id }}');" href="#" class="list-group-item">
+                                            <div class="col-md-2" style="margin-top:12px;">
+                                                {{ event.date }}
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h4 class="list-group-item-heading">{{ event.name }}</h4>
+                                                <p class="list-group-item-text">{{ event.location }}</p>
+                                            </div>
+                                            <span class="clearfix"></span>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--END: Addresses-->
+            </div>
+        </section>
+        <!-- END: SECTION -->
+
+        <div class="modal fade" id="modal-detail" tabindex="-1" role="modal" aria-labelledby="modal-label-3" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 id="show-name" class="modal-title">Show Name Comes Here </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb20">
+                            <div class="col-sm-12">
+                                <p id="show-location">Date | Location</p>
+                                <img id="show-image" style="width:100%;height:auto;margin-bottom:20px;" src="" />
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <h4 class="list-group-item-heading">{{ event.name }}</h4>
-                            <p class="list-group-item-text">{{ event.location }}</p>
+                        <div class="row">
+                            <div class="col-sm-6 xs-box" id="updates">
+
+                            </div>
+                            <div class="col-sm-6" id="grand">
+
+                            </div>
                         </div>
-                    <span class="clearfix"></span>
-					</a>
-                    {% endfor %}
-				</div>
-                    {% endif %}
-                {% endfor %}
-			</div>
-		</div>
-		<!--END: Addresses-->
-	</div>
-</section>
-<!-- END: SECTION -->
-
-    <div class="modal fade" id="modal-3" tabindex="-1" role="modal" aria-labelledby="modal-label-3" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-				<h4 id="modal-label-3" class="modal-title">Large Modal</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row mb20">
-					<div class="col-sm-12">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium atque architecto quae ullam rem labore veritatis temporibus asperiores, ad eaque odit commodi inventore dolore perspiciatis, nam dicta est eos id quod excepturi.</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 xs-box" id="updates">
-
-					</div>
-					<div class="col-sm-6" id="grand">
-
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button data-dismiss="modal" class="btn btn-b" type="button">Close</button>
-				<button class="btn btn-b" type="button">Save Changes</button>
-			</div>
-		</div>
-	</div>
-</div>
+                        <div class="row">
+                            <div class="col-sm-6 xs-box">
+                                <h4>( PRE-REGISTRATION IS REQUIRED )</h4>
+                                <a href="{% url "index__bride_groom_registration" %}" class="btn btn-primary">Registration</a>
+                            </div>
+                            <div class="col-sm-6" >
+                                <h4>( ALREADY PRE-REGISTERED? )</h4>
+                                <a href="{% url "index__bride_groom_registration" %}" class="btn btn-primary">Buy Tickets</a>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6 xs-box">
+                                <h4><span class="fa fa-calendar"></span> Date and Time</h4>
+                                <p id="date-time-id"></p>
+                            </div>
+                            <div class="col-sm-6" >
+                                <h4><span class="fa fa-map-marker"></span> Location</h4>
+                                <p id="location-id"></p>
+                            </div>
+                        </div>
+                        <div  class="map_canvas" width="100%" height="200" frameborder="0" style="border:0" id="map_api" allowfullscreen></div>
+                        <div class="row">
+                            <div class="col-sm-12 xs-box">
+                                <h4><span class="fa fa-headphones"></span> Organizer</h4>
+                                <h4>Bay Area Wedding Fairs</h4>
+                                <p><a href="www.bayareaweddingfairs.com">www.bayareaweddingfairs.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-b" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <!-- END: WRAPPER -->
     <!-- GO TOP BUTTON -->
 {% endblock content %}
+{% block jquery_links %}
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCCvqBKpmwqyEtpSs86C1h9JhMDreJALm0"></script>
+{% endblock jquery_links %}
+{% block jquery_page_scripts %}
+    <script>
+        {#        $('#modal-detail').modal('show')#}
+        function get_information(event_id){
+            $.ajax({
+                url: "",
+                type: "POST",
+                data: {
+                    'event_id': event_id,
+                },
+
+                success: function (data) {
+                    var obj = jQuery.parseJSON(data);
+                    console.log(obj.image)
+                    $('#updates').html(obj.description)
+                    $('#show-name').html(obj.name)
+                    $('#show-location').html(obj.date+' | '+obj.location)
+                    $('#location-id').html(obj.location)
+                    $('#date-time-id').html(obj.date)
+                    $("#map_api").val(obj.location).trigger("geocode");
+                    $('#show-image').attr('src',obj.image)
+                    $('#grand').html(obj.description_grand)
+                    $('#modal-detail').modal('show')
+                },
+
+                error: function(error) {
+                    console.log("error: "+error.message);
+
+                }
+            })
+        }
+        $(function(){
+
+            var options = {
+                map: ".map_canvas"
+            };
+
+
+
+        });
+    </script>
+{% endblock jquery_page_scripts %}

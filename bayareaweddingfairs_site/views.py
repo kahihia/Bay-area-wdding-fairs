@@ -4,12 +4,13 @@ from yapjoy_files.forms import bg_registration_form
 from django.contrib.auth.models import User
 from yapjoy_registration.models import UserProfile
 from yapjoy_files.models import Register_Event, CategoryOptions
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, HttpResponse
 from yapjoy_files.views import send_bawf_email
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from yapjoy_files.models import Event_fairs
 from datetime import datetime
+import json
 
 def Index(request):
     return render(request, "bayareaweddingfairs/site/home/home.html")
@@ -31,7 +32,21 @@ def ShopVendors(request):
     }
     return render(request, "bayareaweddingfairs/site/shopVendors/index.html", context)
 
+@csrf_exempt
 def OurShows(request):
+    if "event_id" in request.POST:
+        event_id = request.POST.get('event_id')
+        event = get_object_or_404(Event_fairs, id=event_id)
+        if event:
+            data = {
+                'description':event.description,
+                'description_grand':event.grandPrizeDescription,
+                'image':str(event.image),
+                'name':event.name,
+                'location':event.location,
+                'date':str(event.date),
+            }
+            return HttpResponse(json.dumps(data))
     events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
     events = sort_months(events_list)
     return render(request, "bayareaweddingfairs/site/ourShows/ourShows.html", {
