@@ -168,10 +168,9 @@ def VendorRegistration(request):
 
 def shopDetail(request, id):
     """replace the id with slug"""
-    item = ShopVendorsItem.objects.filter(id=id)
+    item = ShopVendorsItem.objects.get(id=id)
     itemDetail = ShopVendorsItemDetail.objects.filter(vendorItems=item)
 
-    print "detail: ", itemDetail, item
     context = {
         'item': item,
         'detail': itemDetail
