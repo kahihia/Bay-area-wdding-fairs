@@ -157,6 +157,7 @@
                                                                                             </th>
                                                                                             <th>Balance Due</th>
                                                                                             <th>Status</th>
+                                                                                            <th>Booth</th>
                                                                                             <th>Created at</th>
                                                                                         </tr>
                                                                                         </thead>
@@ -195,6 +196,7 @@
                                                                                                                 {% endif %}{% endif %}
                                                                                                 </td>
 
+                                                                                                <td>{{ event.booth }}</td>
                                                                                                 <td>{{ event.created_at|date:"Y-m-d" }}</td>
                                                                                             </tr>
                                                                                         {% endfor %}
