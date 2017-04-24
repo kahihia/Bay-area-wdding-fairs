@@ -165,6 +165,9 @@ def BrideGroomRegistration(request):
 def VendorRegistration(request):
     return HttpResponse('Awaiting')
 
+def BecomeExhibitor(request):
+    return render(request, "bayareaweddingfairs/site/become_exhibitor/become-an-exhibitor.html")
+
 
 def shopDetail(request, id):
     """replace the id with slug"""
