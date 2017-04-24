@@ -164,3 +164,16 @@ def BrideGroomRegistration(request):
 
 def VendorRegistration(request):
     return HttpResponse('Awaiting')
+
+
+def shopDetail(request, id):
+    """replace the id with slug"""
+    item = ShopVendorsItem.objects.filter(id=id)
+    itemDetail = ShopVendorsItemDetail.objects.filter(vendorItems=item)
+
+    print "detail: ", itemDetail, item
+    context = {
+        'item': item,
+        'detail': itemDetail
+    }
+    return render(request, "bayareaweddingfairs/shopVendors/shopVendorItemDetail.html", context)

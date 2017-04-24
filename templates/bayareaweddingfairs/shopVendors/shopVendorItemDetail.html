@@ -44,25 +44,17 @@
                 <!-- Portfolio Items -->
                 <div id="isotope" class="isotope portfolio-items" data-isotope-item-space="3" data-isotope-mode="masonry" data-isotope-col="3" data-isotope-item=".portfolio-item">
 
-
-                    {% for shopItem in vendorShopsList %}
+                    {% for shopItem in detail %}
                         <div class="portfolio-item design artwork">
                             <div class="portfolio-image effect social-links">
-                                <img src="{% static shopItem.shop.shopVendorImage.url %}" alt="">
+                                <img src="{% static shopItem.itemDetailImage.url %}" alt="">
                             </div>
                             <div class="portfolio-description">
-                                <h4 class="title">{{ shopItem.shop }}</h4>
+                                <h4 class="title">{{ shopItem.title }}</h4>
                             </div>
                             <div class="portfolio-date">
                             </div>
 
-                            <div class="portfolio-details">
-                                {% for item in shopItem.itemsList %}
-                                    <a href="{% url 'storefrontItemDetail' id=item.id %}">{{ item }}</a><br />
-                                {% endfor %}
-
-
-                            </div>
                         </div>
                     {% endfor %}
 
