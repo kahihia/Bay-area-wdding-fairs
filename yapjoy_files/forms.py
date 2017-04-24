@@ -373,6 +373,7 @@ class registration_event_form(forms.ModelForm):
         self.fields['food'].empty_label = "Please select"
         self.fields['commission'].required = False
         self.fields['website'].required = False
+        self.fields['booth_no'].required = False
 
 class bg_registration_form(forms.ModelForm):
     firstName = forms.CharField(max_length=225, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name*'}),

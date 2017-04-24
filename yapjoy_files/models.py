@@ -772,6 +772,7 @@ class Register_Event(models.Model):
 
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=UNPAID, null=True, blank=True)
     booth = models.CharField(max_length=50, choices=BOOTH_CHOICES, null=True, blank=True)
+    booth_no = models.CharField(max_length=500, null=True, blank=True)
     food = models.CharField(max_length=50, choices=SNACKS_CHOICES, null=True, blank=True)
     is_fashionshow = models.BooleanField(default=False)
     is_partner_vendor = models.BooleanField(default=False)

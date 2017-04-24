@@ -3405,8 +3405,6 @@ def events_based_list_bg(request):
 @staff_member_required
 @csrf_exempt
 def events_based_list(request):
-    # user = request.user
-    print ("hfd")
     email_sent = None
     csv_export_id = None
     form = events_search_form()
@@ -3427,113 +3425,80 @@ def events_based_list(request):
             last_year.append(e)
         elif e.date.year == next_year_no:
             next_year.append(e)
-    if 'csv_export_all' in request.POST:
-        output = []
-        event_selected = request.POST.get('csv_export_all', None)
-        csv_export_id = request.POST.get('csv_export_id', None)
-        print 'csv_export_all: ',event_selected, csv_export_id
-        response = HttpResponse(content_type='text/CSV')
-        response['Content-Disposition'] = 'attachment;filename=export.csv'
-        # response.ContentType = "application/CSV";
-        # response.AddHeader("Content-Disposition", "attachment;records.csv");
-        writer = csv.writer(response)
-        search_list = []
-        query_set = []
-        if not csv_export_id == "None":
-            print 'inside if: ',csv_export_id
-            if csv_export_id == "lastyear":
-                print 'in last year: ',last_year
+    if request.method == "POST":
+        if 'csv_export_all' in request.POST:
+            output = []
+            event_selected = request.POST.get('csv_export_all', None)
+            csv_export_id = request.POST.get('csv_export_id', None)
+            response = HttpResponse(content_type='text/CSV')
+            response['Content-Disposition'] = 'attachment;filename=export.csv'
+            writer = csv.writer(response)
+            search_list = []
+            query_set = []
+            if not csv_export_id == "None":
+                print 'inside if: ',csv_export_id
+                if csv_export_id == "lastyear":
+                    search_list = last_year
+                elif csv_export_id == "thisyear":
+                    search_list = this_year
+                elif csv_export_id == "nextyear":
+                    search_list = next_year
+                query_set = Register_Event.objects.select_related('event', 'sales').exclude(type=Register_Event.BGUSER).filter(
+                event__in=search_list).exclude(status=Register_Event.REMOVED).order_by('-created_at')
+            elif event_selected:
+                query_set = Register_Event.objects.select_related('event').exclude(type=Register_Event.BGUSER).filter(event_id=event_selected).exclude(status=Register_Event.REMOVED).order_by('-created_at')
+            if query_set:
+                writer.writerow(['Vendors Name','Category','Company Name','Show','Balance Due','Payment Method','Status','Created At','Email'])
+                for data in query_set:
+                    output.append([data.name,data.category, data.business_name, "%s - %s"%(data.event.name, data.event.date),str(data.amount_due), data.payment_method, data.status, data.created_at,data.email])
+                writer.writerows(output)
+                return response
+        if "events_year" in request.POST:
+            events_year = request.POST.get('events_year')
+            search_list = []
+            if events_year == "lastyear":
+                csv_export_id = "lastyear"
                 search_list = last_year
-            elif csv_export_id == "thisyear":
-                print 'in this year'
+            elif events_year == "thisyear":
+                csv_export_id = "thisyear"
                 search_list = this_year
-            elif csv_export_id == "nextyear":
-                print 'in next year'
+            elif events_year == "nextyear":
+                csv_export_id = "nextyear"
                 search_list = next_year
-            query_set = Register_Event.objects.select_related('event', 'sales').exclude(type=Register_Event.BGUSER).filter(
-            event__in=search_list).exclude(status=Register_Event.REMOVED).order_by('-created_at')
-        elif event_selected:
-            print 'inside else'
-            query_set = Register_Event.objects.select_related('event').exclude(type=Register_Event.BGUSER).filter(event_id=event_selected).exclude(status=Register_Event.REMOVED).order_by('-created_at')
-        print 'query set: ',query_set
-        if query_set:
-            print 'In query set: ',query_set.count()
-            writer.writerow(['Vendors Name','Category','Company Name','Show','Balance Due','Payment Method','Status','Created At','Email'])
-            for data in query_set:
-                # 'first_name','last_name','user__email','amount','frequency','donate_as','phone','occupation','address','city','state','zip'
-                output.append([data.name,data.category, data.business_name, "%s - %s"%(data.event.name, data.event.date),str(data.amount_due), data.payment_method, data.status, data.created_at,data.email])
-            writer.writerows(output)
-            return response
-
-
-    if "events_year" in request.POST:
-
-        events_year = request.POST.get('events_year')
-        print 'search value: ',events_year
-        search_list = []
-        if events_year == "lastyear":
-            print 'in last year'
-            csv_export_id = "lastyear"
-            search_list = last_year
-        elif events_year == "thisyear":
-            print 'in this year'
-            csv_export_id = "thisyear"
-            search_list = this_year
-        elif events_year == "nextyear":
-            print 'in next year'
-            csv_export_id = "nextyear"
-            search_list = next_year
-        events = Register_Event.objects.select_related('event', 'sales').exclude(type=Register_Event.BGUSER).filter(
-            event__in=search_list).exclude(status=Register_Event.REMOVED).order_by('-created_at')
-    elif request.method == 'POST':
-        print ("Search heree")
-        form = events_search_form(request.POST)
-        event_dict = {}
-        event_list = []
-        if form.is_valid():
-            data = form.cleaned_data
-            event_selected = data['events']
-            print ("event: ", event_selected)
-            events = Register_Event.objects.select_related('event','sales').exclude(type=Register_Event.BGUSER).filter(event=event_selected).exclude(status=Register_Event.REMOVED).order_by('-created_at')
-            print (events.query)
-            for e in events:
-                print ('s: ', e.grand_prize)
-                if e.grand_prize != None and e.grand_prize != '':
-                    sum = sum + int(e.grand_prize)
-            print ("i: ", sum)
-
-            electricity = InvoiceRegisterVendor.objects.filter(register=events)
-            print ("elec: ", electricity)
-
-            for e in events:
-
-                electricity = InvoiceRegisterVendor.objects.filter(register__id=e.event_id)
-
-                print("elect: ", e.id, electricity)
-                for el in electricity:
-                    event_list.append({
-                        'name':e.name,
-                        'email':e.email,
-                        'business_name':e.business_name,
-                        'is_partner_vendor':e.is_partner_vendor,
-                        'total_amount':e.total_amount,
-                        'amount_due':e.amount_due,
-                        'commission':e.commission,
-                        'get_percent_amount':e.get_percent_amount,
-                        'payment_method':e.payment_method,
-                        'grand_prize':e.grand_prize,
-                        'booth':e.booth,
-                        'electricity':el.electricity_types,
-                        'status':e.status,
-                        'created_at':e.created_at
-
-                    })
-
-            # sum = Register_Event.objects.select_related('event','sales').exclude(type=Register_Event.BGUSER).filter\
-            #     (event=event_selected).exclude(status=Register_Event.REMOVED).order_by('-created_at').aggregate(Sum(int('grand_prize') if ('grand_prize') else None)).get('grand_prize__sum', 0.00)
-
-            print ("list: ", event_list)
-    # print this_year, last_year, next_year
+            events = Register_Event.objects.select_related('event', 'sales').exclude(type=Register_Event.BGUSER).filter(
+                event__in=search_list).exclude(status=Register_Event.REMOVED).order_by('-created_at')
+        elif request.method == 'POST':
+            form = events_search_form(request.POST)
+            event_dict = {}
+            event_list = []
+            if form.is_valid():
+                data = form.cleaned_data
+                event_selected = data['events']
+                events = Register_Event.objects.select_related('event','sales').exclude(type=Register_Event.BGUSER).filter(event=event_selected).exclude(status=Register_Event.REMOVED).order_by('-created_at')
+                for e in events:
+                    if e.grand_prize != None and e.grand_prize != '':
+                        sum = sum + int(e.grand_prize)
+                electricity = InvoiceRegisterVendor.objects.filter(register=events)
+                for e in events:
+                    electricity = InvoiceRegisterVendor.objects.filter(register__id=e.event_id)
+                    for el in electricity:
+                        event_list.append({
+                            'name':e.name,
+                            'email':e.email,
+                            'business_name':e.business_name,
+                            'is_partner_vendor':e.is_partner_vendor,
+                            'total_amount':e.total_amount,
+                            'amount_due':e.amount_due,
+                            'commission':e.commission,
+                            'get_percent_amount':e.get_percent_amount,
+                            'payment_method':e.payment_method,
+                            'grand_prize':e.grand_prize,
+                            'booth':e.booth,
+                            'booth_no':e.booth_no,
+                            'electricity':el.electricity_types,
+                            'status':e.status,
+                            'created_at':e.created_at
+                        })
     return render(request, 'vendroid/CRM/event_search.html', {
         'event_selected':event_selected,
         'events':events,
@@ -3547,7 +3512,6 @@ def events_based_list(request):
         'next_year_no':next_year_no,
         'csv_export_id':csv_export_id,
         'sum':sum
-        # 'staff':staff,
     })
 
 from django.db.models import Sum
@@ -4058,48 +4022,34 @@ def interested_contractor_detail(request, id):
 @staff_member_required
 @csrf_exempt
 def contracted_contractor(request):
-    # user = request.user
-    # salesCandidates = User.objects.filter(is_superuser=True)
     wps = None
     view_all = None
     viewtype = None
-    # wps = Register_Event.objects.filter(Q(status=Register_Event.PAID) & (~Q(type=Register_Event.BGUSER))).order_by('-created_at')
     initial_word = ""
-
-    # print wps
-    if 'search' in request.POST:
-        search = request.POST.get('search')
-        try:
-            initial_word = search
-            search = search.split(' ')[0]
-            wps = Register_Event.objects.select_related('event').exclude(type=Register_Event.BGUSER).filter(
-                email__icontains=search).exclude(status=Register_Event.REMOVED).order_by('-created_at')
-            print('wps contracted: ', wps)
-        except:
-            pass
-
-    else:
-        wps = Register_Event.objects.select_related('event').all().exclude(type=Register_Event.BGUSER).exclude(status=Register_Event.REMOVED).order_by('-created_at')#[:10]
-        print('wps contracted: else ', wps)
-    # else:
-    #     wps = Register_Event.objects.select_related('event').exclude(type=Register_Event.BGUSER).exclude(
-    #         status=Register_Event.REMOVED).order_by('-created_at')
-    if "viewtype" in request.POST:
-        view_all = True
-        viewtype = request.POST.get('viewtype')
-        print 'viewtype: ',viewtype
-        if viewtype == "paid":
-            print 'mark paid'
-            wps = wps.filter(total_amount__gt=0, amount_due=0)
-        elif viewtype == "unpaid":
-            print 'mark unpaid'
-            wps = wps.filter(total_amount__gt=0, amount_due__gt=0)
+    if request.method == "POST":
+        if 'search' in request.POST:
+            search = request.POST.get('search')
+            try:
+                initial_word = search
+                search = search.split(' ')[0]
+                wps = Register_Event.objects.select_related('event').exclude(type=Register_Event.BGUSER).filter(
+                    email__icontains=search).exclude(status=Register_Event.REMOVED).order_by('-created_at')
+                print('wps contracted: ', wps)
+            except:
+                pass
+        if "viewtype" in request.POST:
+            view_all = True
+            viewtype = request.POST.get('viewtype')
+            if viewtype == "paid":
+                wps = wps.filter(total_amount__gt=0, amount_due=0)
+            elif viewtype == "unpaid":
+                wps = wps.filter(total_amount__gt=0, amount_due__gt=0)
+    wps = Register_Event.objects.select_related('event').all().exclude(type=Register_Event.BGUSER).exclude(status=Register_Event.REMOVED).order_by('-created_at')
     return render(request, 'vendroid/CRM/contracted_contractors.html', {
         'events':wps,
         'view_all':view_all,
         'viewtype':viewtype,
         'initial_word':initial_word,
-        # 'salesCandidates':salesCandidates,
     })
 
 @login_required(login_url='/crm/login/')
@@ -4160,456 +4110,306 @@ def contracted_contractor_detail(request, id):
             'is_partner_vendor': wp.is_partner_vendor,
             'backdrop_allowed': wp.backdrop_allowed,
             'website': wp.website,
+            'booth_no': wp.booth_no,
         }
         Form = registration_event_form(initial=initial)
     invoice_form = InvoiceForm()
     message = None
-    if "list_price" in request.POST:
-        invoice_form = InvoiceForm(request.POST)
-        if invoice_form.is_valid():
-            data = invoice_form.cleaned_data
-            list_price = data['list_price']
-            offered_price = data['offered_price']
-            pv_prize_offered = data['pv_prize_offered']
-            payment_method = data['payment_method']
-            electricity_types = data['electricity_types']
-            email_list = data['email_list']
-            inv = InvoiceRegisterVendor.objects.create(register=wp,
-                                                       list_price=list_price,
-                                                       offered_price=offered_price,
-                                                       pv_prize_offered=pv_prize_offered,
-                                                       # deposit=deposit,
-                                                       # is_sent_deposit=send_email_now,
-                                                       # balance1=balance1,
-                                                       # balance2=balance2,
-                                                       # balance3=balance3,
-                                                       # date_balance1=date_balance1,
-                                                       # date_balance2=date_balance2,
-                                                       # date_balance3=date_balance3,
-                                                       # date_deposit=date_deposit,
-                                                       payment_method=payment_method,
-                                                       electricity_types=electricity_types,
-                                                       email_list=email_list,
-                                                       )
-            # wp.record_amount_due()
+    if request.method == "POST":
+        if "list_price" in request.POST:
+            invoice_form = InvoiceForm(request.POST)
+            if invoice_form.is_valid():
+                data = invoice_form.cleaned_data
+                list_price = data['list_price']
+                offered_price = data['offered_price']
+                pv_prize_offered = data['pv_prize_offered']
+                payment_method = data['payment_method']
+                electricity_types = data['electricity_types']
+                email_list = data['email_list']
+                inv = InvoiceRegisterVendor.objects.create(register=wp,
+                                                           list_price=list_price,
+                                                           offered_price=offered_price,
+                                                           pv_prize_offered=pv_prize_offered,
+                                                           # deposit=deposit,
+                                                           # is_sent_deposit=send_email_now,
+                                                           # balance1=balance1,
+                                                           # balance2=balance2,
+                                                           # balance3=balance3,
+                                                           # date_balance1=date_balance1,
+                                                           # date_balance2=date_balance2,
+                                                           # date_balance3=date_balance3,
+                                                           # date_deposit=date_deposit,
+                                                           payment_method=payment_method,
+                                                           electricity_types=electricity_types,
+                                                           email_list=email_list,
+                                                           )
+                wp.amount_due = wp.get_amount_due()
+                wp.total_amount = wp.get_amount_total()
+                wp.have_invoices += 1
+                wp.save()
+                message = "Invoice information added successfully."
+                return HttpResponseRedirect("/crm/invoices/contracted_detail/" + id + "/")
+
+        if "convert_back" in request.POST:
+            wp.status = Register_Event.UNPAID
+            wp.save()
+            return HttpResponse("success")
+
+        elif request.POST.get("noteForm"):
+            print "note form interested"
+            getForm = contractor_detail_note_form(request.POST)
+            if getForm.is_valid():
+                note = getForm.cleaned_data['note']
+                try:
+                    Notes.objects.create(exhibitor=wp, note_writer=request.user, note=note)
+                except Exception as e:
+                    raise Http404
+                return HttpResponseRedirect("/crm/invoices/contracted_detail/"+id+"/")
+            else:
+                error_message = "Please fill the Note"
+        elif request.POST.get("taskForm"):
+            getForm = sales_tasks_form(request.POST)
+            if getForm.is_valid():
+                subject = getForm.cleaned_data['subject']
+                message = getForm.cleaned_data['message']
+                status = getForm.cleaned_data['status']
+                dueDate = getForm.cleaned_data['dueDate']
+                try: SalesTasks.objects.create(
+                    subject=subject,
+                    message=message,
+                    status=status,
+                    dueDate=dueDate,
+                    sales=request.user,
+                    exhibitor=wp
+                )
+                except: raise Http404
+                return HttpResponseRedirect("")
+            else:
+                error_message = "Please fill the Task Form"
+        elif request.is_ajax() and "editTaskForm" in request.POST:
+            taskid = request.POST.get('editTaskForm')
+            try:
+                task = SalesTasks.objects.get(id=taskid)
+                initial = {
+                    'subject': task.subject,
+                    'exhibitor': task.exhibitor,
+                    'message': task.message,
+                    'dueDate': task.dueDate,
+                    'status':task.status,
+                    'modified_at':task.modified_at,
+                }
+                taskForm = sales_tasks_form(initial=initial)
+            except: taskForm = sales_tasks_form()
+
+            template = loader.get_template('vendroid/CRM/partial/_taskFromContractorDetailBody.html')
+            content = {
+                 'error_message': error_message,
+                 'taskForm': taskForm,
+                 'taskid': taskid,
+            }
+            data = RequestContext(request, content)
+            return HttpResponse(template.render(data))
+        elif request.is_ajax() and "saveTaskFormID" in request.POST:
+            taskId = int(request.POST['saveTaskFormID'])
+            try:
+                task = SalesTasks.objects.get(id=taskId)
+                task.subject = str(request.POST['subject'])
+                task.message = str(request.POST['message'])
+                task.status = str(request.POST['status'])
+                task.dueDate = request.POST['dueDate']
+                task.save()
+                if str(request.POST['status']) == SalesTasks.INPROGRESS:
+                    try: tasksComplete = SalesTasks.objects.filter(exhibitor__id=id, sales=user, status=SalesTasks.COMPLETE)
+                    except: tasksComplete = None
+                else:
+                    try: tasksInProgress = SalesTasks.objects.filter(exhibitor__id=id, sales=user, status=SalesTasks.INPROGRESS)
+                    except: tasksInProgress = None
+                return HttpResponse('Success')
+                if wp.type == Register_Event.CONTRACTOR:
+                    return HttpResponseRedirect("/crm/invoices/contracted_detail/" + id + "/")
+                return HttpResponseRedirect("/crm/invoices/interested_detail/"+id+"/")
+            except: raise Http404
+        elif request.is_ajax() and "editContractorForm" in request.POST:
+            try:
+                wp = Register_Event.objects.get(id=id)
+                try: sales = wp.sales
+                except: sales = None
+                initial = {
+                        'event': wp.event,
+                        'user': wp.user,
+                        'name': wp.name,
+                        'phone': wp.phone,
+                        'email': wp.email,
+                        'city': wp.city,
+                        'zip': wp.zip,
+                        'business_name': wp.business_name,
+                        'comments': wp.comments,
+                        'how_heard': wp.how_heard,
+                        'categories': wp.category,
+                        'status': wp.status,
+                        'amount_due': wp.amount_due,
+                        'description': wp.description,
+                        'grand_prize': wp.grand_prize,
+                        'payment_method': wp.payment_method,
+                        'sales': sales,
+                        'booth': wp.booth,
+                        'is_fashionshow': wp.is_fashionshow,
+                        'is_partner_vendor': wp.is_partner_vendor,
+                        'backdrop_allowed': wp.backdrop_allowed,
+                        'commission': wp.commission,
+                        'food': wp.food,
+                        'website': wp.website,
+                        'booth_no': wp.booth_no,
+                    }
+                Form = registration_event_form(initial=initial)
+            except:
+                raise Http404
+            template = loader.get_template('vendroid/CRM/partial/_contractorDetail.html')
+            content = {
+                 'form': Form,
+            }
+            data = RequestContext(request, content)
+            return HttpResponse(template.render(data))
+        elif request.POST.get("contratorForm"):
+            Form = registration_event_form(request.POST)
+            if Form.is_valid():
+                data = Form.cleaned_data
+                try:
+                    reg_wp = Register_Event.objects.get(id=id)
+                except:
+                    reg_wp = []
+                    raise Http404
+                reg_wp.name = data['name']
+                reg_wp.business_name = data['business_name']
+                reg_wp.phone = data['phone']
+                reg_wp.email = data['email']
+                reg_wp.city = data['city']
+                reg_wp.zip = data['zip']
+                reg_wp.comments = data['comments']
+                reg_wp.how_heard = data['how_heard']
+                reg_wp.category = data['categories']
+                reg_wp.booth = data['booth']
+                reg_wp.food = data['food']
+                reg_wp.is_fashionshow = data['is_fashionshow']
+                reg_wp.is_partner_vendor = data['is_partner_vendor']
+                reg_wp.backdrop_allowed = data['backdrop_allowed']
+                reg_wp.website = data['website']
+                reg_wp.booth_no = data['booth_no']
+                reg_wp.grand_prize = data['grand_prize']
+                percent_amount = 0
+                commission_percent = request.POST.get('select_commission')
+                if commission_percent == 'other':
+                    commission_percent = data['commission']
+                reg_wp.commission = float(commission_percent)
+                reg_wp.save()
+                if reg_wp.booth == Register_Event.DELUXE:
+                    reg_wp.backdrop_allowed = True
+                    reg_wp.save()
+                if reg_wp.booth == Register_Event.PREMIUM:
+                    reg_wp.backdrop_allowed = True
+                    reg_wp.save()
+                for o in Register_Event.objects.filter(email__iexact=reg_wp.email):
+                    o.name = data['name']
+                    o.business_name = data['business_name']
+                    o.phone = data['phone']
+                    o.email = data['email']
+                    o.city = data['city']
+                    o.zip = data['zip']
+                    o.website = data['website']
+                    o.save()
+                return HttpResponseRedirect("/crm/invoices/contracted_detail/"+id+"/")
+            else:
+                print "form is not valid"
+        elif request.is_ajax() and "chooseSales" in request.POST:
+            salesID = request.POST.get('chooseSales')
+            try:wp = Register_Event.objects.get(id=id)
+            except: raise Http404
+            try:
+                sales = User.objects.get(id=salesID)
+                wp.sales = sales
+                wp.save()
+            except:
+                raise Http404
+            content = {
+                'sales': sales.get_full_name(),
+            }
+            return JsonResponse(content, safe=False)
+        elif "send_aggrement" in request.POST:
+            agreement_id = Register_Event_Aggrement.objects.create(register_event=wp)
+            agreement_id.code = id_generator(size=25)
+            agreement_id.save()
+            context = {
+                'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a>"%(agreement_id.code),
+                'title':"Bay Area Wedding Fairs Agreement",
+                }
+            html_content = render_to_string('email/bawf_native_email.html', context=context)
+            text_content = strip_tags(html_content)
+            msg = EmailMultiAlternatives("BayAreaWeddingFairs Agreement", text_content, 'info@bayareaweddingfairs.com', [wp.email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            message = "Agreement is sent successfully."
+        elif "create_bulk_signal" in request.POST:
+            ids = request.POST.getlist('bulk_check')
+            bulk = BulkInvoices.objects.create(email=wp.email)
+            bulk_amount = 0
+            for id in ids:
+                ine = InvoiceRegisterVendor.objects.get(id=id)
+                bulk_amount += ine.deposit
+                bulk.invoice_event_vendor.add(ine)
+            bulk.amount = bulk_amount
+            bulk.save()
+            context = {
+                'message':"Click on the following link to view the bulk invoice <br /><br /><a href='https://www.yapjoy.com/crm/invoices/bulk/pay/%s' target='_blank' class='btn'>Open Invoice</a>"%(bulk.id),
+                'title':"Bay Area Wedding Fairs Bulk Invoice",
+                }
+            html_content = render_to_string('email/bawf_email.html', context=context)
+            text_content = strip_tags(html_content)
+            msg = EmailMultiAlternatives("BayAreaWeddingFairs Invoice", text_content, 'info@bayareaweddingfairs.com', [wp.email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            message = "Invoice request sent successfully."
+        elif "delete_invoice" in request.POST:
+            delete_invoice = request.POST.get('delete_invoice')
+            InvoiceRegisterVendor.objects.get(id=delete_invoice).delete()
             wp.amount_due = wp.get_amount_due()
             wp.total_amount = wp.get_amount_total()
-            wp.have_invoices += 1
+            wp.have_invoices -= 1
             wp.save()
-            message = "Invoice information added successfully."
-            return HttpResponseRedirect("/crm/invoices/contracted_detail/" + id + "/")
-
-    if "convert_back" in request.POST:
-        wp.status = Register_Event.UNPAID
-        wp.save()
-        return HttpResponse("success")
-
-    elif request.POST.get("noteForm"):
-        print "note form interested"
-        getForm = contractor_detail_note_form(request.POST)
-
-        # print getForm
-
-        if getForm.is_valid():
-            note = getForm.cleaned_data['note']
-            # print wp.name, sales, note
-
-            try:
-                print wp
-                Notes.objects.create(exhibitor=wp, note_writer=request.user, note=note)
-            except Exception as e:
-                print "Notes exception",e
-                raise Http404
-            return HttpResponseRedirect("/crm/invoices/contracted_detail/"+id+"/")
-        else:
-            error_message = "Please fill the Note"
-    elif request.POST.get("taskForm"):
-        getForm = sales_tasks_form(request.POST)
-        if getForm.is_valid():
-            subject = getForm.cleaned_data['subject']
-            message = getForm.cleaned_data['message']
-            status = getForm.cleaned_data['status']
-            dueDate = getForm.cleaned_data['dueDate']
-            # sales = getForm.cleaned_data['sales']
-
-            # print wp.name, sales, note
-
-            try: SalesTasks.objects.create(
-                subject=subject,
-                message=message,
-                status=status,
-                dueDate=dueDate,
-                sales=request.user,
-                exhibitor=wp
-            )
-            except: raise Http404
-            return HttpResponseRedirect("")
-        else:
-            print "form is not valid"
-            error_message = "Please fill the Task Form"
-    elif request.is_ajax() and "editTaskForm" in request.POST:
-        taskid = request.POST.get('editTaskForm')
-        try:
-            task = SalesTasks.objects.get(id=taskid)
-            initial = {
-                'subject': task.subject,
-                # 'sales': task.sales,
-                'exhibitor': task.exhibitor,
-                'message': task.message,
-                'dueDate': task.dueDate,
-                'status':task.status,
-                'modified_at':task.modified_at,
-            }
-            taskForm = sales_tasks_form(initial=initial)
-        except: taskForm = sales_tasks_form()
-
-        template = loader.get_template('vendroid/CRM/partial/_taskFromContractorDetailBody.html')
-        content = {
-             'error_message': error_message,
-             'taskForm': taskForm,
-             'taskid': taskid,
-        }
-        data = RequestContext(request, content)
-        return HttpResponse(template.render(data))
-
-    elif request.is_ajax() and "saveTaskFormID" in request.POST:
-        print "save task form submitted"
-        print request.POST
-        # getForm = sales_tasks_form(request.POST['saveTaskForm'])
-        taskId = int(request.POST['saveTaskFormID'])
-        print taskId
-
-        # # if getForm.is_valid():
-        # subject = getForm.cleaned_data['subject']
-        # message = getForm.cleaned_data['message']
-        # status = getForm.cleaned_data['status']
-        # dueDate = getForm.cleaned_data['dueDate']
-        # sales = getForm.cleaned_data['sales']
-
-        try:
-            task = SalesTasks.objects.get(id=taskId)
-            task.subject = str(request.POST['subject'])
-            task.message = str(request.POST['message'])
-            task.status = str(request.POST['status'])
-            task.dueDate = request.POST['dueDate']
-            # task.sales_id = #int(request.POST['sales'])
-            # task.exhibitor=wp
-            task.save()
-            print "save Task form done"
-
-            if str(request.POST['status']) == SalesTasks.INPROGRESS:
-                try: tasksComplete = SalesTasks.objects.filter(exhibitor__id=id, sales=user, status=SalesTasks.COMPLETE)
-                except: tasksComplete = None
+            return HttpResponseRedirect('')
+        elif "delete_contractor" in request.POST:
+            wp.status = Register_Event.REMOVED
+            wp.amount_due = wp.get_amount_due()
+            wp.total_amount = wp.get_amount_total()
+            wp.save()
+            return HttpResponseRedirect('/crm/invoices/contracted/')
+        elif "assign_sales_person" in request.POST:
+            assign_sales_person_2 = request.POST.get('assign_sales_person_2')
+            if assign_sales_person_2 != "None":
+                wp.sales_id = assign_sales_person_2
             else:
-                try: tasksInProgress = SalesTasks.objects.filter(exhibitor__id=id, sales=user, status=SalesTasks.INPROGRESS)
-                except: tasksInProgress = None
-            print 'all success redirecting...'
-            return HttpResponse('Success')
-            if wp.type == Register_Event.CONTRACTOR:
-                return HttpResponseRedirect("/crm/invoices/contracted_detail/" + id + "/")
-            return HttpResponseRedirect("/crm/invoices/interested_detail/"+id+"/")
-
-            # return render_to_redirect("vendroid/CRM/interested_contractors_details.html", {
-            #     'wp': wp,
-            #     'id':id,
-            #     'is_contracted': False,
-            #     'form': noteForm,
-            #     'taskForm': taskForm,
-            #     'notes':notes,
-            #     'tasksComplete':tasksComplete,
-            #     'tasksInProgress':tasksInProgress,
-            #     'error_message': error_message,
-            # }, context_instance=RequestContext(request))
-            # return HttpResponse({
-            #     'tasksComplete':tasksComplete,
-            #     'tasksInProgress':tasksInProgress,
-            # })
-
-        except: raise Http404
-
-
-        # else:
-        #     print "Task form is not valid"
-        #     error_message = "Please fill the Task Form"
-
-    #Retreive Register_event contract info and edit form
-    elif request.is_ajax() and "editContractorForm" in request.POST:
-        print "edit contractor form"
-        # wp = Register_Event.objects.get(id=id)
-        # print wp.user
-
-        try:
-            wp = Register_Event.objects.get(id=id)
-            try: sales = wp.sales
-            except: sales = None
-            initial = {
-                    'event': wp.event,
-                    'user': wp.user,
-                    'name': wp.name,
-                    'phone': wp.phone,
-                    'email': wp.email,
-                    'city': wp.city,
-                    'zip': wp.zip,
-                    'business_name': wp.business_name,
-                    'comments': wp.comments,
-                    'how_heard': wp.how_heard,
-                    'categories': wp.category,
-                    'status': wp.status,
-                    'amount_due': wp.amount_due,
-                    'description': wp.description,
-                    'grand_prize': wp.grand_prize,
-                    'payment_method': wp.payment_method,
-                    'sales': sales,
-                    'booth': wp.booth,
-                    'is_fashionshow': wp.is_fashionshow,
-                    'is_partner_vendor': wp.is_partner_vendor,
-                    'backdrop_allowed': wp.backdrop_allowed,
-                    'commission': wp.commission,
-                    'food': wp.food,
-                    'website': wp.website,
-                }
-            print "here"
-            Form = registration_event_form(initial=initial)
-            print "hhh"
-        except:
-            raise Http404
-
-        template = loader.get_template('vendroid/CRM/partial/_contractorDetail.html')
-        content = {
-             # 'error_message': error_message,
-             'form': Form,
-        }
-        data = RequestContext(request, content)
-        return HttpResponse(template.render(data))
-
-    #Save edited Register_event contract form
-    elif request.POST.get("contratorForm"):
-        # getForm = sales_tasks_form(request.POST)
-        print request.POST
-        #
-        # try:
-        #     reg_wp = Register_Event.objects.get(id=id)
-        #     reg_wp.category = request.POST['category']
-        #     reg_wp.city = request.POST['city']
-        #     reg_wp.name = request.POST['name']
-        #     reg_wp.zip = request.POST['zip']
-        #     reg_wp.how_heard = request.POST['how_heard']
-        #     reg_wp.comments = request.POST['comments']
-        #     reg_wp.phone = request.POST['phone']
-        #     reg_wp.business_name = request.POST['business_name']
-        #     reg_wp.email = request.POST['email']
-        #     reg_wp.save()
-        #
-        #     print "saved new contract form"
-        #     return HttpResponseRedirect("/crm/invoices/interested_detail/"+id+"/")
-        #
-        # except: raise Http404
-
-
-
-        Form = registration_event_form(request.POST)
-        print Form
-        # data = form.cleaned_data
-        # print data
-        # print form
-
-        if Form.is_valid():
-            print 'form is valid'
-            data = Form.cleaned_data
-            print data
-
-            try:
-                reg_wp = Register_Event.objects.get(id=id)
-            except:
-                reg_wp = []
-                raise Http404
-
-            reg_wp.name = data['name']
-            reg_wp.business_name = data['business_name']
-            reg_wp.phone = data['phone']
-            reg_wp.email = data['email']
-            reg_wp.city = data['city']
-            reg_wp.zip = data['zip']
-            reg_wp.comments = data['comments']
-            reg_wp.how_heard = data['how_heard']
-            reg_wp.category = data['categories']
-            reg_wp.booth = data['booth']
-            reg_wp.food = data['food']
-            reg_wp.is_fashionshow = data['is_fashionshow']
-            reg_wp.is_partner_vendor = data['is_partner_vendor']
-            reg_wp.backdrop_allowed = data['backdrop_allowed']
-            reg_wp.website = data['website']
-            reg_wp.grand_prize = data['grand_prize']
-            print 'initial commission: ',wp.commission
-            percent_amount = 0
-            commission_percent = request.POST.get('select_commission')
-            if commission_percent == 'other':
-                commission_percent = data['commission']
-            # if commission_percent:
-            #     percent_amount = (float(reg_wp.total_amount)/100)*float(commission_percent)
-            # print 'reg_wp.get_amount_total(): ',reg_wp.total_amount
-            print 'percent_amount: ',percent_amount
-            reg_wp.commission = float(commission_percent)
-            print 'commission: ',data['commission']
-            reg_wp.save()
-            if reg_wp.booth == Register_Event.DELUXE:
-                reg_wp.backdrop_allowed = True
-                reg_wp.save()
-            if reg_wp.booth == Register_Event.PREMIUM:
-                reg_wp.backdrop_allowed = True
-                reg_wp.save()
-
-            for o in Register_Event.objects.filter(email__iexact=reg_wp.email):
-                o.name = data['name']
-                o.business_name = data['business_name']
-                o.phone = data['phone']
-                o.email = data['email']
-                o.city = data['city']
-                o.zip = data['zip']
-                o.website = data['website']
-                # o.comments = data['comments']
-                # o.how_heard = data['how_heard']
-                # o.category = data['category']
-                # o.booth = data['booth']
-                # o.is_fashionshow = data['is_fashionshow']
-                # o.is_partner_vendor = data['is_partner_vendor']
-                # o.backdrop_allowed = data['backdrop_allowed']
-                o.save()
-
-            print "saved new contract form"
-            return HttpResponseRedirect("/crm/invoices/contracted_detail/"+id+"/")
-
-            # except: raise Http404
-
-            # try:
-            #     reg_wp = Register_Event.objects.get(id=id)
-            #     reg_wp.category = request.POST['category']
-            #     reg_wp.city = request.POST['city']
-            #     reg_wp.name = request.POST['name']
-            #     reg_wp.zip = request.POST['zip']
-            #     reg_wp.how_heard = request.POST['how_heard']
-            #     reg_wp.comments = request.POST['comments']
-            #     reg_wp.phone = request.POST['phone']
-            #     reg_wp.business_name = request.POST['business_name']
-            #     reg_wp.email = request.POST['email']
-            #     reg_wp.save()
-            #
-            #     print "saved new contract form"
-            #     return HttpResponseRedirect("/crm/invoices/interested_detail/"+id+"/")
-            #
-            # except: raise Http404
-
-
-        else:
-            print "form is not valid"
-            # raise Http404
-
-    #deal with change/assign sales
-    elif request.is_ajax() and "chooseSales" in request.POST:
-        salesID = request.POST.get('chooseSales')
-        try:wp = Register_Event.objects.get(id=id)
-        except: raise Http404
-
-        try:
-            sales = User.objects.get(id=salesID)
-            wp.sales = sales
+                wp.sales_id = None
             wp.save()
-        except:
-            raise Http404
-
-        content = {
-            'sales': sales.get_full_name(),
-        }
-        return JsonResponse(content, safe=False)
-    elif "send_aggrement" in request.POST:
-        agreement_id = Register_Event_Aggrement.objects.create(register_event=wp)
-        agreement_id.code = id_generator(size=25)
-        agreement_id.save()
-        context = {
-            'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a>"%(agreement_id.code),
-            'title':"Bay Area Wedding Fairs Agreement",
-            }
-        html_content = render_to_string('email/bawf_native_email.html', context=context)
-        text_content = strip_tags(html_content)
-        msg = EmailMultiAlternatives("BayAreaWeddingFairs Agreement", text_content, 'info@bayareaweddingfairs.com', [wp.email])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
-        message = "Agreement is sent successfully."
-
-    elif "create_bulk_signal" in request.POST:
-        ids = request.POST.getlist('bulk_check')
-        print ids
-        bulk = BulkInvoices.objects.create(email=wp.email)
-        bulk_amount = 0
-        for id in ids:
-            ine = InvoiceRegisterVendor.objects.get(id=id)
-            bulk_amount += ine.deposit
-            bulk.invoice_event_vendor.add(ine)
-        bulk.amount = bulk_amount
-        bulk.save()
-        context = {
-            'message':"Click on the following link to view the bulk invoice <br /><br /><a href='https://www.yapjoy.com/crm/invoices/bulk/pay/%s' target='_blank' class='btn'>Open Invoice</a>"%(bulk.id),
-            'title':"Bay Area Wedding Fairs Bulk Invoice",
-            }
-        html_content = render_to_string('email/bawf_email.html', context=context)
-        text_content = strip_tags(html_content)
-        msg = EmailMultiAlternatives("BayAreaWeddingFairs Invoice", text_content, 'info@bayareaweddingfairs.com', [wp.email])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
-        message = "Invoice request sent successfully."
-        print "bulk is created: ",bulk.id
-    elif "delete_invoice" in request.POST:
-
-        delete_invoice = request.POST.get('delete_invoice')
-        print "delete_invoice: ",delete_invoice
-        InvoiceRegisterVendor.objects.get(id=delete_invoice).delete()
-        # wp.record_amount_due()
-        wp.amount_due = wp.get_amount_due()
-        wp.total_amount = wp.get_amount_total()
-        wp.have_invoices -= 1
-        wp.save()
-        return HttpResponseRedirect('')
-    elif "delete_contractor" in request.POST:
-        wp.status = Register_Event.REMOVED
-        wp.amount_due = wp.get_amount_due()
-        wp.total_amount = wp.get_amount_total()
-        wp.save()
-        # wp.record_amount_due()
-        return HttpResponseRedirect('/crm/invoices/contracted/')
-    elif "assign_sales_person" in request.POST:
-        assign_sales_person_2 = request.POST.get('assign_sales_person_2')
-        print "sales person assign: ",assign_sales_person_2
-        if assign_sales_person_2 != "None":
-            wp.sales_id = assign_sales_person_2
-            print "Done with sales"
-        else:
-            wp.sales_id = None
-        wp.save()
-        return HttpResponseRedirect('')
-    # print 'checking edit note id'
-    elif "edit_note_id" in request.POST:
-        print 'inside edit notes id'
-        edit_note_id = request.POST.get('edit_note_id')
-        notes_to_edit = Notes.objects.get(id=edit_note_id)
-        notes_to_edit.note = request.POST.get('note_text')
-        notes_to_edit.save()
-        return HttpResponseRedirect('')
-    elif "remove_note_id" in request.POST:
-        remove_note_id = request.POST.get('remove_note_id')
-        note_to_delete = Notes.objects.get(id=remove_note_id).delete()
-    elif "edit_invoice" in request.POST:
-        edit_invoice = request.POST.get('edit_invoice')
-        irv_to_edit = InvoiceRegisterVendor.objects.get(id=edit_invoice)
-        if irv_to_edit.payment_method == InvoiceRegisterVendor.CASH:
-            irv_to_edit.payment_method = InvoiceRegisterVendor.CHECK
-            irv_to_edit.save()
-        elif irv_to_edit.payment_method == InvoiceRegisterVendor.CHECK:
-            irv_to_edit.payment_method = InvoiceRegisterVendor.CASH
-            irv_to_edit.save()
-        return HttpResponseRedirect('')
+            return HttpResponseRedirect('')
+        elif "edit_note_id" in request.POST:
+            edit_note_id = request.POST.get('edit_note_id')
+            notes_to_edit = Notes.objects.get(id=edit_note_id)
+            notes_to_edit.note = request.POST.get('note_text')
+            notes_to_edit.save()
+            return HttpResponseRedirect('')
+        elif "remove_note_id" in request.POST:
+            remove_note_id = request.POST.get('remove_note_id')
+            Notes.objects.get(id=remove_note_id).delete()
+        elif "edit_invoice" in request.POST:
+            edit_invoice = request.POST.get('edit_invoice')
+            irv_to_edit = InvoiceRegisterVendor.objects.get(id=edit_invoice)
+            if irv_to_edit.payment_method == InvoiceRegisterVendor.CASH:
+                irv_to_edit.payment_method = InvoiceRegisterVendor.CHECK
+                irv_to_edit.save()
+            elif irv_to_edit.payment_method == InvoiceRegisterVendor.CHECK:
+                irv_to_edit.payment_method = InvoiceRegisterVendor.CASH
+                irv_to_edit.save()
+            return HttpResponseRedirect('')
     bulk_invoices = BulkInvoices.objects.filter(email__iexact=wp.email)
-    print "bulk invoices: ",bulk_invoices
-    #aggrements = Register_Event_Aggrement.objects.filter(register_event=wp)
     invoices = InvoiceRegisterVendor.objects.filter(register=wp)
     staff = User.objects.filter(is_staff=True)
     allow_payment_list = ['Cash', 'Check']
@@ -4629,7 +4429,6 @@ def contracted_contractor_detail(request, id):
         'invoices': invoices,
         'message': message,
         'cont_form': Form,
-        # 'aggrements': aggrements,
         'bulk_invoices': bulk_invoices,
     })
 

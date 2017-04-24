@@ -205,6 +205,7 @@
                                                                                                     Company
                                                                                                 </th>
                                                                                                 <th>Booth </th>
+                                                                                                <th>Booth #</th>
                                                                                                 <th>PV
                                                                                                 </th>
 
@@ -234,7 +235,7 @@
                                                                                                 {#                                                      {% autopaginate events 10 %}#}
                                                                                             {% endif %}
                                                                                             {% if sum %}
-                                                                                               <b> <p>Prize Count: $ {{ sum }}</p></b>
+                                                                                                <b> <p>Prize Count: $ {{ sum }}</p></b>
                                                                                             {% endif %}
                                                                                             {% for event in events %}
 
@@ -249,7 +250,8 @@
                                                                                                     </td>
                                                                                                     <td>{{ event.category }}</td>
                                                                                                     <td>{{ event.business_name }}</td>
-                                                                                                <td>{{ event.booth }}</td>
+                                                                                                    <td>{{ event.booth }}</td>
+                                                                                                    <td>{{ event.booth_no }}</td>
 
                                                                                                     <td>{{ event.is_partner_vendor }}</td>
 
@@ -277,18 +279,18 @@
                                                                                                     <td>
                                                                                                         {% if event.status == "Deleted" %}
                                                                                                             Deleted
+                                                                                                        {% else %}
+                                                                                                            {% if event.total_amount == 0 %}
+                                                                                                                No
+                                                                                                                invoice
+                                                                                                                available
                                                                                                             {% else %}
-                                                                                                                    {% if event.total_amount == 0 %}
-                                                                                                                        No
-                                                                                                                        invoice
-                                                                                                                        available
-                                                                                                                        {% else %}
-                                                                                                                                {% if event.amount_due == 0 %}
-                                                                                                                                    Paid
-                                                                                                                                {% else %}
-                                                                                                                                    <span style="color:red;">Unpaid</span>
-                                                                                                                                {% endif %}
-                                                                                                                    {% endif %}{% endif %}
+                                                                                                                {% if event.amount_due == 0 %}
+                                                                                                                    Paid
+                                                                                                                {% else %}
+                                                                                                                    <span style="color:red;">Unpaid</span>
+                                                                                                                {% endif %}
+                                                                                                            {% endif %}{% endif %}
                                                                                                     </td>
 
                                                                                                     <td>{{ event.created_at|date:"Y-m-d" }}</td>

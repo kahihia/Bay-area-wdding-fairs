@@ -157,7 +157,7 @@
                                                                                             </th>
                                                                                             <th>Balance Due</th>
                                                                                             <th>Status</th>
-                                                                                            <th>Booth</th>
+                                                                                            <th>Booth #</th>
                                                                                             <th>Created at</th>
                                                                                         </tr>
                                                                                         </thead>
@@ -180,23 +180,23 @@
                                                                                                 <td>
                                                                                                     {% if event.status == "Deleted" %}
                                                                                                         Deleted
-                                                                                                        {% else %}
-                                                                                                                {% if event.total_amount == 0 %}
-                                                                                                                    {% if event.have_invoices %}
-                                                                                                                        Paid
-                                                                                                                    {% else %}
-                                                                                                                        No
-                                                                                                                        invoice
-                                                                                                                        available{% endif %}{% else %}
-                                                                                                                {% if event.amount_due == 0 %}
-                                                                                                                    Paid
-                                                                                                                {% else %}
-                                                                                                                    <span style="color:red;">Unpaid</span>
-                                                                                                                {% endif %}
-                                                                                                                {% endif %}{% endif %}
+                                                                                                    {% else %}
+                                                                                                        {% if event.total_amount == 0 %}
+                                                                                                            {% if event.have_invoices %}
+                                                                                                                Paid
+                                                                                                            {% else %}
+                                                                                                                No
+                                                                                                                invoice
+                                                                                                                available{% endif %}{% else %}
+                                                                                                            {% if event.amount_due == 0 %}
+                                                                                                                Paid
+                                                                                                            {% else %}
+                                                                                                                <span style="color:red;">Unpaid</span>
+                                                                                                            {% endif %}
+                                                                                                        {% endif %}{% endif %}
                                                                                                 </td>
 
-                                                                                                <td>{{ event.booth }}</td>
+                                                                                                <td>{{ event.booth_no }}</td>
                                                                                                 <td>{{ event.created_at|date:"Y-m-d" }}</td>
                                                                                             </tr>
                                                                                         {% endfor %}
