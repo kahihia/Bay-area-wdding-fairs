@@ -1,0 +1,69 @@
+{% extends 'bayareaweddingfairs/site/base/base_inner_layout.html' %}
+{% load static %}
+{% load myfilters %}
+
+{% block title %}
+    TICKETS & REGISTRATION
+{% endblock title %}
+
+{% block css_links %}
+    {#    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <link href="{% static "bawf/css/forms.css" %}" rel="stylesheet">
+    <style>
+        .white {
+            color: white;
+        }
+    </style>
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 30px;
+        }
+
+        ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        .categories-css ul {
+            margin-left: -40px;
+        }
+
+    </style>
+{% endblock css_links %}
+
+{% block content %}
+
+    <!-- WRAPPER -->
+    <div class="wrapper">
+
+        <section class="page-title-parallax fullscreen" style="background-color: #CCCCCC;">
+            <div class="container container-fullscreen">
+                <div class="text-middle">
+                    <form  id="id_form_reg" action="." method="post"
+                           role="form">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 p-30 background-white">
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <h3>Thank you for registering with Bay Area Wedding Fairs.</h3>
+                                    <hr />
+                                    <p>We will get back to you soon. In the meantime, if you have any questions, please email at info@bayareaweddingfairs.com</p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- END: WRAPPER -->
+    <!-- GO TOP BUTTON -->
+{% endblock content %}
