@@ -304,7 +304,7 @@ def save_to_S3(file_name):
     full_key_name = os.path.join(path, key_name)
     k = bucket.new_key(full_key_name)
     k.set_contents_from_filename(key_name, cb=percent_cb, num_cb=10)
-    link_ = 'https://yapjoy-static.s3.amazonaws.com/static/images/bawf/' + file_name
+    link_ = 'https://bayareaweddingfairs-static.s3.amazonaws.com/static/images/bawf/' + file_name
 
     print "link: ", link_
     os.remove(file_name)
