@@ -43,17 +43,19 @@
 
                                 <div class="col-md-12">
                                     <div class="clearfix"></div>
-                                    <br/>
-                                    <div class="text-center">
-                                        <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png" style="margin-bottom: 20px;" />
-                                        <h3 style="color: rgb(185, 76, 112);margin-bottom:20px;">Save time and money and purchase tickets now !</h3>
-                                    </div>
+                                 <div class="col-md-12  text-center">
+                                <h3>Save time and money and purchase tickets now !</h3>
+                                     <hr />
+
+
+
+                            </div>
                                     <form method="post" action="" id="payment-form" >
                                         {% csrf_token %}
 
 
-                                        <div class="table-responsive">
-                                            <select class="form-control" id="id_event" name="event">
+                                        <div>
+                                            <select class="form-control input-lg" id="id_event" name="event">
                                                 <option value="0">Select Wedding Fair</option>
                                                 {% for e in event %}
                                                     <option value="{{ e.id }}" data-date="{{ e.date }}">{{ e.name }} {{ e.date }}</option>
@@ -70,13 +72,13 @@
                                                 <input hidden id="{{ e.id }}__name" value="{{ e.name }} - {{ e.date }}" />
                                             {% endfor %}
                                             <div>
-                                                <h4 class="col-md-12 text-left" style="margin-top: 15px;margin-bottom:15px;">
+                                                <h4 class="text-left" style="margin-top: 15px;margin-bottom:15px;">
                                                     Event: <a id="event_name">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
                                                 </h4>
 
                                                 <div id="standard_div">
-                                                    <div class="col-md-12 text-left" >
-                                                        STANDARD ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
+                                                    <div class="text-left" >
+                                                        STANDARD ADMISSION:  <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
                                                         <option value="0" selected="selected">0</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -101,15 +103,15 @@
                                                     </select>
                                                         <div class="clearfix"></div>
                                                     </div>
-                                                    <div class="col-md-12 text-left" style="margin-bottom:15px;">
+                                                    <h4 class="text-left" style="margin-bottom:15px;">
 
                                                         Price: <a id="event_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                    </div>
+                                                    </h4>
                                                 </div>
                                                 <div id="earlybird_div">
 
-                                                    <div class="col-md-12 text-left">
-                                                        EARLY BIRD DISCOUNTED ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="earlybird-event-quantity" id="id_form-earlybird-quantity" name="earlybirdTickets">
+                                                    <div class="text-left">
+                                                        EARLY BIRD DISCOUNTED ADMISSION:  <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="earlybird-event-quantity" id="id_form-earlybird-quantity" name="earlybirdTickets">
                                                         <option value="0" selected="selected">0</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -134,17 +136,17 @@
                                                     </select>
                                                         <div class="clearfix"></div>
                                                     </div>
-                                                    <div class="col-md-12 text-left"  style="margin-bottom:15px;">
+                                                    <h4 class="text-left"  style="margin-bottom:15px;">
                                                         Price: <a id="earlybirds_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                    </div>
+                                                    </h4>
                                                 </div>
 
 
 
                                                 <div id="group_div">
 
-                                                    <div class="col-md-12 text-left">
-                                                        GROUP DISCOUNTED TICKETS (4+):  <select style="width:80px;display: inline;" data-ga-interaction-id="group-event-quantity" id="id_form-group-quantity" name="groupTickets">
+                                                    <div class="text-left">
+                                                        GROUP DISCOUNTED TICKETS (4+):  <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="group-event-quantity" id="id_form-group-quantity" name="groupTickets">
                                                         <option value="0" selected="selected">0</option>
                                                         <option value="4">4</option>
                                                         <option value="5">5</option>
@@ -166,9 +168,9 @@
                                                     </select>
                                                         <div class="clearfix"></div>
                                                     </div>
-                                                    <div class="col-md-12 text-left" style="margin-bottom:15px;">
+                                                    <h4 class="text-left" style="margin-bottom:15px;">
                                                         Price: <a id="group_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                    </div>
+                                                    </h4>
 
 
                                                 </div>
@@ -179,16 +181,16 @@
 
                                         </div>
 
-                                        <div class="col-md-12" style="padding:0px;">
-                                            <div class="col-md-8 col-sm-8 col-xs-10 np">
+                                        <div style="padding:0px;">
+                                            <div class="col-xs-6 np" style="padding:0px">
                                                 <input style="width: 96%" type="text" id="promocode" class="form-control pull-left" maxlength="255" name="promocode" placeholder="Type promocode here to get discount" />
                                                 <div class="clearfix"></div>
                                             </div>
-                                            <div class="col-md-4 col-sm-4 col-xs-2 np">
-                                                <input type="button" class="btn vd_btn btn-brown pull-left"   id="apply_promocode" name="apply_promocode" value="Apply" />
+                                            <div class="col-xs-4">
+                                                <input type="button" class="btn btn-primary pull-left"   id="apply_promocode" name="apply_promocode" value="Apply" />
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12 np">
+                                            <div class="np">
                                                 <div class="clearfix"></div>
                                                 <div id="error_promotion" style="color: red"></div>
                                                 <div id="success_promotion" ></div>
@@ -198,7 +200,7 @@
                                         </div><div class="clearfix"></div>
                                         <div class="" style="padding:0px;margin-top:15px;">
                                             <div class="text-left" style="padding:0px;">
-                                                <h4>Total: $<p style="display: inline;" id="total_ticket_price">0</p></h4>
+                                                <h2>Total: $<p style="display: inline;" id="total_ticket_price">0</p></h2>
                                             </div>
                                             <input  type="hidden" name="hidden_total" value="$xx" id="hidden_total"/>
                                         </div>
@@ -215,11 +217,11 @@
                                             <input type="hidden" name="event_date" id="event_date" />
                                             <div id="error_email" style="color:red"></div>
                                             <p style="font-size:20px;color:grey;">
-                                                <input id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated below
+                                                <label><input id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated below</label>
                                                 <br />
                                             <div id="agree_error" style="color:red;"></div>
                                             </p>
-                                            <input style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" type="submit" class="btn vd_btn btn-brown" value="BUY NOW" id="submit-form" />
+                                            <input style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" type="submit" class="btn btn-primary" value="BUY NOW" id="submit-form" />
 
                                             <div class="text-left  font-small-policy" style="margin-top:10px;">
                                                 <b style="font-size: 15px;">
@@ -254,7 +256,11 @@
 {% block jquery_page_scripts %}
 
     <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script>
+        $('#id_month').attr('class','form-control input-lg')
+        $('#id_year').attr('class','form-control input-lg')
+        $('#id_phone').mask('(000) 000-0000');
         var event_price =0;
         var earlybird = 0;
         var group=0;

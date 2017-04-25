@@ -52,6 +52,7 @@ def OurShows(request):
                 'name':event.name,
                 'location':event.location,
                 'date':str(event.date),
+                'id':event.id,
             }
             return HttpResponse(json.dumps(data))
     events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
@@ -75,7 +76,10 @@ def BrideGroomRegistration(request):
     cat = ""
     eventsCheck = None
     how_heard = None
-    inteventsIDList = None
+    show = None
+    if "show" in request.GET:
+        show = request.GET.get('show')
+    inteventsIDList = []
     form = bg_registration_form()
     if request.method == "POST":
         form = bg_registration_form(request.POST)
@@ -83,7 +87,6 @@ def BrideGroomRegistration(request):
         how_heard = None
         eventsIDList = request.POST.getlist('eventsCheck')
         how_heard = request.POST.get('how_heard')
-        inteventsIDList = []
         if eventsIDList:
             for x in eventsIDList:
                 inteventsIDList.append(int(x))
@@ -158,6 +161,11 @@ def BrideGroomRegistration(request):
     converging events by season
     """
     events = Event_fairs.objects.filter(Q(is_expired=False)).order_by('date')
+    try:
+        inteventsIDList.append(int(show))
+    except Exception as e:
+        print e
+
     content = {
         'form': form,
         'events': events,
@@ -167,6 +175,7 @@ def BrideGroomRegistration(request):
         'eventsCheck': eventsCheck,
         'all_events': events,
         'how_heard': how_heard,
+        'show': show,
     }
     return render(request, "bayareaweddingfairs/site/BGRegister/BGRegister.html", content)
 
@@ -235,7 +244,6 @@ def BrideGroomTicket(request):
                 )
             try:
                 if charge:
-                    print "event: ",
                     code = id_generator()
                     qr = pyqrcode.create(code)
                     filename = '{}'.format((datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
@@ -265,7 +273,7 @@ def BrideGroomTicket(request):
                                                         ticket.group_ticket,
                                                         int(ticket.amount / 100), ticket.promocode_success),
                                                     object=ticket, link=image_link)
-                    return render(request, "vendroid/bayareaweddingfairs_tickets/thankyou_page.html", {
+                    return render(request, "bayareaweddingfairs/site/BGTicket/Success.html", {
                         'object': ticket,
                     })
             except Exception as e:
@@ -413,6 +421,9 @@ def BecomeExhibitor(request):
 
 def VendorRegistrationThankYou(request):
     return render(request, "bayareaweddingfairs/site/become_exhibitor/thank_you.html")
+
+def BrideGroomTicketSuccess(request):
+    return render(request, "bayareaweddingfairs/site/BGTicket/Success.html")
 
 def BrideRegistrationThankYou(request):
     return render(request, "bayareaweddingfairs/site/BGRegister/thank_you.html")

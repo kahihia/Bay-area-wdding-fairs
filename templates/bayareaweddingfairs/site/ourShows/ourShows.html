@@ -91,11 +91,11 @@
                         <div class="row">
                             <div class="col-sm-6 xs-box">
                                 <h4>( PRE-REGISTRATION IS REQUIRED )</h4>
-                                <a href="{% url "index__bride_groom_registration" %}" class="btn btn-primary">Registration</a>
+                                <a href="{% url "index__bride_groom_registration" %}" id="show_reg_id" class="btn btn-primary">Registration</a>
                             </div>
                             <div class="col-sm-6" >
                                 <h4>( ALREADY PRE-REGISTERED? )</h4>
-                                <a href="{% url "index__bride_groom_registration" %}" class="btn btn-primary">Buy Tickets</a>
+                                <a href="{% url "index__bride_groom_ticket" %}" class="btn btn-primary">Buy Tickets</a>
                             </div>
                         </div>
                         <hr />
@@ -146,6 +146,7 @@
                 success: function (data) {
                     var obj = jQuery.parseJSON(data);
                     console.log(obj.image)
+                    $('#show_reg_id').attr('href','{% url "index__bride_groom_registration" %}'+'?show='+obj.id)
                     $('#updates').html(obj.description)
                     $('#show-name').html(obj.name)
                     $('#show-location').html(obj.date+' | '+obj.location)
