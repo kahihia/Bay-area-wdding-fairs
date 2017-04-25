@@ -270,7 +270,7 @@ def BrideRegistrationThankYou(request):
 
 def shopDetail(request, id):
     """replace the id with slug"""
-    item = ShopVendorsItem.objects.get(id=id)
+    item = get_object_or_404(ShopVendorsItem, id=id)
     itemDetail = ShopVendorsItemDetail.objects.filter(vendorItems=item)
 
     context = {
