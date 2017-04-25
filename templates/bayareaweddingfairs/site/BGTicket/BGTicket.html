@@ -1,0 +1,527 @@
+{% extends 'bayareaweddingfairs/site/base/base_inner_layout.html' %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static "bawf/css/forms.css" %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 80px;
+        }
+        @media only screen and (max-width: 500px) {
+            .font-small-policy {
+                font-size: 2px;
+            }
+        }
+    </style>
+
+    <div class="wrapper">
+
+        <section class="page-title-parallax fullscreen" style="background-color: #CCCCCC;">
+            <div class="container container-fullscreen">
+                <div class="text-middle">
+                    <div class="tab-content">
+                        {% if successMessage %}
+                            <div class="flashes">
+                                <div class="alert alert-success">{{ successMessage }}</div>
+                            </div>
+                        {% endif %}
+                        {% if error_message %}
+                            <div class="flashes">
+                                <div class="alert alert-danger">{{ error_message }}</div>
+                            </div>
+                        {% endif %}
+                        <div class="tab-pane active" id="privacy">
+                            <div class="col-md-6 col-md-offset-3 p-30 background-white" style="font-size: 15px;">
+
+                                <div class="col-md-12">
+                                    <div class="clearfix"></div>
+                                    <br/>
+                                    <div class="text-center">
+                                        <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png" style="margin-bottom: 20px;" />
+                                        <h3 style="color: rgb(185, 76, 112);margin-bottom:20px;">Save time and money and purchase tickets now !</h3>
+                                    </div>
+                                    <form method="post" action="" id="payment-form" >
+                                        {% csrf_token %}
+
+
+                                        <div class="table-responsive">
+                                            <select class="form-control" id="id_event" name="event">
+                                                <option value="0">Select Wedding Fair</option>
+                                                {% for e in event %}
+                                                    <option value="{{ e.id }}" data-date="{{ e.date }}">{{ e.name }} {{ e.date }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <input hidden id="0__price" value="0" />
+                                            <input hidden id="0__earlybird_ticket" value="0" />
+                                            <input hidden id="0__group_ticket" value="0" />
+                                            <input hidden id="0__name" value="Select an event" />
+                                            {% for e in event %}
+                                                <input hidden id="{{ e.id }}__price" value="{{ e.amount }}" />
+                                                <input hidden id="{{ e.id }}__earlybird_ticket" value="{{ e.earlybird_ticket }}" />
+                                                <input hidden id="{{ e.id }}__group_ticket" value="{{ e.group_ticket }}" />
+                                                <input hidden id="{{ e.id }}__name" value="{{ e.name }} - {{ e.date }}" />
+                                            {% endfor %}
+                                            <div>
+                                                <h4 class="col-md-12 text-left" style="margin-top: 15px;margin-bottom:15px;">
+                                                    Event: <a id="event_name">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                </h4>
+
+                                                <div id="standard_div">
+                                                    <div class="col-md-12 text-left" >
+                                                        STANDARD ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
+                                                        <option value="0" selected="selected">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                        <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                        <option value="15">15</option>
+                                                        <option value="16">16</option>
+                                                        <option value="17">17</option>
+                                                        <option value="18">18</option>
+                                                        <option value="19">19</option>
+                                                        <option value="20">20</option>
+                                                    </select>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="col-md-12 text-left" style="margin-bottom:15px;">
+
+                                                        Price: <a id="event_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                    </div>
+                                                </div>
+                                                <div id="earlybird_div">
+
+                                                    <div class="col-md-12 text-left">
+                                                        EARLY BIRD DISCOUNTED ADMISSION:  <select style="width:80px;display: inline;" data-ga-interaction-id="earlybird-event-quantity" id="id_form-earlybird-quantity" name="earlybirdTickets">
+                                                        <option value="0" selected="selected">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                        <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                        <option value="15">15</option>
+                                                        <option value="16">16</option>
+                                                        <option value="17">17</option>
+                                                        <option value="18">18</option>
+                                                        <option value="19">19</option>
+                                                        <option value="20">20</option>
+                                                    </select>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="col-md-12 text-left"  style="margin-bottom:15px;">
+                                                        Price: <a id="earlybirds_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div id="group_div">
+
+                                                    <div class="col-md-12 text-left">
+                                                        GROUP DISCOUNTED TICKETS (4+):  <select style="width:80px;display: inline;" data-ga-interaction-id="group-event-quantity" id="id_form-group-quantity" name="groupTickets">
+                                                        <option value="0" selected="selected">0</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                        <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                        <option value="15">15</option>
+                                                        <option value="16">16</option>
+                                                        <option value="17">17</option>
+                                                        <option value="18">18</option>
+                                                        <option value="19">19</option>
+                                                        <option value="20">20</option>
+                                                    </select>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="col-md-12 text-left" style="margin-bottom:15px;">
+                                                        Price: <a id="group_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="clearfix"></div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12" style="padding:0px;">
+                                            <div class="col-md-8 col-sm-8 col-xs-10 np">
+                                                <input style="width: 96%" type="text" id="promocode" class="form-control pull-left" maxlength="255" name="promocode" placeholder="Type promocode here to get discount" />
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-2 np">
+                                                <input type="button" class="btn vd_btn btn-brown pull-left"   id="apply_promocode" name="apply_promocode" value="Apply" />
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12 np">
+                                                <div class="clearfix"></div>
+                                                <div id="error_promotion" style="color: red"></div>
+                                                <div id="success_promotion" ></div>
+
+                                            </div>
+
+                                        </div><div class="clearfix"></div>
+                                        <div class="" style="padding:0px;margin-top:15px;">
+                                            <div class="text-left" style="padding:0px;">
+                                                <h4>Total: $<p style="display: inline;" id="total_ticket_price">0</p></h4>
+                                            </div>
+                                            <input  type="hidden" name="hidden_total" value="$xx" id="hidden_total"/>
+                                        </div>
+
+                                        <!-- Panel Widget -->
+
+                                        <div class="panel widget">
+                                            <hr />
+
+                                            {{ form.as_p  }}
+
+                                            <input type="hidden" name="total_amount" id="total_amount" />
+                                            <input type="hidden" name="stripe_token" id="stripe_token" />
+                                            <input type="hidden" name="event_date" id="event_date" />
+                                            <div id="error_email" style="color:red"></div>
+                                            <p style="font-size:20px;color:grey;">
+                                                <input id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated below
+                                                <br />
+                                            <div id="agree_error" style="color:red;"></div>
+                                            </p>
+                                            <input style="text-transform: uppercase; background-color: #db2681; font-size: 18px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: inline-block; margin: 0; text-align: center; text-decoration: none; font-weight: bold; color: #ffffff; font-family: arial,sans-serif !important; padding: 10px 20px;" type="submit" class="btn vd_btn btn-brown" value="BUY NOW" id="submit-form" />
+
+                                            <div class="text-left  font-small-policy" style="margin-top:10px;">
+                                                <b style="font-size: 15px;">
+                                                    Refund Policy:
+                                                </b>
+                                                <p style="font-size: 15px;">Tickets are non-refundable. However, tickets can be transferred to other events only if approved by Bay Area Wedding Fairs.</p>
+
+                                                <b style="font-size: 15px;">Waiver Release</b>
+
+                                                <p style="font-size: 15px;">Purchasing this Ticket provides entrance for one person into a Bay Area Wedding Fair. All Ticket sales are final unless pre-approved by Bay Area Wedding Fairs. Bay Area Wedding Fairs reserves the right to permit or refuse entrance for any reason it deems detrimental to the Event. Once the attendee enters the Event they acknowledge that the attendee/ticket holder is not covered by any liability policy or entity and agrees to hold Bay Area Wedding Fairs harmless for any physical, emotional, financial or any other form of damages as a result of attending the Event. Individual Exhibitors have sole responsibility of their personal, physical, promotional or financial interactions with each attendee/ticket holder. Bay Area Wedding Fairs may advertise certain attractions or promotions that due to circumstances beyond its control may not be available at any specific event. Last Minute Changes are due to exhibitor/provider failures and not Bay Area Wedding Fairs. No Refunds or remedies are available in these cases. Attendees must obey all laws and may be subject to the host property’s security requests. Failure to adhere to these requests and/or failure to abide by the rules stated herein may result in ejection from the event with no possibility of refund. Enjoy the Event!</p>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                    <div class="clearfix"></div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock content %}
+{% block jquery_page_scripts %}
+
+    <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+    <script>
+        var event_price =0;
+        var earlybird = 0;
+        var group=0;
+        var total_value = 0;
+        var standard_quantity = 0;
+        var earlybird_quantity = 0;
+        var group_quantity = 0;
+        var total = $('#total_ticket_price');
+        var hidden_total = $('#hidden_total');
+        $("#standard_div").hide()
+        function get_event(){
+            var event_id = $('#id_event').val();
+
+            event_price = $('#'+event_id+'__price').val();
+            earlybird = $('#'+event_id+'__earlybird_ticket').val();
+            group = $('#'+event_id+'__group_ticket').val();
+
+
+            var event_name = $('#'+event_id+'__name').val();
+
+            $('#event_amount').html(event_price);
+            $('#earlybirds_amount').html(earlybird);
+            $('#group_amount').html(group);
+
+            $('#event_name').html(event_name);
+
+            $('#id_form-earlybird-quantity ').get(0).selectedIndex = 0
+            $('#id_form-group-quantity ').get(0).selectedIndex = 0
+        }
+        function event_selection_function(){
+            get_event();
+            $("#group_div").show();
+            $("#earlybird_div").show();
+            $("#standard_div").show();
+            if (earlybird <= 0.0)
+            {
+                $("#earlybird_div").hide();
+            }
+            if (event_price <= 0.0)
+            {
+                $("#standard_div").hide();
+            }
+            if(group <= 0.0)
+            {
+                $("#group_div").hide();
+            }
+
+            $('input[name="hidden_total"]').val('');
+            total_value = 0;
+            total.text(total_value);
+            {#            standard_quantity = $('#id_form-0-quantity :selected').text();#}
+            earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
+            group_quantity = $('#id_form-group-quantity :selected').text();
+            console.log(standard_quantity, earlybird_quantity, group_quantity);
+            calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
+        }
+        $('#id_event').change(function(){
+
+            event_selection_function();
+            var event_date = $('#id_event').find(':selected').data('date');
+            $("#event_date").val(event_date);
+            console.log('event: ', event_date, $(this));
+
+            var m_names = new Array("Jan. ", "Feb. ", "Mar. ",
+                "Apr. ", "May. ", "Jun. ", "Jul. ", "Aug. ", "Sep. ",
+                "Oct. ", "Nov. ", "Dec. ");
+
+            var d = new Date();
+            var curr_date = d.getDate();
+            var curr_month = d.getMonth();
+            var curr_year = d.getFullYear();
+            var current_date = m_names[curr_month] + curr_date +', ' +curr_year;
+            console.log('date: ', current_date, event_date);
+            if(current_date == event_date){
+                $("#standard_div").show();
+                $("#earlybird_div").hide();
+                $("#group_div").hide()
+
+            }else{
+                $("#standard_div").hide();
+                $("#earlybird_div").show();
+                $("#group_div").show()
+            }
+
+
+        });
+        function calculateAmount(standard_quantity, earlybird_quantity, group_quantity) {
+
+            total_value = (standard_quantity * event_price).toFixed(2);
+            total_value = +total_value + +(earlybird_quantity * earlybird).toFixed(2);
+            total_value = +total_value + +(group_quantity * group).toFixed(2);
+
+
+            $('input[name="hidden_total"]').val(total_value);
+            total.text(total_value);
+        }
+
+        $(document).ready(function () {
+            event_selection_function()
+            get_event();
+            $("#id_email").resetForm();
+
+            $('#error_email').html('');
+
+
+            $("#id_form-0-quantity").change(function () {
+                standard_quantity = $('#id_form-0-quantity :selected').text();
+                earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
+                group_quantity = $('#id_form-group-quantity :selected').text();
+                calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
+            });
+
+            $("#id_form-earlybird-quantity").change(function () {
+                var selected;
+                standard_quantity = $('#id_form-0-quantity :selected').text();
+                earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
+                group_quantity = $('#id_form-group-quantity :selected').text();
+                calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
+                var applyBtn = $("#apply_promocode").val();
+                if(applyBtn == 'Applied'){
+                    applyPromoCode();
+                }
+
+            });
+
+            $("#id_form-group-quantity").change(function () {
+                standard_quantity = $('#id_form-0-quantity :selected').text();
+                earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
+                group_quantity = $('#id_form-group-quantity :selected').text();
+
+                calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
+                var applyBtn = $("#apply_promocode").val();
+                if(applyBtn == 'Applied'){
+                    applyPromoCode();
+                }
+            });
+
+
+
+            $('#apply_promocode').click(function () {
+
+                $('#success_promotion').html('');
+                $('#error_promotion').html('');
+
+                var promotion = $("#promocode").val();
+                if (total.text() != '0'){
+                    if(promotion != ''){
+                        applyPromoCode();
+                    }
+                    else{
+                        $('#error_promotion').html('Please Enter the Promotion Code');
+                    }
+                }
+                else {
+                    $('#error_promotion').html('Please first select the quantity ');
+                }
+
+            });
+
+            function applyPromoCode()
+            {
+                $.ajax({
+                    url: "/bayareaweddingfairs/tickets/promocode/",
+                    type: "GET",
+                    data: {
+                        'promocode': $("#promocode").val(),
+                        'total_text':total.text(),
+                        'quantity': $('#id_form-0-quantity :selected').text(),
+                        'eventid' : $("#id_event option:selected").val(),
+                        'earlyquantity' : $("#id_form-earlybird-quantity option:selected").val(),
+                        'groupquantity' : $("#id_form-group-quantity option:selected").val()
+
+                    },
+
+                    success: function (data) {
+                        if (data['response'] == 'error'){
+
+                            $('#error_promotion').html('Promotion Code is not Valid');
+
+                        }
+                        if(data['response'] == 'success'){
+                            $('#success_promotion').html('Promotion code is applied successfully. Your updated amount is: '+ (data['discount']).toFixed(2));
+                            total.text((data['discount']).toFixed(2));
+                            $(this).prop('disabled', true);
+                            $('#apply_promocode').attr('disabled', 'disabled');
+                            $('#apply_promocode').val('Applied');
+                        }
+                    },
+
+                    error: function(error) {
+                        console.log("error: "+error.message);
+
+                    }
+                })
+
+            }
+
+            $('#submit-form').click(function(event) {
+                {#                event.preventDefault();#}
+                //Stripe.setPublishableKey('pk_test_tZdpLY6bm1aDvhy9tBdfyMeV');
+                var email = $('#id_email').val();
+                var phone = $('#id_phone').val();
+                var number = $('#id_number').val();
+                var checked_box = $('#agreement_check').is(":checked");
+
+                if((email == '')) {
+                    event.preventDefault();
+                    $('#error_email').html('Email is required');
+                    return false
+                }
+                if((number == '')) {
+                    event.preventDefault();
+                    $('#error_email').html('Card Number is required');
+                    return false
+                }
+                if((phone == '')) {
+                    $('#error_email').html('Phone is required');
+                    return false
+                }
+                if(total.text() == '0'){
+                    event.preventDefault();
+                    $('#error_email').html('Please Select the Quantity ');
+                    return false
+                }
+                if(checked_box == false){
+                    event.preventDefault();
+                    $('#error_email').html('Please accept the terms and conditions. ');
+                    return false
+                }
+
+                else {
+                    $("#stripe-error-message").html("");
+                    if ($("#id_number").length == 1) {
+                        var key = '{{ pub_key }}';
+                        Stripe.setPublishableKey(key);
+                        var form = this;
+                        var card = {
+                            number: $("#id_number").val(),
+                            expMonth: $("#id_month").val(),
+                            expYear: $("#id_year").val(),
+                        };
+
+                        Stripe.card.createToken(card, function (status, response) {
+
+                            if (status === 200) {
+                                $("#stripe_token").val(response.id);
+
+                                $("#payment-form").submit();
+                            } else {
+                                $("#error_email").text(response.error.message);
+                            }
+                        });
+                        return false;
+                    }else{
+                        console.log('in else')
+                    }
+                }
+
+                $('#error_email').html('Your Ticket is reserved you will get the Email on provided email address');
+                $('#error_email').css("color",'green')
+
+            });
+
+
+        });
+
+
+    </script>
+
+{% endblock jquery_page_scripts %}

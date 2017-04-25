@@ -1,21 +1,26 @@
 from django.shortcuts import render
 from .models import *
-from yapjoy_files.forms import bg_registration_form, registration_event_form, LasVegasForm
+from yapjoy_files.forms import *
 from django.contrib.auth.models import User
 from yapjoy_registration.models import UserProfile, Company
 from yapjoy_files.models import Register_Event_Interested
+from yapjoy_registration.models import UserProfile
+from yapjoy_registration.commons import id_generator
 from yapjoy_files.models import Register_Event, CategoryOptions
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, HttpResponse
 from yapjoy_files.views import send_bawf_email
+from bayareaweddingfairs_tickets.views import *
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from yapjoy_files.models import Event_fairs
 from datetime import datetime
 from django.core.urlresolvers import reverse
-import json
+import json, stripe, pyqrcode, boto
+
 
 def Index(request):
     return render(request, "bayareaweddingfairs/site/home/home.html")
+
 
 def ShopVendors(request):
     vendorShopsList = []
@@ -61,6 +66,7 @@ def sort_months(events):
     for event in events:
         list_months[event.date.month].append(event)
     return list_months
+
 
 @csrf_exempt
 def BrideGroomRegistration(request):
@@ -166,6 +172,149 @@ def BrideGroomRegistration(request):
 
 def VendorRegistrationIndex(request):
     return HttpResponse('Awaiting')
+
+@csrf_exempt
+def BrideGroomTicket(request):
+    event = None
+    hide_thanks = request.GET.get('nothanks')
+    """
+    Needs to be converted to Live keys via
+    settings.STRIPE_SECRET_KEY_BAWF
+    """
+    stripe.api_key = 'sk_test_z3b8Yfc0Mcuh0P3M7VDfGZkt'
+    ticketform = CreditCardBAWFTicketForm()
+    valid_code = ""
+    error_message = ""
+    amount = 0
+    promo_code_discount = None
+    if request.method == 'POST':
+        ticketform = CreditCardBAWFTicketForm(request.POST or None)
+        if ticketform.is_valid():
+            email = ticketform.cleaned_data.get('email')
+            event = request.POST.get('event')
+            phone = ticketform.cleaned_data.get('phone')
+            month = ticketform.cleaned_data.get('month')
+            year = ticketform.cleaned_data.get('year')
+            stripe_token = request.POST.get('stripe_token')
+            promocode = request.POST.get('promocode')
+            quantity_tickets = request.POST.get('quantityTickets')
+            earlybird_ticket = request.POST.get('earlybirdTickets')
+            group_ticket = request.POST.get('groupTickets')
+            event_date = request.POST.get('event_date')
+            event = Event_fairs.objects.get(id=event)
+            group = 0
+            easybird = 0
+            if str(event_date) == str(datetime.now().date().strftime('%b. %d, %Y')):
+                amount = float(event.amount) * float(int(quantity_tickets))
+            else:
+                amount = 0
+            easybird = (float(event.earlybird_ticket) * float(int(earlybird_ticket)))
+            group = float(event.group_ticket) * float(int(group_ticket))
+            amount = amount + easybird + group
+            try:
+                promo_code_discount = Promocode.objects.get(code=promocode)
+                if promo_code_discount.is_Available:
+                    if promo_code_discount.type == Promocode.AMOUNT:
+                        new_earlyBirdPrice = float(event.earlybird_ticket) - float(promo_code_discount.amount_percent)
+                        new_groupPrice = float(event.group_ticket) - float(promo_code_discount.amount_percent)
+                        amount = float(new_groupPrice) * int(group_ticket) + float(new_earlyBirdPrice) * int(
+                            earlybird_ticket)
+
+                    elif promo_code_discount.type == Promocode.PERCENT:
+                        amount = (amount / 100) * float(promo_code_discount.amount_percent)
+            except Exception as e:
+                print e
+            amount = int(amount * 100)
+            charge = None
+            if stripe_token:
+                charge = stripe.Charge.create(
+                    amount=amount,  # amount in cents, again
+                    currency="usd",
+                    source=stripe_token,
+                    description="Ticket purchased by %s, quatity: %s, amount: %s" % (email, quantity_tickets, amount)
+                )
+            try:
+                if charge:
+                    print "event: ",
+                    code = id_generator()
+                    qr = pyqrcode.create(code)
+                    filename = '{}'.format((datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
+                    filename = filename + '.png'
+                    qr.png(filename, scale=7)
+                    image_link = save_to_S3(filename)
+                    ticket = EventTickets()
+                    ticket.event = event
+                    ticket.email = email
+                    ticket.phone = phone
+                    ticket.card = charge.stripe_id
+                    ticket.amount = amount
+                    ticket.quantity = quantity_tickets
+                    ticket.earlybird_ticket = earlybird_ticket
+                    ticket.group_ticket = group_ticket
+                    ticket.code = code
+                    ticket.path_upload = image_link
+                    if promo_code_discount:
+                        ticket.promocode_success = promo_code_discount
+                    ticket.save()
+                    result = send_email_ticket_bawf(sender="info@bayareaweddingfairs.com",
+                                                    subject="Bay Area Wedding Fairs: Ticket",
+                                                    receive=email,
+                                                    title="Thank you for purchasing Bay Area Wedding Fairs Tickets",
+                                                    message='Your ticket reservation has been made against the following show: <br /><br />- %s<br /><br />Quantity of Standard tickets: %s<br />Quantity of EarlyBirds Discounted tickets: %s<br />Quantity of Group Discounted tickets: %s<br />Total amount processed: $%s<br />Promotion code (if any): %s<br /><br />We are looking forward to have you in the show, feel free to contact for any queries info@bayareaweddingfairs.com' % (
+                                                        event, ticket.quantity, ticket.earlybird_ticket,
+                                                        ticket.group_ticket,
+                                                        int(ticket.amount / 100), ticket.promocode_success),
+                                                    object=ticket, link=image_link)
+                    return render(request, "vendroid/bayareaweddingfairs_tickets/thankyou_page.html", {
+                        'object': ticket,
+                    })
+            except Exception as e:
+                print "exceptionBuyTickets: ", e.message
+        else:
+            print "form not valid"
+    """
+        Needs to be converted to Live keys via
+        settings.STRIPE_PUBLISHABLE_KEY_BAWF
+    """
+    context = {
+        'pub_key': 'pk_test_ic11SWVPcUHwZ1mDBEBTdSX1',
+        'event': Event_fairs.objects.filter(date__gte=datetime.now().date()).filter(amount__isnull=False).exclude(id__in=[46,47,48,49,50,51,52]).order_by('date'),
+        'form': ticketform,
+        'hide_thanks': hide_thanks,
+    }
+    return render(request, "bayareaweddingfairs/site/BGTicket/BGTicket.html", context)
+
+"""Local Settings """
+conn = boto.connect_s3(
+        aws_access_key_id='AKIAIXFGL3W7R47QWV2A',
+        aws_secret_access_key='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',
+    )
+# conn = boto.connect_s3(
+#         aws_access_key_id=AWS_ACCESS_KEY_ID,
+#         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+#     )
+bucket = conn.get_bucket(AWS_STORAGE_BUCKET_NAME)
+import sys
+
+
+def save_to_S3(file_name):
+
+    key_name = file_name
+    path = '/static/images/bawf/'
+    full_key_name = os.path.join(path, key_name)
+    k = bucket.new_key(full_key_name)
+    k.set_contents_from_filename(key_name, cb=percent_cb, num_cb=10)
+    link_ = 'https://yapjoy-static.s3.amazonaws.com/static/images/bawf/' + file_name
+
+    print "link: ", link_
+    os.remove(file_name)
+    return link_
+
+
+def percent_cb(complete, total):
+    sys.stdout.write('.')
+    sys.stdout.flush()
+
 
 @csrf_exempt
 def VendorRegistration(request):
