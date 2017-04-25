@@ -8,6 +8,6 @@ urlpatterns = patterns('',
     url(r'^become-an-exhibitor/', VendorRegistration, name="index__vendor_registration"),
     url(r'^$', Index),
     url(r'^become-an-exhibitor-2/', BecomeExhibitor, name="BecomeExhibitor"),
-   url(r'^(?P<id>[-_@.+0-9a-zA-Z ]+)/$', shopDetail, name="storefrontItemDetail")
+   url(r'^shop-vendors-details/(?P<id>\d+)/$', shopDetail, name="storefrontItemDetail")
 )
 
