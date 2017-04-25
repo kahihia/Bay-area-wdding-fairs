@@ -3,7 +3,7 @@
 {% load myfilters %}
 
 {% block title %}
-    TICKETS & REGISTRATION
+    VENDOR REGISTRATION
 {% endblock title %}
 
 {% block css_links %}
@@ -51,40 +51,27 @@
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3 p-30 background-white">
                             <div class="col-md-12 m-t-20 text-center">
-                                <h3>Pre-Registration is required
-                                    for attending bride and groom</h3>
-                                <p>(Registration or Ticket Sales Is Not Allowed At The
-                                    Show)</p>
-
-
+                                <h3>APPLY NOW TO BECOME AN EXHIBITOR</h3>
 
                             </div>
                             <div class="col-md-12 m-t-10 text-center">
-                                <h4 style="display:inline-block;">Already
-                                    Registered?</h4>
-                                <a style="margin-left:10px;display:inline-block;"
-                                   class="btn btn-primary"
-                                   href="https://bayareaweddingfairs.herokuapp.com/crm/invoices/addition/bg/success/iframev2/?nothanks=True">
-                                    BUY TICKET </a>
-                                <br />
-                                <h4 style="display:inline-block;margin-top:10px;color: #26B8F3;">Click to find discounted tickets</h4>
+                               
+
                                  <div class="hr-title hr-long center"><abbr>Registration Form</abbr> </div>
                             </div>
 {#                            <div class="col-sm-12 form-group">#}
                                 <div class="col-md-12 form-group">
                                     <div class="form-group">
-                                        &nbsp;<b> Wedding Fair(s)
-                                        Interested In (Please
-                                        Select)<b style="color:red">*</b></b>
-                                        {% for event in all_events %}
-                                        {% include "vendroid/CRM/_season_events.html" %}
-                                    {% endfor %}
+                                        &nbsp;<b>Wedding Fair(s) Interested In (Please Select)<b style="color:red">*</b></b>
+                                        {% for event in events %}
+                                                                                        {% include "vendroid/CRM/_season_events.html" %}
+                                                                                    {% endfor %}
                                     {% if eventsCheck %}
-                                        <div class="red">Please
-                                            select at least one
-                                            event
-                                        </div>
-                                    {% endif %}
+                                                                                            <div class="red">Please
+                                                                                                select at least an
+                                                                                                event
+                                                                                            </div>
+                                                                                        {% endif %}
                                     </div>
 
                                     <div class="clearfix"></div>
@@ -93,57 +80,54 @@
 
                             <div class="col-md-6 form-group">
                                 {#                                <label class="sr-only">First Name</label>#}
-                                {{ form.firstName|addcss:"form-control input-lg" }}
-                                <div class="red" id="error"></div>
-                                {% if form.firstName.errors %}
-                                    <div class="red">{{ form.firstName.errors.0 }}</div>
+                                {{ form.name|addcss:"form-control input-lg" }}
+                                {% if form.name.errors %}
+                                    <div class="red">{{ form.name.errors.0 }}</div>
                                 {% endif %}
                             </div><div class="col-md-6 form-group">
                             {#                            <label class="sr-only">Last Name</label>#}
-                            {{ form.lastName|addcss:"form-control input-lg" }}
-                            <div id="error_lastname" class="red"></div>
-                            {% if form.lastName.errors %}
+                            {{ form.business_name|addcss:"form-control input-lg" }}
+                            {% if form.business_name.errors %}
                                 <div class="red">
-                                    {{ form.lastName.errors.0 }}
+                                    {{ form.business_name.errors.0 }}
                                 </div>
                             {% endif %}
                         </div>
                             <div class="col-md-6 form-group">
                                 {#                                <label class="sr-only">Username</label>#}
-                                {{ form.city|addcss:"form-control input-lg" }}
-                                <div id="error_city" class="red"></div>
-                                {% if form.city.errors %}
+                                {{ form.phone|addcss:"form-control input-lg" }}
+                                {% if form.phone.errors %}
                                     <div class="red">
-                                        {{ form.city.errors.0 }}
+                                        {{ form.phone.errors.0 }}
                                     </div>
                                 {% endif %}
                             </div><div class="col-md-6 form-group">
                             {#                            <label class="sr-only">Password</label>#}
-                            {{ form.zip|addcss:"form-control input-lg" }}
+                            {{ form.email|addcss:"form-control input-lg" }}
                             <div id="error_zip" class="red"></div>
-                            {% if form.zip.errors %}
-                                <div class="red">{{ form.zip.errors.0 }}</div>
+                            {% if form.email.errors %}
+                                <div class="red">{{ form.email.errors.0 }}</div>
                             {% endif %}
 
                         </div>
 
                             <div class="col-md-6 form-group">
-                                {{ form.email|addcss:"form-control input-lg" }}
-                                {% if form.email.errors %}
-                                    <div class="red">{{ form.email.errors.0 }}</div>
+                                {{ form.city|addcss:"form-control input-lg" }}
+                                {% if form.city.errors %}
+                                    <div class="red">{{ form.city.errors.0 }}</div>
                                 {% endif %}
                             </div>
                             <div class="col-md-6 form-group">
-                                {{ form.phone|addcss:"form-control input-lg" }}
+                                {{ form.zip|addcss:"form-control input-lg" }}
                                 <div id="error_phone" class="red"></div>
-                                {% if form.phone.errors %}
-                                    <div class="red">{{ form.phone.errors.0 }}</div>{% endif %}
+                                {% if form.zip.errors %}
+                                    <div class="red">{{ form.zip.errors.0 }}</div>{% endif %}
                             </div>
                             <div class="col-md-6 form-group">
-                                {{ form.weddingDate|addcss:"form-control input-lg" }}
-                                {% if form.weddingDate.errors %}
+                                {{ form.categories|addcss:"form-control input-lg" }}
+                                {% if form.categories.errors %}
                                     <div class="red">
-                                        {{ form.weddingDate.errors.0 }}
+                                        {{ form.categories.errors.0 }}
                                     </div>
                                 {% endif %}
                             </div>
@@ -151,7 +135,7 @@
                                 <select class="form-control input-lg"
                                         id="id_how_heard"
                                         name="how_heard">
-                                    <option value="">How did you hear about us?
+                                    <option value="">How did you hear about us?*
                                     </option>
                                     <option {% if how_heard == "Facebook" %}selected{% endif %} value="Facebook">
                                         Facebook
@@ -176,18 +160,18 @@
                                     </option>
                                 </select>
                                 {% if form.how_heard.errors %}
-                                    <div class="red">{{ form.how_heard.errors.0 }}</div>
+                                                                                        <div class="red">{{ form.how_heard.errors.0 }}</div>
+                                                                                    {% endif %}
+                            </div>
+                         <div class="col-md-6 form-group">
+                                {{ form.website|addcss:"form-control input-lg" }}
+                                {% if form.website.errors %}
+                                    <div class="red">
+                                        {{ form.website.errors.0 }}
+                                    </div>
                                 {% endif %}
                             </div>
-                            <div class="col-md-12 form-group">
-                                <b>Wedding Professionals You Are
-                                                            Interested in?</b>
-                                                        <br/>
-                                                        {{ form.categories }}
-                                                        {% if form.categories.errors %}
-                                                            <div class="red">{{ form.categories.errors }}</div>
-                                                        {% endif %}
-                            </div>
+
                             <div class="col-md-12 form-group">
                                  <b>Comments</b>
                                                         <div class="">
@@ -215,127 +199,16 @@
     <!-- GO TOP BUTTON -->
 {% endblock content %}
 {% block jquery_links %}
-{#        <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>#}
-{#    <script type="text/plain"#}
-{#            src="https://raw.githubusercontent.com/igorescobar/jQuery-Mask-Plugin/master/src/jquery.mask.js"></script>#}
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-
 {% endblock jquery_links %}
 {% block jquery_page_scripts %}
-
-
     <script>
         $(function () {
-            $('#id_weddingDate').datepicker();
-            $('#id_weddingDate').data('inline', true);
             $('#id_phone').mask('(000) 000-0000');
         });
     </script>
-    <script>
-        var charReg = /^\s*[a-zA-Z0-9,\s]+\s*$/;
-        var numberReg = /^\s*[0-9,\s]+\s*$/;
-        $('#id_firstName').keyup(function () {
-            var inputVal = $(this).val();
-            if (!charReg.test(inputVal)) {
-                $("#error").html('No Special Characters Allowed')
-            }else{
-                $("#error").html('')
-            }
 
-        });
-        $('#id_lastName').keyup(function () {
-            var inputVal = $(this).val();
-            if (!charReg.test(inputVal)) {
-                $("#error_lastname").html('No Special Characters Allowed')
-            }else{
-                $("#error_lastname").html('')
-            }
-
-        });
-        $('#id_city').keyup(function () {
-            var inputVal = $(this).val();
-            if (!charReg.test(inputVal)) {
-                $("#error_city").html('No Special Characters Allowed')
-            }else{
-                $("#error_city").html('')
-            }
-        });
-        $('#id_comments').keyup(function () {
-            var inputVal = $(this).val();
-            if (!charReg.test(inputVal)) {
-                $("#error_comments").html('No Special Characters Allowed')
-            }else{
-                $("#error_comments").html('')
-            }
-        });
-        $('#id_zip').keyup(function () {
-            var inputVal = $(this).val();
-            if (!numberReg.test(inputVal)) {
-                $("#error_zip").html('Only Numbers are allowed')
-            } else {
-                $("#error_zip").html('')
-            }
-        });
-        $("#id_form_reg").submit(function (e) {
-            var first_name = $('#id_firstName').val();
-            var last_name = $("#id_lastName").val();
-            var city = $("#id_city").val();
-            var comments = $("#id_comments").val();
-            var zip = $("#id_zip").val();
-            var phone = $("#id_phone").val();
-            if (first_name != ''){
-                if (!charReg.test(first_name)) {
-                    $("#error").html('No Special Characters Allowed');
-{#                    return false#}
-                }
-            }
-            else{
-                $("#error").html('Please Enter First Name');
-{#                return false#}
-            }
-            if (last_name != ''){
-                if (!charReg.test(last_name)) {
-                    $("#error_lastname").html('No Special Characters Allowed');
-{#                    return false;#}
-                }
-            }else{
-                $("#error_lastname").html('Please Enter Last Name');
-{#                return false#}
-            }
-            if (city != ''){
-                if (!charReg.test(city)) {
-                    $("#error_city").html('No Special Characters Allowed');
-{#                    return false#}
-                }
-            }else{
-                $("#error_city").html('Please Enter City');
-{#                return false#}
-            }
-            if (comments != ''){
-                if (!charReg.test(comments)) {
-                    $("#error_comments").html('No Special Characters Allowed');
-{#                    return false#}
-                }
-            }
-            if (zip != ''){
-                if (!numberReg.test(zip)) {
-                    $("#error_zip").html('Only Numbers are allowed')
-{#                    return false#}
-                }
-            }else{
-                $("#error_zip").html('Please Enter Zip');
-{#                return false#}
-            }
-            if(phone == ''){
-                $("#error_phone").html('Please Enter the Phone Number');
-{#                return false;#}
-            }
-            if(phone == '' | zip != '' | comments != '' | city != '' | last_name != '' | first_name != ''){
-                return false
-            }
-        });
-    </script>
     <script>
     $('#id_comments').attr('cols','20')
     </script>

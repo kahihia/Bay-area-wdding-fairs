@@ -1,0 +1,53 @@
+{% extends 'bayareaweddingfairs/site/base/base_inner_layout.html' %}
+{% load static %}
+{% load myfilters %}
+
+{% block title %}
+    THANK YOU, BAY AREA WEDDING FAIRS
+{% endblock title %}
+
+{% block css_links %}
+    <link href="{% static "bawf/css/forms.css" %}" rel="stylesheet">
+    <style>
+        ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+        .categories-css ul {
+            margin-left: -40px;
+        }
+    </style>
+{% endblock css_links %}
+{% block content %}
+    <!-- WRAPPER -->
+    <div class="wrapper">
+        <section class="page-title-parallax fullscreen" style="background-color: #CCCCCC;">
+            <div class="container container-fullscreen">
+                <div class="text-middle">
+                    <form  id="id_form_reg" action="." method="post"
+                           role="form">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 p-30 background-white">
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <h3>Thank you for registering. We look forward to seeing you at the Wedding Fair.</h3>
+                                    <hr />
+                                    <p>Save time and money and purchase tickets now !</p>
+                                </div>
+                                <div class="col-md-12 m-t-10 text-center">
+                                    <a style="margin-left:10px;display:inline-block;"
+                                       class="btn btn-primary"
+                                       href="#">
+                                        CLICK HERE TO GET TICKETS </a>
+                                    <br />
+                                    <p>Tell your friends you are going to the wedding fair.<br />Click the button below, choose your fair and click ‘Join’.</p>
+                                    <a href="https://www.facebook.com/baweddingfairs/events" target="_blank"><img style="width: 300px;" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/1442956760.png"></a>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}

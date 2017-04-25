@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from .models import *
-from yapjoy_files.forms import bg_registration_form
+from yapjoy_files.forms import bg_registration_form, registration_event_form
 from django.contrib.auth.models import User
-from yapjoy_registration.models import UserProfile
+from yapjoy_registration.models import UserProfile, Company
+from yapjoy_files.models import Register_Event_Interested
 from yapjoy_files.models import Register_Event, CategoryOptions
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, HttpResponse
 from yapjoy_files.views import send_bawf_email
@@ -10,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from yapjoy_files.models import Event_fairs
 from datetime import datetime
+from django.core.urlresolvers import reverse
 import json
 
 def Index(request):
@@ -140,7 +142,7 @@ def BrideGroomRegistration(request):
                 firstName, lastName, email, phone, city, zip, event_name, cat, how_heard, comments)
                 send_bawf_email(sendTo='info@bayareaweddingfairs.com', message=message_information, title="",
                                 subject="Bride / Groom Registration Information!")
-                return HttpResponseRedirect('/crm/registration/bg/success/iframe/')
+                return HttpResponseRedirect(reverse("index__bride_registration__success"))
             else:
                 error_message = "Select an event atleast"
                 eventsCheck = "Select an event atleast"
@@ -162,12 +164,109 @@ def BrideGroomRegistration(request):
     }
     return render(request, "bayareaweddingfairs/site/BGRegister/BGRegister.html", content)
 
-def VendorRegistration(request):
+def VendorRegistrationIndex(request):
     return HttpResponse('Awaiting')
+
+@csrf_exempt
+def VendorRegistration(request):
+    is_completed = None
+    error_message = None
+    eventsIDList = None
+    inteventsIDList = None
+    eventsCheck = None
+    how_heard = None
+    form = registration_event_form()
+
+    if request.method == "POST":
+        form = registration_event_form(request.POST)
+        eventsIDList = request.POST.getlist('eventsCheck')
+        how_heard = request.POST.get('how_heard')
+        inteventsIDList = []
+        if eventsIDList:
+            for x in eventsIDList:
+                inteventsIDList.append(int(x))
+        else:
+            eventsCheck = "Select an event atleast"
+        if form.is_valid():
+            data = form.cleaned_data
+            if eventsIDList:
+                name = data['name']
+                business_name = data['business_name']
+                phone = data['phone']
+                email = data['email']
+                city = data['city']
+                zip = data['zip']
+                comments = data['comments']
+                how_heard = data['how_heard']
+                category = data['category']
+                categories = data['categories']
+                website = data['website']
+                user_reg = None
+                try:
+                    user_reg = User.objects.get(email__iexact=email)
+                except:
+                    user_reg = User.objects.create(email=email, username=email)
+                    profile = UserProfile.objects.get(user=user_reg)
+                    profile.type = UserProfile.PROFESSIONAL
+                    profile.save()
+                    Company.objects.create(userprofile=profile, name=business_name)
+                event_name = ""
+                reg = Register_Event_Interested.objects.create(
+                                                        user=user_reg,
+                                                        name=name,
+                                                        business_name=business_name,
+                                                        phone=phone,
+                                                        email=user_reg.email,
+                                                        city=city,
+                                                        zip=zip,
+                                                        comments=comments,
+                                                        how_heard=how_heard,
+                                                        category=categories,
+                                                        type=Register_Event.CONTRACTOR,
+                                                        website=website,
+                                                        )
+                for eID in eventsIDList:
+                    event = Event_fairs.objects.get(id=eID)
+                    reg.event.add(event)
+                    event_name += "%s<br />"%(event.name)
+                message2 = """<b>Fullname</b> : %s<br /><br />
+                        <b>Email</b> : %s<br /><br />
+                        <b>Phone</b> : %s<br /><br />
+                        <b>City</b> : %s<br /><br />
+                        <b>Zipcode</b> : %s<br /><br />
+                        <b>Buisness Category</b> : %s<br /><br />
+                        <b>Buisness Name</b> : %s<br /><br />
+                        <b>Wedding Fair Interested In</b> :<br />
+                        %s<br /><br />
+                        <b>How did you hear about us</b> : %s<br /><br />
+                        <b>Comments</b> : %s"""%(name, user_reg.email, phone, city, zip, categories, business_name, event_name, how_heard, comments)
+                send_bawf_email(sendTo="steve@bayareaweddingfairs.com", message=message2, title="Registered Vendor Information:", subject="A NEW VENDOR HAS REGISTERED")
+                message = "Thank you for registering with Bay Area Wedding Fairs. We will get back to you soon.<br /><br />LOOKING FOR MORE WEDDING BUSINESS?? Try our new Wedding Planning Platform <a href='https://www.yapjoy.com/'>YAPJOY</a>.<br /><br />If you have any questions, please email us directly at <a href='mailto:info@bayareaweddingfairs.com'>info@bayareaweddingfairs.com</a><br /><br />Thank You!<br /><br />Bay Area Wedding Fairs"
+                send_bawf_email(sendTo=user_reg.email, message=message, title="", subject="Registration Successful!")
+                is_completed = True
+                return HttpResponseRedirect(reverse("index__vendor_registration__success"))
+            else:
+                error_message = "Select an event atleast"
+    events = Event_fairs.objects.filter(Q(is_expired=False)&Q(date__gte=datetime.now())).order_by('date')
+    content = {
+        'form':form,
+        'events':events,
+        'error_message':error_message,
+        'eventsIDList':inteventsIDList,
+        'eventsCheck':eventsCheck,
+        'is_completed':is_completed,
+        'how_heard':how_heard,
+    }
+    return render(request, 'bayareaweddingfairs/site/WPRegister/WPRegister.html', content)
 
 def BecomeExhibitor(request):
     return render(request, "bayareaweddingfairs/site/become_exhibitor/become-an-exhibitor.html")
 
+def VendorRegistrationThankYou(request):
+    return render(request, "bayareaweddingfairs/site/become_exhibitor/thank_you.html")
+
+def BrideRegistrationThankYou(request):
+    return render(request, "bayareaweddingfairs/site/BGRegister/thank_you.html")
 
 def shopDetail(request, id):
     """replace the id with slug"""

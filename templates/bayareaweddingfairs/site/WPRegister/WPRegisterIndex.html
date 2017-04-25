@@ -197,7 +197,7 @@
                                                             {% endif %}
                             </div>
                             <div class="col-md-12 form-group text-center">
-                            <button style="margin-top:15px;" class="btn btn-primary" type="submit">SUBMIT</button>
+                            <button style="margin-top:15px;" class="btn btn-primary" type="submit">Register New Account </button>
 
                         </div>
 
@@ -277,14 +277,6 @@
                 $("#error_zip").html('')
             }
         });
-        $('#id_phone').keyup(function () {
-            var inputVal = $(this).val();
-            if (!inputVal) {
-                $("#error_phone").html('Phone no is required')
-            } else {
-                $("#error_phone").html('')
-            }
-        });
         $("#id_form_reg").submit(function (e) {
             var first_name = $('#id_firstName').val();
             var last_name = $("#id_lastName").val();
@@ -320,12 +312,12 @@
                 $("#error_city").html('Please Enter City');
 {#                return false#}
             }
-{#            if (comments != ''){#}
-{#                if (!charReg.test(comments)) {#}
-{#                    $("#error_comments").html('No Special Characters Allowed');#}
+            if (comments != ''){
+                if (!charReg.test(comments)) {
+                    $("#error_comments").html('No Special Characters Allowed');
 {#                    return false#}
-{#                }#}
-{#            }#}
+                }
+            }
             if (zip != ''){
                 if (!numberReg.test(zip)) {
                     $("#error_zip").html('Only Numbers are allowed')
@@ -339,11 +331,9 @@
                 $("#error_phone").html('Please Enter the Phone Number');
 {#                return false;#}
             }
-            if(phone == '' | zip == '' | city == '' | last_name == '' | first_name == ''){
+            if(phone == '' | zip != '' | comments != '' | city != '' | last_name != '' | first_name != ''){
                 return false
             }
-            return true
-
         });
     </script>
     <script>
