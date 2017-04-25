@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="{% static "images/favicon_bawf.ico" %}">
     <title>{% block title %}{% endblock title %}</title>
-    {% cache 50000 "base_inner_layout__base_header" %}
+{#    {% cache 50000 "base_inner_layout__base_header" %}#}
     <!-- Bootstrap Core CSS -->
     <link href="{% static "bawf/theme/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "bawf/theme/vendor/fontawesome/css/font-awesome.min.css" %}" type="text/css" rel="stylesheet">
@@ -43,18 +43,18 @@
     <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
     <link rel="stylesheet" property="stylesheet" href="{% static "bawf/theme/vendor/rs-plugin/css/settings.css" %}" type="text/css" media="all" />
     <link rel="stylesheet" href="{% static "bawf/theme/css/rs-plugin-styles.css" %}" type="text/css" />
-    {% endcache %}
+{#    {% endcache %}#}
     {% block css_links %}
 
     {% endblock css_links %}
     <!-- CSS CUSTOM STYLE -->
-    {% cache 50000 "base_inner_layout__base_header_2" %}
+{#    {% cache 50000 "base_inner_layout__base_header_2" %}#}
     <link rel="stylesheet" type="text/css" href="{% static "bawf/theme/css/custom.css" %}" media="screen" />
 
     <!--VENDOR SCRIPT-->
     <script src="{% static "bawf/theme/vendor/jquery/jquery-1.11.2.min.js" %}"></script>
     <script src="{% static "bawf/theme/vendor/plugins-compressed.js" %}"></script>
-    {% endcache %}
+{#    {% endcache %}#}
 </head>
 
 <body class="wide">

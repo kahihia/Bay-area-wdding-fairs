@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="{% static "images/favicon_bawf.ico" %}">
     <title>{% block title %}{% endblock title %}</title>
-    {% cache 50000 "base_index__base_header" %}
+{#    {% cache 50000 "base_index__base_header" %}#}
     <!-- Bootstrap Core CSS -->
     <link href="{% static "bawf/theme/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "bawf/theme/vendor/fontawesome/css/font-awesome.min.css" %}" type="text/css" rel="stylesheet">
@@ -47,7 +47,7 @@
     {% block css_links %}
 
     {% endblock css_links %}
-    {% cache 50000 "base_index__base_header_2" %}
+{#    {% cache 50000 "base_index__base_header_2" %}#}
     <!-- CSS CUSTOM STYLE -->
     <link rel="stylesheet" type="text/css" href="{% static "bawf/theme/css/custom.css" %}" media="screen" />
 
@@ -87,13 +87,13 @@
     <!--Jquery plugin Links Block--->
     {% block jquery_links %}
     {% endblock jquery_links %}
-    {% cache 50000 "base_index__base_footer" %}
+{#    {% cache 50000 "base_index__base_footer" %}#}
     <!-- Theme Base, Components and Settings -->
     <script src="{% static "bawf/theme/js/theme-functions.js" %}"></script>
 
     <!-- Custom js file -->
     <script src="{% static "bawf/theme/js/custom.js" %}"></script>
-    {% endcache %}
+{#    {% endcache %}#}
     {% block jquery_page_scripts %}
     {% endblock jquery_page_scripts %}
 
