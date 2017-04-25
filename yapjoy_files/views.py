@@ -4026,7 +4026,10 @@ def contracted_contractor(request):
     view_all = None
     viewtype = None
     initial_word = ""
+    wps = Register_Event.objects.select_related('event').all().exclude(type=Register_Event.BGUSER).exclude(
+        status=Register_Event.REMOVED).order_by('-created_at')
     if request.method == "POST":
+        print request.POST
         if 'search' in request.POST:
             search = request.POST.get('search')
             try:
@@ -4035,7 +4038,7 @@ def contracted_contractor(request):
                 wps = Register_Event.objects.select_related('event').exclude(type=Register_Event.BGUSER).filter(
                     email__icontains=search).exclude(status=Register_Event.REMOVED).order_by('-created_at')
                 print('wps contracted: ', wps)
-            except:
+            except Exception as e:
                 pass
         if "viewtype" in request.POST:
             view_all = True
@@ -4044,7 +4047,6 @@ def contracted_contractor(request):
                 wps = wps.filter(total_amount__gt=0, amount_due=0)
             elif viewtype == "unpaid":
                 wps = wps.filter(total_amount__gt=0, amount_due__gt=0)
-    wps = Register_Event.objects.select_related('event').all().exclude(type=Register_Event.BGUSER).exclude(status=Register_Event.REMOVED).order_by('-created_at')
     return render(request, 'vendroid/CRM/contracted_contractors.html', {
         'events':wps,
         'view_all':view_all,
