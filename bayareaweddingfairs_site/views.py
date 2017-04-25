@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import *
-from yapjoy_files.forms import bg_registration_form, registration_event_form
+from yapjoy_files.forms import bg_registration_form, registration_event_form, LasVegasForm
 from django.contrib.auth.models import User
 from yapjoy_registration.models import UserProfile, Company
 from yapjoy_files.models import Register_Event_Interested
@@ -267,6 +267,53 @@ def VendorRegistrationThankYou(request):
 
 def BrideRegistrationThankYou(request):
     return render(request, "bayareaweddingfairs/site/BGRegister/thank_you.html")
+
+@csrf_exempt
+def LasVegasSignin(request):
+    error_message = None
+    success_message = ""
+    form = LasVegasForm()
+    if request.method == "POST":
+        print "inside post"
+        form = LasVegasForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            firstName = data['firstName']
+            lastName = data['lastName']
+            email = data['email']
+            weddingDate = data['weddingDate']
+            name = str(firstName) + ' ' + str(lastName)
+            user = None
+            try:
+                user = User.objects.get(email__iexact=email)
+            except:
+                user = User.objects.create(email=email, username=email, first_name=firstName, last_name=lastName)
+            user_reg = Register_Event.objects.create(
+                event=Event_fairs.objects.filter(date__gte=datetime.now()).order_by('date')[0],
+                user=user,
+                name=name,
+                email=email,
+                is_lasVegasSignIn=True,
+                type=Register_Event.BGUSER,
+                )
+            print "saving las vegas reg"
+            success_message = "Your request is submitted successfully."
+            message = "Thank you for registering with Bay Area Wedding Fairs.<br /><br />If you have any questions, please email us at <a href='mailto:info@bayareaweddingfairs.com'>info@bayareaweddingfairs.com </a><br /><br />Thank You!<br />Bay Area Wedding Fairs"
+            send_bawf_email(sendTo=user_reg.email, message=message, title="",
+                            subject="Registration Successful!")
+            message_information = "First Name: %s<br />Last Name: %s<br />Email: %s<br /><br />Wedding Date: %s<br /><br />" % (
+                firstName, lastName, email, weddingDate)
+            send_bawf_email(sendTo='info@bayareaweddingfairs.com', message=message_information, title="",
+                            subject="Bride / Groom Registration Information!")
+            form = LasVegasForm()
+        else:
+            error_message = "Select an event atleast"
+    content = {
+        'form': form,
+        'success_message': success_message,
+    }
+    return render(request, 'bayareaweddingfairs/site/lasVegasSignin/LasVegasSignIn.html', content)
+
 
 def shopDetail(request, id):
     """replace the id with slug"""

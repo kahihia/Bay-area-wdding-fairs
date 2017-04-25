@@ -1,0 +1,122 @@
+{% extends 'bayareaweddingfairs/site/base/base_inner_layout.html' %}
+{% load static %}
+{% load myfilters %}
+
+{% block title %}
+    TICKETS & REGISTRATION
+{% endblock title %}
+
+{% block css_links %}
+    {#    <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>#}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <link href="{% static "bawf/css/forms.css" %}" rel="stylesheet">
+    <style>
+        .white {
+            color: white;
+        }
+    </style>
+    <style>
+        .red {
+            color: red;
+        }
+
+        textarea {
+            height: 30px;
+        }
+
+        ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        .categories-css ul {
+            margin-left: -40px;
+        }
+
+    </style>
+{% endblock css_links %}
+
+{% block content %}
+    <!-- WRAPPER -->
+    <div class="wrapper">
+        <section class="page-title-parallax fullscreen" style="background-color: #CCCCCC;">
+            <div class="container container-fullscreen">
+                <div class="text-middle">
+                    <form id="id_form_reg" action="." method="post"
+                          role="form">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 p-30 background-white">
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <h3>FILL OUT THE FORM BELOW FOR A CHANCE TO WIN LAS VEGAS GIVEAWAY</h3>
+                                    <p>MAKE SURE TO FOLLOW US ON SOCIAL MEDIA FOR WINNER ANNOUNCEMENTS EVERY FRIDAY.</p>
+
+                                    <hr/>
+
+                                </div>
+                                <div class="clearfix"></div>
+                                {% if success_message %}
+                                    <div role="alert" class="alert alert-success"> {{ success_message }} </div>
+                                {% endif %}
+
+
+                                <div class="col-md-12 form-group">
+                                    <label>First Name</label>
+                                    {{ form.firstName|addcss:"form-control input-lg" }}
+                                    {% if form.firstName.errors %}
+                                        <div class="red">{{ form.firstName.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label>Last Name</label>
+                                    {{ form.lastName|addcss:"form-control input-lg" }}
+                                    {% if form.lastName.errors %}
+                                        <div class="red">
+                                            {{ form.lastName.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-12 form-group">
+                                    <label>Email</label>
+                                    {{ form.email|addcss:"form-control input-lg" }}
+                                    {% if form.email.errors %}
+                                        <div class="red">{{ form.email.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label>Wedding Date</label>
+                                    {{ form.weddingDate|addcss:"form-control input-lg" }}
+                                    {% if form.weddingDate.errors %}
+                                        <div class="red">{{ form.weddingDate.errors.0 }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-12 form-group text-center">
+                                    <button style="margin-top:15px;" class="btn btn-primary" type="submit">SUBMIT
+                                    </button>
+
+                                </div>
+
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+    <!-- END: WRAPPER -->
+{% endblock content %}
+{% block jquery_links %}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock jquery_links %}
+{% block jquery_page_scripts %}
+    <script>
+        $(function () {
+            $('#id_weddingDate').datepicker();
+            $('#id_weddingDate').data('inline', true);
+        });
+    </script>
+{% endblock jquery_page_scripts %}
