@@ -19,7 +19,23 @@ import json, stripe, pyqrcode, boto
 
 
 def Index(request):
-    return render(request, "bayareaweddingfairs/site/home/home.html")
+    vendorShopsList = []
+    vendorShops = ShopVendor.objects.all()
+    for shop in vendorShops:
+        shopItemList = ShopVendorsItem.objects.filter(shopVendors=shop).order_by('created_at')
+        vendorShop = {
+            'shop': shop,
+            'itemsList': shopItemList
+        }
+        vendorShopsList.append(vendorShop)
+    events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
+    events = sort_months(events_list)
+    context = {
+        'vendorShops': vendorShops,
+        'vendorShopsList': vendorShopsList,
+        'events': events,
+    }
+    return render(request, "bayareaweddingfairs/site/home/home.html", context)
 
 @csrf_exempt
 def ContactView(request):
