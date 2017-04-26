@@ -1,47 +1,54 @@
 # Django settings for yapjoy project.
-import os
-DEBUG = False
+
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
-EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
+EMAIL_HOST_USER = 'app39782801@heroku.com'
+EMAIL_HOST_PASSWORD = '7tahzw8m0499'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 LOGIN_URL = '/login/'
 ADMINS = (
-    ('Adeel K', 'adeelpkpk@gmail.com'),
+    ('MOBEEN AHMED', 'mbnysf11@gmail.com'),
 )
-
-import pusher
-pusher.app_id = os.environ.get('PUSHER_APP_ID')
-pusher.key = os.environ.get('PUSHER_KEY')
-pusher.secret = os.environ.get('PUSHER_SECRET')
-
-MANAGERS = ADMINS
+import os
+# MANAGERS = ADMINS
 DEFAULT_FROM_EMAIL = 'support@yapjoy.com'
-
-DB_NAME = os.environ.get('DB_NAME')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_HOST = os.environ.get('DB_HOST')
-DB_PORT = os.environ.get('DB_PORT')
-
 DATABASES = {
-     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': DB_NAME,                      # Or path to database file if using sqlite3.
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': DB_PORT,                      # Set to empty string for default.
-        # 'CONN_MAX_AGE': 60,
-    }
+    #  'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'NAME': 'd7c3j6t68crpvq',                      # Or path to database file if using sqlite3.
+    #     # The following settings are not used with sqlite3:
+    #     'USER': 'pwsbkpspkyouzt',
+    #     'PASSWORD': '6be7bebadcd9550e6c37bf5b9740b839264c5bdbae31aa13282b4d422bfab909',
+    #     'HOST': 'ec2-50-19-95-47.compute-1.amazonaws.com',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '5432',                      # Set to empty string for default.
+    #     # 'CONN_MAX_AGE': 60,
+    # }
+    'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'yapjoy',                      # Or path to database file if using sqlite3.
+            # The following settings are not used with sqlite3:
+            'USER': 'postgres',
+            'PASSWORD': 'asd',
+            'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'PORT': '5432',                      # Set to empty string for default.
+        },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'NAME': 'dbf9p7mq7lsq80',                      # Or path to database file if using sqlite3.
+    #     # The following settings are not used with sqlite3:
+    #     'USER': 'qolxdvgffhlidb',
+    #     'PASSWORD': 'gF6hNkmeUwrfOf5JqwcTLio9d-',
+    #     'HOST': 'ec2-50-16-229-91.compute-1.amazonaws.com',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '5432',                      # Set to empty string for default.
+    # }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['crm.bayareaweddingfairs.com','https://s3-us-west-2.amazonaws.com','.facebook.com','http://yui.yahooapis.com','bayareaweddingfairs.herokuapp.com']
+ALLOWED_HOSTS = ['www.yapjoy.com','yapjoy.herokuapp.com','https://s3-us-west-2.amazonaws.com','.facebook.com','http://yui.yahooapis.com']
 SITE_NAME = 'https://www.yapjoy.com/'
 
 # Local time zone for this installation. Choices can be found here:
@@ -87,14 +94,15 @@ DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
 DEFAULT_S3_PATH = "media"
 STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
 STATIC_S3_PATH = "static"
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET')
+AWS_ACCESS_KEY_ID = 'AKIAIXFGL3W7R47QWV2A'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'yapjoy-static'
 AWS_PRELOAD_METADATA = True
 MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
 MEDIA_URL = 'https://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
 STATIC_ROOT = "/%s/" % STATIC_S3_PATH
-STATIC_URL = 'https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
+# STATIC_URL = 'https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL= "/static/"
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 #----------- aws settings ---------------
 
@@ -167,7 +175,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 )
-REST_SESSION_LOGIN = False
+
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -177,9 +185,9 @@ REST_SESSION_LOGIN = False
 
 # Static asset configuration
 
-secure_scheme_headers = {
-    'X-FORWARDED-PROTO': 'https'
-}
+# secure_scheme_headers = {
+#     'X-FORWARDED-PROTO': 'https'
+# }
 
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/'
@@ -254,10 +262,8 @@ INSTALLED_APPS = (
     'yapjoy_vendors',
     'yapjoy_teamschat',
     's3direct',
-    'bayareaweddingfairs_site',
     # 'ckeditor_uploader',
     # 'friendship',
-
     'bayareaweddingfairs_tickets',
     #'debug_toolbar',
     # 'cas_consumer',
@@ -283,13 +289,25 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+# CKEDITOR_UPLOAD_PATH = "uploads/"
+# CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'Custom',
+#         'toolbar_Custom': [
+#             ['Bold', 'Italic', 'Underline'],
+#             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+#             ['Link', 'Unlink'],
+#             ['RemoveFormat', 'Source']
+#         ]
+#     }
+# }
 
+SOCIAL_AUTH_FACEBOOK_KEY='778671392242244'
+SOCIAL_AUTH_FACEBOOK_SECRET='571c5632e92b3b1a5ae02ea9dce89e78'
 
-SOCIAL_AUTH_FACEBOOK_KEY=os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
-SOCIAL_AUTH_FACEBOOK_SECRET=os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
-
-GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
-GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+GOOGLE_CLIENT_ID = '920774801939-jjh416fdsoopdtgqm0dgkdnu6ndjrc1d.apps.googleusercontent.com'
+GOOGLE_CLIENT_SECRET = 'p2qnu-mym1h0-fOvbmvXl4FB'
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -350,22 +368,22 @@ S3DIRECT_DESTINATIONS = {
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 AUTH_PROFILE_MODULE = 'yapjoy_registration.UserProfile'
 
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = 'sk_live_5tw0mrFpx8g33UKhPQZuaKvc'
+STRIPE_PUBLISHABLE_KEY = 'pk_live_Hxwa4UrkwLn3bhUqx6sjbQTF'
 
-STRIPE_SECRET_KEY_BAWF = os.environ.get('STRIPE_SECRET_KEY_BAWF')
-STRIPE_PUBLISHABLE_KEY_BAWF = os.environ.get('STRIPE_PUBLISHABLE_KEY_BAWF')
+STRIPE_SECRET_KEY_BAWF = 'sk_live_n8WrsUoKt0Esb2cfUAIBHWgn'
+STRIPE_PUBLISHABLE_KEY_BAWF = 'pk_live_fqbN9t5DE4vEfGqQEFzTDpZS'
 
-YAHOO_CLIENT_ID = os.environ.get('YAHOO_CLIENT_ID')
-YAHOO_CLIENT_SECRET = os.environ.get('YAHOO_CLIENT_SECRET')
+YAHOO_CLIENT_ID = "dj0yJmk9VG90Tm9GTk16clhXJmQ9WVdrOWVWZEVXbWxsTldNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05MA--"
+YAHOO_CLIENT_SECRET = "e2d3e379c96c8a4e4e34fdcbfb3ef5ee473865bd"
 
-LIVE_CLIENT_ID = os.environ.get('LIVE_CLIENT_ID')
-LIVE_CLIENT_SECRET = os.environ.get('LIVE_CLIENT_SECRET')
+LIVE_CLIENT_ID = "0000000040168962"
+LIVE_CLIENT_SECRET = "aS9Zv0EjCUwiEslFPpUovNHXQj89bsLQ"
 
 MERCHANT_SETTINGS = {
      "stripe": {
-        "API_KEY": os.environ.get('STRIPE_SECRET_KEY'),
-        "PUBLISHABLE_KEY": os.environ.get('STRIPE_PUBLISHABLE_KEY'),
+        "API_KEY": "sk_live_5tw0mrFpx8g33UKhPQZuaKvc",
+        "PUBLISHABLE_KEY": "pk_live_Hxwa4UrkwLn3bhUqx6sjbQTF",
     }
 }
 
@@ -482,11 +500,9 @@ LOGGING = {
         },
     }
 }
-#
-# SSLIFY_DISABLE_FOR_REQUEST = [
-#     lambda request: request.get_full_path().startswith('/crm/bridegroom/reg')
-# ]
+
+
 # tokbox settings
 
-TOKBOX_KEY = os.environ.get('TOKBOX_KEY')
-TOKBOX_SECRET = os.environ.get('TOKBOX_SECRET')
+TOKBOX_KEY = '45284952'
+TOKBOX_SECRET = 'b00fa2eb9bf9bd29b7f82e098bee1009f019bc75'
