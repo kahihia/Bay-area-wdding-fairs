@@ -45,8 +45,8 @@ def ContactView(request):
         subject = request.POST.get('widget-contact-form-subject')
         message_rec = request.POST.get('widget-contact-form-message')
         Contact.objects.create(email=email, name=name, message=message_rec, subject=subject)
-        message = "Subject: %s,<br /><br />You have been contacted by %s. Their message is:<br /><br />%s<br /><br />You can contact Adeel Khan via email at %s" % (
-            subject, name, message_rec, email)
+        message = "Subject: %s,<br /><br />You have been contacted by %s. Their message is:<br /><br />%s<br /><br />You can contact %s via email at %s" % (
+            subject, name, message_rec, name, email)
         send_bawf_email(sendTo='info@bayareaweddingfairs.com', message=message, title="Message submitted successfully.",
                         subject="You have been contacted by %s - BayAreaWeddingFairs" % (name))
         message = "Dear %s,<br /><br />Your request has been submitted. Our representative will get back to you shortly depending upon the sent request.<br /><br />Best<br />BayAreaWeddingFairs" % (
