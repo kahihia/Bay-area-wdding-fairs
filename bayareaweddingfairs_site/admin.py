@@ -30,5 +30,11 @@ class ShopVendorsItemDetailAdmin(admin.ModelAdmin):
 
 admin.site.register(ShopVendorsItemDetail, ShopVendorsItemDetailAdmin)
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'subject', 'created_at']
+    search_fields = ['email', 'name']
+
+admin.site.register(Contact, ContactAdmin)
+
 
 

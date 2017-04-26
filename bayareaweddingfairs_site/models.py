@@ -50,3 +50,12 @@ class ShopVendorsItemDetail(models.Model):
 
     def __str__(self):
         return self.title
+
+class Contact(models.Model):
+    name = models.CharField(max_length=1000)
+    subject = models.CharField(max_length=1000)
+    message = models.CharField(max_length=1000)
+    email = models.CharField(max_length=1000)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)

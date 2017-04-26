@@ -3,6 +3,7 @@ from .views import *
 
 urlpatterns = patterns('',
                        url(r'^shop-vendors/', ShopVendors, name="index__shop_vendors"),
+                       url(r'^contact/', ContactView, name="index__contact"),
                        url(r'^our-events/', OurShows, name="index__our_events"),
                        url(r'^bride-groom-registration/', BrideGroomRegistration, name="index__bride_groom_registration"),
                        # url(r'^become-an-exhibitor/', VendorRegistrationIndex, name="index__vendor_registration_index"),
@@ -15,6 +16,6 @@ urlpatterns = patterns('',
                        url(r'^bride-registration-success/', BrideRegistrationThankYou, name="index__bride_registration__success"),
                        url(r'^las-vagas-signin/', LasVegasSignin, name="index__LasVegasSignin"),
                        url(r'^shop-vendors-details/(?P<id>[-_@.+0-9a-zA-Z ]+)/$', shopDetail, name="index__storefrontItemDetail"),
-                     url(r'^$', Index),
+                       url(r'^$', Index),
                        )
 
