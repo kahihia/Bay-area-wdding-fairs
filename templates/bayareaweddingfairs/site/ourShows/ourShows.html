@@ -45,7 +45,7 @@
                                 <h3>{{ event_list.0.date|date:"M" }}</h3>
                                 <div class="list-group">
                                     {% for event in event_list %}
-                                        <a onclick="get_information('{{ event.id }}');" href="#" class="list-group-item">
+                                        <a onclick="get_information('{{ event.id }}');" style="cursor: pointer;" class="list-group-item">
                                             <div class="col-md-2" style="margin-top:12px;">
                                                 {{ event.date }}
                                             </div>
@@ -66,69 +66,7 @@
         </section>
         <!-- END: SECTION -->
 
-        <div class="modal fade" id="modal-detail" tabindex="-1" role="modal" aria-labelledby="modal-label-3" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                        <h4 id="show-name" class="modal-title">Show Name Comes Here </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mb20">
-                            <div class="col-sm-12">
-                                <p id="show-location">Date | Location</p>
-                                <img id="show-image" style="width:100%;height:auto;margin-bottom:20px;" src="" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 xs-box" id="updates">
-
-                            </div>
-                            <div class="col-sm-6" id="grand">
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 xs-box">
-                                <h4>( PRE-REGISTRATION IS REQUIRED )</h4>
-                                <a href="{% url "index__bride_groom_registration" %}" id="show_reg_id" class="btn btn-primary">Registration</a>
-                            </div>
-                            <div class="col-sm-6" >
-                                <h4>( ALREADY PRE-REGISTERED? )</h4>
-                                <a href="{% url "index__bride_groom_ticket" %}" class="btn btn-primary">Buy Tickets</a>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-6 xs-box">
-                                <h4><span class="fa fa-calendar"></span> Date and Time</h4>
-                                <p id="date-time-id"></p>
-                            </div>
-                            <div class="col-sm-6" >
-                                <h4><span class="fa fa-map-marker"></span> Location</h4>
-                                <p id="location-id"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
-            <div class="map" data-map-address="2600 Kitty Hawk Rd, Livermore, CA 94551, USA" data-map-zoom="10" data-map-icon="{% static "bawf/images/markers/marker1.png" %}" data-map-type="ROADMAP"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 xs-box">
-                                <h4><span class="fa fa-headphones"></span> Organizer</h4>
-                                <h4>Bay Area Wedding Fairs</h4>
-                                <p><a href="www.bayareaweddingfairs.com">www.bayareaweddingfairs.com</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-b" type="button">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    {% include "bayareaweddingfairs/site/ourShows/_detail.html" %}
 
     </div>
     <!-- END: WRAPPER -->

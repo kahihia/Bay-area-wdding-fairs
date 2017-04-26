@@ -28,10 +28,12 @@ def Index(request):
             'itemsList': shopItemList
         }
         vendorShopsList.append(vendorShop)
-
+    events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
+    events = sort_months(events_list)
     context = {
         'vendorShops': vendorShops,
-        'vendorShopsList': vendorShopsList
+        'vendorShopsList': vendorShopsList,
+        'events': events,
     }
     return render(request, "bayareaweddingfairs/site/home/home.html", context)
 
