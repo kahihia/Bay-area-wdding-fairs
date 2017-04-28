@@ -94,7 +94,8 @@ AWS_PRELOAD_METADATA = True
 MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
 MEDIA_URL = 'https://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
 STATIC_ROOT = "/%s/" % STATIC_S3_PATH
-STATIC_URL = 'https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = 'https://dlzm0e7zegsau.cloudfront.net/static/'
+# STATIC_URL = 'https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 #----------- aws settings ---------------
 
