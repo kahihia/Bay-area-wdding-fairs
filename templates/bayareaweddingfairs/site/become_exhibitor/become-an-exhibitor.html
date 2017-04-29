@@ -6,6 +6,11 @@
 {% endblock title %}
 
 {% block css_links %}
+    <style>
+    #slider-carousel-exibitor .owl-bg-img{
+        height:298px !important;
+    }
+    </style>
 {% endblock css_links %}
 
 {% block content %}
@@ -39,7 +44,7 @@
         <div class="container">
 {#            <h3 class="text-center">BECOME AN EXHIBITOR</h3><br/><br/>#}
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="accordion color">
                     <div class="ac-item">
                         <h5 class="ac-title"><i class="fa fa-rocket"></i>Innovative & Iconic Wedding Fairs</h5>
@@ -75,35 +80,35 @@
                     </div>
                 </div>
             </div>
-{#            <div class="col-md-6 text-center">#}
-{#                <!-- SECTION SLIDER OWL -->#}
-{#                <div id="slider">#}
-{#                    <div id="slider-carousel">#}
-{#                        <div style="background-image:url('http://bayareaweddingfairs.com/wp-content/uploads/2016/01/slide3.jpg');"#}
-{#                             class="owl-bg-img fullscreen">#}
-{#                            <div class="container-fullscreen">#}
-{#                                <div class="text-middle">#}
-{#                                    <div class="container">#}
-{##}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div style="background-image:url('http://bayareaweddingfairs.com/wp-content/uploads/2016/01/slide1-4.jpg');"#}
-{#                             class="owl-bg-img fullscreen">#}
-{#                            <div class="container-fullscreen">#}
-{#                                <div class="text-middle">#}
-{#                                    <div class="container">#}
-{##}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{##}
-{#                    </div>#}
-{#                </div>#}
-{#                <!-- END: SECTION SLIDER OWL -->#}
-{#            </div>#}
+            <div class="col-md-5 text-center pull-right">
+                <!-- SECTION SLIDER OWL -->
+                <div id="sliderexibitor">
+                    <div id="slider-carousel-exibitor">
+                        <div style="background-image:url('{% static 'bawf/images/slide3.jpg' %}');"
+                             class="owl-bg-img fullscreen">
+                            <div class="container-fullscreen">
+                                <div class="text-middle">
+                                    <div class="container">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background-image:url('{% static 'bawf/images/slide1-4.jpg' %}');"
+                             class="owl-bg-img fullscreen">
+                            <div class="container-fullscreen">
+                                <div class="text-middle">
+                                    <div class="container">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END: SECTION SLIDER OWL -->
+            </div>
         </div>
     </section>
 
@@ -276,5 +281,24 @@ dlzm0e7zegsau.cloudfront.net/static/bawf/theme/images/2560x1440-davys-grey-solid
 
 {% block jquery_page_scripts %}
     <!--Pages Plugin Links Goes Here-->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#slider-carousel-exibitor").owlCarousel({
+                margin: 0,
+                loop: true,
+                nav: true,
+                navText: ['<i class="fa fa-arrow-left icon-white"></i>',
+                    '<i class="fa fa-arrow-right icon-white"></i>'],
+                autoplay: true,
+                dots: false,
+                autoplayHoverPause: true,
+                navigation: true,
+                items: 1,
+                animateOut: 'fadeOut',
+                autoHeight : true
+            });
+        });
+
+    </script>
     
 {% endblock jquery_page_scripts %}
