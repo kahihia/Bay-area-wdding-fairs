@@ -17,6 +17,15 @@
             background-size: 100% 100% !important;
 {#            background-repeat: no-repeat !important;#}
         }
+    .logo img{
+        height:70px;
+    }
+    .sticky .logo img{
+        height:70px;
+    }
+    a.list-group-item:hover, a.list-group-item:focus{
+        background: #26B8F3 ;
+    }
     </style>
 
 {% endblock css_links %}
@@ -629,6 +638,12 @@
                 }
             })
         }
+
+        $(document).ready(function(){
+            $("#slider-carousel").owlCarousel({
+                autoplayTimeout:20000
+            });
+        });
     </script>
 
 {% endblock jquery_page_scripts %}
