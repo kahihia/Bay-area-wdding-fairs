@@ -1,4 +1,9 @@
 {% load static %}
+<style type="text/css">
+    .owl-item .slider-content{
+        opacity: 1 !important;
+    }
+</style>
 <!-- REVOLUTION SLIDER -->
 {#        <div id="slider">#}
 {#            <div id="rev_slider_30_1_wrapper" class="rev_slider_wrapper fullscreen-container" data-alias="POLO Homepage" style="background-color:transparent;padding:0px;">#}
@@ -100,20 +105,7 @@
 <!-- SLIDER OWL -->
 <section id="slider" class="no-padding">
     <div id="slider-carousel" class="boxed-slider">
-    <div class="owl-bg-img slide1">
-            <div class="container container-fullscreen">
-                <div class="text-middle">
-                    <div class="text-center text-light slider-content">
-                        <h6>Bay Area Wedding Fairs</h6>
-                        <div class="seperator seperator-small no-padding"></div>
-                        <h1 class="text-uppercase">Over 30 Seasons</h1>
 
-                        <a class="button border rounded transparent" href="{% url "index__our_events" %}">FIND A FAIR NEAR YOU</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
 
 
 {#        <div class="owl-bg-img slide2">#}
@@ -131,7 +123,20 @@
 {##}
 {#            </div>#}
 {#        </div>#}
+        <div class="owl-bg-img slide1">
+            <div class="container container-fullscreen">
+                <div class="text-middle">
+                    <div class="text-center text-light slider-content">
+                        <h6>BIGGEST Wedding Fair At</h6>
+                        <div class="seperator seperator-small no-padding"></div>
+                        <h1 class="text-uppercase">The Levi's May 21</h1>
 
+                        <a class="button border rounded transparent" href="{% url "index__our_events" %}">CLICK HERE</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         <div class="owl-bg-img slide3">
             <div class="container container-fullscreen">
@@ -208,15 +213,17 @@
             </div>
         </div>
 
+
+
         <div class="owl-bg-img slide8">
             <div class="container container-fullscreen">
                 <div class="text-middle">
                     <div class="text-center text-light slider-content">
-                        <h6>BIGGEST Wedding Fair At</h6>
+                        <h6>Bay Area Wedding Fairs</h6>
                         <div class="seperator seperator-small no-padding"></div>
-                        <h1 class="text-uppercase">The Levi's May 21</h1>
+                        <h1 class="text-uppercase">Over 30 Seasons</h1>
 
-                        <a class="button border rounded transparent" href="{% url "index__our_events" %}">CLICK HERE</a>
+                        <a class="button border rounded transparent" href="{% url "index__our_events" %}">FIND A FAIR NEAR YOU</a>
                     </div>
                 </div>
 
