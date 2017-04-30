@@ -1357,54 +1357,54 @@ var INSPIRO = {};
      * --------------------------------------------------------------------------- */
     INSPIRO.maps = function () {
 
-        //if ($map.exists()) {
-        //
-        //
-        //    $map.each(function () {
-        //
-        //        var $elem = $(this),
-        //            mapAddress = $elem.attr('data-map-address') ? $elem.attr('data-map-address') : "Melbourne, Australia",
-        //            mapType = $elem.attr('data-map-type') ? $elem.attr('data-map-type') : "ROADMAP",
-        //            mapZoom = $elem.attr('data-map-zoom') ? $elem.attr('data-map-zoom') : "14",
-        //            mapIcon = $elem.attr('data-map-icon') ? $elem.attr('data-map-icon') : "images/markers/marker2.png";
-        //
-        //        var markers = [{
-        //            address: mapAddress,
-        //            html: mapAddress,
-        //            icon: {
-        //                image: mapIcon,
-        //                iconsize: [40, 63],
-        //                iconanchor: [18, 60],
-        //            },
-        //            }];
-        //
-        //        $elem.gMap({
-        //
-        //            address: mapAddress,
-        //            maptype: mapType,
-        //            markers: markers,
-        //            zoom: Number(mapZoom),
-        //            doubleclickzoom: true,
-        //            controls: {
-        //                panControl: true,
-        //                zoomControl: true,
-        //                mapTypeControl: false,
-        //                scaleControl: true,
-        //                streetViewControl: false,
-        //                overviewMapControl: true
-        //            },
-        //            styles: [{
-        //                featureType: "poi",
-        //                elementType: "labels",
-        //                stylers: [{
-        //                    visibility: "off"
-        //                }]
-        //            }]
-        //
-        //        });
-        //    });
-        //
-        //}
+        if ($map.exists()) {
+
+
+            $map.each(function () {
+
+                var $elem = $(this),
+                    mapAddress = $elem.attr('data-map-address') ? $elem.attr('data-map-address') : "Melbourne, Australia",
+                    mapType = $elem.attr('data-map-type') ? $elem.attr('data-map-type') : "ROADMAP",
+                    mapZoom = $elem.attr('data-map-zoom') ? $elem.attr('data-map-zoom') : "14",
+                    mapIcon = $elem.attr('data-map-icon') ? $elem.attr('data-map-icon') : "images/markers/marker2.png";
+
+                var markers = [{
+                    address: mapAddress,
+                    html: mapAddress,
+                    icon: {
+                        image: mapIcon,
+                        iconsize: [40, 63],
+                        iconanchor: [18, 60],
+                    },
+                    }];
+
+                $elem.gMap({
+
+                    address: mapAddress,
+                    maptype: mapType,
+                    markers: markers,
+                    zoom: Number(mapZoom),
+                    doubleclickzoom: true,
+                    controls: {
+                        panControl: true,
+                        zoomControl: true,
+                        mapTypeControl: false,
+                        scaleControl: true,
+                        streetViewControl: false,
+                        overviewMapControl: true
+                    },
+                    styles: [{
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{
+                            visibility: "off"
+                        }]
+                    }]
+
+                });
+            });
+
+        }
     };
 
     /* ---------------------------------------------------------------------------
@@ -1891,7 +1891,7 @@ var INSPIRO = {};
         INSPIRO.counters(),
         INSPIRO.countdownTimer(),
         INSPIRO.youTubeBgPlayer(),
-        //INSPIRO.maps(),
+        INSPIRO.maps(),
         INSPIRO.lightBoxInspiro(),
         INSPIRO.resposniveVideos(),
         INSPIRO.tooltip(),

@@ -414,7 +414,6 @@
         </div>
 
     </section>
-    <!-- END: CLIENTS -->
 
     {% include "bayareaweddingfairs/site/ourShows/_detail.html" %}
 
@@ -434,6 +433,8 @@
 {#    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.video.min copy.js" %}"></script>#}
 {#    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js" %}"></script>#}
 {#    <script type="text/javascript" src="{% static "bawf/theme/vendor/rs-plugin/js/extensions/revolution.extension.slideanims.min.js" %}"></script>#}
+     <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>
+
 
 {% endblock jquery_links %}
 
@@ -481,6 +482,7 @@
             $("#slider-carousel").owlCarousel({
                 autoplayTimeout:20000
             });
+{#            $('#map').gMap();#}
         });
     </script>
 
