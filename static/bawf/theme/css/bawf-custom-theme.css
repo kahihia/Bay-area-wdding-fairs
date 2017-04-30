@@ -1,0 +1,18 @@
+.blue{
+    color: #26B8F3 !important;
+}
+.parallax{
+    background-attachment: fixed !important;
+    background-position: 0px 0px !important;
+    background-size: 100% 100% !important;
+/*{#            background-repeat: no-repeat !important;#}*/
+}
+.logo img{
+height:70px;
+}
+.sticky .logo img{
+height:70px;
+}
+a.list-group-item:hover, a.list-group-item:focus{
+background: #26B8F3 ;
+}

@@ -566,13 +566,13 @@ var INSPIRO = {};
                     navigation: true,
                     items: 1,
                     animateOut: 'fadeOut',
-                    autoplayTimeout:10000
+                    autoplayTimeout:15000
 
                 });
 
                 var owl = $("#slider-carousel");
 
-                $('.owl-item.active .slider-content').addClass("animated fadeIn");
+                //$('.owl-item.active .slider-content').addClass("animated fadeIn");
 
 
                 owl.on('changed.owl.carousel', function (event) {
