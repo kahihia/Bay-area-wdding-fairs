@@ -1,18 +1,20 @@
-.slide8{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE1+(1)-min.jpg');background-position: 0px 0px !important;}
-.slide3{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/CouplesSlide+(1)-min.jpg');}
-.slide4{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/GROOM_SLIDE-min.jpg');}
-.slide5{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/WinningSlide-min+(2).jpg');}
-.slide6{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/FUN_Slide-min.jpg');}
-.slide7{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/Gowns_SLIDE-min.jpg');}
-.slide1{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/LEVISSLIDE-min+(1).jpg');}
+.slide8{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE1+(1)-min.jpg');background-position: 0px 0px !important;}
+.slide3{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/CouplesSlide+(1)-min.jpg');}
+.slide4{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/GROOM_SLIDE-min.jpg');}
+.slide5{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/WinningSlide-min+(2).jpg');}
+.slide6{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/FUN_Slide-min.jpg');}
+.slide7{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/Gowns_SLIDE-min.jpg');}
+.slide1{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE2_NEW.jpg');}
+/*.slide1{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE2_NEW.jpg');}*/
 @media only screen
 and (max-device-width:640px),
 only screen and (max-device-width:667px),
-only screen and (max-width:480px){.slide1{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE1.jpg') !important;}
-.slide3{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/CouplesSlide-min.jpg') !important;}
-.slide4{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/GROOMS_SLIDE-min.png') !important;}
-.slide5{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/WinningSLIDE-min.jpg') !important;}
-.slide6{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/FUN_SLIDe-min.png') !important;}
-.slide7{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/Gowns_SLIDE-min.png') !important;}
-.slide8{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/LEVISSLIDE-min+(1).jpg') !important;}
+only screen and (max-width:480px){
+.slide8{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE1.jpg') !important;}
+.slide3{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/CouplesSlide-min.jpg') !important;}
+.slide4{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/GROOMS_SLIDE-min.png') !important;}
+.slide5{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/WinningSLIDE-min.jpg') !important;}
+.slide6{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/FUN_SLIDe-min.png') !important;}
+.slide7{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/Gowns_SLIDE-min.png') !important;}
+.slide1{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE2_NEW.jpg') !important;}
 }
