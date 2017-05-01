@@ -1,0 +1,25 @@
+@media only screen and (max-width:480px){
+    .slider-mobile-text{
+            font-size: 20px;
+    }
+    .heading-jumbo{
+        font-size:25px;
+    }
+    .section-register-exhibitor h1{
+        font-size: 20px;
+    }
+    .section-register-exhibitor p{
+            font-size: 15px;
+    }
+    .section-register-exhibitor a{
+        padding: 10px 10px;
+        font-size: 9px;
+    }
+    .bawf-counter-section .counter span{
+        font-size: 35px;
+    }
+    .parallax{
+        background-size: cover !important;
+    }
+
+}
