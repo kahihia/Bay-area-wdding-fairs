@@ -18,10 +18,10 @@
     <!-- WHAT WE DO -->
     <section class="background-grey">
         <div class="container">
-            <div class="heading text-left">
-                <h2 class="blue">WHAT WE DO</h2>
-                <span class="lead">Planning , Shopping , Savings </span>
-            </div>
+{#            <div class="heading text-left">#}
+{#                <h2 class="blue">WHAT WE DO</h2>#}
+{#                <span class="lead">Planning , Shopping , Savings </span>#}
+{#            </div>#}
             <div class="row">
                 <div class="col-md-4">
                     <div class="icon-box effect medium border center" data-animation="fadeInUp" data-animation-delay="200">
@@ -334,13 +334,13 @@
 
             <div class="col-md-6 text-center text-light">
 				<h1>WEDDING PROFESSIONALS</h1>
-                    <a class="button border full-rounded  color button-3d effect icon-left" href="http://bayareaweddingfairs.com/become-an-exhibitor/"><span>BECOME AN EXHIBITOR</span></a>
+                    <a class="button border full-rounded  color button-3d effect icon-left" href="{% url "index__BecomeExhibitor" %}"><span>BECOME AN EXHIBITOR</span></a>
                     <p class="lead">MEET OUR AWESOME COUPLES</p>
             </div>
 
             <div class="col-md-6 text-center text-light">
 				 <h1>BRIDES & GROOMS</h1>
-                    <a class="button border full-rounded  color button-3d effect icon-left" href="http://bayareaweddingfairs.com/our-events/"><span>FIND A WEDDING FAIR NEAR YOU</span></a>
+                    <a class="button border full-rounded  color button-3d effect icon-left" href="{% url "index__bride_groom_registration" %}"><span>FIND A WEDDING FAIR NEAR YOU</span></a>
                     <p class="lead">GET YOUR TICKET TO WINNING<br/>
 
                         SHOPPING & PLANNING</p>
