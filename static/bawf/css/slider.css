@@ -6,6 +6,7 @@
 .slide7{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/Gowns_SLIDE-min.jpg');}
 .slide1{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE2_NEW.jpg');}
 .slide9{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/ArriveWithAnIdea_Leave_WithA_Plan.jpg');}
+.slide10{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/Las_Vegas.png');}
 /*.slide1{background-image:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/SLIDE2_NEW.jpg');}*/
 @media only screen
 and (max-device-width:640px),
@@ -19,4 +20,5 @@ only screen and (max-width:480px){
 .slide7{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/Gowns_SLIDE-min.png') !important;}
 .slide1{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/min/LevisSLIDE-min.jpg') !important;}
 .slide9{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/ArriveWithAnIdea_Leave_WithA_Plan.jpg') !important;}
+.slide10{background-image:url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/Las_Vegas.png') !important;}
 }
