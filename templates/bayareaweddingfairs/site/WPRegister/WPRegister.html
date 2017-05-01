@@ -180,8 +180,13 @@
                                                                 <div class="red">{{ form.comments.errors }}</div>
                                                             {% endif %}
                             </div>
-                            <div class="col-md-12 form-group text-center">
-                            <button style="margin-top:15px;" class="btn btn-primary" type="submit">Register New Account </button>
+                            <div class="col-md-12 form-group">
+                                <p style="font-size:20px;color:grey;">
+                                                <label> By clicking Submit button, you agree to our <a href="{% url "index__PrivacyPolicy" %}" target="_blank" style="color: #337ab7;">Privacy Policy</a></label>
+                                            </p>
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary" type="submit">Submit </button>
+                            </div>
 
                         </div>
 
