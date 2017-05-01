@@ -86,6 +86,8 @@ def OurShows(request):
                 'description_grand':event.grandPrizeDescription,
                 'image':str(event.image),
                 'name':event.name,
+                'short_location':event.short_location,
+                'geo_location':event.google_location,
                 'location':event.location,
                 'date':str(event.date),
                 'id':event.id,

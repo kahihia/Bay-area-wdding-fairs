@@ -1,6 +1,4 @@
-var tpj = jQuery;
 
-var revapi30;
 
 function get_information(event_id){
     $.ajax({
@@ -16,8 +14,9 @@ function get_information(event_id){
             $('#show_reg_id').attr('href','{% url "index__bride_groom_registration" %}'+'?show='+obj.id)
             $('#updates').html(obj.description)
             $('#show-name').html(obj.name)
-            $('#show-location').html(obj.date+' | '+obj.location)
+            $('#show-location').html(obj.date+' | '+obj.short_location)
             $('#location-id').html(obj.location)
+            // $('#location-iframe').attr('src',obj.geo_location+"?api_key=AIzaSyB9cPOKyo2rN35p75FFb2CcF3iLlQkAE0I")
             $('.map').attr('data-map-address',obj.location)
             $('#date-time-id').html(obj.date)
             $('#show-image').attr('src',obj.image)
@@ -31,9 +30,3 @@ function get_information(event_id){
         }
     })
 }
-
-$(document).ready(function(){
-    $("#slider-carousel").owlCarousel({
-        autoplayTimeout:20000
-    });
-});

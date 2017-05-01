@@ -1,0 +1,19 @@
+{% for event_list in events %}
+    {% if event_list %}
+        <h3>{{ event_list.0.date|date:"M" }}</h3>
+        <div class="list-group">
+            {% for event in event_list %}
+                <a onclick="get_information('{{ event.id }}');" style="cursor: pointer;" class="list-group-item">
+                    <div class="col-md-2" style="margin-top:12px;">
+                        {{ event.date }}
+                    </div>
+                    <div class="col-md-10">
+                        <h4 class="list-group-item-heading">{{ event.name }}</h4>
+                        <p class="list-group-item-text">{{ event.short_location }}</p>
+                    </div>
+                    <span class="clearfix"></span>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endfor %}

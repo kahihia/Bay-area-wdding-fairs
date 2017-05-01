@@ -96,6 +96,7 @@ class Event_fairs(models.Model):
     group_ticket = models.CharField(max_length=255, blank=True, null=True)
     description = HTMLField(null=True, blank=True)
     grandPrizeDescription = HTMLField(null=True, blank=True)
+    short_location = models.CharField(max_length=255, null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     google_location = models.CharField(max_length=255, null=True, blank=True)
     # season = models.CharField(max_length=20, null=True, blank=True)
