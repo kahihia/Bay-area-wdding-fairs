@@ -77,22 +77,41 @@ def ShopVendors(request):
 
 @csrf_exempt
 def OurShows(request):
-    if "event_id" in request.POST:
-        event_id = request.POST.get('event_id')
-        event = get_object_or_404(Event_fairs, id=event_id)
-        if event:
-            data = {
-                'description':event.description,
-                'description_grand':event.grandPrizeDescription,
-                'image':str(event.image),
-                'name':event.name,
-                'short_location':event.short_location,
-                'geo_location':event.google_location,
-                'location':event.location,
-                'date':str(event.date),
-                'id':event.id,
-            }
-            return HttpResponse(json.dumps(data))
+    if request.method == "POST":
+        if "event_id" in request.POST:
+            event_id = request.POST.get('event_id')
+            event = get_object_or_404(Event_fairs, id=event_id)
+            if event:
+                data = {
+                    'description':event.description,
+                    'description_grand':event.grandPrizeDescription,
+                    'image':str(event.image),
+                    'name':event.name,
+                    'short_location':event.short_location,
+                    'geo_location':event.google_location,
+                    'location':event.location,
+                    'date':str(event.date),
+                    'id':event.id,
+                }
+                return HttpResponse(json.dumps(data))
+        elif "optionsRadios" in request.POST:
+            optionsRadios = request.POST.get('optionsRadios')
+            email = request.POST.get('widget-subscribe-form-email')
+            if email and optionsRadios:
+                if not Subscriptions.objects.filter(email__iexact=email):
+                    Subscriptions.objects.create(email=email, type=optionsRadios, is_subscribed=True)
+                    send_bawf_email(sendTo=email, message="You have been successfully subscribed to Bay Area Wedding Fairs News letters with email %s."%(email),
+                                    title="Bay Area Wedidng Fairs subscription successfull.:", subject="Subscription successfull")
+                    send_bawf_email(sendTo="info@bayareaweddingfairs.com",
+                                    message="You have been successfully subscribed to Bay Area Wedding Fairs News letters with email %s."%(email),
+                                    title="Bay Area Wedidng Fairs subscription successfull.:",
+                                    subject="Subscription successfull")
+                    return HttpResponse(json.dumps({'response':'success'}))
+                else:
+                    return HttpResponse(json.dumps({
+                        'response':'failed',
+                        'message':'You are already subscribed for notifications.',
+                    }))
     events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
     events = sort_months(events_list)
     return render(request, "bayareaweddingfairs/site/ourShows/ourShows.html", {

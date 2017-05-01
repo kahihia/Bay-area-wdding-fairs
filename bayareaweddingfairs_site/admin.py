@@ -36,5 +36,11 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Contact, ContactAdmin)
 
+class SubscriptionsAdmin(admin.ModelAdmin):
+    list_display = ['email', 'type', 'is_subscribed', 'created_at']
+    search_fields = ['email', 'type']
+
+admin.site.register(Subscriptions, SubscriptionsAdmin)
+
 
 

@@ -44,9 +44,20 @@
 {##}
                         <div class="col-md-4">
                             <div class="widget clearfix widget-newsletter">
-                                <form id="widget-subscribe-form" action="include/subscribe-form.php" role="form" method="post" class="form-inline">
+                                <form id="widget-subscribe-form" action="{% url "index__our_events" %}" role="form" method="post" class="form-inline">
                                     <h4 class="widget-title">Subscribe</h4>
                                     <small>Stay informed on our latest news!</small>
+                                    <div class="col-md-12">
+
+						<div class="radio">
+							<label>
+								<input type="radio" name="optionsRadios" id="optionsRadios1" value="bridegroom" checked=""> Bride / Groom </label>
+						</div><br />
+						<div class="radio">
+							<label>
+								<input type="radio" name="optionsRadios" id="optionsRadios2" value="weddingprofessional"> Wedding Professional </label>
+						</div>
+					</div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
                                         <input type="email" aria-required="true" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
@@ -60,8 +71,8 @@
                                         submitHandler: function(form) {
                                             jQuery(form).ajaxSubmit({
                                                 dataType: 'json',
-                                                success: function(text) {
-                                                    if (text.response == 'success') {
+                                                success: function(response) {
+                                                    if (response.response == 'success') {
                                                         $.notify({
                                                             message: "You have successfully subscribed to our mailing list."
                                                         }, {
@@ -71,7 +82,7 @@
 
                                                     } else {
                                                         $.notify({
-                                                            message: text.message
+                                                            message: response.message
                                                         }, {
                                                             type: 'warning'
                                                         });

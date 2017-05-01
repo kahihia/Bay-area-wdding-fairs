@@ -59,3 +59,10 @@ class Contact(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+class Subscriptions(models.Model):
+    email = models.CharField(max_length=1000)
+    type = models.CharField(max_length=1000)
+    is_subscribed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
