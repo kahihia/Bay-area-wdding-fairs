@@ -1,0 +1,77 @@
+{% extends 'bayareaweddingfairs/site/base/base_inner_layout.html' %}
+{% load pagination_tags %}
+{% load static %}
+{% load myfilters %}
+{% load humanize %}
+{% block content %}
+    <link href="{% static "bawf/css/forms.css" %}" rel="stylesheet">
+    <div class="wrapper">
+        <section class="page-title-parallax fullscreen" style="background-color: #CCCCCC;">
+            <div class="container container-fullscreen">
+                <div class="text-middle">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="privacy">
+                            <div class="col-md-8 col-md-offset-2 p-30 background-white" style="font-size: 15px;">
+                                <div class="col-md-12">
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-12  text-center">
+                                        <div class="hr-title hr-long center"><abbr>PRIVACY POLICY / TERMS & CONDITION</abbr></div>
+                                    </div>
+                                    <div class="col-md-12 m-t-10">
+                                        <p>Your privacy is important to us, and maintaining your trust and confidence is
+                                            one of our highest priorities. We respect your right to keep your personal
+                                            information confidential and understand your desire to avoid unwanted
+                                            solicitations. A recent law change requires us (along with banks, brokerage
+                                            houses, and other financial institutions) to disclose our Privacy Policy to
+                                            you – which we are more than happy to do. We hope that by taking a few
+                                            minutes to read it, you will have a better understanding of what we do with
+                                            the information you provide us and how we keep it private and secure.</p>
+                                        <h4>Information We Collect:</h4>
+                                        <p>We collect certain personal information about you – but only when that
+                                            information is provided by you or is obtained by us with your authorization.
+                                            We use that information to better assist you in your event planning process.
+                                            As part of that process, we may share your information with the
+                                            participating exhibitors (“Exhibitors”) for the event you registered for.
+                                            You might receive offers and other relevant information from Exhibitors.
+                                            However, the Exhibitors are required by law to clearly give an unsubscribe
+                                            option when sending emails. By attending the fair, you authorize Bay Area
+                                            Wedding Fairs, its staff and its Exhibitors to take pictures of you and your
+                                            party. Those pictures may be shared on social media, print and/or
+                                            online.</p>
+                                        <h4>Attending Event:</h4>
+                                        <p>Purchasing this Ticket provides entrance for one person into a Bay Area
+                                            Wedding Fair. All Ticket sales are final unless pre-approved by Bay Area
+                                            Wedding Fairs. Bay Area Wedding Fairs reserves the right to permit or refuse
+                                            entrance for any reason it deems detrimental to the Event. Once the attendee
+                                            enters the Event they acknowledge that the attendee/ticket holder is not
+                                            covered by any liability policy or entity and agrees to hold Bay Area
+                                            Wedding Fairs harmless for any physical, emotional, financial or any other
+                                            form of damages as a result of attending the Event. Individual Exhibitors
+                                            have sole responsibility of their personal, physical, promotional or
+                                            financial interactions with each attendee/ticket holder. Bay Area Wedding
+                                            Fairs may advertise certain attractions or promotions that due to
+                                            circumstances beyond its control may not be available at any specific event.
+                                            These promotions or prizes have no cash value. Last Minute Changes are due
+                                            to exhibitor/provider failures and not Bay Area Wedding Fairs. No Refunds or
+                                            remedies are available in these cases. Attendee must be a Bride or Groom to
+                                            qualify for Prizes and Giveaways. Attendees must obey all laws and may be
+                                            subject to the host property’s security requests. Failure to adhere to these
+                                            requests and/or failure to abide by the rules stated herein may result in
+                                            ejection from the event with no possibility of refund. Enjoy the Event!</p>
+                                        <p>Thank you for allowing us to serve your event planning needs. We value your
+                                            business and are committed to protecting you privacy. Please call us if you
+                                            have any questions or if we can be of further service.
+                                        </p>
+                                        <p>Best regards,</p>
+                                        <p>Bay Area Wedding Fairs</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}
