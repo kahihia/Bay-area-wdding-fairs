@@ -216,8 +216,8 @@
                                             <input type="hidden" name="stripe_token" id="stripe_token" />
                                             <input type="hidden" name="event_date" id="event_date" />
                                             <div id="error_email" style="color:red"></div>
-                                            <p style="font-size:20px;color:grey;">
-                                                <label><input id="agreement_check" type="checkbox" required /> I agree to the terms & conditions stated below</label>
+                                            <p style="font-size:12px;color:grey;">
+                                                <label> By purchasing tickets you agree to the terms and conditions listed below</label>
                                                 <br />
                                             <div id="agree_error" style="color:red;"></div>
                                             </p>
@@ -464,7 +464,7 @@
                 var email = $('#id_email').val();
                 var phone = $('#id_phone').val();
                 var number = $('#id_number').val();
-                var checked_box = $('#agreement_check').is(":checked");
+{#                var checked_box = $('#agreement_check').is(":checked");#}
 
                 if((email == '')) {
                     event.preventDefault();
@@ -485,11 +485,11 @@
                     $('#error_email').html('Please Select the Quantity ');
                     return false
                 }
-                if(checked_box == false){
-                    event.preventDefault();
-                    $('#error_email').html('Please accept the terms and conditions. ');
-                    return false
-                }
+{#                if(checked_box == false){#}
+{#                    event.preventDefault();#}
+{#                    $('#error_email').html('Please accept the terms and conditions. ');#}
+{#                    return false#}
+{#                }#}
 
                 else {
                     $("#stripe-error-message").html("");
