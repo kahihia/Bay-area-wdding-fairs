@@ -100,10 +100,10 @@ def OurShows(request):
             if email and optionsRadios:
                 if not Subscriptions.objects.filter(email__iexact=email):
                     Subscriptions.objects.create(email=email, type=optionsRadios, is_subscribed=True)
-                    send_bawf_email(sendTo=email, message="You have been successfully subscribed to Bay Area Wedding Fairs News letters with email %s."%(email),
+                    send_bawf_email(sendTo=email, message="You have been successfully subscribed to Bay Area Wedding Fairs Newsletter with email %s."%(email),
                                     title="Bay Area Wedidng Fairs subscription successfull.:", subject="Subscription successfull")
                     send_bawf_email(sendTo="info@bayareaweddingfairs.com",
-                                    message="You have been successfully subscribed to Bay Area Wedding Fairs News letters with email %s."%(email),
+                                    message="You have been successfully subscribed to Bay Area Wedding Fairs Newsletter with email %s."%(email),
                                     title="Bay Area Wedidng Fairs subscription successfull.:",
                                     subject="Subscription successfull")
                     return HttpResponse(json.dumps({'response':'success'}))
