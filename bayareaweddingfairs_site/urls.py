@@ -19,5 +19,6 @@ urlpatterns = patterns('',
                        url(r'^las-vagas-signin/', LasVegasSignin, name="index__LasVegasSignin"),
                        url(r'^shop-vendors-details/(?P<id>[-_@.+0-9a-zA-Z ]+)/$', shopDetail, name="index__storefrontItemDetail"),
                        url(r'^$', Index),
+                       url(r'event-detail/(?P<id>\d+)/', eventDetail, name="eventfair_detail" )
                        )
 

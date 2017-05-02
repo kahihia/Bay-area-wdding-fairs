@@ -542,3 +542,24 @@ def shopDetail(request, id):
         'detail': itemDetail
     }
     return render(request, "bayareaweddingfairs/shopVendors/shopVendorItemDetail.html", context)
+
+
+def eventDetail(request, id):
+    event_dict = {}
+    event = Event_fairs.objects.get(id=id)
+    print "event: " , event.amount
+    event_dict = {
+        'standard_price': event.amount,
+        'standard_ticket_name': event.standard_ticket_name,
+        'standard_ticket_visible': event.standard_ticket_visible,
+        'earlybird_ticket': event.earlybird_ticket,
+        'earlybird_ticket_name': event.earlybird_ticket_name,
+        'earlybird_ticket_visible': event.earlybird_ticket_visible,
+        'group_ticket': event.group_ticket,
+        'group_ticket_name': event.group_ticket_name,
+        'group_ticket_visible': event.group_ticket_visible
+
+
+    }
+
+    return HttpResponse(json.dumps( event_dict))

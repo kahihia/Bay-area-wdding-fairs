@@ -70,110 +70,118 @@
                                                 <input hidden id="{{ e.id }}__earlybird_ticket" value="{{ e.earlybird_ticket }}" />
                                                 <input hidden id="{{ e.id }}__group_ticket" value="{{ e.group_ticket }}" />
                                                 <input hidden id="{{ e.id }}__name" value="{{ e.name }} - {{ e.date }}" />
+                                                <input hidden id="{{ e.id }}__standard_name" value="{{ e.standard_ticket_name }}" />
+                                                <input hidden id="{{ e.id }}__early_name" value="{{ e.early_ticket_name }}" />
+                                                <input hidden id="{{ e.id }}__group_name" value="{{ e.group_ticket_name }}" />
                                             {% endfor %}
                                             <div>
                                                 <h4 class="text-left" style="margin-top: 15px;margin-bottom:15px;">
                                                     Event: <a id="event_name">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
                                                 </h4>
 
-                                                <div id="standard_div">
-                                                    <div class="text-left" >
-                                                        STANDARD ADMISSION:  <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
-                                                        <option value="0" selected="selected">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                        <option value="13">13</option>
-                                                        <option value="14">14</option>
-                                                        <option value="15">15</option>
-                                                        <option value="16">16</option>
-                                                        <option value="17">17</option>
-                                                        <option value="18">18</option>
-                                                        <option value="19">19</option>
-                                                        <option value="20">20</option>
-                                                    </select>
-                                                        <div class="clearfix"></div>
+
+                                                    <div id="standard_div">
+                                                        <div class="text-left" >
+                                                            <label id="lbl_standard">{{ event.standard_ticket_name }}</label>
+                                                            <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="event-quantity" id="id_form-0-quantity" name="quantityTickets">
+                                                                <option value="0" selected="selected">0</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="6">6</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                                <option value="12">12</option>
+                                                                <option value="13">13</option>
+                                                                <option value="14">14</option>
+                                                                <option value="15">15</option>
+                                                                <option value="16">16</option>
+                                                                <option value="17">17</option>
+                                                                <option value="18">18</option>
+                                                                <option value="19">19</option>
+                                                                <option value="20">20</option>
+                                                            </select>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <h4 class="text-left" style="margin-bottom:15px;">
+
+                                                            Price: <a id="event_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                        </h4>
                                                     </div>
-                                                    <h4 class="text-left" style="margin-bottom:15px;">
 
-                                                        Price: <a id="event_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="earlybird_div">
+                                                    <div id="earlybird_div">
 
-                                                    <div class="text-left">
-                                                        EARLY BIRD DISCOUNTED ADMISSION:  <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="earlybird-event-quantity" id="id_form-earlybird-quantity" name="earlybirdTickets">
-                                                        <option value="0" selected="selected">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                        <option value="13">13</option>
-                                                        <option value="14">14</option>
-                                                        <option value="15">15</option>
-                                                        <option value="16">16</option>
-                                                        <option value="17">17</option>
-                                                        <option value="18">18</option>
-                                                        <option value="19">19</option>
-                                                        <option value="20">20</option>
-                                                    </select>
-                                                        <div class="clearfix"></div>
+                                                        <div class="text-left">
+                                                            <label id="lbl_early">{{ event.earlybird_ticket_name }}</label>
+
+                                                            <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="earlybird-event-quantity" id="id_form-earlybird-quantity" name="earlybirdTickets">
+                                                                <option value="0" selected="selected">0</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="6">6</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                                <option value="12">12</option>
+                                                                <option value="13">13</option>
+                                                                <option value="14">14</option>
+                                                                <option value="15">15</option>
+                                                                <option value="16">16</option>
+                                                                <option value="17">17</option>
+                                                                <option value="18">18</option>
+                                                                <option value="19">19</option>
+                                                                <option value="20">20</option>
+                                                            </select>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <h4 class="text-left"  style="margin-bottom:15px;">
+                                                            Price: <a id="earlybirds_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                        </h4>
                                                     </div>
-                                                    <h4 class="text-left"  style="margin-bottom:15px;">
-                                                        Price: <a id="earlybirds_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                    </h4>
-                                                </div>
 
 
+                                                    <div id="group_div">
 
-                                                <div id="group_div">
+                                                        <div class="text-left">
+                                                            <label id="lbl_group">{{ event.group_ticket_name }}</label>
+                                                            <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="group-event-quantity" id="id_form-group-quantity" name="groupTickets">
+                                                                <option value="0" selected="selected">0</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="6">6</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                                <option value="12">12</option>
+                                                                <option value="13">13</option>
+                                                                <option value="14">14</option>
+                                                                <option value="15">15</option>
+                                                                <option value="16">16</option>
+                                                                <option value="17">17</option>
+                                                                <option value="18">18</option>
+                                                                <option value="19">19</option>
+                                                                <option value="20">20</option>
+                                                            </select>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <h4 class="text-left" style="margin-bottom:15px;">
+                                                            Price: <a id="group_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
+                                                        </h4>
 
-                                                    <div class="text-left">
-                                                        GROUP DISCOUNTED TICKETS (4+):  <select class="form-control input-lg" style="width:80px;display: inline;" data-ga-interaction-id="group-event-quantity" id="id_form-group-quantity" name="groupTickets">
-                                                        <option value="0" selected="selected">0</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                        <option value="13">13</option>
-                                                        <option value="14">14</option>
-                                                        <option value="15">15</option>
-                                                        <option value="16">16</option>
-                                                        <option value="17">17</option>
-                                                        <option value="18">18</option>
-                                                        <option value="19">19</option>
-                                                        <option value="20">20</option>
-                                                    </select>
-                                                        <div class="clearfix"></div>
+
                                                     </div>
-                                                    <h4 class="text-left" style="margin-bottom:15px;">
-                                                        Price: <a id="group_amount">{{ event.name }} - {{ event.date|date:"D, M d Y" }}</a>
-                                                    </h4>
-
-
-                                                </div>
                                                 <div class="clearfix"></div>
 
 
@@ -271,6 +279,8 @@
         var total = $('#total_ticket_price');
         var hidden_total = $('#hidden_total');
         $("#standard_div").hide()
+        $("#group_div").hide();
+        $("#earlybird_div").hide();
         function get_event(){
             var event_id = $('#id_event').val();
 
@@ -324,6 +334,45 @@
             $("#event_date").val(event_date);
             console.log('event: ', event_date, $(this));
 
+            var event = $("#id_event option:selected").val();
+            console.log("eventID: "+event)
+            $.ajax({
+                url: "/event-detail/"+event,
+                type: "GET",
+                data: {},
+
+                success: function (data) {
+                    dt = JSON.parse(data)
+                    console.log("data: "+dt['group_ticket_name'])
+                    if (dt['standard_ticket_visible'] == true){
+                        $("#lbl_standard").html(dt['standard_ticket_name']);
+
+                    }else{
+                        $("#standard_div").hide();
+                    }
+                    if (dt['earlybird_ticket_visible'] == true){
+                        $("#lbl_early").html(dt['earlybird_ticket_name']);
+
+                    }else{
+                        $("#earlybird_div").hide();
+
+                    }
+                    if (dt['group_ticket_visible'] == true){
+                        $("#lbl_group").html(dt['group_ticket_name'])
+                    }else{
+                        $("#group_div").hide();
+                    }
+
+
+                },
+
+                error: function(error) {
+                    console.log("error: "+error.message);
+
+                }
+            })
+
+
             var m_names = new Array("Jan. ", "Feb. ", "Mar. ",
                 "Apr. ", "May. ", "Jun. ", "Jul. ", "Aug. ", "Sep. ",
                 "Oct. ", "Nov. ", "Dec. ");
@@ -334,16 +383,16 @@
             var curr_year = d.getFullYear();
             var current_date = m_names[curr_month] + curr_date +', ' +curr_year;
             console.log('date: ', current_date, event_date);
-            if(current_date == event_date){
-                $("#standard_div").show();
-                $("#earlybird_div").hide();
-                $("#group_div").hide()
-
-            }else{
-                $("#standard_div").hide();
-                $("#earlybird_div").show();
-                $("#group_div").show()
-            }
+{#            if(current_date == event_date){#}
+{#                $("#standard_div").show();#}
+{#                $("#earlybird_div").hide();#}
+{#                $("#group_div").hide()#}
+{##}
+{#            }else{#}
+{#                $("#standard_div").hide();#}
+{#                $("#earlybird_div").show();#}
+{#                $("#group_div").show()#}
+{#            }#}
 
 
         });

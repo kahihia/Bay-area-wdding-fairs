@@ -92,8 +92,17 @@ class Event_fairs(models.Model):
     is_expired = models.BooleanField(default=False)
     date = models.DateField(null=True, blank=True)
     amount = models.CharField(max_length=255, null=True, blank=True)
+    standard_ticket_name = models.CharField(help_text="Standard Ticket Name", max_length=255, blank=True, null=True)
+    standard_ticket_visible = models.BooleanField(help_text="Show Standard Ticket", default=True)
+
     earlybird_ticket = models.CharField(max_length=255, blank=True, null=True)
+    earlybird_ticket_name = models.CharField(help_text="Early Bird Ticket Name", max_length=255, blank=True, null=True)
+    earlybird_ticket_visible = models.BooleanField(help_text="Show Early Bird", default=True)
+
     group_ticket = models.CharField(max_length=255, blank=True, null=True)
+    group_ticket_name = models.CharField(help_text="Group Ticket Name", max_length=255, blank=True, null=True)
+    group_ticket_visible = models.BooleanField(help_text="Show Group Ticket", default=True)
+
     description = HTMLField(null=True, blank=True)
     grandPrizeDescription = HTMLField(null=True, blank=True)
     short_location = models.CharField(max_length=255, null=True, blank=True)
