@@ -31,9 +31,10 @@ def PromoCode_Validate(request):
         quantity = request.GET.get('quantity')
         eventID = request.GET.get('eventid')
         earlyQuantity = request.GET.get('earlyquantity')
-        groupQuantity = request.GET.get('groupquantity')
+        quantityTickets = request.GET.get('quantityTickets')
+        groupquantity = request.GET.get('groupquantity')
         total = float(total)
-        print promocode_code, total, discount, quantity, eventID, earlyQuantity, groupQuantity
+        print promocode_code, total, discount, quantity, eventID, earlyQuantity, quantityTickets, groupquantity
         event = Event_fairs.objects.get(id=eventID)
         print "evevnt: ", event.earlybird_ticket, event.group_ticket
         try:
@@ -44,15 +45,19 @@ def PromoCode_Validate(request):
                 type = v.type
                 if (v.type == 'amount') & (total != ''):
                     earlyPrice = float(event.earlybird_ticket) - float(amount)
-                    groupPrice = float(event.group_ticket) - float(amount)
-                    total = earlyPrice * int(earlyQuantity) + groupPrice * int(groupQuantity)
+                    ticketPrice = float(event.amount) - float(amount)
+                    groupPrice = float(event.group_ticket)
+                    total = earlyPrice * int(earlyQuantity) + ticketPrice * int(quantityTickets) + groupPrice * int(groupquantity)
                     discount = total
 
                 elif (v.type == 'percent') & (total != ''):
 
-                    discount = (total / 100) * float(amount)
-                    print "d: ", discount
-                    discount = total - discount
+                    earlyPrice = (float(event.earlybird_ticket)/100)* float(amount)
+                    ticketPrice = (float(event.amount)/100)* float(amount)
+                    groupPrice = float(event.group_ticket)
+                    total = earlyPrice * int(earlyQuantity) + ticketPrice * int(quantityTickets) + groupPrice * int(
+                        groupquantity)
+                    discount = total
                 print "final discount:", discount
                 data = {'response': 'success', 'discount': discount}
                 return JsonResponse(data)
@@ -306,3 +311,30 @@ def send_email_ticket_bawf(sender,subject, receive,message,link ,title=None, obj
 
         return False
 
+def send_email_ticket_bawf_ticket(sender,subject, receive,message):
+    top_content = None
+
+    try:
+
+        context_email = {
+                'heading' : subject,
+                'sub_heading' : top_content,
+                'message':message,
+                'title':subject,
+                'name':receive,
+            }
+        print 'recieve: ', receive
+        html_content = render_to_string('email/ticket_summary.html', context_email)
+        text_content = strip_tags(html_content)
+        msg = EmailMultiAlternatives(subject, text_content, sender, receive)
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        print "email sent: ",receive
+        return True
+
+    except Exception as e:
+        print "e: ", e
+        print "email not sent"
+
+        return False

@@ -281,13 +281,18 @@ def BrideGroomTicket(request):
                 promo_code_discount = Promocode.objects.get(code=promocode)
                 if promo_code_discount.is_Available:
                     if promo_code_discount.type == Promocode.AMOUNT:
+                        tickets_price = float(event.amount) - float(promo_code_discount.amount_percent)
                         new_earlyBirdPrice = float(event.earlybird_ticket) - float(promo_code_discount.amount_percent)
-                        new_groupPrice = float(event.group_ticket) - float(promo_code_discount.amount_percent)
+                        new_groupPrice = float(event.group_ticket) #- float(promo_code_discount.amount_percent)
                         amount = float(new_groupPrice) * int(group_ticket) + float(new_earlyBirdPrice) * int(
-                            earlybird_ticket)
+                            earlybird_ticket) + float(tickets_price) * int(quantity_tickets)
 
                     elif promo_code_discount.type == Promocode.PERCENT:
-                        amount = (amount / 100) * float(promo_code_discount.amount_percent)
+                        tickets_price = (float(event.amount) /100) * float(promo_code_discount.amount_percent)
+                        new_earlyBirdPrice = (float(event.earlybird_ticket) /100) * float(promo_code_discount.amount_percent)
+                        new_groupPrice = float(event.group_ticket)  # - float(promo_code_discount.amount_percent)
+                        amount = float(new_groupPrice) * int(group_ticket) + float(new_earlyBirdPrice) * int(
+                            earlybird_ticket) + float(tickets_price) * int(quantity_tickets)
             except Exception as e:
                 print e
             amount = int(amount * 100)
@@ -330,6 +335,19 @@ def BrideGroomTicket(request):
                                                         ticket.group_ticket,
                                                         int(ticket.amount / 100), ticket.promocode_success),
                                                     object=ticket, link=image_link)
+                    tickets_sold_total = EventTickets.objects.filter(event=event)
+                    normal = 0
+                    early_normal = 0
+                    group_normal = 0
+                    for o in tickets_sold_total:
+                        normal += int(o.quantity)
+                        early_normal += int(o.earlybird_ticket)
+                        group_normal += int(o.group_ticket)
+                    total_normal = normal+group_normal+early_normal
+                    send_email_ticket_bawf_ticket(sender="info@bayareaweddingfairs.com",
+                                                    subject="Bay Area Wedding Fairs: Ticket Summary",
+                                                    receive=['adeelpkpk@gmail.com','info@bayareaweddingfairs.com'],
+                                                    message='Event: %s<br />Total tickets sold:<br /><br />%s: %s<br />%s: %s<br />%s: %s<br /><b>Total: %s</b>' % (event,event.standard_ticket_name,normal, event.earlybird_ticket_name,early_normal, event.group_ticket_name,group_normal,total_normal))
                     return render(request, "bayareaweddingfairs/site/BGTicket/Success.html", {
                         'object': ticket,
                     })

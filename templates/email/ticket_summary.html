@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static "vendroid/css/theme-responsive.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static "vendroid/css/font-awesome-ie7.min.css" %}"><![endif]-->
+    <link href="{% static "vendroid/css/font-entypo.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/css/fonts.css" %}"  rel="stylesheet" type="text/css">
+    <style>
+        a{
+            color: #26B8F3; !important;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="800" style="border: 1px solid #cccccc;">
+    <tr>
+        <td align="center"  style="padding: 40px 0 30px 0;">
+            <img src="https://bayareaweddingfairs-static.s3.amazonaws.com/static/images/bawf/bawf_logo.png" alt="BayAreaWeddingFairs"
+                 style="display: block; width: 40%;"/>
+        </td>
+    </tr>
+    <tr>
+
+        <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+            <h1>Summary</h1>
+            <p>Total Ticket Counts</p>
+            <hr />
+            <p><b>{{ object.event.name|upper }}</b></p>
+            <p>{{ object.event.date }}</p>
+            <p>{{ message|safe }}</p>
+
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#26B8F3" style="padding: 30px 30px 30px 30px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;">
+                        BayAreaWeddingFairs in collaboration with <a target="_blank" style="color:white !important;margin-left:0px;padding-left:0px;" href="https://www.yapjoy.com">YapJoy</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
