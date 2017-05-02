@@ -343,7 +343,7 @@ def BrideGroomTicket(request):
     """
     context = {
         'pub_key': 'pk_test_ic11SWVPcUHwZ1mDBEBTdSX1',
-        'event': Event_fairs.objects.filter(date__gte=datetime.now().date()).filter(amount__isnull=False).exclude(id__in=[46,47,48,49,50,51,52]).order_by('date'),
+        'event': Event_fairs.objects.filter(date__gte=datetime.now().date()).filter(amount__isnull=False).filter(Q(standard_ticket_visible=True)|Q(earlybird_ticket_visible=True)|Q(group_ticket_visible=True)).exclude(id__in=[46,47,48,49,50,51,52]).order_by('date'),
         'form': ticketform,
         'hide_thanks': hide_thanks,
     }
