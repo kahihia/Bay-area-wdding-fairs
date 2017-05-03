@@ -44,6 +44,7 @@ class ShopVendorsItemDetail(models.Model):
     vendorItems = models.ForeignKey(ShopVendorsItem, related_name="itemsDetails", null=True, blank=True)
     title = models.CharField(help_text="Shop Vendor Item Details", max_length=255, null=True, blank=True)
     itemDetailImage = models.FileField(upload_to="static/itemdetails/")
+    website = models.CharField(max_length=1000,null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
