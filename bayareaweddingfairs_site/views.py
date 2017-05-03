@@ -348,7 +348,7 @@ def BrideGroomTicket(request):
                 send_email_ticket_bawf_ticket(sender="info@bayareaweddingfairs.com",
                                                 subject="Bay Area Wedding Fairs: Ticket Summary",
                                                 receive=['adeelpkpk@gmail.com','info@bayareaweddingfairs.com'],
-                                                message='<b>ORDER DETAILS<b/><b/>Time: %s<br />Order ID: %s<br />Tickets Sold: %s<br />Amount: %s<br />Tracking Code: %s<br />Buyer: %s<br />Buyer Phone: %s<br /><hr />Event: %s<br />Venue: %s<br />Event Date: %s<br />Sales: You have now sold %s tickets for this date' % (
+                                                message='<b>ORDER DETAILS<br/><br/>Time: %s<br />Order ID: %s<br />Tickets Sold: %s<br />Amount: %s<br />Tracking Code: %s<br />Buyer: %s<br />Buyer Phone: %s<br /><hr />Event: %s<br />Venue: %s<br />Event Date: %s<br />Sales: You have now sold %s tickets for this date' % (
                                                     str(datetime.now()),
                                                     ticket.id,
                                                     ticket.get_all_tickets(),
