@@ -343,11 +343,24 @@ def BrideGroomTicket(request):
                         normal += int(o.quantity)
                         early_normal += int(o.earlybird_ticket)
                         group_normal += int(o.group_ticket)
-                    total_normal = normal+group_normal+early_normal
+                    total_tickets_sold = normal+early_normal+group_normal
                     send_email_ticket_bawf_ticket(sender="info@bayareaweddingfairs.com",
                                                     subject="Bay Area Wedding Fairs: Ticket Summary",
                                                     receive=['adeelpkpk@gmail.com','info@bayareaweddingfairs.com'],
-                                                    message='Event: %s<br /><br />Total tickets sold:<br /><br />%s - %s<br />%s - %s<br />%s - %s<br /><b>%s - Total</b>' % (event,normal,event.standard_ticket_name, early_normal,event.earlybird_ticket_name,group_normal, event.group_ticket_name,total_normal))
+                                                    message='<b>ORDER DETAILS<b/><b/>Time: %s<br />Order ID: %s<br />Tickets Sold: %s<br />Amount: $%s<br />Tracking Code: %s<br />Buyer: %s<br />Buyer Phone: %s<br /><hr />Event: %s<br />Venue: %s<br />Event Date: %s<br />Sales: You have now sold %s tickets for this date' % (
+                                                        datetime.now(),
+                                                        ticket.id,
+                                                        ticket.get_all_tickets(),
+                                                        ticket.get_amount(),
+                                                        ticket.code,
+                                                        ticket.email,
+                                                        ticket.phone,
+                                                        ticket.event,
+                                                        ticket.event.location,
+                                                        ticket.event.date,
+                                                        ticket.event.date,
+                                                        total_tickets_sold
+                                                    ))
                     return render(request, "bayareaweddingfairs/site/BGTicket/Success.html", {
                         'object': ticket,
                     })
