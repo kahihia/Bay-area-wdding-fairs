@@ -11,7 +11,7 @@ function get_information(event_id){
         success: function (data) {
             var obj = jQuery.parseJSON(data);
             console.log(obj.image)
-            var link_bg_reg = {% url "index__bride_groom_registration" %};
+            var link_bg_reg = '/bride-groom-registration/';
             $('#show_reg_id').attr('href',link_bg_reg+'?show='+obj.id)
             $('#updates').html(obj.description)
             $('#show-name').html(obj.name)
