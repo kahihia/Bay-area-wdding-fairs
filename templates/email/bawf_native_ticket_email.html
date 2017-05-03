@@ -43,8 +43,8 @@
             Thank You !<br /><br />Bay Area Wedding Fair Team !</span></p>
             <hr />
             <p>TICKETS</p>
-            <p><b>{% if object.quantity and not object.quantity == '0'  %}{{ object.quantity }} Standard Ticket<br />{% endif %}{% if object.earlybird_ticket and not object.earlybird_ticket == '0'  %}{{ object.earlybird_ticket }} Early Bird Ticket<br />{% endif %}
-                {% if object.group_ticket  and not object.group_ticket == '0'  %}{{ object.group_ticket }} Group Ticket{% endif %}</b></p>
+            <p><b>{% if object.quantity and not object.quantity == '0'  %}{{ object.quantity }} {{ object.standard_ticket_name }}<br />{% endif %}{% if object.earlybird_ticket and not object.earlybird_ticket == '0'  %}{{ object.earlybird_ticket }} {{ object.earlybird_ticket_name }}<br />{% endif %}
+                {% if object.group_ticket  and not object.group_ticket == '0'  %}{{ object.group_ticket }} {{ object.group_ticket_name }}{% endif %}</b></p>
 
         </td>
     </tr>
