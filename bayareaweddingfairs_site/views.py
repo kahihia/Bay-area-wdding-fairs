@@ -85,6 +85,7 @@ def OurShows(request):
                 data = {
                     'description':event.description,
                     'description_grand':event.grandPrizeDescription,
+                    'footerdetail':event.footerDescription,
                     'image':str(event.image),
                     'name':event.name,
                     'short_location':event.short_location,

@@ -105,6 +105,7 @@ class Event_fairs(models.Model):
 
     description = HTMLField(null=True, blank=True)
     grandPrizeDescription = HTMLField(null=True, blank=True)
+    footerDescription = HTMLField(null=True, blank=True)
     short_location = models.CharField(max_length=255, null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     google_location = models.CharField(max_length=255, null=True, blank=True)

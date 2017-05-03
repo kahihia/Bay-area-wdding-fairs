@@ -17,6 +17,7 @@ function get_information(event_id){
             $('#show-name').html(obj.name)
             $('#show-location').html(obj.date+' | '+obj.short_location)
             $('#location-id').html(obj.location)
+            $('#more-detail').html(obj.footerdetail)
             // $('#location-iframe').attr('src',obj.geo_location+"?api_key=AIzaSyB9cPOKyo2rN35p75FFb2CcF3iLlQkAE0I")
             $('.map').attr('data-map-address',obj.location)
             $('#date-time-id').html(obj.date)
