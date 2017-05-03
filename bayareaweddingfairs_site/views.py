@@ -270,13 +270,14 @@ def BrideGroomTicket(request):
             event = Event_fairs.objects.get(id=event)
             group = 0
             easybird = 0
-            if str(event_date) == str(datetime.now().date().strftime('%b. %d, %Y')):
-                amount = float(event.amount) * float(int(quantity_tickets))
-            else:
-                amount = 0
+            # if str(event_date) == str(datetime.now().date().strftime('%b. %d, %Y')):
+            #     amount = float(event.amount) * float(int(quantity_tickets))
+            # else:
+            #     amount = 0
+            normal_tickets = float(event.amount) * float(int(quantity_tickets))
             easybird = (float(event.earlybird_ticket) * float(int(earlybird_ticket)))
             group = float(event.group_ticket) * float(int(group_ticket))
-            amount = amount + easybird + group
+            amount = normal_tickets + easybird + group
             try:
                 promo_code_discount = Promocode.objects.get(code=promocode)
                 if promo_code_discount.is_Available:
@@ -304,68 +305,67 @@ def BrideGroomTicket(request):
                     source=stripe_token,
                     description="Ticket purchased by %s, quatity: %s, amount: %s" % (email, quantity_tickets, amount)
                 )
-            try:
-                if charge:
-                    code = id_generator()
-                    qr = pyqrcode.create(code)
-                    filename = '{}'.format((datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
-                    filename = filename + '.png'
-                    qr.png(filename, scale=7)
-                    image_link = save_to_S3(filename)
-                    ticket = EventTickets()
-                    ticket.event = event
-                    ticket.email = email
-                    ticket.phone = phone
-                    ticket.card = charge.stripe_id
-                    ticket.amount = amount
-                    ticket.quantity = quantity_tickets
-                    ticket.earlybird_ticket = earlybird_ticket
-                    ticket.group_ticket = group_ticket
-                    ticket.code = code
-                    ticket.path_upload = image_link
-                    if promo_code_discount:
-                        ticket.promocode_success = promo_code_discount
-                    ticket.save()
-                    result = send_email_ticket_bawf(sender="info@bayareaweddingfairs.com",
-                                                    subject="Bay Area Wedding Fairs: Ticket",
-                                                    receive=email,
-                                                    title="Thank you for purchasing Bay Area Wedding Fairs Tickets",
-                                                    message='Your ticket reservation has been made against the following show: <br /><br />- %s<br /><br />Quantity of Standard tickets: %s<br />Quantity of EarlyBirds Discounted tickets: %s<br />Quantity of Group Discounted tickets: %s<br />Total amount processed: $%s<br />Promotion code (if any): %s<br /><br />We are looking forward to have you in the show, feel free to contact for any queries info@bayareaweddingfairs.com' % (
-                                                        event, ticket.quantity, ticket.earlybird_ticket,
-                                                        ticket.group_ticket,
-                                                        int(ticket.amount / 100), ticket.promocode_success),
-                                                    object=ticket, link=image_link)
-                    tickets_sold_total = EventTickets.objects.filter(event=event)
-                    normal = 0
-                    early_normal = 0
-                    group_normal = 0
-                    for o in tickets_sold_total:
-                        normal += int(o.quantity)
-                        early_normal += int(o.earlybird_ticket)
-                        group_normal += int(o.group_ticket)
-                    total_tickets_sold = normal+early_normal+group_normal
-                    send_email_ticket_bawf_ticket(sender="info@bayareaweddingfairs.com",
-                                                    subject="Bay Area Wedding Fairs: Ticket Summary",
-                                                    receive=['adeelpkpk@gmail.com','info@bayareaweddingfairs.com'],
-                                                    message='<b>ORDER DETAILS<b/><b/>Time: %s<br />Order ID: %s<br />Tickets Sold: %s<br />Amount: $%s<br />Tracking Code: %s<br />Buyer: %s<br />Buyer Phone: %s<br /><hr />Event: %s<br />Venue: %s<br />Event Date: %s<br />Sales: You have now sold %s tickets for this date' % (
-                                                        datetime.now(),
-                                                        ticket.id,
-                                                        ticket.get_all_tickets(),
-                                                        ticket.get_amount(),
-                                                        ticket.code,
-                                                        ticket.email,
-                                                        ticket.phone,
-                                                        ticket.event,
-                                                        ticket.event.location,
-                                                        ticket.event.date,
-                                                        ticket.event.date,
-                                                        total_tickets_sold
-                                                    ))
-                    return render(request, "bayareaweddingfairs/site/BGTicket/Success.html", {
-                        'object': ticket,
-                    })
-            except Exception as e:
-                print "exceptionBuyTickets: ", e.message
+            # try:
+            if charge:
+                code = id_generator()
+                qr = pyqrcode.create(code)
+                filename = '{}'.format((datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
+                filename = filename + '.png'
+                qr.png(filename, scale=7)
+                image_link = save_to_S3(filename)
+                ticket = EventTickets()
+                ticket.event = event
+                ticket.email = email
+                ticket.phone = phone
+                ticket.card = charge.stripe_id
+                ticket.amount = amount
+                ticket.quantity = quantity_tickets
+                ticket.earlybird_ticket = earlybird_ticket
+                ticket.group_ticket = group_ticket
+                ticket.code = code
+                ticket.path_upload = image_link
+                if promo_code_discount:
+                    ticket.promocode_success = promo_code_discount
+                ticket.save()
+                result = send_email_ticket_bawf(sender="info@bayareaweddingfairs.com",
+                                                subject="Bay Area Wedding Fairs: Ticket",
+                                                receive=email,
+                                                title="Thank you for purchasing Bay Area Wedding Fairs Tickets",
+                                                message='Your ticket reservation has been made against the following show: <br /><br />- %s<br /><br />Quantity of Standard tickets: %s<br />Quantity of EarlyBirds Discounted tickets: %s<br />Quantity of Group Discounted tickets: %s<br />Total amount processed: $%s<br />Promotion code (if any): %s<br /><br />We are looking forward to have you in the show, feel free to contact for any queries info@bayareaweddingfairs.com' % (
+                                                    event, ticket.quantity, ticket.earlybird_ticket,
+                                                    ticket.group_ticket,
+                                                    int(ticket.amount / 100), ticket.promocode_success),
+                                                object=ticket, link=image_link)
+                tickets_sold_total = EventTickets.objects.filter(event=event)
+                normal = 0
+                early_normal = 0
+                group_normal = 0
+                for o in tickets_sold_total:
+                    normal += int(o.quantity)
+                    early_normal += int(o.earlybird_ticket)
+                    group_normal += int(o.group_ticket)
+                total_tickets_sold = normal+early_normal+group_normal
+                send_email_ticket_bawf_ticket(sender="info@bayareaweddingfairs.com",
+                                                subject="Bay Area Wedding Fairs: Ticket Summary",
+                                                receive=['adeelpkpk@gmail.com','info@bayareaweddingfairs.com'],
+                                                message='<b>ORDER DETAILS<b/><b/>Time: %s<br />Order ID: %s<br />Tickets Sold: %s<br />Amount: %s<br />Tracking Code: %s<br />Buyer: %s<br />Buyer Phone: %s<br /><hr />Event: %s<br />Venue: %s<br />Event Date: %s<br />Sales: You have now sold %s tickets for this date' % (
+                                                    str(datetime.now()),
+                                                    ticket.id,
+                                                    ticket.get_all_tickets(),
+                                                    ticket.get_amount(),
+                                                    ticket.code,
+                                                    ticket.email,
+                                                    ticket.phone,
+                                                    str(ticket.event.name),
+                                                    str(ticket.event.location),
+                                                    str(ticket.event.date),
+                                                    total_tickets_sold
+                                                ))
+                return render(request, "bayareaweddingfairs/site/BGTicket/Success.html", {
+                    'object': ticket,
+                })
+            # except Exception as e:
+            #     print "exceptionBuyTickets: ", e
         else:
             print "form not valid"
     """
