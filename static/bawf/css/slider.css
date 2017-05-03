@@ -24,6 +24,6 @@ only screen and (max-width:480px){
 .slide9{background-image:linear-gradient(to bottom, rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.35) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/ArriveWithAnIdea_Leave_WithA_Plan.jpg') !important;}
 .slide10{background-image:linear-gradient(to bottom, rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.35) 80%),url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/slider/Las_Vegas.png') !important;}
 .hide_on_mobile{display: none;}
-.entertainment-image{background: url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/FunWeddingFairForEntireParty_Mobile.png');background-attachment: fixed !important;background-position: 0px 0px !important;}
+.entertainment-image{background: url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/FunWeddingFairForEntireParty_Mobile.png')}
 .largest-show{background: url('https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/SF_Mobile.png')}
 }
