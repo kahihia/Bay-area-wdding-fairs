@@ -66,32 +66,7 @@
 										</span>
                                     </div>
                                 </form>
-                                <script type="text/javascript">
-                                    jQuery("#widget-subscribe-form").validate({
-                                        submitHandler: function(form) {
-                                            jQuery(form).ajaxSubmit({
-                                                dataType: 'json',
-                                                success: function(response) {
-                                                    if (response.response == 'success') {
-                                                        $.notify({
-                                                            message: "You have successfully subscribed to our mailing list."
-                                                        }, {
-                                                            type: 'success'
-                                                        });
-                                                        $(form)[0].reset();
 
-                                                    } else {
-                                                        $.notify({
-                                                            message: response.message
-                                                        }, {
-                                                            type: 'warning'
-                                                        });
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    });
-                                  </script>
                             </div>
 
                         </div>
