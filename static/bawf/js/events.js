@@ -20,15 +20,26 @@ function get_information(event_id){
             $('#more-detail').html(obj.footerdetail)
             // $('#location-iframe').attr('src',obj.geo_location+"?api_key=AIzaSyB9cPOKyo2rN35p75FFb2CcF3iLlQkAE0I")
             $('.map').attr('data-map-address',obj.location)
+            var markers = [{
+                    address: obj.location,
+                    html: obj.location,
+                    icon: {
+                        image: "https://s3-us-west-1.amazonaws.com/bayareaweddingfairs-static/static/bawf/images/markers/marker1.png",
+                        iconsize: [40, 63],
+                        iconanchor: [18, 60],
+                    },
+                    }];
             $('.map').gMap({address:obj.location,
-                    zoom: Number(10),
+                    maptype: 'ROADMAP',
+                    zoom: Number(16),
+                    markers: markers,
                     doubleclickzoom: true,
                     controls: {
                         panControl: true,
                         zoomControl: true,
-                        mapTypeControl: false,
+                        mapTypeControl: true,
                         scaleControl: true,
-                        streetViewControl: false,
+                        streetViewControl: true,
                         overviewMapControl: true
                     },
                     styles: [{
