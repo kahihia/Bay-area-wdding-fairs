@@ -38,7 +38,7 @@ def PromoCode_Validate(request):
         event = Event_fairs.objects.get(id=eventID)
         print "evevnt: ", event.earlybird_ticket, event.group_ticket
         try:
-            validcode = Promocode.objects.get(code=promocode_code)
+            validcode = Promocode.objects.get(code__iexact=promocode_code)
             v = validcode
             if v.is_Available:
                 amount = v.amount_percent
