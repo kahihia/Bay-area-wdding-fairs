@@ -91,7 +91,7 @@ def OurShows(request):
                     'short_location':event.short_location,
                     'geo_location':event.google_location,
                     'location':event.location,
-                    'date':str(event.date),
+                    'date':str(event.date.strftime('%m-%d-%Y')),
                     'id':event.id,
                 }
                 return HttpResponse(json.dumps(data))
