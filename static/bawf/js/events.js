@@ -20,6 +20,25 @@ function get_information(event_id){
             $('#more-detail').html(obj.footerdetail)
             // $('#location-iframe').attr('src',obj.geo_location+"?api_key=AIzaSyB9cPOKyo2rN35p75FFb2CcF3iLlQkAE0I")
             $('.map').attr('data-map-address',obj.location)
+            $('.map').gMap({address:obj.location,
+                    zoom: Number(10),
+                    doubleclickzoom: true,
+                    controls: {
+                        panControl: true,
+                        zoomControl: true,
+                        mapTypeControl: false,
+                        scaleControl: true,
+                        streetViewControl: false,
+                        overviewMapControl: true
+                    },
+                    styles: [{
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{
+                            visibility: "off"
+                        }]
+                    }]
+                    })
             $('#date-time-id').html(obj.date)
             $('#show-image').attr('src',obj.image)
             $('#grand').html(obj.description_grand)
