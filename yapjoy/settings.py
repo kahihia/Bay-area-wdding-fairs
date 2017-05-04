@@ -152,7 +152,7 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = [
 ]
 
 MIDDLEWARE_CLASSES = (
-    # 'sslify.middleware.SSLifyMiddleware',
+    'sslify.middleware.SSLifyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -169,7 +169,7 @@ MIDDLEWARE_CLASSES = (
 )
 REST_SESSION_LOGIN = False
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -230,7 +230,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    # 'sslify',
+    'sslify',
     'django_comments',
     'yapjoy_api',
     'yapjoy_feed',
