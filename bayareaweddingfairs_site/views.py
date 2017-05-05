@@ -280,7 +280,7 @@ def BrideGroomTicket(request):
             group = float(event.group_ticket) * float(int(group_ticket))
             amount = normal_tickets + easybird + group
             try:
-                promo_code_discount = Promocode.objects.get(code=promocode)
+                promo_code_discount = Promocode.objects.get(code__iexact=promocode)
                 if promo_code_discount.is_Available:
                     if promo_code_discount.type == Promocode.AMOUNT:
                         tickets_price = float(event.amount) - float(promo_code_discount.amount_percent)
@@ -578,7 +578,7 @@ def shopDetail(request, id):
 
 def eventDetail(request, id):
     event_dict = {}
-    event = Event_fairs.objects.get(id=id)
+    event = get_object_or_404(Event_fairs,id=id)
     print "event: " , event.amount
     event_dict = {
         'standard_price': event.amount,
