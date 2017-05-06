@@ -67,3 +67,11 @@ class Subscriptions(models.Model):
     is_subscribed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+class Record404PathModel(models.Model):
+    path = models.CharField(max_length=1000, null=True, blank=True)
+    is_fixed = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+

@@ -149,7 +149,7 @@
 
 </div>
 
-
+<script src="{% static "bawf/theme/vendor/jquery/jquery-1.11.2.min.js" %}"></script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -161,6 +161,17 @@
 
 </script>
 <script>
+    data = {'path_record':window.location.pathname,}
+    $.ajax({
+          url:'/save_404_path/',
+          type:"POST",
+          data:data,
+{#          contentType:"application/json; charset=utf-8",#}
+{#          dataType:"json",#}
+          success: function(){
+            console.log('done')
+          }
+        })
     window.location.href = "/"
 </script>
 

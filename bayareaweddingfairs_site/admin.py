@@ -42,5 +42,11 @@ class SubscriptionsAdmin(admin.ModelAdmin):
 
 admin.site.register(Subscriptions, SubscriptionsAdmin)
 
+class Record404PathModelAdmin(admin.ModelAdmin):
+    list_display = ['path', 'is_fixed', 'created_at']
+    search_fields = ['path']
+
+admin.site.register(Record404PathModel, Record404PathModelAdmin)
+
 
 

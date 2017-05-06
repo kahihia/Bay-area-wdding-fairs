@@ -119,6 +119,18 @@ def OurShows(request):
         'events':events,
     })
 
+
+@csrf_exempt
+def Save404Path(request):
+    if request.method == "POST":
+        print request.POST
+        if "path_record" in request.POST:
+            path_record = request.POST.get('path_record')
+            Record404PathModel.objects.create(path=path_record)
+            return HttpResponse("Done")
+    return HttpResponse('Not Done')
+
+
 def sort_months(events):
     January, February, March, April, May, June, July, August, September, October, November, December = ([] for i in range(12))
     list_months = ['', January, February, March, April, May, June, July, August, September, October, November, December]
