@@ -517,17 +517,22 @@ def VendorRegistration(request):
     }
     return render(request, 'bayareaweddingfairs/site/WPRegister/WPRegister.html', content)
 
+
 def BecomeExhibitor(request):
     return render(request, "bayareaweddingfairs/site/become_exhibitor/become-an-exhibitor.html")
+
 
 def VendorRegistrationThankYou(request):
     return render(request, "bayareaweddingfairs/site/become_exhibitor/thank_you.html")
 
+
 def BrideGroomTicketSuccess(request):
     return render(request, "bayareaweddingfairs/site/BGTicket/Success.html")
 
+
 def BrideRegistrationThankYou(request):
     return render(request, "bayareaweddingfairs/site/BGRegister/thank_you.html")
+
 
 @csrf_exempt
 def LasVegasSignin(request):

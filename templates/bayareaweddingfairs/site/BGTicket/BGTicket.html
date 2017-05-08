@@ -428,6 +428,10 @@
                 earlybird_quantity = $('#id_form-earlybird-quantity :selected').text();
                 group_quantity = $('#id_form-group-quantity :selected').text();
                 calculateAmount(standard_quantity, earlybird_quantity, group_quantity);
+                var applyBtn = $("#apply_promocode").val();
+                if(applyBtn == 'Applied'){
+                    applyPromoCode();
+                }
             });
 
             $("#id_form-earlybird-quantity").change(function () {
