@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate, logout, login as auth_login
 from django.shortcuts import get_object_or_404, HttpResponse
 from django.db.models import Q
 from .models import EventTickets
+# from yapjoy_files.models import Event_fairs
 import stripe
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
@@ -131,6 +132,40 @@ class TicketsAPI(APIView):
         return HttpResponse("No such method available.")
 
 from yapjoy_files.models import Event_fairs
+# from django.db.models import
+class TicketsAPIData(APIView):
+    # permission_classes = (AllowAny,)
+    permission_classes = (IsAdminUser,)
+    authentication_classes = (CsrfExemptSessionAuthentication, TokenAuthentication, SessionAuthentication)
+
+    # @csrf_exempt
+    def get(self, request, id):
+        add_ticket = []
+        event = get_object_or_404(Event_fairs, id=id)
+        tickets = EventTickets.objects.filter(event=event)
+        if tickets:
+            first_ticket_count = 0
+            second_ticket_count = 0
+            third_ticket_count = 0
+            for o in tickets:
+                first_ticket_count+=int(o.quantity)
+                second_ticket_count+=int(o.earlybird_ticket)
+                third_ticket_count+=int(o.group_ticket)
+            add_ticket = {
+                'first_ticket_count':first_ticket_count,
+                'first_ticket':event.standard_ticket_name,
+                'second_ticket_count':second_ticket_count,
+                'second_ticket':event.earlybird_ticket_name,
+                'third_ticket_count':third_ticket_count,
+                'third_ticket':event.group_ticket_name,
+                'event_date':event.date,
+                'event_name':event.name,
+                'tickets':tickets,
+            }
+
+        return Http200(serialize(add_ticket))
+
+
 class iOSEvent(APIView):
     # permission_classes = (AllowAny,)
     permission_classes = (IsAdminUser,)
@@ -148,6 +183,7 @@ class iOSEvent(APIView):
             for tick in event_tickets:
                 total_amount += tick.get_all_tickets()
             add_ticket = {
+                'id':event.id,
                 'event_name':event.name,
                 'event_date':event.date,
                 'tickets':str(total_amount),
