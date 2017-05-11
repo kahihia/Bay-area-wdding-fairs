@@ -391,7 +391,7 @@ def BrideGroomTicket(request):
         'form': ticketform,
         'hide_thanks': hide_thanks,
     }
-    return render(request, "bayareaweddingfairs/site/BGTicket/BGTicket.html", context)
+    return render(request, "bayareaweddingfairs/site/BGTicket/BGTicketV2.html", context)
 
 """Local Settings """
 conn = boto.connect_s3(
