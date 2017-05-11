@@ -152,11 +152,11 @@ class TicketsAPIData(APIView):
                 second_ticket_count+=int(o.earlybird_ticket)
                 third_ticket_count+=int(o.group_ticket)
             add_ticket = {
-                'first_ticket_count':first_ticket_count,
+                'first_ticket_count':str(first_ticket_count),
                 'first_ticket':event.standard_ticket_name,
-                'second_ticket_count':second_ticket_count,
+                'second_ticket_count':str(second_ticket_count),
                 'second_ticket':event.earlybird_ticket_name,
-                'third_ticket_count':third_ticket_count,
+                'third_ticket_count':str(third_ticket_count),
                 'third_ticket':event.group_ticket_name,
                 'event_date':event.date,
                 'event_name':event.name,
