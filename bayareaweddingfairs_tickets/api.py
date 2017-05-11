@@ -140,7 +140,7 @@ class TicketsAPIData(APIView):
 
     # @csrf_exempt
     def get(self, request, id):
-        add_ticket = []
+        data = []
         event = get_object_or_404(Event_fairs, id=id)
         tickets = EventTickets.objects.filter(event=event)
         if tickets:
@@ -162,8 +162,9 @@ class TicketsAPIData(APIView):
                 'event_name':event.name,
                 # 'tickets':tickets,
             }
+            data.append(add_ticket)
 
-        return Http200(serialize(add_ticket))
+        return Http200(serialize(data))
 
 
 class iOSEvent(APIView):
