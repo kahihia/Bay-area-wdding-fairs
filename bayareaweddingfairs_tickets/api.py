@@ -160,7 +160,7 @@ class TicketsAPIData(APIView):
                 'third_ticket':event.group_ticket_name,
                 'event_date':event.date,
                 'event_name':event.name,
-                'tickets':tickets,
+                # 'tickets':tickets,
             }
 
         return Http200(serialize(add_ticket))
