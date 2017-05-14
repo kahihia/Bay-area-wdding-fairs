@@ -25,7 +25,7 @@ admin.site.register(ShopVendorsItem, ShopVendorsItemAdmin)
 
 
 class ShopVendorsItemDetailAdmin(admin.ModelAdmin):
-    list_display = ['id', 'vendorItems', 'title', 'created_at']
+    list_display = ['id', 'vendorItems', 'title','website', 'created_at']
     search_fields = ['vendorItems', 'title']
 
 admin.site.register(ShopVendorsItemDetail, ShopVendorsItemDetailAdmin)
