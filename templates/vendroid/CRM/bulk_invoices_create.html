@@ -16,19 +16,19 @@
         display: None;
     }
     .modal-header{
-        background-color: rgb(186, 140, 0) !important;
+        background-color: #26B8F3 !important;
     }
     .bg-brown{
-        background-color: rgb(186, 140, 0) !important;
+        background-color: #26B8F3 !important;
     }
     .progress-bar{
-        background-color: rgb(186, 140, 0) !important;
+        background-color: #26B8F3 !important;
     }
     a {
-        color: #ba8c00;
+        color: #26B8F3;
     }
     .nav-tabs .active a {
-        background-color: #ba8c00 !important;
+        background-color: #26B8F3 !important;
         color: white !important;
     }
     </style>
@@ -145,7 +145,7 @@
                                                                             <!-- row -->
                                                                         </div>
                                                                     <div class="col-md-3">
-                                                                        <button style="background-color: #ba8c00 !important;margin-bottom: 20px;"
+                                                                        <button style="background-color: #26B8F3 !important;margin-bottom: 20px;"
                                                                                 type="submit"
                                                                                 class="btn vd_btn vd_bg-green pull-left">
                                                                             <span class="menu-icon">
@@ -179,7 +179,7 @@
 {#                                                                        <label class="col-sm-3 control-label">Search Email</label>#}
                                                                         <div class="col-md-3 pull-right">
                                                                         {#                                                                                                <input id="notification_sig" name="notification_sig" hidden="hidden" />#}
-                                                                        <button style="background-color: #ba8c00 !important;margin-bottom: 20px;"
+                                                                        <button style="background-color: #26B8F3 !important;margin-bottom: 20px;"
                                                                                 type="submit"
                                                                                 class="btn vd_btn vd_bg-green pull-left">
                                                                             <span class="menu-icon">
@@ -687,8 +687,8 @@
                                                           <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
                                                           <td>{{ invoice.created_at }}</td>
                                                           <td>
-                                                              <a onclick="show_fields('#edit_deposit_{{ invoice.id }}','#edit_deposit_div_{{ invoice.id }}', '#edit_deposit_date_{{ invoice.id }}','#edit_deposit_date_div_{{ invoice.id }}', '#edit_deposit_button_{{ invoice.id }}','#edit_deposit_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_deposit_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
-                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_deposit_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                              <a onclick="show_fields('#edit_deposit_{{ invoice.id }}','#edit_deposit_div_{{ invoice.id }}', '#edit_deposit_date_{{ invoice.id }}','#edit_deposit_date_div_{{ invoice.id }}', '#edit_deposit_button_{{ invoice.id }}','#edit_deposit_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_deposit_button_{{ invoice.id }}" style="background-color: #26B8F3 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_deposit_save_button_{{ invoice.id }}" style="background-color: #26B8F3 !important;"  >Save</button>
                                                                 <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
                                                                 <input hidden value="deposit" name="edit_pending_invoice_type" />
                                                           </td>
@@ -709,8 +709,8 @@
                                                           <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
                                                           <td>{{ invoice.created_at }}</td>
                                                           <td>
-                                                              <a onclick="show_fields('#edit_balance1_{{ invoice.id }}','#edit_balance1_div_{{ invoice.id }}', '#edit_balance1_date_{{ invoice.id }}','#edit_balance1_date_div_{{ invoice.id }}', '#edit_balance1_button_{{ invoice.id }}','#edit_balance1_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance1_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
-                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance1_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                              <a onclick="show_fields('#edit_balance1_{{ invoice.id }}','#edit_balance1_div_{{ invoice.id }}', '#edit_balance1_date_{{ invoice.id }}','#edit_balance1_date_div_{{ invoice.id }}', '#edit_balance1_button_{{ invoice.id }}','#edit_balance1_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance1_button_{{ invoice.id }}" style="background-color: #26B8F3 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance1_save_button_{{ invoice.id }}" style="background-color: #26B8F3 !important;"  >Save</button>
                                                              <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
                                                                 <input hidden value="balance1" name="edit_pending_invoice_type" />
                                                           </td>
@@ -730,8 +730,8 @@
                                                           <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
                                                           <td>{{ invoice.created_at }}</td>
                                                           <td>
-                                                              <a onclick="show_fields('#edit_balance2_{{ invoice.id }}','#edit_balance2_div_{{ invoice.id }}', '#edit_balance2_date_{{ invoice.id }}','#edit_balance2_date_div_{{ invoice.id }}', '#edit_balance2_button_{{ invoice.id }}','#edit_balance2_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance2_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
-                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance2_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                              <a onclick="show_fields('#edit_balance2_{{ invoice.id }}','#edit_balance2_div_{{ invoice.id }}', '#edit_balance2_date_{{ invoice.id }}','#edit_balance2_date_div_{{ invoice.id }}', '#edit_balance2_button_{{ invoice.id }}','#edit_balance2_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance2_button_{{ invoice.id }}" style="background-color: #26B8F3 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance2_save_button_{{ invoice.id }}" style="background-color: #26B8F3 !important;"  >Save</button>
                                                              <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
                                                                 <input hidden value="balance2" name="edit_pending_invoice_type" />
                                                           </td>
@@ -751,8 +751,8 @@
                                                           <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
                                                           <td>{{ invoice.created_at }}</td>
                                                           <td>
-                                                              <a onclick="show_fields('#edit_balance3_{{ invoice.id }}','#edit_balance3_div_{{ invoice.id }}', '#edit_balance3_date_{{ invoice.id }}','#edit_balance3_date_div_{{ invoice.id }}', '#edit_balance3_button_{{ invoice.id }}','#edit_balance3_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance3_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
-                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance3_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                              <a onclick="show_fields('#edit_balance3_{{ invoice.id }}','#edit_balance3_div_{{ invoice.id }}', '#edit_balance3_date_{{ invoice.id }}','#edit_balance3_date_div_{{ invoice.id }}', '#edit_balance3_button_{{ invoice.id }}','#edit_balance3_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_balance3_button_{{ invoice.id }}" style="background-color: #26B8F3 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_balance3_save_button_{{ invoice.id }}" style="background-color: #26B8F3 !important;"  >Save</button>
                                                              <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
                                                                 <input hidden value="balance3" name="edit_pending_invoice_type" />
                                                           </td>
@@ -827,8 +827,8 @@
                                                           <td>{% if invoice.vendor_register.payment_method %}{{ invoice.vendor_register.payment_method }}{% else %}N/A{% endif %}</td>
                                                           <td>{{ invoice.created_at }}</td>
                                                           <td>
-                                                              <a onclick="show_fields('#edit_deposit_{{ invoice.id }}','#edit_deposit_div_{{ invoice.id }}', '#edit_deposit_date_{{ invoice.id }}','#edit_deposit_date_div_{{ invoice.id }}', '#edit_deposit_button_{{ invoice.id }}','#edit_deposit_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_deposit_button_{{ invoice.id }}" style="background-color: #ba8c00 !important">Edit</a>
-                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_deposit_save_button_{{ invoice.id }}" style="background-color: #ba8c00 !important;"  >Save</button>
+                                                              <a onclick="show_fields('#edit_deposit_{{ invoice.id }}','#edit_deposit_div_{{ invoice.id }}', '#edit_deposit_date_{{ invoice.id }}','#edit_deposit_date_div_{{ invoice.id }}', '#edit_deposit_button_{{ invoice.id }}','#edit_deposit_save_button_{{ invoice.id }}');" class="btn vd_btn vd_bg-green" id="edit_deposit_button_{{ invoice.id }}" style="background-color: #26B8F3 !important">Edit</a>
+                                                              <button type="submit" class="btn vd_btn vd_bg-green displayNone" id="edit_deposit_save_button_{{ invoice.id }}" style="background-color: #26B8F3 !important;"  >Save</button>
                                                                 <input hidden value="{{ invoice.id }}" name="edit_pending_invoice" />
                                                                 <input hidden value="deposit" name="edit_pending_invoice_type" />
                                                           </td>
@@ -856,10 +856,10 @@
                                       <div id="card-view" class="panel-body">
                                       {% if not is_customer %}
                                       <div class="col-md-12">
-                                          <a id="add_new_card" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Add Card</a>
+                                          <a id="add_new_card" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #26B8F3 !important;margin-bottom: 20px;">Add Card</a>
                                           <form action="" method="post" id="request_new_card_form">
                                               <input id="request_new_card" name="request_new_card" value="{{ email }}" hidden />
-                                              <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Card Update Request</button>
+                                              <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #26B8F3 !important;margin-bottom: 20px;">Card Update Request</button>
                                           </form>
                                       </div>
 
@@ -873,7 +873,7 @@
                                               Expiry: {{ cc_form.month }}{{ cc_form.month.errors }} {{ cc_form.year }}{{ cc_form.year.errors }}
                 {#                              <br/>#}
                                               <div style="color: red;">{{ cc_form.agree.errors.0 }}{% if card_errors %}{{ card_errors }}{% endif %}</div><div style="color: red;" id="stripe-error-message"></div><br />
-                                              <button class="btn vd_btn pull-right btn-brown " style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;" id="submit-invoice">Submit</button>
+                                              <button class="btn vd_btn pull-right btn-brown " style="margin-right: 10px;background-color: #26B8F3 !important;margin-bottom: 20px;" id="submit-invoice">Submit</button>
                                            </form>
                                       </div>
                                           {% endif %}
@@ -888,9 +888,9 @@
                                             </form>
                                             <form action="" method="post" id="request_new_card_form">
                                               <input id="request_new_card" name="request_new_card" value="{{ email }}" hidden />
-                                              <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Card Update Request</button>
+                                              <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #26B8F3 !important;margin-bottom: 20px;">Card Update Request</button>
                                           </form>
-{#                                            <a class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #ba8c00 !important;margin-bottom: 20px;">Edit</a>#}
+{#                                            <a class="btn vd_btn vd_bg-green pull-right" style="margin-right: 10px;background-color: #26B8F3 !important;margin-bottom: 20px;">Edit</a>#}
                                         </div>
                                       {% else %}
                                           <div class="col-md-12 text-center">
@@ -952,7 +952,7 @@
                                                           <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>
                                                           <td>${{ csv.get_total }}</td>
                                                           <td>{{ csv.created_at }}</td>
-                                                          <td><a style="background-color: #ba8c00 !important" class="btn vd_btn vd_bg-green" href="/crm/invoices/contracted_detail/{{ csv.register.id }}/" >Edit</a></td>
+                                                          <td><a style="background-color: #26B8F3 !important" class="btn vd_btn vd_bg-green" href="/crm/invoices/contracted_detail/{{ csv.register.id }}/" >Edit</a></td>
                                                       </tr>
                                                   {% endfor %}
                                                   </tbody>
@@ -968,7 +968,7 @@
 
                                           <input hidden id="create_bulk_signal" name="create_bulk_signal" />
                                           <input hidden id="email_search" name="email_search" value="{{ email }}" />
-                                                <button type="submit" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;margin-bottom: 20px;" >Setup Invoice</button>
+                                                <button type="submit" class="btn vd_btn vd_bg-green" style="background-color: #26B8F3 !important;margin-bottom: 20px;" >Setup Invoice</button>
                                           </div>
 
                                         </form>
@@ -1089,7 +1089,7 @@
 
                                             <div class="col-md-12 text-right" style="margin-top: 15px;">
                                             <input type="checkbox" name="is_manual" id="is_manual" style="margin-bottom: 10px;" /> Charge manually <br />
-                                                <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="background-color: #ba8c00 !important;margin-bottom: 20px;" type="submit">Generate Invoice</button>
+                                                <button type="submit" class="btn vd_btn vd_bg-green pull-right" style="background-color: #26B8F3 !important;margin-bottom: 20px;" type="submit">Generate Invoice</button>
 
                                             </div>
                                             {% endif %}

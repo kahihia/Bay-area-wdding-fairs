@@ -4,21 +4,10 @@
 {% load myfilters %}
 {% load humanize %}
 {% block content %}
-    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
-    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
-    {##}
-    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
 
-
-    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
-
-     <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "vendroid/plugins/dataTables/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
     <!-- Specific Page Scripts Put Here -->
-     <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
     <style>
         .red {
             color: red;
@@ -27,48 +16,18 @@
         textarea {
             height: 80px;
         }
-    .displayNone{
-        display: None;
-    }
-    .modal-header{
-        background-color: rgb(186, 140, 0) !important;
-    }
-    .bg-brown{
-        background-color: rgb(186, 140, 0) !important;
-    }
-    .progress-bar{
-        background-color: rgb(186, 140, 0) !important;
-    }
-    /* highlight results */
-{#    .ui-autocomplete span.hl_results {#}
-{#        background-color: #ffff66;#}
-{#    }#}
-{##}
-{#    /* loading - the AJAX indicator */#}
-{#    .ui-autocomplete-loading {#}
-{#        background: white url('../img/ui-anim_basic_16x16.gif') right center no-repeat;#}
-{#    }#}
-{##}
-{#    /* scroll results */#}
-{#    .ui-autocomplete {#}
-{#        max-height: 250px;#}
-{#        overflow-y: auto;#}
-{#        /* prevent horizontal scrollbar */#}
-{#        overflow-x: hidden;#}
-{#        /* add padding for vertical scrollbar */#}
-{#        padding-right: 5px;#}
-{#    }#}
-{##}
-{#    .ui-autocomplete li {#}
-{#        font-size: 16px;#}
-{#    }#}
-{##}
-{#    /* IE 6 doesn't support max-height#}
-{#    * we use height instead, but this forces the menu to always be this tall#}
-{#    */#}
-{#    * html .ui-autocomplete {#}
-{#        height: 250px;#}
-{#    }#}
+        .displayNone{
+            display: None;
+        }
+        .modal-header{
+            background-color: rgb(186, 140, 0) !important;
+        }
+        .bg-brown{
+            background-color: rgb(186, 140, 0) !important;
+        }
+        .progress-bar{
+            background-color: rgb(186, 140, 0) !important;
+        }
     </style>
 
     <div class="vd_body">
@@ -140,12 +99,12 @@
                                                         {% endif %}
                                                         <div class="tab-pane active" id="privacy">
                                                             <div class="col-md-12 text-center">
-                                                               {% include "vendroid/CRM/partial/_header_inside.html" %}
+                                                                {% include "vendroid/CRM/partial/_header_inside.html" %}
                                                             </div>
-                                                        <div class="col-md-12">
-                                                            <a onclick="$('#form-id').toggle('hidden');" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;">Create MediaKit</a>
-                                                            <hr />
-                                                        </div>
+                                                            <div class="col-md-12">
+                                                                <a onclick="$('#form-id').toggle('hidden');" class="btn vd_btn vd_bg-green" style="background-color: #26B8F3 !important;">Create MediaKit</a>
+                                                                <hr />
+                                                            </div>
                                                             <form class="form-horizontal" action="" method="post" id="form-id" hidden
                                                                   role="form">
                                                                 {% csrf_token %}
@@ -168,7 +127,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Phone</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -182,7 +141,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Email</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -231,7 +190,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Business Category</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -248,7 +207,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Email</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -265,8 +224,8 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                 <h3 class="text-center">Show Information</h3>
-                                                                <div class="form-group">
+                                                                    <h3 class="text-center">Show Information</h3>
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Session</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -283,7 +242,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Booth Offered</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -300,7 +259,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Normal Price</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -317,8 +276,8 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <h3 class="text-center">Discounted Pricing</h3>
-                                                                <div class="form-group">
+                                                                    <h3 class="text-center">Discounted Pricing</h3>
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">ONE Show Price</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -335,7 +294,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">TWO Show Price</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -352,7 +311,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">THREE Show Price</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -369,7 +328,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Prize Value</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -386,7 +345,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Special Instructions 1</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -403,7 +362,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Special Instructions 2</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -420,7 +379,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Special Instructions 3</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -437,7 +396,7 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
+                                                                    <div class="form-group">
                                                                         <label class="col-sm-4 control-label">Opening Remarks</label>
 
                                                                         <div class="col-sm-4 controls">
@@ -454,13 +413,13 @@
                                                                         </div>
                                                                         <!-- col-sm-10 -->
                                                                     </div>
-                                                                <div class="form-group">
-{#                                                                        <label class="col-sm-4 control-label">Opening Remarks</label>#}
+                                                                    <div class="form-group">
+                                                                        {#                                                                        <label class="col-sm-4 control-label">Opening Remarks</label>#}
 
                                                                         <div class="col-sm-8 controls">
                                                                             <div class="row mgbt-xs-0">
                                                                                 <div class="col-xs-12">
-                                                                                    <button type="submit" class="btn vd_btn vd_bg-green pull-right"style="background-color: #ba8c00 !important;"  >SEND</button>
+                                                                                    <button type="submit" class="btn vd_btn vd_bg-green pull-right"style="background-color: #26B8F3 !important;"  >SEND</button>
                                                                                 </div>
                                                                                 <!-- col-xs-12 -->
                                                                             </div>
@@ -473,169 +432,103 @@
 
 
 
-                                                                <div class="clearfix"></div>
+                                                                    <div class="clearfix"></div>
 
                                                                     <!-- form-group -->
 
                                                                 </div>
                                                                 <div class="clearfix"></div>
-                                                                </form>
+                                                            </form>
 
 
 
                                                         </div>
 
                                                     </div>
-                                                <hr />
-{#                                                {% if media_kits %}#}
+                                                    <hr />
+                                                    {#                                                {% if media_kits %}#}
                                                     {% autopaginate media_kits 10 %}
-                                                        <div class="col-md-12">
-                                      <div class="panel-heading vd_bg-grey">
-                                        <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Sent Media Kits</h3>
-                                      </div>
-                                      <div class="panel-body table-responsive">
-                                          <div class="dataTables_wrapper form-inline no-footer"
-                                               id="data-tables_wrapper">
-                                          <form method="post" action="" >
-                                                  {% csrf_token %}
-                                                  <button style="background-color: #ba8c00 !important;margin-bottom: 20px;" type="submit" class="btn vd_btn vd_bg-green pull-right">
+                                                    <div class="col-md-12">
+                                                        <div class="panel-heading vd_bg-grey">
+                                                            <h3 class="panel-title text-center"> <span class="menu-icon">  </span> Sent Media Kits</h3>
+                                                        </div>
+                                                        <div class="panel-body table-responsive">
+                                                            <div class="dataTables_wrapper form-inline no-footer"
+                                                                 id="data-tables_wrapper">
+                                                                <form method="post" action="" >
+                                                                    {% csrf_token %}
+                                                                    <button style="background-color: #26B8F3 !important;margin-bottom: 20px;" type="submit" class="btn vd_btn vd_bg-green pull-right">
                                                                             <span class="menu-icon">
 
 
                                                                             </span>
-                                                                            Search
-                                                                        </button>
-                                           <input placeholder="search" class="pull-right form-control" name="search" id="search" style="margin-right: 20px;" />
-                                              </form>
-                                              <table aria-describedby="data-tables_info" role="grid"
-                                                     class="table table-striped dataTable no-footer" id="data-tables">
-                                                  <thead>
-                                                  <tr role="row">
-{#                                                      <th>Invoice ID#}
-{#                                                      </th>#}
-                                                      <th>Sales Person
-                                                      </th>
-                                                      <th>
-                                                          Vendor's Name
-                                                      </th>
-                                                      <th>
-                                                          Vendor's Email
-                                                      </th><th>
-                                                          Vendor's Business
-                                                      </th>
-                                                      <th>
-                                                          Status
-                                                      </th>
-                                                      <th>
-                                                          Viewed Date
-                                                      </th>
+                                                                        Search
+                                                                    </button>
+                                                                    <input placeholder="search" class="pull-right form-control" name="search" id="search" style="margin-right: 20px;" />
+                                                                </form>
+                                                                <table aria-describedby="data-tables_info" role="grid"
+                                                                       class="table table-striped dataTable no-footer" id="data-tables">
+                                                                    <thead>
+                                                                    <tr role="row">
+                                                                        {#                                                      <th>Invoice ID#}
+                                                                        {#                                                      </th>#}
+                                                                        <th>Sales Person
+                                                                        </th>
+                                                                        <th>
+                                                                            Vendor's Name
+                                                                        </th>
+                                                                        <th>
+                                                                            Vendor's Email
+                                                                        </th><th>
+                                                                        Vendor's Business
+                                                                    </th>
+                                                                        <th>
+                                                                            Status
+                                                                        </th>
+                                                                        <th>
+                                                                            Viewed Date
+                                                                        </th>
 
-                                                      <th>
-                                                          Sending Date
-                                                      </th>
-                                                      <th>
-                                                          Preview
-                                                      </th>
+                                                                        <th>
+                                                                            Sending Date
+                                                                        </th>
+                                                                        <th>
+                                                                            Preview
+                                                                        </th>
 
-                                                  </tr>
-                                                  </thead>
-                                                  <tbody>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
 
-                                                  {% for kit in media_kits %}
-                                                      <tr role="row" class="gradeA odd">
-                                                          <td>{{ kit.user.get_full_name }} ({{ kit.user.email }})</td>
-                                                          <td>{{ kit.vendor_name }}</td>
-                                                          <td>{{ kit.email }}</td>
-                                                          <td>{{ kit.business_name }}</td>
-                                                          <td>{{ kit.status }}</td>
-                                                          <td>{{ kit.viewed|default_if_none:"Not yet viewed." }}</td>
-                                                          <td>{{ kit.created_at|date:"Y-m-d"  }}</td>
-                                                          <td><a target="_blank" href="{% url "media_kit_view2" kit.code %}" class="btn vd_btn vd_bg-green" style="background-color: #ba8c00 !important;">View</a></td>
+                                                                    {% for kit in media_kits %}
+                                                                        <tr role="row" class="gradeA odd">
+                                                                            <td>{{ kit.user.get_full_name }} ({{ kit.user.email }})</td>
+                                                                            <td>{{ kit.vendor_name }}</td>
+                                                                            <td>{{ kit.email }}</td>
+                                                                            <td>{{ kit.business_name }}</td>
+                                                                            <td>{{ kit.status }}</td>
+                                                                            <td>{{ kit.viewed|default_if_none:"Not yet viewed." }}</td>
+                                                                            <td>{{ kit.created_at|date:"Y-m-d"  }}</td>
+                                                                            <td><a target="_blank" href="{% url "media_kit_view2" kit.code %}" class="btn vd_btn vd_bg-green" style="background-color: #26B8F3 !important;">View</a></td>
 
-                                                      </tr>
-
-
-                                                  {% endfor %}
+                                                                        </tr>
 
 
-                                                  </tbody>
-                                              </table>
-
-                                          </div>
-
-{#                                        <div class="col-md-12">#}
-{#                                             <table aria-describedby="data-tables_info" role="grid"#}
-{#                                                     class="table table-striped dataTable no-footer" id="data-tables">#}
-{#                                                  <thead>#}
-{#                                                  <tr role="row">#}
-{#                                                      <th>Mark</th>#}
-{#                                                      <th>Email</th>#}
-{##}
-{#                                                      <th>CSV Path#}
-{#                                                      </th>#}
-{#                                                      <th></th>#}
-{#                                                      <th>List Price#}
-{#                                                      </th>#}
-{#                                                      <th>Electricity</th>#}
-{#                                                      <th>#}
-{#                                                          Status#}
-{#                                                      </th>#}
-{#                                                      <th>Method</th>#}
-{#                                                      <th>PV Prize</th>#}
-{#                                                      <th>Total Amount</th>#}
-{#                                                      <th>#}
-{#                                                          Created at#}
-{#                                                      </th>#}
-{#                                                      <th>Remove</th>#}
-{#                                                      <th>#}
-{#                                                          Edit#}
-{#                                                      </th>#}
-{#                                                  </tr>#}
-{#                                                  </thead>#}
-{#                                                  <tbody>#}
-{#                                                  {% for invoice in event_invoices %}#}
-{#                                                      <tr role="row" class="gradeA odd">#}
-{#                                                      <td><input {% if csv.id in invoices_generate_ids %}checked{% endif %} type="checkbox" name="bulk_check" id="bulk_check" value="{{ csv.id }}" /></td>#}
-{#                                                          <td>{{ invoice.email }}</td>#}
-{#                                                          <td>${{ csv.offered_price }}</td>#}
-{#                                                          <td>${{ csv.list_price }}</td>#}
-{#                                                          <td>{{ csv.csv }}</td>#}
-{##}
-{#                                                          <td>{% if csv.electricity_types == "Amount" %}$75{% else %}{{ csv.electricity_types }}{% endif %}</td>#}
-{#                                                          <td>{{ csv.register.status }}</td>#}
-{#                                                          <td>{{ csv.payment_method }}</td>#}
-{#                                                          <td>${{ csv.pv_prize_offered }}</td>#}
-{#                                                          <td>${{ csv.get_total }}</td>#}
-{#                                                          <td>{{ invoice.created_at }}</td>#}
-{#                                                          <td><form action="" method="POST">{% csrf_token %}<input id="delete_invoice" name="delete_invoice" value="{{ csv.id }}" hidden  /><button class="btn vd-bg-lightblue vd_white" type="submit">Delete</button></form></td>#}
-{#                                                          <td><a href="{% url "invoices_data_view" csv.id %}" class="btn vd_btn btn-brown">View List</a></td>#}
-{#                                                          <td>#}
-{#                                                              <form action="." method="post">#}
-{#                                                                  {% csrf_token %}#}
-{#                                                                  <input hidden id="delete_id" name="delete_id" value="{{ csv.id }}" />#}
-{#                                                                  <button type="submit" class="btn vd_btn btn-brown">Delete List</button>#}
-{#                                                              </form>#}
-{##}
-{#                                                          </td>#}
-{#                                                      </tr>#}
-{#                                                  {% endfor %}#}
-{#                                                  </tbody>#}
-{#                                              </table>#}
-{#                                        </div>#}
-{#                                      {% if event_invoices %}#}
-{#                                          <div class="col-md-12">#}
-{#                                          {% for o in event_invoices %}#}
-{#                                              {{ o }}#}
-{#                                          {% endfor %}#}
-{#                                          </div>#}
-{#                                          {% endif %}#}
+                                                                    {% endfor %}
 
 
-                                      </div>
-                       <div class="clearfix"></div>
-                                  </div>
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+
+
+
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
                                                     {% paginate %}
-{#                                                        {% endif %}#}
+                                                    {#                                                        {% endif %}#}
                                                 </div>
                                                 <br><br>
 
@@ -687,7 +580,7 @@
         </footer>
         <!-- Footer END -->
     </div>
-{#     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>#}
+    {#     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>#}
 
 
 
@@ -697,20 +590,10 @@
 {% endblock content %}
 {% block script %}
     <script>
-$('#data-tables').dataTable({
-{#        "aoColumns": [{"iDataSort": 6}],#}
-{#    {% if view_all %}#}
-        "iDisplayLength": 25,
-        "aLengthMenu": [[10, 15, 25, 35, 50, 100, -1], [10, 15, 25, 35, 50, 100, "All"]],
-{#    {% else %}#}
-{#        "iDisplayLength": 25,#}
-{#        "aLengthMenu": [[10, 15, 25, 35, 50, 100], [10, 15, 25, 35, 50, 100]],#}
-{#    {% endif %}#}
-    "aaSorting": [[ 6, 'desc' ]],
-
-{#            "columnDefs": [#}
-{#                { "type": "datetime-moment", targets: 6 }#}
-{#            ]#}
-    });
-</script>
+        $('#data-tables').dataTable({
+            "iDisplayLength": 25,
+            "aLengthMenu": [[10, 15, 25, 35, 50, 100, -1], [10, 15, 25, 35, 50, 100, "All"]],
+            "aaSorting": [[ 6, 'desc' ]],
+        });
+    </script>
 {% endblock script %}

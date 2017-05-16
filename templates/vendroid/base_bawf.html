@@ -107,11 +107,24 @@
         }
 
     </style>
-{#    <script>#}
-{#        var currentUserId = {{ user.id }};#}
-{##}
-{##}
-{#    </script>#}
+    <style>
+        .vd_content-section {
+             margin-bottom: auto;
+        }
+        #footer .vd_bottom {
+            background-color: white !important;
+            color: #26B8F3 !important;
+        }
+        .vd_top-menu-wrapper{
+            background-color: white !important;
+        }
+        .vd_menu-search-submit {
+            background-color: black !important;
+        }
+        #top-menu-profile {
+            color: blue !important;
+        }
+    </style>
 
 
 </head>
@@ -122,40 +135,6 @@
 {#{% include "vendroid/messages/partial/notification.html" %}#}
 {% block content %}
 {% endblock content %}
-
-<!-- .vd_body END  -->
-
-<!--
-<a class="back-top" href="#" id="back-top"> <i class="icon-chevron-up icon-white"> </i> </a> -->
-{#<div class="modal fade" id="subscriptionModal" role="dialog" aria-hidden="true">#}
-{#    <div class="modal-dialog">#}
-{#        <div class="modal-content">#}
-{#            <div class="modal-body">#}
-{#                <a class="close" data-dismiss="modal"><i class="fa fa-close"></i></a>#}
-{#                <h4 class="modal-title" style="margin-bottom: 0px;">Membership</h4>#}
-{##}
-{##}
-                    {#        <h3 class="section-title text-center"  style="color: #3397a5">Buy Credit</h3>#}
-                    {#        <!-- Nav tabs -->#}
-{##}
-{##}
-{#                    <iframe id="iframe_sub" src="" width="100%" height="510px"></iframe>#}
-{##}
-{#                    <!-- end panel -->#}
-{#                    <!-- end panel -->#}
-{##}
-{##}
-{#            </div>#}
-{#            <div class="modal-footer">#}
-{#                <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>#}
-{#            </div>#}
-{#            <div class="clearfix"></div>#}
-{#        </div>#}
-{#        <!-- /.modal-content -->#}
-{#    </div>#}
-{#    <!-- /.modal-dialog -->#}
-{#</div>#}
-
 
 <!-- Javascript =============================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -183,20 +162,6 @@
 <script type="text/javascript" src="{% static "vendroid/js/theme.js" %}"></script>
 <script type="text/javascript" src="{% static "vendroid/custom/custom.js" %}"></script>
 
-<!-- Specific Page Scripts Put Here -->
-<!-- Flot Chart  -->
-{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.min.js" %}"></script>#}
-{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.resize.min.js" %}"></script>#}
-{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.pie.min.js" %}"></script>#}
-{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.categories.min.js" %}"></script>#}
-{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.time.min.js" %}"></script>#}
-{#<script type="text/javascript" src="{% static "vendroid/plugins/flot/jquery.flot.animator.min.js" %}"></script>#}
-{##}
-{#<!-- Vector Map -->#}
-{#<script type="text/javascript" src="{% static "vendroid/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" %}"></script>#}
-{#<script type="text/javascript" src="{% static "vendroid/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %}"></script>#}
-{##}
-{#<!-- Calendar -->#}
 
 <script type="text/javascript" src='{% static "vendroid/plugins/moment/moment.min.js" %}'></script>
 {#<script type="text/javascript" src='{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}'></script>#}
@@ -228,109 +193,6 @@
   ga('send', 'pageview');
 
 </script>
-{#<script>#}
-{#    var user = '{{ user.id }}';#}
-{#</script>#}
-{#<script src='https://static.opentok.com/v2/js/opentok.min.js'></script>#}
-{##}
-{#<div  class="vd_mega-menu-content open-top width-xs-4 width-md-5 width-lg-4 center-xs-4" id="chatBox">#}
-{#  <div class="child-menu">#}
-{#     <div class="title">#}
-{#         <a id="chatUserName" href="" style="color: #fff;"></a> <i data-id="" class="userBarStatus"></i>#}
-{#         <div class="vd_panel-menu">#}
-{#               <div class="menu" data-original-title="Video Call" data-rel="tooltip">#}
-{#                  <i class="fa fa-video-camera video-call-icon" id="userVideoLink"></i>#}
-{#              </div>#}
-{#               <div class="menu entypo-icon" data-original-title="Close" data-rel="tooltip">#}
-{#                  <i class="icon-cross" id="closeBtn"></i>#}
-{#              </div>#}
-{#          </div>#}
-{#     </div>#}
-{#     <div class="content-list content-image content-menu">#}
-{#      <div class="mCustomScrollbar _mCS_6" data-rel="scroll" id="scrollbar_begins">#}
-{#         <ul class="list-wrapper pd-lr-10" id="chatMessages" data-id="">#}
-{#         </ul>#}
-{#     </div>#}
-{#         <div class="closing chat-area">#}
-{#             <div class="chat-box">#}
-{#              <input type="text" placeholder="chat here.." id="chatText">#}
-{#             </div>#}
-{#             <div class="vd_panel-menu">#}
-{#              </div>#}
-{#         </div>#}
-{#     </div>#}
-{#  </div> <!-- child-menu -->#}
-{#</div>#}
-
-{% comment %}
-<div class="vd_chat-menu hidden-xs">
-      <div class="vd_mega-menu-wrapper">
-          <div class="vd_mega-menu">
-             <ul class="mega-ul">
-    <li class="one-big-icon mega-li mgl-10">
-      <div  class="vd_mega-menu-content open-top width-xs-4 width-md-5 width-lg-4 center-xs-4" id="chatBox">
-        <div class="child-menu">
-           <div class="title">
-           	   <span id="chatUserName"></span> <i data-id="" class="userBarStatus"></i>
-               <div class="vd_panel-menu">
-                     <div class="menu" data-original-title="Video Call" data-rel="tooltip">
-                        <i class="fa fa-video-camera video-call-icon" id="userVideoLink"></i>
-                    </div>
-                     <div class="menu entypo-icon" data-original-title="Close" data-rel="tooltip">
-                        <i class="icon-cross" id="closeBtn"></i>
-                    </div>
-                </div>
-           </div>
-		   <div class="content-list content-image content-menu">
-           	<div class="mCustomScrollbar _mCS_6" data-rel="scroll" id="scrollbar_begins">
-               <ul class="list-wrapper pd-lr-10" id="chatMessages" data-id="">
-               </ul>
-           </div>
-               <div class="closing chat-area">
-               	   <div class="chat-box">
-                   	<input type="text" placeholder="chat here.." id="chatText">
-                   </div>
-                   <div class="vd_panel-menu">
-                    </div>
-               </div>
-           </div>
-        </div> <!-- child-menu -->
-      </div>   <!-- vd_mega-menu-content -->
-    </li>
-    <li class="profile mega-li pdlr-15 bordered">
-        <a data-action="click-trigger" href="#" class="mega-link">
-            <span class="menu-name">
-                <i class="fa fa-comments append-icon"></i> Chat
-            </span>
-        </a>
-      <div data-action="click-target" class="vd_mega-menu-content  width-xs-3  center-xs-3 open-top" style="display: none;" id="userList">
-        <div class="child-menu">
-        	<div class="content-list  content-image">
-            <div data-rel="scroll">
-                <ul class="list-wrapper pd-lr-10" id="chatUserList">
-
-                </ul>
-                </div>
-            </div>
-        </div>
-      </div>
-
-    </li>
-    <li class="profile border-left mega-li">
-        <a data-action="chat-close" href="javascript:void(0);" class="mega-link pd-10">
-            <span class="mega-icon">
-                <i class="fa fa-sign-out"></i>
-            </span>
-        </a>
-    </li>
-</ul>
-<!-- Head menu search form ends -->
-          </div>
-      </div>
-  </div>
-  {% endcomment %}
-{#  <script src="{% static 'js/chatbar.js' %}"></script>#}
-{#  <script src="{% static 'js/notification.js' %}"></script>#}
 </body>
 
 </html>
