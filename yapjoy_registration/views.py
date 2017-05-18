@@ -3016,23 +3016,17 @@ def admin_login(request):
     InvalidDetails = None
     if request.method== 'POST':
         form = loginForm(request.POST)
-        print 'here'
-
         if form.is_valid():
-            print '2'
             data = form.cleaned_data
             username = data['username']
             password = data['password']
-            print 'redirect: ', username, password
             user_auth = authenticate(username=username, password=password)
             try:
-                print user_auth
                 sub = None
                 if user_auth.is_active:
                     if user_auth.is_staff:
                         user_auth.backend = 'django.contrib.auth.backends.ModelBackend'
                         auth_login(request, user_auth)
-                        print 'auth'
                         return HttpResponseRedirect('/crm/mediakit/')
                     InvalidDetails = "Only staff can login."
                 else:

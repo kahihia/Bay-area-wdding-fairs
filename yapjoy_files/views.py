@@ -1054,13 +1054,11 @@ def media_kit(request):
                                          ["%s <%s>"%(m_kit.vendor_name, m_kit.email)], bcc=[user.email])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            # print 'code: ',m_kit.code, m_kit.status
             successMessage = "Message has been sent successfully."
     return render(request, 'vendroid/CRM/mediakit.html', {
         'form':form,
         'user':user,
         'media_kits':media_kits,
-       # 'successMessage':successMessage,
     })
 
 # @login_required(login_url="/login/")
@@ -1188,7 +1186,7 @@ def event_invoice_bulk_create(request):
                 reg_eve_add = InvoiceRegisterVendor.objects.get(id=o)
                 reg_agg.invoices.add(reg_eve_add)
             context = {
-                'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(reg_agg.code),
+                'message':"Click on the following link to view the agrement <br /><br /><a href='https://www.bayareaweddingfairs.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(reg_agg.code),
                 'title':"Bay Area Wedding Fairs Agreement",
                 }
             html_content = render_to_string('email/bawf_native_email.html', context=context)
@@ -1363,7 +1361,7 @@ def event_invoice_bulk_create(request):
                     e.transaction_id_balance3 = response.stripe_id
                 e.save()
                 context = {
-                    'message': "%s (%s)<br /><br />You have been charged successfully with %s pending invoice for event (%s) of $%s.<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (
+                    'message': "%s (%s)<br /><br />You have been charged successfully with %s pending invoice for event (%s) of $%s.<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/contact/'> Support Feedback</a> form." % (
                     eir.event_invoice.register_event.name, eir.event_invoice.register_event.business_name, eir.type,
                     e.register_event.event.name, str(total_amount)),
                     'title': "Bay Area Wedding Fairs Invoice Charged Successfully",
@@ -1380,7 +1378,7 @@ def event_invoice_bulk_create(request):
                 eir.status = EventInvoiceRequest.FAILED
                 eir.save()
                 context = {
-                    'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of %s for the invoice of event (%s) of $%s<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (
+                    'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of %s for the invoice of event (%s) of $%s<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/contact/'> Support Feedback</a> form." % (
                     eir.event_invoice.register_event.name, eir.event_invoice.register_event.business_name, eir.type,
                     e.register_event.event.name, str(total_amount), exc),
                     'title': "Bay Area Wedding Fairs Invoice Charge Failed",
@@ -1402,7 +1400,7 @@ def event_invoice_bulk_create(request):
                 return HttpResponseRedirect('/crm/invoices/bulk/create/')
             agg_reg_resend = Register_Event_Aggrement.objects.get(id=resendAgreement)
             context = {
-                'message':"Click on the following link to view the agrement <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(agg_reg_resend.code),
+                'message':"Click on the following link to view the agrement <br /><br /><a href='https://www.bayareaweddingfairs.com/crm/view/complete/agreement/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(agg_reg_resend.code),
                 'title':"Bay Area Wedding Fairs Agreement",
                 }
             html_content = render_to_string('email/bawf_native_email.html', context=context)
@@ -1537,7 +1535,7 @@ def event_invoice_bulk_create(request):
         invoice_req = EventInvoiceRequest.objects.get(id=invoice_resend_id)
         agree_req = Register_Event_Aggrement.objects.get(id=invoice_req.agreement_code)
         context = {
-            'message': "%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a>"%(invoice_req.event_invoice.register_event.name,invoice_req.event_invoice.register_event.business_name,invoice_req.code,agree_req.code),
+            'message': "%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://www.bayareaweddingfairs.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a>"%(invoice_req.event_invoice.register_event.name,invoice_req.event_invoice.register_event.business_name,invoice_req.code,agree_req.code),
             'title': "Bay Area Wedding Fairs Agreement",
         }
         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -1827,12 +1825,12 @@ def check_for_invoices(self):
                         context = {}
                         if e.is_manual:
                             context = {
-                                    'message':"%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
+                                    'message':"%s (%s)<br /><br />Click on the following link to view the agreement. <br /><br /><a href='https://www.bayareaweddingfairs.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
                                     'title':"Bay Area Wedding Fairs Agreement",
                                     }
                         else:
                             context = {
-                                    'message':"%s (%s)<br /><br />The agreement will automatically go into full effect within 24 hours of the send time posted on this email. Please make sure you review this agreement immediately and contact your representative if something has been omitted or is incorrectly stated. Once the 24 hour review period has passed and no concerns have been brought to our attention, all intents and concerns stated within this agreement will become fully bound. If you have posted immediate payment it also will complete within 24 hours of the posted email time. Therefore it is paramount that you review and accept this agreement within the specified time.<br /><br />Please click on the link below to review your full agreement. We look forward to working with you. Please reach out to your representative immediately if anything is confusing or incorrect within the agreement so it can be adjusted prior to the specified 24 hour binding period. <br /><br /><a href='https://bayareaweddingfairs.herokuapp.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%( eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
+                                    'message':"%s (%s)<br /><br />The agreement will automatically go into full effect within 24 hours of the send time posted on this email. Please make sure you review this agreement immediately and contact your representative if something has been omitted or is incorrectly stated. Once the 24 hour review period has passed and no concerns have been brought to our attention, all intents and concerns stated within this agreement will become fully bound. If you have posted immediate payment it also will complete within 24 hours of the posted email time. Therefore it is paramount that you review and accept this agreement within the specified time.<br /><br />Please click on the link below to review your full agreement. We look forward to working with you. Please reach out to your representative immediately if anything is confusing or incorrect within the agreement so it can be adjusted prior to the specified 24 hour binding period. <br /><br /><a href='https://www.bayareaweddingfairs.com/invoices/deposit/pay/%s/%s' target='_blank' class='btn'>Open Agreement</a><br /><br /><b>This agreement will expire in 3 days from the time you view it.</b>"%( eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name,eir.code,reg_agg.code),
                                     'title':"Bay Area Wedding Fairs Agreement",
                                     }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -1890,7 +1888,7 @@ def check_for_invoices(self):
                         e.transaction_id_balance1_date = e.get_transaction_id_balance1_date()
                         e.save()
                         context = {
-                                    'message':"Dear %s (%s)<br /><br />You have been charged successfully with balance 1 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://bayareaweddingfairs.herokuapp.com/feedback/'> Support Feedback</a> form."%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount),eir.get_event_b1()),
+                                    'message':"Dear %s (%s)<br /><br />You have been charged successfully with balance 1 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/feedback/'> Support Feedback</a> form."%(eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount),eir.get_event_b1()),
                                     'title':"Bay Area Wedding Fairs Invoice Charged Successfully",
                                 }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -1908,7 +1906,7 @@ def check_for_invoices(self):
                         eir.status = EventInvoiceRequest.FAILED
                         eir.save()
                         context = {
-                            'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of Balance 1 ($%s) for the invoice of event (%s).<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount),eir.get_event_b1(), exc),
+                            'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of Balance 1 ($%s) for the invoice of event (%s).<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/contact/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount),eir.get_event_b1(), exc),
                             'title': "Bay Area Wedding Fairs Invoice Charge Failed",
                         }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -1973,7 +1971,7 @@ def check_for_invoices(self):
                         e.transaction_id_balance2_date = e.get_transaction_id_balance2_date()
                         e.save()
                         context = {
-                            'message': "Dear %s (%s)<br /><br />You have been charged successfully with balance 2 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b2()),
+                            'message': "Dear %s (%s)<br /><br />You have been charged successfully with balance 2 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/contact/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b2()),
                             'title': "Bay Area Wedding Fairs Invoice Charged Successfully",
                         }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -1993,7 +1991,7 @@ def check_for_invoices(self):
                         eir.status = EventInvoiceRequest.FAILED
                         eir.save()
                         context = {
-                            'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of Balance 2 ($%s) for the invoice of event (%s).<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b2(), exc),
+                            'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of Balance 2 ($%s) for the invoice of event (%s).<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/contact/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b2(), exc),
                             'title': "Bay Area Wedding Fairs Invoice Charge Failed",
                         }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -2057,7 +2055,7 @@ def check_for_invoices(self):
                         e.transaction_id_balance3_date = e.get_transaction_id_balance3_date()
                         e.save()
                         context = {
-                            'message': "Dear %s (%s)<br /><br />You have been charged successfully with balance 3 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b3()),
+                            'message': "Dear %s (%s)<br /><br />You have been charged successfully with balance 3 ($%s) pending invoice for event (%s).<br /><br />Thank you for working with us.<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/contact/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b3()),
                             'title': "Bay Area Wedding Fairs Invoice Charged Successfully",
                         }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -2077,7 +2075,7 @@ def check_for_invoices(self):
                         eir.status = EventInvoiceRequest.FAILED
                         eir.save()
                         context = {
-                            'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of Balance 3 ($%s) for the invoice of event (%s).<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.yapjoy.com/feedback/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b3(), exc),
+                            'message': "Dear %s (%s)<br /><br />Your card is failed for auto charge at BayAreaWeddingFairs of Balance 3 ($%s) for the invoice of event (%s).<br /><br />Failure reason: %s<br /><br />For any queries, feel free to contact info@bayareaweddingfairs.com or use our <a href='https://www.bayareaweddingfairs.com/contact/'> Support Feedback</a> form." % (eir.event_invoice.register_event.name,eir.event_invoice.register_event.business_name, str(total_amount), eir.get_event_b3(), exc),
                             'title': "Bay Area Wedding Fairs Invoice Charge Failed",
                         }
                         html_content = render_to_string('email/bawf_email.html', context=context)
@@ -3181,22 +3179,6 @@ def interested_contractor(request):
     initial_word = ""
     events = None#Register_Event_Interested.objects.select_related('user').filter( ~Q(type=Register_Event_Interested.BGUSER)).order_by('-created_at')
     salesCandidates = User.objects.filter(is_superuser=True)
-    # if request.is_ajax():
-    #     search = request.POST.get('search')
-    #     print search
-    #     if search:
-    #         print 'inside search'
-    #         try:
-    #             initial_word = search
-    #             search = search.split(' ')[0]
-    #             userprofile = UserProfile.objects.get(user__email=search)
-    #             return HttpResponse('success')
-    #         except Exception as e:
-    #             print e
-    #             return HttpResponse('failed')
-    #     else:
-    #         print 'inside search else'
-    #         return HttpResponse('failed')
     if request.method == 'POST':
         if 'search' in request.POST:
             print 'inside search'
