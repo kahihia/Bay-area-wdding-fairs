@@ -122,8 +122,17 @@
                                                                             <br />
 
                                                                             </div>
-                                                                            <div class="col-md-6"><button class="btn vd_btn btn-brown pull-left" type="submit" style="margin-left: 10px;" id="search-btn"  >Export CSV</button></div>
-                                                                            <br />
+                                                                            <div class="col-md-6 pull-left" style="display: inline;"><button class="btn vd_btn btn-brown pull-left" type="submit" style="margin-left: 10px;" id="search-btn"  >Export CSV</button></div>
+{#                                                                            <br />#}
+                                                                         <div class="col-md-12 pull-right text-left" style="display: inline;">
+                                                                             <b>Amount in total: </b>${{ actual_amount|intcomma }}<br />
+                                                                             <b>Discount (via Promocode): </b>${{ discounted_mount|intcomma }}<br />
+                                                                             <b>----------------------------------------------<br />
+                                                                             <b>Total Amount Transferred: </b>${{ amount|intcomma }}<br />
+
+
+                                                                         </div>
+                                                                         <div class="cearfix"></div>
                                                                         </form>
                                                                     </div>
                                                                     <div class="col-md-6">

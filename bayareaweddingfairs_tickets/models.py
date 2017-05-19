@@ -44,7 +44,7 @@ class EventTickets(models.Model):
 
     def get_amount(self):
         if self.amount:
-            amount = self.amount/100
+            amount = int(self.amount)/100
             return amount
 
 

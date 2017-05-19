@@ -5092,11 +5092,22 @@ def EventList_bg(request):
         })
         return HttpResponse(html)
     else:
-        bgUsers = EventTickets.objects.all()
-
+        bgUsers = EventTickets.objects.select_related('event').all()
+    amount = 0
+    actual_amount = 0
+    discounted_mount = 0
+    for o in bgUsers:
+        actual_amount += int(o.quantity)*int(o.event.amount)
+        actual_amount += int(o.earlybird_ticket)*int(o.event.earlybird_ticket)
+        actual_amount += int(o.group_ticket)*int(o.event.group_ticket)
+        amount += int(o.amount)/100
+        discounted_mount = actual_amount - amount
     return render(request, 'vendroid/CRM/bgEventList.html', {
         'bgUsers': bgUsers,
         'event': events,
+        'actual_amount': actual_amount,
+        'discounted_mount': discounted_mount,
+        'amount': amount,
     })
 
 
