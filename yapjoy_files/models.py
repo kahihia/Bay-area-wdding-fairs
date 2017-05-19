@@ -809,6 +809,14 @@ class Register_Event(models.Model):
     def __str__(self):
         return "%s - %s - %s (%s)"%(self.id, self.email, self.event.name, self.created_at.date())
 
+    def get_if_electricity(self):
+        vendor_reg = InvoiceRegisterVendor.objects.filter(register_id=self.id)
+        if vendor_reg:
+            for vendor in vendor_reg:
+                if vendor.electricity_types:
+                    return vendor.electricity_types
+        return "N/A"
+
     def record_amount_due(self):
         self.amount_due = self.get_amount_due()
         self.total_amount = self.get_amount_total()

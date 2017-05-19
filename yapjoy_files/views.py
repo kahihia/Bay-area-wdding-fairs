@@ -3430,9 +3430,9 @@ def events_based_list(request):
             elif event_selected:
                 query_set = Register_Event.objects.select_related('event').exclude(type=Register_Event.BGUSER).filter(event_id=event_selected).exclude(status=Register_Event.REMOVED).order_by('-created_at')
             if query_set:
-                writer.writerow(['Vendors Name','Category','Company Name','Show','Balance Due','Payment Method','Status','Created At','Email'])
+                writer.writerow(['Vendors Name','Category','Company Name','Show','Balance Due','Payment Method','Status','Created At','Email','Electricity','Phone','Food & Beverage'])
                 for data in query_set:
-                    output.append([data.name,data.category, data.business_name, "%s - %s"%(data.event.name, data.event.date),str(data.amount_due), data.payment_method, data.status, data.created_at,data.email])
+                    output.append([data.name,data.category, data.business_name, "%s - %s"%(data.event.name, data.event.date),str(data.amount_due), data.payment_method, data.status, data.created_at,data.email, data.get_if_electricity(),data.phone, data.food])
                 writer.writerows(output)
                 return response
         if "events_year" in request.POST:
