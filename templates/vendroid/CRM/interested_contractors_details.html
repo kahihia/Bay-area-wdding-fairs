@@ -15,23 +15,23 @@
             height: 80px;
         }
         .btn-brown {
-            background-color: #ba8c00 !important;
+            background-color: #26B8F3 !important;
         }
     </style>
-    <style>
-        .vd_content-section {
-            margin-bottom: 400px;
-        }
-        #footer .vd_bottom {
-            background-color: #816100 !important;
-        }
-        .vd_top-menu-wrapper{
-            background-color: #816100 !important;
-        }
-        .vd_menu-search-submit {
-            background-color: black !important;
-        }
-    </style>
+{#    <style>#}
+{#        .vd_content-section {#}
+{#            margin-bottom: 400px;#}
+{#        }#}
+{#        #footer .vd_bottom {#}
+{#            background-color: #816100 !important;#}
+{#        }#}
+{#        .vd_top-menu-wrapper{#}
+{#            background-color: #816100 !important;#}
+{#        }#}
+{#        .vd_menu-search-submit {#}
+{#            background-color: black !important;#}
+{#        }#}
+{#    </style>#}
     <script>
         $(function () {
             $('#id_dueDate').datepicker({
@@ -84,10 +84,10 @@
                                         <div class="col-sm-12">
                                             <div class="panel widget light-widget">
                                                 <div class="panel-body" style="padding:40px;">
-                                                    <div class="col-sm-2">
-                                                        <div class="mgbt-xs-20"><img width="100%" alt="logo" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"></div>
-                                                    </div>
-                                                    <div class="col-sm-10">
+{#                                                    <div class="col-sm-2">#}
+{#                                                        <div class="mgbt-xs-20"><img width="100%" alt="logo" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"></div>#}
+{#                                                    </div>#}
+                                                    <div class="col-sm-12">
                                                         <h3 class="font-semibold mgbt-xs-20">{{ wp.name }}</h3>
                                                         {% if not is_contracted %}
                                                             <a class="btn vd_btn vd_bg-soft-blue vd_white pull-right " title="Convert to the Contracted Vendor" onclick="convert({{wp.id}});"><i class="fa fa-repeat append-icon"></i>Convert</a>
