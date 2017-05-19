@@ -3432,7 +3432,16 @@ def events_based_list(request):
             if query_set:
                 writer.writerow(['Vendors Name','Category','Company Name','Show','Balance Due','Payment Method','Status','Created At','Email','Electricity','Phone','Food & Beverage', 'Booth No'])
                 for data in query_set:
-                    output.append([data.name,data.category, data.business_name, "%s - %s"%(data.event.name, data.event.date),str(data.amount_due), data.payment_method, data.status, data.created_at,data.email, data.get_if_electricity(),data.phone, data.food, data.booth_no])
+                    stats = "Unpaid"
+                    if data.status == "Deleted":
+                        stats = "Deleted"
+                    else:
+                        if data.total_amount == 0:
+                            stats = "No invoice available"
+                        else:
+                            if data.amount_due == 0:
+                                stats = "Paid"
+                    output.append([data.name,data.category, data.business_name, "%s - %s"%(data.event.name, data.event.date),str(data.amount_due), data.payment_method, stats, data.created_at,data.email, data.get_if_electricity(),data.phone, data.food, data.booth_no])
                 writer.writerows(output)
                 return response
         if "events_year" in request.POST:
