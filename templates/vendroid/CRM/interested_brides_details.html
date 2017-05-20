@@ -4,82 +4,48 @@
 {% load myfilters %}
 {% load humanize %}
 {% block content %}
-{#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
-{#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
-{##}
-{#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
+    <style>
+        .red {
+            color: red;
+        }
 
+        textarea {
+            height: 80px;
+        }
 
-{#    <script type="text/javascript" src="{% static "vendroid/plugins/jquery-ui/jquery-ui.custom.min.js" %}"></script>#}
-
-        <style>
-    .red {
-        color: red;
-    }
-    textarea {
-        height: 80px;
-    }
-    .btn-brown {
-        background-color: #26B8F3 !important;
-    }
+        .btn-brown {
+            background-color: #26B8F3 !important;
+        }
     </style>
-{#    <style>#}
-{#    .vd_content-section .row {#}
-{#        padding-bottom: 0px;]#}
-{#    }#}
-{#    .vd_content-section {#}
-{#         margin-bottom: 400px;#}
-{#    }#}
-{#    #footer .vd_bottom {#}
-{#        background-color: #816100 !important;#}
-{#    }#}
-{#    .vd_top-menu-wrapper{#}
-{#        background-color: #816100 !important;#}
-{#    }#}
-{#    .vd_menu-search-submit {#}
-{#        background-color: black !important;#}
-{#    }#}
-{#</style>#}
     <script>
-    $(function () {
-{#        alert('works well')#}
+        $(function () {
             $('#id_dueDate').datepicker({
-              dateFormat: "yy-mm-dd"
+                dateFormat: "yy-mm-dd"
             });
-{#            $("#id_wedding_date").datetimepicker({#}
-{#             'showTimepicker': false,#}
-{#            });#}
         });
 
     </script>
     <style>
-    .ui-widget-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-    .ui-front {
-        z-index: 100;
-    }
-    .errorlist {
-        color: red;
-    }
+        .ui-widget-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ui-front {
+            z-index: 100;
+        }
+
+        .errorlist {
+            color: red;
+        }
     </style>
-
-{#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
-{#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
-{#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
-{#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
-{#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
-
-
-<!-- Specific Page Scripts Put Here -->
 
     <div class="vd_body">
         <!-- Header Start -->
-       {% include "vendroid/partial/_header_yj_bawf.html" %}
+        {% include "vendroid/partial/_header_yj_bawf.html" %}
         <!-- Header Ends -->
         <div class="content">
             <div class="container">
@@ -87,458 +53,451 @@
 
                 <!-- Middle Content Start -->
 
-               <div class="vd_content-wrapper">
-                  <div class="vd_container">
-                    <div class="vd_content clearfix">
+                <div class="vd_content-wrapper">
+                    <div class="vd_container">
+                        <div class="vd_content clearfix">
 
-                      <!-- vd_head-section -->
+                            <!-- vd_head-section -->
 
-                      <div class="clearfix">
+                            <div class="clearfix">
 
-                      <!-- vd_title-section -->
+                                <!-- vd_title-section -->
 
-                      <div class="vd_content-section clearfix">
-
-
+                                <div class="vd_content-section clearfix">
 
 
-                         <div class="row">
-                          <div class="col-sm-12">
-                            <div class="panel widget light-widget">
-                              <div class="panel-body" style="padding:40px;">
-                {#                    <div class="pull-right text-right">#}
-                {#                      <h3 class="font-semibold mgbt-xs-20">INVOICE</h3>#}
-                {#                      <table class="table table-bordered">#}
-                {#                        <tbody><tr>#}
-                {#                          <th>Invoice No.</th>#}
-                {#                          <th>Date</th>#}
-                {#                        </tr>#}
-                {#                        <tr>#}
-                {#                          <td>I-24051301</td>#}
-                {#                          <td>24 May 2013</td>#}
-                {#                        </tr>#}
-                {#                      </tbody></table>#}
-                {#                    </div>#}
-{#                                <div class="col-sm-2">#}
-{#                                    <div class="mgbt-xs-20"><img width="100%" alt="logo" src="http://bayareaweddingfairs.com/wp-content/uploads/2016/01/logo-new-02.png"></div>#}
-{#                                </div>#}
-                                <div class="col-sm-12">
-            {#                        <div class="">#}
-                                        <h3 class="font-semibold mgbt-xs-20">{{ wp.name }}</h3>
-{#                                        {% if not is_contracted %}#}
-{#                                            <a class="btn vd_btn vd_bg-soft-blue vd_white pull-right " title="Convert to the Contracted Vendor" onclick="convert({{wp.id}});"><i class="fa fa-repeat append-icon"></i>Convert</a>#}
-{#                                             <form action="" method="post">#}
-{#                                            {% csrf_token %}#}
-{#                                                <input hidden name="delete_contractor" id="delete_contractor" value="{{ pass_id }}" />#}
-{#                                            <button style="margin-right: 10px;" class="btn vd_btn vd_bg-red vd_white pull-right " title="Remove the contracted vendor"><i class="fa fa-trash-o append-icon"></i>Delete</button>#}
-{#                                            </form>#}
-{##}
-{#                                        {% else %}#}
-{#                                            <a class="btn vd_btn vd_bg-soft-blue vd_white pull-right " title="Convert back to the Interested Vendor" onclick="convert_back({{ wp.id }});"><i class="fa fa-undo append-icon"></i>Convert Back</a>#}
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel widget light-widget">
+                                                <div class="panel-body" style="padding:40px;">
+                                                    <div class="col-sm-12">
+                                                        <h3 class="font-semibold mgbt-xs-20">{{ wp.name }}</h3>
 
-                                            <form action="" method="post">
-                                            {% csrf_token %}
-                                                <input hidden name="delete_bride" id="delete_bride" value="{{ wp.id }}" />
-                                            <button class="btn vd_btn vd_bg-red vd_white pull-right " title="Remove the contracted vendor"><i class="fa fa-trash-o append-icon"></i>Delete</button>
-                                            </form>
-{#                                        {% endif %}#}
+                                                        <form action="" method="post">
+                                                            {% csrf_token %}
+                                                            <input hidden name="delete_bride" id="delete_bride"
+                                                                   value="{{ wp.id }}"/>
+                                                            <button class="btn vd_btn vd_bg-red vd_white pull-right "
+                                                                    title="Remove the contracted vendor"><i
+                                                                    class="fa fa-trash-o append-icon"></i>Delete
+                                                            </button>
+                                                        </form>
+                                                        <p>Status:
+                                                            <mark style="color:orangered">Bride / Groom</mark>
+                                                        </p>
+                                                    </div>
 
-{#                                        {% if not is_contracted %}#}
-                                        <p>Status: <mark style="color:orangered">Bride / Groom </mark>
-{#                                            <i>({{ wp.status }})</i>#}
-                                        </p>
-{#                                        {% else %}#}
-{#                                        <p>Status: <mark style="color:green">Contracted </mark>#}
-{#                                            <i>({{ wp.status }})</i>#}
-{#                                        </p>#}
-{#                                        {% endif %}#}
+                                                    <hr>
+                                                    <br>
 
-{#                                        <p>Email: {{ wp.email }}</p>#}
-{#                                        <p>Phone: {{ wp.phone }}</p>#}
-{#                                        <p>Assigned to: {{ wp.sales.get_full_name }}#}
-{#                                            {% if is_contracted %}#}
-{#                                            {% endif %}#}
-                                        </p>
-{#                        </div>#}
-                    </div>
+                                                </div>
+                                                <!-- panel-body -->
 
-                                <hr>
-                                <br>
+                                            </div>
+                                            <!-- Panel Widget -->
+                                        </div>
 
-                              </div>
-                              <!-- panel-body -->
-
-                            </div>
-                            <!-- Panel Widget -->
-                          </div>
-
-                        </div>
-                          <!-- col-md-6 -->
-
-
-                        <div class="row">
-                          <div class="col-sm-12">
-                            <div class="panel widget light-widget">
-                              <div class="panel-body">
-{#                                  <button class="btn vd_btn btn-brown" data-toggle="modal" href="#contractFormModal">#}
-{#                                      Edit Contractor (Below Table)#}
-{#                                  </button>#}
-{#                                  <br/><br>#}
-                                  <div class="col-md-6">
-                                      <h5 class="">Bride / Groom Information</h5>
-                                  <table class="table table-bordered">
-                                    <tbody>
-                                        <tr class="">
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Name:</td>
-                                          <td class="col-sm-9"><span id="wp_name" class="pull-left">{{ wp.name }}</span>
-                                              <form method="post" action="" class="edit-form" id="name-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_name" class="pull-left" value="name" >
-                                                  <input hidden name="edit_value" id="edit_value" value="{{ wp.name }}" >
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_name, #name-edit-btn, #edit_value, #name-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_name" >
-                                                  <div hidden id="name-edit-save-btn" class="pull-right" ><button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-                                                  <a class="pull-right btn" id="name-cancel-btn" href="#" onclick="$('#wp_name, #name-edit-btn, #edit_value, #name-edit-save-btn').toggle('hidden');">Cancel</a>
-                                                  </div>
-                                              </form>
-
-                                          <a class="pull-right" id="name-edit-btn" href="#" onclick="$('#wp_name, #name-edit-btn, #edit_value, #name-edit-save-btn').toggle('hidden');">Edit</a>
-
-                                          </td>
-
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Company: </td>#}
-{#                                          <td class="col-sm-3">{{ wp.business_name }}</td>#}
-                                        </tr>
-
-                                        <tr>
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">City:</td>
-                                          <td class="col-sm-9"><span id="wp_city" class="pull-left">{{ wp.city }}</span>
-
-                                          <form method="post" action="" class="edit-form" id="city-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_city" class="pull-left" value="city" >
-                                                  <input hidden name="edit_value" id="edit_value_city" value="{{ wp.city }}" >
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_city, #city-edit-btn, #edit_value_city, #city-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_city" >
-                                                  <div hidden id="city-edit-save-btn" class="pull-right" ><button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-
-                                                  <a class="pull-right btn" id="city-cancel-btn" href="#" onclick="$('#wp_city, #city-edit-btn, #edit_value_city, #city-edit-save-btn').toggle('hidden');">Cancel</a></div>
-                                              </form>
-
-                                          <a class="pull-right" id="city-edit-btn" href="#" onclick="$('#wp_city, #city-edit-btn, #edit_value_city, #city-edit-save-btn').toggle('hidden');">Edit</a>
-                                          </td>
-
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Vendor Name: </td>#}
-{#                                          <td class="col-sm-3">{{ wp.name }}</td>#}
-                                        </tr>
-
-                                        <tr>
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Zip:</td>
-                                          <td class="col-sm-9"><span id="wp_zip" class="pull-left">{{ wp.zip }}</span>
-                                          <form method="post" action="" class="edit-form" id="zip-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_zip" class="pull-left" value="zip" >
-                                                  <input hidden name="edit_value" id="edit_value_zip" value="{{ wp.zip }}" >
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_zip, #zip-edit-btn, #edit_value_zip, #zip-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_zip" >
-                                                  <div hidden id="zip-edit-save-btn" class="pull-right" ><button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-                                                  <a class="pull-right btn" id="zip-cancel-btn" href="#" onclick="$('#wp_zip, #zip-edit-btn, #edit_value_zip, #zip-edit-save-btn').toggle('hidden');">Cancel</a>
-                                                  </div>
-                                              </form>
-
-                                          <a class="pull-right" id="zip-edit-btn" href="#" onclick="$('#wp_zip, #zip-edit-btn, #edit_value_zip, #zip-edit-save-btn').toggle('hidden');">Edit</a>
-                                          </td>
-
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Email: </td>#}
-{#                                          <td class="col-sm-3">{{ wp.email }}</td>#}
-                                        </tr><tr class="">
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Business Category:</td>#}
-{#                                          <td class="col-sm-3">{{ wp.category }}</td>#}
-
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Email: </td>
-                                          <td class="col-sm-9"><span id="wp_email" class="pull-left">{{ wp.email }}</span>
-                                          <form method="post" action="" class="edit-form" id="email-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_email" class="pull-left" value="email" >
-                                                  <input hidden name="edit_value" id="edit_value_email" value="{{ wp.email }}" >
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_email, #email-edit-btn, #edit_value_email, #email-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_email" >
-                                                  <div hidden id="email-edit-save-btn" class="pull-right" >
-
-                                                      <button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-                                                        <a class="pull-right btn" id="email-cancel-btn" href="#" onclick="$('#wp_email, #email-edit-btn, #edit_value_email, #email-edit-save-btn').toggle('hidden');" >Cancel</a>
-                                                  </div>
-                                              </form>
-
-                                          <a class="pull-right" id="email-edit-btn" href="#" onclick="$('#wp_email, #email-edit-btn, #edit_value_email, #email-edit-save-btn').toggle('hidden');">Edit</a>
-                                          </td>
-                                        </tr>
-
-
-{#                            <tr>#}
-{#                              <td class="col-sm-3  vd_bg-soft-grey text-right">Sales:</td>#}
-{#                              <td class="col-sm-3">{{ wp.sales.get_full_name }}</td>#}
-{#                            </tr>#}
-                        </tbody>
-                      </table>
-
-                                      </div>
-
-                                  <div class="col-md-6">
-                                      <h5 class="">&nbsp;</h5>
-                                      <table class="table table-bordered">
-                                    <tbody>
-                                            <tr class="">
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Business Category:</td>#}
-{#                                          <td class="col-sm-3">{{ wp.category }}</td>#}
-
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Phone: </td>
-                                          <td class="col-sm-9"><span id="wp_phone" class="pull-left">{{ wp.phone }}</span>
-                                          <form method="post" action="" class="edit-form" id="phone-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_phone" class="pull-left" value="phone" >
-                                                  <input hidden name="edit_value" id="edit_value_phone" value="{{ wp.phone }}" >
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_phone, #phone-edit-btn, #edit_value_phone, #phone-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_phone" >
-                                                  <div hidden id="phone-edit-save-btn" class="pull-right" >
-
-                                                      <button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-                                                        <a class="pull-right btn" id="phone-cancel-btn" href="#" onclick="$('#wp_phone, #phone-edit-btn, #edit_value_phone, #phone-edit-save-btn').toggle('hidden');" >Cancel</a>
-                                                  </div>
-                                              </form>
-
-                                          <a class="pull-right" id="phone-edit-btn" href="#" onclick="$('#wp_phone, #phone-edit-btn, #edit_value_phone, #phone-edit-save-btn').toggle('hidden');">Edit</a>
-                                          </td>
-                                        </tr>
-
-                                        <tr>
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Phone:</td>#}
-{#                                          <td class="col-sm-3">{{ wp.phone }}</td>#}
-
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Wedding Date: </td>
-                                          <td class="col-sm-9"><span id="wp_weddingdate" class="pull-left">{{ wp.weddingDate }}</span>
-                                          <form method="post" action="" class="edit-form" id="weddingdate-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_weddingdate" class="pull-left" value="weddingdate" >
-                                                  <input hidden name="edit_value" id="edit_value_weddingdate" value="{{ wp.weddingDate }}" >
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_weddingdate, #weddingdate-edit-btn, #edit_value_weddingdate, #weddingdate-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_weddingdate" >
-                                                  <div hidden id="weddingdate-edit-save-btn" class="pull-right" >
-
-                                                      <button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-                                                        <a class="pull-right btn" id="weddingdate-cancel-btn" href="#" onclick="$('#wp_weddingdate, #weddingdate-edit-btn, #edit_value_weddingdate, #weddingdate-edit-save-btn').toggle('hidden');" >Cancel</a>
-                                                  </div>
-                                              </form>
-
-                                          <a class="pull-right" id="weddingdate-edit-btn" href="#" onclick="$('#wp_weddingdate, #weddingdate-edit-btn, #edit_value_weddingdate, #weddingdate-edit-save-btn').toggle('hidden');">Edit</a>
-                                          </td>
-                                        </tr>
-
-                                        <tr>
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Status:</td>#}
-{#                                          <td class="col-sm-3">{{ wp.status }}</td>#}
-
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">How Heard: </td>
-                                          <td class="col-sm-9"><span id="wp_how-heard" class="pull-left">{{ wp.how_heard }}</span>
-                                          <form method="post" action="" class="edit-form" id="how-heard-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_how-heard" class="pull-left" value="how-heard" >
-{#                                                  <input hidden name="edit_value" id="edit_value_how-heard" value="{{ wp.how_heard }}" >#}
-                                              <select style="width: 40%;" hidden id="edit_value_how-heard" name="edit_value" placeholder="How did you hear">
-                                                  <option value="">How did you hear?</option>
-                                                    <option value="Here comes the guide">Here comes the guide</option>
-                                                    <option value="Other">Other</option>
-                                                    <option value="Facebook">Facebook</option>
-
-                                                    <option value="Google">Google</option>
-                                                    <option value="Radio">Radio</option>
-                                                    <option value="TheKnot">TheKnot</option>
-                                                    <option value="Friends &amp; Family">Friends &amp; Family</option>
-                                                    </select>
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_how-heard, #how-heard-edit-btn, #edit_value_how-heard, #how-heard-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_how-heard" >
-                                                  <div hidden id="how-heard-edit-save-btn" class="pull-right" >
-
-                                                      <button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-                                                        <a class="pull-right btn" id="how-heard-cancel-btn" href="#" onclick="$('#wp_how-heard, #how-heard-edit-btn, #edit_value_how-heard, #how-heard-edit-save-btn').toggle('hidden');" >Cancel</a>
-                                                  </div>
-                                              </form>
-
-                                          <a class="pull-right" id="how-heard-edit-btn" href="#" onclick="$('#wp_how-heard, #how-heard-edit-btn, #edit_value_how-heard, #how-heard-edit-save-btn').toggle('hidden');">Edit</a>
-                                          </td>
-                                        </tr>
-                                     <tr>
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Status:</td>#}
-{#                                          <td class="col-sm-3">{{ wp.status }}</td>#}
-
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Categories: </td>
-                                          <td class="col-sm-9">{% for cat in wp.categories.all %}{{ cat }}, {% endfor %}</td>
-                                        </tr>
-                                       </tbody>
-                                      </table>
-                                  </div>
-                              <div class="clearfix"></div>
-                                    <div class="col-md-6">
-                                        <h5 class="mgbt-xs-15">Show Information</h5>
-                                  <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Events:</td>
-                                          <td class="col-sm-9">
-{#                                              {{ wp.event.name }}#}
-                                          {% if not show_interested %}
-                                          {{ wp.event.name }} <br><p style="color:grey">{{ wp.event.date }}</p>
-                                        {% else %}
-                                              {% for event_obj in wp.event.all %}{{ event_obj.name }} <br><p style="color:grey">{{ event_obj.date }}</p>{% endfor %}
-                                          {% endif %}
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Comments:</td>
-                                          <td class="col-sm-9"><span id="wp_comments" class="pull-left">{{ wp.comments }}</span>
-                                          <form method="post" action="" class="edit-form" id="comments-form">
-                                                  {% csrf_token %}
-                                                  <input hidden name="edit_type" id="edit_comments" class="pull-left" value="comments" >
-                                                  <input hidden name="edit_value" id="edit_value_comments" value="{{ wp.comments }}" >
-                                                  <input hidden name="edit_editor" id="edit_editor" value="#wp_comments, #comments-edit-btn, #edit_value_comments, #comments-edit-save-btn" >
-                                                  <input hidden name="edit_display" id="edit_display" value="#wp_comments" >
-                                                  <div hidden id="comments-edit-save-btn" class="pull-right" >
-
-                                                      <button type="submit" class="btn vd_btn btn-brown pull-right"  href="#" >Save</button>
-                                                        <a class="pull-right btn" id="comments-cancel-btn" href="#" onclick="$('#wp_comments, #comments-edit-btn, #edit_value_comments, #comments-edit-save-btn').toggle('hidden');" >Cancel</a>
-                                                  </div>
-                                              </form>
-
-                                          <a class="pull-right" id="comments-edit-btn" href="#" onclick="$('#wp_comments, #comments-edit-btn, #edit_value_comments, #comments-edit-save-btn').toggle('hidden');">Edit</a>
-
-                                          </td>
-                                        </tr>
-{#                                        {% if is_contracted %}#}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Booth:</td>#}
-{#                                          <td class="col-sm-9">{{ wp.booth }}</td>#}
-{#                                        </tr>#}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Fashion Show Sponsorship:</td>#}
-{#                                          <td class="col-sm-9">{{ wp.is_fashionshow }}</td>#}
-{#                                        </tr>#}
-{#                                            <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Partner Vendor:</td>#}
-{#                                          <td class="col-sm-9">{{ wp.is_partner_vendor }}</td>#}
-{#                                        </tr><tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Backdrop Allowed (Y/N):</td>#}
-{#                                          <td class="col-sm-9">{% if wp.backdrop_allowed %}Yes{% else %}No{% endif %}</td>#}
-{#                                        </tr><tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Food & Beverage:</td>#}
-{#                                          <td class="col-sm-9">{% if wp.food %}{{ wp.food }}{% else %}No{% endif %}</td>#}
-{#                                        </tr>#}
-{#                                        {% endif %}#}
-                                    </tbody>
-                                  </table>
                                     </div>
-{#                                  <div class="col-md-6">#}
-{#                                      {% if is_contracted  %}#}
-{#                                  <h5 class="mgbt-xs-15">Payment Information</h5>#}
-{#                                  <table class="table table-bordered">#}
-{#                                    <tbody>#}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Balance Due:</td>#}
-{#                                          <td class="col-sm-9">${{ wp.amount_due }} </td>#}
-{#                                        </tr>#}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Total Amount:</td>#}
-{#                                          <td class="col-sm-9">${{ wp.total_amount }} </td>#}
-{#                                        </tr>#}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Commission:</td>#}
-{#                                          <td class="col-sm-9">{% if wp.commission %}{{ wp.commission|default_if_none:"0"|floatformat:"1" }}% (${{ wp.get_percent_amount|floatformat:"1" }}){% else %}0% ($0){% endif %}</td>#}
-{#                                        </tr>#}
-{##}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Payment Method:</td>#}
-{#                                          <td class="col-sm-9">{{ wp.payment_method }}</td>#}
-{#                                        </tr>#}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Description:</td>#}
-{#                                          <td class="col-sm-9">{{ wp.description }}</td>#}
-{#                                        </tr>#}
-{#                                    </tbody>#}
-{#                                  </table>#}
-{#                                  {% endif %}#}
-{#                                  </div>#}
-                                <div class="clearfix"></div>
+                                    <!-- col-md-6 -->
 
 
-{#                                  <div class="col-md-6">#}
-{#                                      <h5 class="mgbt-xs-15">Address Information</h5>#}
-{#                                  <table class="table table-bordered">#}
-{#                                    <tbody>#}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">City:</td>#}
-{#                                          <td class="col-sm-9">{{ wp.city }}</td>#}
-{#                                        </tr>#}
-{##}
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Zip:</td>#}
-{#                                          <td class="col-sm-9">{{ wp.zip }}</td>#}
-{#                                        </tr>#}
-{#                                    </tbody>#}
-{#                                  </table>#}
-{#                                  </div>#}
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel widget light-widget">
+                                                <div class="panel-body">
+                                                    <div class="col-md-6">
+                                                        <h5 class="">Bride / Groom Information</h5>
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                            <tr class="">
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Name:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_name"
+                                                                                           class="pull-left">{{ wp.name }}</span>
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="name-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type" id="edit_name"
+                                                                               class="pull-left" value="name">
+                                                                        <input hidden name="edit_value" id="edit_value"
+                                                                               value="{{ wp.name }}">
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_name, #name-edit-btn, #edit_value, #name-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display" value="#wp_name">
+                                                                        <div hidden id="name-edit-save-btn"
+                                                                             class="pull-right">
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+                                                                            <a class="pull-right btn"
+                                                                               id="name-cancel-btn" href="#"
+                                                                               onclick="$('#wp_name, #name-edit-btn, #edit_value, #name-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
 
-                                 <div class="col-md-6">
-                                      <h5 class="mgbt-xs-15">Assignee Information</h5>
-                                  <table class="table table-bordered">
-                                    <tbody>
-{#                                        <tr>#}
-{#                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Vendors Owner::</td>#}
-{#                                          <td class="col-sm-9">{{ wp.sales }}</td>#}
-{#                                        </tr>#}
+                                                                    <a class="pull-right" id="name-edit-btn" href="#"
+                                                                       onclick="$('#wp_name, #name-edit-btn, #edit_value, #name-edit-save-btn').toggle('hidden');">Edit</a>
 
-                                        <tr>
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Modified By:</td>
-                                          <td class="col-sm-9">{% if wp.sales %}{{ wp.sales }} &nbsp; {% endif %}{{ wp.modified_at }}</td>
-                                        </tr>
+                                                                </td>
+                                                            </tr>
 
-                                        <tr>
-                                          <td class="col-sm-3 vd_bg-soft-grey text-right">Created By:</td>
-                                          <td class="col-sm-9">{% if wp.sales %}{{ wp.sales }} &nbsp; {% endif %}{{ wp.created_at }}</td>
-                                        </tr>
-                                    </tbody>
-                                  </table>
-                                 </div>
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">City:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_city"
+                                                                                           class="pull-left">{{ wp.city }}</span>
+
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="city-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type" id="edit_city"
+                                                                               class="pull-left" value="city">
+                                                                        <input hidden name="edit_value"
+                                                                               id="edit_value_city"
+                                                                               value="{{ wp.city }}">
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_city, #city-edit-btn, #edit_value_city, #city-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display" value="#wp_city">
+                                                                        <div hidden id="city-edit-save-btn"
+                                                                             class="pull-right">
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+
+                                                                            <a class="pull-right btn"
+                                                                               id="city-cancel-btn" href="#"
+                                                                               onclick="$('#wp_city, #city-edit-btn, #edit_value_city, #city-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
+
+                                                                    <a class="pull-right" id="city-edit-btn" href="#"
+                                                                       onclick="$('#wp_city, #city-edit-btn, #edit_value_city, #city-edit-save-btn').toggle('hidden');">Edit</a>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Zip:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_zip"
+                                                                                           class="pull-left">{{ wp.zip }}</span>
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="zip-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type" id="edit_zip"
+                                                                               class="pull-left" value="zip">
+                                                                        <input hidden name="edit_value"
+                                                                               id="edit_value_zip" value="{{ wp.zip }}">
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_zip, #zip-edit-btn, #edit_value_zip, #zip-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display" value="#wp_zip">
+                                                                        <div hidden id="zip-edit-save-btn"
+                                                                             class="pull-right">
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+                                                                            <a class="pull-right btn"
+                                                                               id="zip-cancel-btn" href="#"
+                                                                               onclick="$('#wp_zip, #zip-edit-btn, #edit_value_zip, #zip-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
+
+                                                                    <a class="pull-right" id="zip-edit-btn" href="#"
+                                                                       onclick="$('#wp_zip, #zip-edit-btn, #edit_value_zip, #zip-edit-save-btn').toggle('hidden');">Edit</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="">
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Email:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_email"
+                                                                                           class="pull-left">{{ wp.email }}</span>
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="email-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type" id="edit_email"
+                                                                               class="pull-left" value="email">
+                                                                        <input hidden name="edit_value"
+                                                                               id="edit_value_email"
+                                                                               value="{{ wp.email }}">
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_email, #email-edit-btn, #edit_value_email, #email-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display" value="#wp_email">
+                                                                        <div hidden id="email-edit-save-btn"
+                                                                             class="pull-right">
+
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+                                                                            <a class="pull-right btn"
+                                                                               id="email-cancel-btn" href="#"
+                                                                               onclick="$('#wp_email, #email-edit-btn, #edit_value_email, #email-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
+
+                                                                    <a class="pull-right" id="email-edit-btn" href="#"
+                                                                       onclick="$('#wp_email, #email-edit-btn, #edit_value_email, #email-edit-save-btn').toggle('hidden');">Edit</a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <h5 class="">&nbsp;</h5>
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                            <tr class="">
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Phone:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_phone"
+                                                                                           class="pull-left">{{ wp.phone }}</span>
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="phone-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type" id="edit_phone"
+                                                                               class="pull-left" value="phone">
+                                                                        <input hidden name="edit_value"
+                                                                               id="edit_value_phone"
+                                                                               value="{{ wp.phone }}">
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_phone, #phone-edit-btn, #edit_value_phone, #phone-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display" value="#wp_phone">
+                                                                        <div hidden id="phone-edit-save-btn"
+                                                                             class="pull-right">
+
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+                                                                            <a class="pull-right btn"
+                                                                               id="phone-cancel-btn" href="#"
+                                                                               onclick="$('#wp_phone, #phone-edit-btn, #edit_value_phone, #phone-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
+
+                                                                    <a class="pull-right" id="phone-edit-btn" href="#"
+                                                                       onclick="$('#wp_phone, #phone-edit-btn, #edit_value_phone, #phone-edit-save-btn').toggle('hidden');">Edit</a>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Wedding
+                                                                    Date:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_weddingdate"
+                                                                                           class="pull-left">{{ wp.weddingDate }}</span>
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="weddingdate-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type"
+                                                                               id="edit_weddingdate" class="pull-left"
+                                                                               value="weddingdate">
+                                                                        <input hidden name="edit_value"
+                                                                               id="edit_value_weddingdate"
+                                                                               value="{{ wp.weddingDate }}">
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_weddingdate, #weddingdate-edit-btn, #edit_value_weddingdate, #weddingdate-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display"
+                                                                               value="#wp_weddingdate">
+                                                                        <div hidden id="weddingdate-edit-save-btn"
+                                                                             class="pull-right">
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+                                                                            <a class="pull-right btn"
+                                                                               id="weddingdate-cancel-btn" href="#"
+                                                                               onclick="$('#wp_weddingdate, #weddingdate-edit-btn, #edit_value_weddingdate, #weddingdate-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
+                                                                    <a class="pull-right" id="weddingdate-edit-btn"
+                                                                       href="#"
+                                                                       onclick="$('#wp_weddingdate, #weddingdate-edit-btn, #edit_value_weddingdate, #weddingdate-edit-save-btn').toggle('hidden');">Edit</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">How
+                                                                    Heard:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_how-heard"
+                                                                                           class="pull-left">{{ wp.how_heard }}</span>
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="how-heard-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type"
+                                                                               id="edit_how-heard" class="pull-left"
+                                                                               value="how-heard">
+                                                                        <select style="width: 40%;" hidden
+                                                                                id="edit_value_how-heard"
+                                                                                name="edit_value"
+                                                                                placeholder="How did you hear">
+                                                                            <option value="">How did you hear?</option>
+                                                                            <option value="Here comes the guide">Here
+                                                                                comes the guide
+                                                                            </option>
+                                                                            <option value="Other">Other</option>
+                                                                            <option value="Facebook">Facebook</option>
+                                                                            <option value="Google">Google</option>
+                                                                            <option value="Radio">Radio</option>
+                                                                            <option value="TheKnot">TheKnot</option>
+                                                                            <option value="Friends &amp; Family">Friends
+                                                                                &amp; Family
+                                                                            </option>
+                                                                        </select>
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_how-heard, #how-heard-edit-btn, #edit_value_how-heard, #how-heard-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display" value="#wp_how-heard">
+                                                                        <div hidden id="how-heard-edit-save-btn"
+                                                                             class="pull-right">
+
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+                                                                            <a class="pull-right btn"
+                                                                               id="how-heard-cancel-btn" href="#"
+                                                                               onclick="$('#wp_how-heard, #how-heard-edit-btn, #edit_value_how-heard, #how-heard-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
+                                                                    <a class="pull-right" id="how-heard-edit-btn"
+                                                                       href="#"
+                                                                       onclick="$('#wp_how-heard, #how-heard-edit-btn, #edit_value_how-heard, #how-heard-edit-save-btn').toggle('hidden');">Edit</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">
+                                                                    Categories:
+                                                                </td>
+                                                                <td class="col-sm-9">
+                                                                    {% for cat in wp.categories.all %}{{ cat }}
+                                                                        , {% endfor %}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6">
+                                                        <h5 class="mgbt-xs-15">Show Information</h5>
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">
+                                                                    Events:
+                                                                </td>
+                                                                <td class="col-sm-9">
+                                                                    {#                                              {{ wp.event.name }}#}
+                                                                    {% if not show_interested %}
+                                                                        {{ wp.event.name }} <br>
+                                                                        <p style="color:grey">{{ wp.event.date }}</p>
+                                                                    {% else %}
+                                                                        {% for event_obj in wp.event.all %}
+                                                                            {{ event_obj.name }} <br>
+                                                                            <p style="color:grey">{{ event_obj.date }}</p>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">
+                                                                    Comments:
+                                                                </td>
+                                                                <td class="col-sm-9"><span id="wp_comments"
+                                                                                           class="pull-left">{{ wp.comments }}</span>
+                                                                    <form method="post" action="" class="edit-form"
+                                                                          id="comments-form">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="edit_type"
+                                                                               id="edit_comments" class="pull-left"
+                                                                               value="comments">
+                                                                        <input hidden name="edit_value"
+                                                                               id="edit_value_comments"
+                                                                               value="{{ wp.comments }}">
+                                                                        <input hidden name="edit_editor"
+                                                                               id="edit_editor"
+                                                                               value="#wp_comments, #comments-edit-btn, #edit_value_comments, #comments-edit-save-btn">
+                                                                        <input hidden name="edit_display"
+                                                                               id="edit_display" value="#wp_comments">
+                                                                        <div hidden id="comments-edit-save-btn"
+                                                                             class="pull-right">
+                                                                            <button type="submit"
+                                                                                    class="btn vd_btn btn-brown pull-right"
+                                                                                    href="#">Save
+                                                                            </button>
+                                                                            <a class="pull-right btn"
+                                                                               id="comments-cancel-btn" href="#"
+                                                                               onclick="$('#wp_comments, #comments-edit-btn, #edit_value_comments, #comments-edit-save-btn').toggle('hidden');">Cancel</a>
+                                                                        </div>
+                                                                    </form>
+                                                                    <a class="pull-right" id="comments-edit-btn"
+                                                                       href="#"
+                                                                       onclick="$('#wp_comments, #comments-edit-btn, #edit_value_comments, #comments-edit-save-btn').toggle('hidden');">Edit</a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-6">
+                                                        <h5 class="mgbt-xs-15">Assignee Information</h5>
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Modified
+                                                                    By:
+                                                                </td>
+                                                                <td class="col-sm-9">{% if wp.sales %}{{ wp.sales }}
+                                                                    &nbsp; {% endif %}{{ wp.modified_at }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-sm-3 vd_bg-soft-grey text-right">Created
+                                                                    By:
+                                                                </td>
+                                                                <td class="col-sm-9">{% if wp.sales %}{{ wp.sales }}
+                                                                    &nbsp; {% endif %}{{ wp.created_at }}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!--end of tasks-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row -->
                                 </div>
-
-                                  <!--Note-->
-{#                                    <hr>#}
-{#                                  <div class="col-sm-12">#}
-
-                    <!--end of tasks-->
-                </div>
-              </div>
-            </div>
-            <!-- row -->
-                      </div>
-                      <!-- .vd_content-section -->
-
-                    </div>
-                    <!-- .vd_content -->
-                  </div>
-                  <!-- .vd_container -->
-                </div>
-                                <!-- .vd_container -->
+                                <!-- .vd_content-section -->
                             </div>
+                            <!-- .vd_content -->
+                        </div>
+                        <!-- .vd_container -->
+                    </div>
+                    <!-- .vd_container -->
+                </div>
                 <!-- .vd_content-wrapper -->
-
                 <!-- Middle Content End -->
-{#               </div>#}
+                {#               </div>#}
             </div>
             <!-- .container -->
-
         </div>
         <!-- .content -->
-
         <!-- Footer Start -->
         <footer class="footer-1" id="footer">
             <div class="vd_bottom ">
@@ -557,185 +516,60 @@
         </footer>
         <!-- Footer END -->
     </div>
-
-
-
     <!--Contractor detail form--->
     <div class="modal fade" id="contractFormModal" role="dialog" aria-hidden="true">
         <div class="modal-dialog" style="background-color: wheat">
             <div class="modal-body" id="contractFormModalBody">
-                <div >
-    <h4 class="modal-title" style="text-align: center;" >Edit Contractor Information</h4>
-    <hr>
-    {% if error_message %}
-        <div class="flashes">
-            <div class="alert alert-danger">{{ error_message }}</div>
-        </div>
-    {% endif %}
+                <div>
+                    <h4 class="modal-title" style="text-align: center;">Edit Contractor Information</h4>
+                    <hr>
+                    {% if error_message %}
+                        <div class="flashes">
+                            <div class="alert alert-danger">{{ error_message }}</div>
+                        </div>
+                    {% endif %}
 
-</div>
+                </div>
 
             </div>
 
         </div>
     </div>
 
-
-
-    <!--End Contractor detail form--->
-{#    {% include "vendroid/CRM/partial/_taskFormContractorDetail.html" %}#}
-{#    {% include "vendroid/CRM/partial/_contractorDetail.html" %}#}
-
     <script src="{% static "js/chosen.jquery.min.js" %}"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-{#    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>#}
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
     <script src="{% static "js/jquery.min.js" %}"></script>
-    <script type="text/javascript" src="https://raw.githubusercontent.com/igorescobar/jQuery-Mask-Plugin/master/src/jquery.mask.js"></script>
+    <script type="text/javascript"
+            src="https://raw.githubusercontent.com/igorescobar/jQuery-Mask-Plugin/master/src/jquery.mask.js"></script>
     <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
-{#    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>#}
     <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
     <script type="text/javascript">
-{#    edit_value_phone #}
-
-{#    <script>#}
-{#        $(function () {#}
-            $('#edit_value_weddingdate').datetimepicker(
-                    {
-                        format:'Y-m-d',
-                    }
-
-            );
-            $(document).ready(function(){
-                $('#edit_value_phone').mask('(000) 000-0000');
-            })
-{#        function convert_back(id){#}
-{#            console.log("convert back"+id);#}
-{#            $.ajax({#}
-{#                url: '',#}
-{#                type: 'post', // http method#}
-{#                data: {convert_back: id},#}
-{##}
-{#                success: function (msg) {#}
-{#                    if (msg = "success"){#}
-{#                        alert("Convert Back to Interested Vendor Success!");#}
-{#                        window.location="/crm/invoices/interested_detail/"+id+"/";#}
-{#                    }#}
-{#                    console.log("accept success");#}
-{#                    $('#refreshConversation_friend').html(friend);#}
-{#                },#}
-{##}
-{#                error: function (xhr, errmsg, err) {#}
-{#                   console.log("fail Convert Back to Interested Vendor "+errmsg+" "+err);#}
-{#                }#}
-{#            });#}
-{#        }#}
-{##}
-{#      #}
-        $('.edit-form').submit(function(event){
+        $('#edit_value_weddingdate').datetimepicker(
+            {
+                format: 'Y-m-d',
+            }
+        );
+        $(document).ready(function () {
+            $('#edit_value_phone').mask('(000) 000-0000');
+        })
+        $('.edit-form').submit(function (event) {
             event.preventDefault();
-{#            alert('function called')#}
             $.ajax({
                 url: '{{ request.get_full_path }}',
                 type: 'post', // http method
                 data: $(this).serialize(),
-
                 success: function (response) {
-{#                    console.log('success', response);#}
-                      var obj = jQuery.parseJSON(response);
-{#                      alert(obj.message)#}
-                      $(obj.edit_editor).toggle('hidden');
-                      $(obj.edit_display).html(obj.value);
-                      $(obj.edit_display).html(obj.value);
-                      notification("topright","success","fa fa-check-circle vd_green","Success",obj.message);
-
+                    var obj = jQuery.parseJSON(response);
+                    $(obj.edit_editor).toggle('hidden');
+                    $(obj.edit_display).html(obj.value);
+                    $(obj.edit_display).html(obj.value);
+                    notification("topright", "success", "fa fa-check-circle vd_green", "Success", obj.message);
                 },
-
                 error: function (xhr, errmsg, err) {
-{#                    alert('error')#}
-                    notification('topright','error','fa fa-exclamation-circle vd_red','Operation not performed.','The system is busy at the moment, please try again later.');
-                   console.log("fail "+errmsg+" "+err);
+                    notification('topright', 'error', 'fa fa-exclamation-circle vd_red', 'Operation not performed.', 'The system is busy at the moment, please try again later.');
                 }
             });
         });
-
-{#        function editTaskForm(taskId, wpId){#}
-{#            console.log("convert"+id);#}
-{#            $.ajax({#}
-{#                url: '{{ request.get_full_path }}',#}
-{#                type: 'post', // http method#}
-{#                data: {editTaskForm: taskId},#}
-{##}
-{#                success: function (response) {#}
-{#                    console.log('success', response);#}
-{##}
-{#                    $('#editTaskFormModal').html(response).dialog({modal: true}).dialog('open');#}
-{#                    $('#editTaskFormModalBody').html(response);#}
-{#                    $('#editTaskFormModal').modal('show');#}
-{##}
-{#                },#}
-{##}
-{#                error: function (xhr, errmsg, err) {#}
-{#                   console.log("fail "+errmsg+" "+err);#}
-{#                }#}
-{#            });#}
-{##}
-{##}
-{#        }#}
-
-{#        function editContractorForm(id){#}
-{#            console.log("contractor"+id);#}
-{#            $.ajax({#}
-{#                url: '{{ request.get_full_path }}',#}
-{#                type: 'post', // http method#}
-{#                data: {editContractorForm: id},#}
-{##}
-{#                success: function (response) {#}
-{#                    console.log('success', response);#}
-{#                    $('#contractFormModalBody').html(response);#}
-{#                    $('#contractFormModal').modal('show');#}
-{#                },#}
-{##}
-{#                error: function (xhr, errmsg, err) {#}
-{#                   console.log("fail "+errmsg+" "+err);#}
-{#                }#}
-{#            });#}
-{##}
-{#        }#}
-
-
-
     </script>
-
-
 {% endblock content %}
-{#{% block script %}#}
-{##}
-{#<script>#}
-{#{% if cont_form.errors %}#}
-{#            alert('working')#}
-{#            $('#contractFormModal').modal('show');#}
-{#        {% endif %}#}
-{#$('#id_commission').attr('hidden','hidden')#}
-{#var change_val = $('#select_commission').val();#}
-{#$('#select_commission').on('change',function(){#}
-{#    var change_val = $(this).val();#}
-{#    if(change_val == "other"){#}
-{#        $('#id_commission').removeAttr('hidden')#}
-{#    }#}
-{#    else{#}
-{#        $('#id_commission').attr('hidden','hidden')#}
-{#        $('#id_commission').val(change_val)#}
-{#    }#}
-{#$(document).ready(function(){#}
-{#    var change_val = $('#select_commission').val();#}
-{#    alert(change_val)#}
-{#    if(change_val == "other"){#}
-{#        $('#id_commission').removeAttr('hidden')#}
-{#    }#}
-{#    else{#}
-{#        $('#id_commission').attr('hidden','hidden')#}
-{#        $('#id_commission').val(change_val)#}
-{#    }#}
-{#</script>#}
-{##}
-{#{% endblock script %}#}
