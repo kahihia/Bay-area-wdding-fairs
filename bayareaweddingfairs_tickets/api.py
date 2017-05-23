@@ -12,6 +12,7 @@ from fullcalendar.util import events_to_json, calendar_options
 from django.contrib.auth import authenticate, logout, login as auth_login
 from django.shortcuts import get_object_or_404, HttpResponse
 from django.db.models import Q
+from datetime import datetime
 from .models import EventTickets
 # from yapjoy_files.models import Event_fairs
 import stripe
@@ -183,13 +184,14 @@ class iOSEvent(APIView):
     def get(self, request):
         dict_obj = []
         tickets = EventTickets.objects.all().distinct('event_id')
-        events = Event_fairs.objects.filter(id__in=tickets.values_list('event_id',flat=True))
+        events = Event_fairs.objects.filter(Q(id__in=tickets.values_list('event_id',flat=True))|Q(date__gte=datetime.now()))
 
         for event in events:
             event_tickets = EventTickets.objects.filter(event=event)
             total_amount = 0
-            for tick in event_tickets:
-                total_amount += tick.get_all_tickets()
+            if event_tickets:
+                for tick in event_tickets:
+                    total_amount += tick.get_all_tickets()
             add_ticket = {
                 'id':event.id,
                 'event_name':event.name,
