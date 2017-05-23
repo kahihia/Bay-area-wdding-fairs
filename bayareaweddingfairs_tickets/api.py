@@ -184,7 +184,7 @@ class iOSEvent(APIView):
     def get(self, request):
         dict_obj = []
         tickets = EventTickets.objects.all().distinct('event_id')
-        events = Event_fairs.objects.filter(Q(id__in=tickets.values_list('event_id',flat=True))|Q(date__gte=datetime.now()))
+        events = Event_fairs.objects.filter(Q(id__in=tickets.values_list('event_id',flat=True)))
 
         for event in events:
             event_tickets = EventTickets.objects.filter(event=event)
