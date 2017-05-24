@@ -114,3 +114,15 @@ class Card_change_Admin(admin.ModelAdmin):
     list_display = ['email','code','is_expired', 'created_at']
     search_fields = ['email','code','is_expired','created_at']
 admin.site.register(CardChange, Card_change_Admin)
+
+
+class CRMUrls_Admin(admin.ModelAdmin):
+    list_display = ['url_name', 'url_path', 'created_at', 'modified_at']
+    search_fields = ['url_name', 'url_path']
+admin.site.register(CRMUrls, CRMUrls_Admin)
+
+
+class UserPermissionPage_Admin(admin.ModelAdmin):
+    list_display = ['user', 'crmUrl', 'user_allowed', 'created_at']
+    search_fields = ['user', 'crmUrl__url_name']
+admin.site.register(UserPermissionPage, UserPermissionPage_Admin)

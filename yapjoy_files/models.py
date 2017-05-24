@@ -1310,11 +1310,38 @@ class MediaKit(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+
+class CRMUrls(models.Model):
+    """CRM urls Path and Name"""
+
+    url_name = models.CharField(help_text="URL Name in CRM", max_length=255, null=True, blank=True)
+    url_path = models.CharField(help_text="URL Path in CRM", max_length=255, null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.url_name or u''
+
+
+class UserPermissionPage(models.Model):
+    """User permssion table """
+    user = models.ForeignKey(User, related_name="user_permission")
+    crmUrl = models.ForeignKey(CRMUrls, related_name="crm_url")
+    user_allowed = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username or u''
+
 def media_kit_signal_view(sender, instance, created, **kwargs):
     if created:
         instance.code = id_generator(size=50)
         instance.save()
 post_save.connect(media_kit_signal_view, sender=MediaKit)
+
 
 def CardChange_signal_view(sender, instance, created, **kwargs):
     if created:

@@ -21,6 +21,7 @@ import boto
 from django.db.models import F, FloatField, Sum
 
 from django.db.models import Sum
+from yapjoy_files.decorator import is_permitted
 
 @login_required(login_url='/login/')
 @staff_member_required
@@ -990,6 +991,7 @@ def event_invoice(request):
 
 @login_required(login_url="/login/")
 @staff_member_required
+@is_permitted
 def media_kit(request):
 
     user = request.user
