@@ -60,4 +60,6 @@ urlpatterns = patterns('',
                        url(r'^invoices/ticketing/$', 'yapjoy_files.views.ticketingPrice', name='ticketingPrice'),
                        url(r'^invoices/search/$', 'yapjoy_files.views.ticket_search', name='ticketsearch'),
                        url(r'^eventdata/$', 'yapjoy_files.views.eventdata', name='eventdata'),
+                       url(r'^dashboard/$', 'yapjoy_files.views.dashboard', name='dashboard'),
+
                        )

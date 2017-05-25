@@ -5515,3 +5515,8 @@ def ticket_search(request):
             return HttpResponse(string)
     else:
         return HttpResponse('')
+
+@staff_member_required
+def dashboard(request):
+
+    return render(request,  "vendroid/CRM/dashboard.html")

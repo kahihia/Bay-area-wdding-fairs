@@ -3027,7 +3027,7 @@ def admin_login(request):
                     if user_auth.is_staff:
                         user_auth.backend = 'django.contrib.auth.backends.ModelBackend'
                         auth_login(request, user_auth)
-                        return HttpResponseRedirect('/crm/mediakit/')
+                        return HttpResponseRedirect('/crm/dashboard/')
                     InvalidDetails = "Only staff can login."
                 else:
                     InvalidDetails = "This account has been deavtivated."
