@@ -1052,7 +1052,7 @@ def media_kit(request):
                                     opening_remarks=opening_remarks
                                     )
             context = {
-                'message': "Dear %s, we have created a media kit, specially customized for you. <br /><br />Click on the following link to view it. My contact information is listed on the media kit. Please feel free to contact me with any questions. I will be following up with you in a few days.<br /><br /><a href='https://www.yapjoy.com/crm/mediakit/view/%s' target='_blank' class='btn'>Open Media Kit</a>" % (m_kit.vendor_name,
+                'message': "Dear %s, we have created a media kit, specially customized for you. <br /><br />Click on the following link to view it. My contact information is listed on the media kit. Please feel free to contact me with any questions. I will be following up with you in a few days.<br /><br /><a href='https://www.bayareaweddingfairs.com/crm/mediakit/view/%s' target='_blank' class='btn'>Open Media Kit</a>" % (m_kit.vendor_name,
                 m_kit.code),
                 'title': "Bay Area Wedding Fairs - Requested Media Kit",
             }
@@ -1071,7 +1071,7 @@ def media_kit(request):
 
 # @login_required(login_url="/login/")
 # @staff_member_required
-@is_permitted
+
 def media_kit_view(request, code):
     media_kit = get_object_or_404(MediaKit, code=code)
     if media_kit.status == MediaKit.PENDING:
@@ -1094,7 +1094,6 @@ def media_kit_view(request, code):
     })
 
 
-@is_permitted
 def media_kit_viewv2(request, code):
     media_kit = get_object_or_404(MediaKit, code=code)
     return render(request, 'vendroid/CRM/mediaKitTemplateV2.html', {
