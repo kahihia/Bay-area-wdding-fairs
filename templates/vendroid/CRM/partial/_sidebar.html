@@ -60,16 +60,16 @@
                     </li>
                 {% endif %}
 
-                {% if request|get_user_permissions:'/crm/invoices/interested/' %}
-
-                    <li{% if '/crm/invoices/contracted/' in request.path and not '/crm/invoices/interested/' in request.path %}class="active"{% elif '/crm/invoices/contracted_detail' in request.path %}class="active"{% endif %} >
-                        <a href="/crm/invoices/contracted/">
-                            <span class="menu-icon"><i class="fa fa-file-text"></i></span>
-                            <span class="menu-text">CONTRACTED EXHIBITOR</span>
-                            <span class="menu-badge"><span class="badge vd_bg-red"></span></span>
-                        </a>
-                    </li>
-                {% endif %}
+{#                {% if request|get_user_permissions:'/crm/invoices/interested/' %}#}
+{##}
+{#                    <li{% if '/crm/invoices/contracted/' in request.path and not '/crm/invoices/interested/' in request.path %}class="active"{% elif '/crm/invoices/contracted_detail' in request.path %}class="active"{% endif %} >#}
+{#                        <a href="/crm/invoices/contracted/">#}
+{#                            <span class="menu-icon"><i class="fa fa-file-text"></i></span>#}
+{#                            <span class="menu-text">CONTRACTED EXHIBITOR</span>#}
+{#                            <span class="menu-badge"><span class="badge vd_bg-red"></span></span>#}
+{#                        </a>#}
+{#                    </li>#}
+{#                {% endif %}#}
 
                 {% if request|get_user_permissions:'/crm/invoices/bulk/create/' %}
 
