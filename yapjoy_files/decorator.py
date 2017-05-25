@@ -5,16 +5,15 @@ from yapjoy_files.models import *
 
 
 def is_permitted(function):
-    """decorator for admin user
+    """decorator for sidebar permission
     
     :param function: 
     :return: 
     """
     def wrap(request, *args, **kwargs):
-        print "kwargs: ", kwargs,request.get_full_path
         user = User.objects.get(pk=request.user.id)
-        print "user: ", user
-        permission = UserPermissionPage.objects.filter(user=user, crmUrl__url_path=request.get_full_path, user_allowed=True)
+        permission = UserPermissionPage.objects.filter(user=user, crmUrl__url_path__icontains=request.get_full_path, user_allowed=True)
+
         if user.is_superuser:
             return function(request, *args, **kwargs)
         elif permission:

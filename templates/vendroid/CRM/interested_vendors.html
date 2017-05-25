@@ -5,29 +5,16 @@
 {% load humanize %}
 {% block content %}
     <style>
-        {#  th{#}
-        {#    font-size: 15px;#}
-        {#  }#}
-        {#  td{#}
-        {#    font-size: 10px;#}
-        {#    word-break: break-all;#}
-        {#  }#}
 
         .pagination{
             font-size:15px;
         }
 
         .dataTables_wrapper{
-        {#    width: 200px !important;#}
-        {#    max-width:200px;#}
             overflow-x: scroll;
         }
     </style>
 
-    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
-    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
-    {##}
-    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
     <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
     <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
@@ -35,18 +22,9 @@
     <script>
         $(function () {
             $('#id_wedding_date').datepicker();
-            {#            $("#id_wedding_date").datetimepicker({#}
-            {#             'showTimepicker': false,#}
-            {#            });#}
+
         });
     </script>
-
-    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
-
 
     <!-- Specific Page Scripts Put Here -->
 
@@ -88,11 +66,7 @@
                                         <div class="col-md-12">
                                             <div class="panel widget">
                                                 <div class="panel-body">
-                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
-                                                    {#                    <ul class="nav nav-tabs">#}
-                                                    {##}
-                                                    {##}
-                                                    {#                    </ul>#}
+
                                                     <br>
                                                     <div class="tab-content mgbt-xs-20">
                                                         {% if successMessage %}
@@ -108,17 +82,7 @@
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
-                                                                        {#                                                  <div class="col-md-6">#}
-                                                                        {#                                                      <form action="" method="post" id="searchForm">#}
-                                                                        {#                                                          {% csrf_token %}#}
-                                                                        {#                                                          <input#}
-                                                                        {#                                                                  {% if initial_word %}value="{{ initial_word }}"{% endif %}#}
-                                                                        {#                                                                  id="search" style="width: 50%; margin-right: 10px;" name="search" {% if email_sent %}value="{{ email_sent }}"{% endif %} class="pull-left form-control" placeholder="email" />#}
-                                                                        {#                                                      <button class="btn vd_btn btn-brown pull-left" id="search-btn" type="submit"  >ADD INTERESTED VENDOR</button>#}
-                                                                        {#                                                      </form>#}
-                                                                        {#                                                  </div>#}
 
-                                                                        {#                                                  <a class="btn vd_btn pull-right btn-brown" target="_blank" href="http://bayareaweddingfairs.com/vendor-registration-yj/" style="margin-bottom: 20px;">ADD EXHIBITOR</a>#}
                                                                         <a class="btn vd_btn pull-right btn-brown" href="/crm/local/invoices/addition/iframe/" style="margin-bottom: 20px;">ADD RECORD</a>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -161,7 +125,6 @@
 
 
                                                                         <div class="col-md-6" style="margin-top: 10px;">
-                                                                            {#                                                  <div class="row">#}
                                                                             <form action="" class="" method="post">
                                                                                 {% csrf_token %}
                                                                                 <input name="export_all" id="export_all"
@@ -178,7 +141,6 @@
                                                                                 </button>
 
                                                                             </form>
-                                                                            {#                                              </div>#}
                                                                         </div>
                                                                         <div class="clearfix"></div>
                                                                         {% if events %}
@@ -210,58 +172,23 @@
                                                                                             <th>
                                                                                                 Business Category
                                                                                             </th>
-                                                                                            {#                                                                  <th>Event Registered#}
-                                                                                            {#                                                                  </th>#}
                                                                                             <th>
                                                                                                 Created at
                                                                                             </th>
-                                                                                            {#                                                      <th>#}
-                                                                                            {#                                                          Status#}
-                                                                                            {#                                                      </th>#}
-                                                                                            {#                                                                  <th>#}
-                                                                                            {#                                                                      Invoices#}
-                                                                                            {#                                                                  </th>#}
-
-                                                                                            {#                                                                  <th>#}
-                                                                                            {#                                                                      Sales#}
-                                                                                            {#                                                                  </th>#}
                                                                                         </tr>
                                                                                         </thead>
 
                                                                                         <tbody>
-                                                                                        {#                                                              {% autopaginate events 10 %}#}
                                                                                         {% for event in events %}
                                                                                             <tr role="row" class="gradeA odd">
-                                                                                                {#                                                          <td>{{ event.id }}</td>#}
                                                                                                 <td><a target="_blank" href="{% url "interested_contractor_detail" event.id %}" style="color:dodgerblue">{{ event.name }}</a></td>
                                                                                                 <td>{{ event.business_name }}</td>
                                                                                                 <td>{{ event.phone }}</td>
                                                                                                 <td>{{ event.email }}</td>
                                                                                                 <td>{{ event.category }}</td>
-                                                                                                {#                                                                      <td>{% for event_ob in event.event.all %}{{ event_ob.name }}<br />{% endfor %}</td>#}
                                                                                                 <td>{{ event.created_at|date:"Y-m-d" }}</td>
-                                                                                                {#                                                          <td>{{ event.status }}</td>#}
-                                                                                                {#                                                                      <td><a href="{%  url "event_invoice_detail" event.id   %}" class="btn vd_btn btn-brown">View invoice</a></td>#}
-                                                                                                {#                                                                      <td>{% if event.sales  %}#}
-                                                                                                {#                                                                            <div class="salesNow">{{event.sales.get_full_name }}</div>#}
-                                                                                                {#                                                                          {% else %}#}
-                                                                                                {#                                                                            No sales#}
-                                                                                                {#                                                                          {% endif %}#}
-                                                                                                {#                                                              <a onclick="chooseSales({{ event.id }})" class="btn vd_btn btn-brown">Assign To</a>#}
-                                                                                                {#                                                                          <div class="dropdown">#}
-                                                                                                {#                                                                              <button class="btn vd_btn btn-brown dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Assign Sales#}
-                                                                                                {#                                                                              <span class="caret"></span></button>#}
-                                                                                                {#                                                                              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">#}
-                                                                                                {#                                                                                  {% for sales in salesCandidates %}#}
-                                                                                                {#                                                                                    <li role="presentation"><a role="menuitem" onclick="chooseSales({{ event.id}}, {{sales.id}});">{{ sales.get_full_name }}</a></li>#}
-                                                                                                {#                                                                                  {% endfor %}#}
-                                                                                                {#                                                                              </ul>#}
-                                                                                                {#                                                                            </div>#}
-                                                                                                {#                                                                      </td>#}
-                                                                                                {#                                                          <td><a href="/crm/invoices/edit/{{ event.id }}" class="btn vd_btn btn-brown">Edit invoice</a></td>#}
                                                                                             </tr>
                                                                                         {% endfor %}
-                                                                                        {#                                                              {% paginate %}#}
                                                                                         </tbody>
 
                                                                                     </table>
@@ -307,7 +234,6 @@
                     <!-- .vd_container -->
                 </div>
                 <!-- .vd_container -->
-                {#                </div>#}
                 <!-- .vd_content-wrapper -->
 
                 <!-- Middle Content End -->
@@ -351,7 +277,6 @@
             window.href = '/crm/search';
         });
         function chooseSales(wpID, salesID){
-            {#            console.log("convert"+id);#}
             $.ajax({
                 url: '/crm/invoices/interested_detail/'+wpID+'/',
                 type: 'post', // http method
@@ -361,13 +286,7 @@
                     var sales = response['sales'];
                     console.log('success', sales);
                     $('.salesNow').html(sales);
-                    {#                    $('#contractorDetail').html(response);#}
-                    {#                    $('#contractorDetail').modal('show');#}
-                    {#                    $('#editTaskFormModal').dialog({#}
-                    {#                       height:500,#}
-                    {#                       width:500,#}
-                    {#                       modal:true#}
-                    {#                   });#}
+
                 },
 
                 error: function (xhr, errmsg, err) {
@@ -376,54 +295,12 @@
             });
         };
 
-        {#    $('#search').on('keyup',function () {#}
-        {#        $('#search-btn').text('Searching');#}
-        {#        $.ajax({#}
-        {#                url: '',#}
-        {#                type: 'post', // http method#}
-        {#                data:$('#searchForm').serialize(),#}
-        {##}
-        {#                success: function (response) {#}
-        {#                   alert(response)#}
-        {#                    if(response=='success'){#}
-        {#                        $('#search-btn').removeAttr('disabled','disabled')#}
-        {#                        $('#search-btn').text('ADD INTERESTED VENDOR')#}
-        {#                    }else{#}
-        {#                        $('#search-btn').attr('disabled','disabled')#}
-        {#                        $('#search-btn').text('NO RESULTS FOUND')#}
-        {#                    }#}
-        {##}
-        {#                },#}
-        {##}
-        {#                error: function (xhr, errmsg, err) {#}
-        {#                   console.log("fail Convert to Contracted Vendor "+errmsg+" "+err);#}
-        {#                }#}
-        {#            });#}
-        {#    })#}
     </script>
     <script>
         $(function() {
-            {#    var name = $("#id_email").val();#}
-            var tags = [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ];
             $("#search, #search2").autocomplete({
-                {#        source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]#}
                 source: "/api/bawf/crm/interestedeventslist/autocomplete/",
-                {#        minLength: 2,#}
-                {#        select: function(event, ui) {#}
-                {#            var url = ui;#}
-                {#            alert(ui)#}
-                {#            $("#id_email").val('')#}
-                {#            if(url != '#') {#}
-                {#                location.href = '/crm/invoices/bulk/create/' + url;#}
-                {#            }#}
-                {#        },#}
 
-                {#        html: true, // optional (jquery.ui.autocomplete.html.js required)#}
-
-                // optional (if other layers overlap autocomplete list)
-                {#        open: function(event, ui) {#}
-                {#            $(".ui-autocomplete").css("z-index", 1000);#}
-                {#        }#}
             });
 
         });
@@ -434,7 +311,6 @@
 
     <script>
         $('#data-tables').dataTable({
-            {#        "aoColumns": [{"iDataSort": 6}],#}
             {% if view_all %}
                 "iDisplayLength": -1,
                 "aLengthMenu": [[10, 15, 25, 35, 50, 100, -1], [10, 15, 25, 35, 50, 100, "All"]],
@@ -444,9 +320,6 @@
             {% endif %}
             "aaSorting": [[ 5, 'desc' ]],
 
-            {#            "columnDefs": [#}
-            {#                { "type": "datetime-moment", targets: 6 }#}
-            {#            ]#}
         });
     </script>
 

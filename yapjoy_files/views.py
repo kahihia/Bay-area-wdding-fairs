@@ -25,6 +25,7 @@ from yapjoy_files.decorator import is_permitted
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def crm(request):
     user = request.user
@@ -167,6 +168,7 @@ def crm(request):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def event_management(request):
     user = request.user
@@ -197,6 +199,7 @@ import json
 from yapjoy_registration.commons import id_generator
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def invoice_add(request, id):
     user = request.user
     successMessage = None
@@ -243,6 +246,7 @@ def invoice_add(request, id):
 from yapjoy_registration.models import Company
 @login_required(login_url='/crm/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def event_management(request):
     user = request.user
@@ -770,6 +774,7 @@ def event_management_iframe(request):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def event_management_iframe_local(request):
     # user = request.user
@@ -975,6 +980,7 @@ def choose_season(event):
 
 @login_required(login_url="/login/")
 @staff_member_required
+@is_permitted
 def event_invoice(request):
     user = request.user
     events = Register_Event.objects.all()
@@ -1065,6 +1071,7 @@ def media_kit(request):
 
 # @login_required(login_url="/login/")
 # @staff_member_required
+@is_permitted
 def media_kit_view(request, code):
     media_kit = get_object_or_404(MediaKit, code=code)
     if media_kit.status == MediaKit.PENDING:
@@ -1087,6 +1094,7 @@ def media_kit_view(request, code):
     })
 
 
+@is_permitted
 def media_kit_viewv2(request, code):
     media_kit = get_object_or_404(MediaKit, code=code)
     return render(request, 'vendroid/CRM/mediaKitTemplateV2.html', {
@@ -1095,6 +1103,7 @@ def media_kit_viewv2(request, code):
 
 @login_required(login_url="/login/")
 @staff_member_required
+@is_permitted
 def event_invoice_bulk(request):
     user = request.user
     invoices = BulkInvoices.objects.all()
@@ -1106,6 +1115,7 @@ from dateutil import parser
 from datetime import timedelta
 @login_required(login_url="/crm/login/")
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def event_invoice_bulk_create(request):
     form = InvoiceCreationBulkForm()
@@ -2117,6 +2127,7 @@ import csv as csv_import
 from yapjoy.settings import MEDIA_URL, BASE_DIR
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def invoices_data(request):
     user = request.user
     successMessage = None
@@ -2191,6 +2202,7 @@ def invoices_data(request):
 from django.shortcuts import get_object_or_404
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def invoices_data_view(request, id):
     try:
         events = csvUpload.objects.get(id=id)
@@ -2379,6 +2391,7 @@ def CSVBuyiFrameCoin(request, id):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def invoices_data_purchase(request):
     user = request.user
     successMessage = None
@@ -2464,6 +2477,7 @@ def save_file(name):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def event_invoice_detail(request, id):
     user = request.user
     invoices = None
@@ -2480,6 +2494,7 @@ def event_invoice_detail(request, id):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def event_invoice_edit_detail(request, id):
     user = request.user
     invoices = None
@@ -2524,6 +2539,7 @@ def event_invoice_edit_detail(request, id):
 from django.contrib.auth import authenticate, logout, login as auth_login
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def crm_view_agreement(request, code):
     user = request.user
     invoices = None
@@ -2619,6 +2635,7 @@ def crm_view_complete_agreement(request, code):
 from django.contrib.auth import authenticate, logout, login as auth_login
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def event_invoice_accept(request, code):
     user = request.user
     invoices = None
@@ -2642,6 +2659,7 @@ def event_invoice_accept(request, code):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def event_invoice_accept_bulk(request, code):
     user = request.user
     invoices = None
@@ -2666,6 +2684,7 @@ def event_invoice_accept_bulk(request, code):
 import stripe
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def event_invoice_pay(request, id):
     user = request.user
     profile = user.userprofile
@@ -2714,6 +2733,7 @@ def event_invoice_pay(request, id):
 import stripe
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def event_invoice_deposit_pay(request, id, code):
     user = request.user
     profile = user.userprofile
@@ -2840,6 +2860,7 @@ def event_invoice_deposit_pay(request, id, code):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 def event_invoice_pay_bulk(request, id):
     user = request.user
     profile = user.userprofile
@@ -2892,6 +2913,7 @@ def event_invoice_pay_bulk(request, id):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def invoice(request):
     user = request.user
@@ -2906,6 +2928,7 @@ from django.shortcuts import HttpResponse
 from django.template import RequestContext, loader
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def FileLoading(request):
     #For administrators only
@@ -3173,6 +3196,7 @@ def ViewWpForm(request):
 
 @login_required(login_url="/crm/login/")
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def interested_contractor(request):
     user = request.user
@@ -3219,13 +3243,8 @@ def interested_contractor(request):
         elif "export_all" in request.POST:
             print 'viewpost'
             output = []
-            # event_selected = request.POST.get('csv_export_all', None)
-            # csv_export_id = request.POST.get('csv_export_id', None)
-            # print 'csv_export_all: ', event_selected, csv_export_id
             response = HttpResponse(content_type='text/CSV')
             response['Content-Disposition'] = 'attachment;filename=export.csv'
-            # response.ContentType = "application/CSV";
-            # response.AddHeader("Content-Disposition", "attachment;records.csv");
             writer = csv.writer(response)
             search_list = []
             query_set = []
@@ -3246,12 +3265,6 @@ def interested_contractor(request):
                     email = "N/A"
                     if data.email:
                         email = unicodedata.normalize('NFKD', data.email).encode('ascii', 'ignore')
-                    # name = "N/A"
-                    # if data.name:
-                    #     name = unicodedata.normalize('NFKD', data.name).encode('ascii', 'ignore')
-
-                    # unicodedata.normalize('NFKD', title).encode('ascii', 'ignore')
-                    # 'first_name','last_name','user__email','amount','frequency','donate_as','phone','occupation','address','city','state','zip'
                     output.append([name, business_name, email, str(data.created_at)])
                 writer.writerows(output)
                 return response
@@ -3261,7 +3274,7 @@ def interested_contractor(request):
     else:
         events = Register_Event_Interested.objects.select_related('user').all().filter(
             ~Q(type=Register_Event_Interested.BGUSER)).exclude(status=Register_Event_Interested.REMOVED).order_by('-created_at')
-    # print events
+
     if "viewall" in request.POST:
         view_all = True
     elif "view_my_leads" in request.POST:
@@ -3277,6 +3290,7 @@ def interested_contractor(request):
 
 @login_required(login_url="/login/")
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def events_based_list_bg(request):
     # user = request.user
@@ -3387,6 +3401,7 @@ def events_based_list_bg(request):
 
 @login_required(login_url="/login/")
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def events_based_list(request):
     email_sent = None
@@ -3510,6 +3525,7 @@ def events_based_list(request):
 from django.db.models import Sum
 @login_required(login_url="/login/")
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def commission(request):
     # user = request.user
@@ -3559,6 +3575,7 @@ def commission(request):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def interested_contractor_detail(request, id):
     user = request.user
@@ -4013,6 +4030,7 @@ def interested_contractor_detail(request, id):
 
 @login_required(login_url="/crm/login/")
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def contracted_contractor(request):
     wps = None
@@ -4049,6 +4067,7 @@ def contracted_contractor(request):
 
 @login_required(login_url='/crm/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def contracted_contractor_detail(request, id):
     pass_id = id
@@ -4430,6 +4449,7 @@ def contracted_contractor_detail(request, id):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def bride_detail(request, id):
     pass_id = id
@@ -4570,6 +4590,7 @@ from yapjoy_registration.models import Company
 # @staff_member_required
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def bg_management_dev(request):
     # user = request.user
@@ -4943,6 +4964,7 @@ Please convert to iFrame
 from yapjoy_registration.models import Company
 # @login_required(login_url='/login/')
 # @staff_member_required
+@is_permitted
 @csrf_exempt
 def LasVegasReg(request):
     # user = request.user
@@ -5029,6 +5051,7 @@ def LasVegasReg(request):
 
 @login_required(login_url="/login/")
 @staff_member_required
+@is_permitted
 def interested_bg(request):
     # user = request.user
     bgUsers = Register_Event.objects.select_related('event').filter(type=Register_Event.BGUSER).exclude(status=Register_Event.REMOVED).order_by('-created_at')
@@ -5232,6 +5255,7 @@ def EventList_bg_CSV(request):
 
 @login_required(login_url='/login/')
 @staff_member_required
+@is_permitted
 @csrf_exempt
 def TasksList(request):
 
