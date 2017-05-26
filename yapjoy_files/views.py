@@ -3343,14 +3343,14 @@ def events_based_list_bg(request):
         print 'query set: ',query_set
         if query_set:
             print 'In query set: ',query_set.count()
-            writer.writerow(['Bride Name','Email','City','Zip','Phone','Wedding Date','How Heard','Wedding Professional Interested in','Comments','Show','Created At'])
+            writer.writerow(['Bride Name','Email','City','Zip','Phone','Wedding Date','How Heard','Wedding Professional Interested in','Show','Created At'])
             for data in query_set:
-                print [data.name, data.email,data.city,data.zip, data.phone, data.weddingDate, data.how_heard, ["".join("%s "%(str(x.category))) for x in data.categories.all()],data.comments ,"%s - %s"%(data.event.name, data.event.date), data.created_at]
+                # print [data.name, data.email,data.city,data.zip, data.phone, data.weddingDate, data.how_heard, ["".join("%s "%(str(x.category))) for x in data.categories.all()],data.comments ,"%s - %s"%(data.event.name, data.event.date), data.created_at]
                 cat = ""
                 for c in data.categories.all():
                     cat += "%s "%(c.category)
                 # 'first_name','last_name','user__email','amount','frequency','donate_as','phone','occupation','address','city','state','zip'
-                output.append([data.name, data.email,data.city,data.zip, data.phone, "%s"%(data.weddingDate.date() if data.weddingDate else 'N/A'), data.how_heard, cat,data.comments ,"%s - %s"%(data.event.name, data.event.date), data.created_at.date()])
+                output.append([data.name, data.email,data.city,data.zip, data.phone, "%s"%(data.weddingDate.date() if data.weddingDate else 'N/A'), data.how_heard, cat ,"%s - %s"%(data.event.name, data.event.date), data.created_at.date()])
             writer.writerows(output)
             return response
 
