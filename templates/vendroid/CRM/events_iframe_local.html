@@ -6,14 +6,8 @@
 {% block content %}
     <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
-    <script type="text/javascript"
-            src="https://raw.githubusercontent.com/igorescobar/jQuery-Mask-Plugin/master/src/jquery.mask.js"></script>
-    <script>
-        $(function () {
-            $('#id_wedding_date').datepicker();
-            $('#id_phone').mask('(000) 000-0000');
-        });
-    </script>
+
+
     <style>
         .red {
             color: red;
@@ -78,7 +72,7 @@
 
                                                            <form class="form-horizontal" action="." method="post"
                                                                   role="form">
-{#                                                                {% csrf_token %}#}
+                                                                {% csrf_token %}
                                                                 <div class="clearfix"></div>
                                                                 <div class="col-sm-12">
                                                                     <div class="form-group col-md-12">
@@ -416,11 +410,18 @@
 
 {% endblock content %}
 {% block script %}
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     {% if is_completed %}
          <script>
              notification("topright","success","fa fa-check-circle vd_green","Vendor Added.","Record successfully added.");
          </script>
+
     {% endif %}
+    <script>
+        $(function () {
+            $('#id_wedding_date').datepicker();
+            $('#id_phone').mask('(000) 000-0000');
+        });
+    </script>
 
 {% endblock script %}
