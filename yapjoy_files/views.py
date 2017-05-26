@@ -777,16 +777,6 @@ def event_management_iframe(request):
 @is_permitted
 @csrf_exempt
 def event_management_iframe_local(request):
-    # user = request.user
-    # profile = user.userprofile
-    # initial = {
-    #     'name':'%s'%(user.get_full_name()),
-    #     'phone':profile.phone,
-    #     'email':user.email,
-    #     'city':profile.city,
-    #     'zip':profile.zip,
-    #     'business_name':profile.userprofile_company.name,
-    # }
     is_completed = None
     error_message = None
     eventsIDList = None
@@ -794,10 +784,7 @@ def event_management_iframe_local(request):
     eventsCheck = None
     how_heard = None
     form = registration_event_form()
-
-
     if request.method == "POST":
-        print "inside post"
         form = registration_event_form(request.POST)
         eventsIDList = request.POST.getlist('eventsCheck')
         how_heard = request.POST.get('how_heard')
@@ -808,21 +795,11 @@ def event_management_iframe_local(request):
         else:
             eventsCheck = "Select an event atleast"
         if form.is_valid():
-            print 'form is valid'
             data = form.cleaned_data
 
             print data
 
             if eventsIDList:
-                # for e in events:
-                #     try:
-                #         eventget = request.POST.get('id_event_'+e.id)
-                #     except:
-                #         eventget = ""
-                #         print "get none", 'id_event_'+e.id, e.name, e.date
-                #
-                #     print eventget
-
                 name = data['name']
                 business_name = data['business_name']
                 phone = data['phone']
@@ -834,9 +811,6 @@ def event_management_iframe_local(request):
                 category = data['category']
                 categories = data['categories']
                 website = data['website']
-                # event = data['event']
-
-                print category, how_heard
                 user_reg = None
                 try:
                     user_reg = User.objects.get(email__iexact=email)
@@ -847,8 +821,6 @@ def event_management_iframe_local(request):
                     profile.save()
                     company = Company.objects.create(userprofile=profile, name=business_name)
                 event_name = ""
-
-                # admin_user = User.objects.get(username__iexact="administrator")
                 reg = Register_Event_Interested.objects.create(
                                                         user=user_reg,
                                                         name=name,
@@ -866,28 +838,7 @@ def event_management_iframe_local(request):
                                                         )
                 for eID in eventsIDList:
                     event = Event_fairs.objects.get(id=eID)
-                    print event.name, event.date
                     reg.event.add(event)
-                    # try:
-                    #     regs = Register_Event.objects.filter(event=event, email=user_reg.email)
-                    #     reg = regs[0]
-                    #     reg.user=admin_user,
-                    #     reg.name=name,
-                    #     reg.buser.usiness_name=business_name,
-                    #     reg.phone=phone,
-                    #     reg.email=user_reg.email,
-                    #     reg.city=city,
-                    #     reg.zip=zip,
-                    #     reg.comments=comments,
-                    #     reg.how_heard=how_heard,
-                    #     reg.category=category,
-                    #     reg.event=event,
-                    #     reg.type=Register_Event.BGUSER,
-                    #     reg.save()
-                    # except:
-
-
-
                     event_name += "%s<br />"%(event.name)
                 message2 = """<b>Fullname</b> : %s<br /><br />
                         <b>Email</b> : %s<br /><br />
@@ -901,54 +852,21 @@ def event_management_iframe_local(request):
                         <b>How did you hear about us</b> : %s<br /><br />
                         <b>Comments</b> : %s"""%(name, user_reg.email, phone, city, zip, category, business_name, event_name, how_heard, comments)
                 send_bawf_email(sendTo="info@bayareaweddingfairs.com", message=message2, title="Registered Vendor Information:", subject="A NEW VENDOR HAS REGISTERED")
-                # Invoice_Event.objects.create(registered_event=reg, user=user)
-                print 'created'
-                # message = "Thank you for registering with Bay Area Wedding Fairs. We will get back to you soon.<br /><br />LOOKING FOR MORE WEDDING BUSINESS?? Try our new Wedding Planning Platform <a href='https://www.yapjoy.com/'>YAPJOY</a>.<br /><br />If you have any questions, please email us directly at <a href='mailto:info@bayareaweddingfairs.com'>info@bayareaweddingfairs.com</a><br /><br />Thank You!<br /><br />Bay Area Wedding Fairs"
-                # send_bawf_email(sendTo=user_reg.email, message=message, title="", subject="Registration Successful!")
                 is_completed = True
                 form = registration_event_form()
-                # return HttpResponseRedirect('/crm/invoices/addition/success/iframe/')
             else:
                 error_message = "Select an event atleast"
-
-
     #coverging events by season
     events = Event_fairs.objects.filter(Q(Q(date__gte=datetime.now())& ~Q(name="Las Vegas GiveAway"))|Q(id=42))
-    # spring_events = []
-    # summer_events = []
-    # fall_events = []
-    # winter_events = []
-    # for event in events:
-    #     season = choose_season(event)
-    #     # print event.name, event.date, event.date.month, season
-    #
-    #     if season == 'Spring':
-    #         spring_events.append(event)
-    #     elif season == 'Summer':
-    #         summer_events.append(event)
-    #     elif season == 'Fall':
-    #         fall_events.append(event)
-    #     elif season == 'Winter':
-    #         winter_events.append(event)
-    #     else:
-    #         print "Season is wrong", event.date
-
     content = {
         'form':form,
         'events':events,
-        # 'spring_events': spring_events,
-        # 'summer_events':summer_events,
-        # 'fall_events':fall_events,
-        # 'winter_events':winter_events,
         'error_message':error_message,
         'eventsIDList':inteventsIDList,
         'eventsCheck':eventsCheck,
         'is_completed':is_completed,
         'how_heard': how_heard,
-
     }
-
-    # template_name = 'vendroid/CRM/events_iframe_local.html'
     return render(request, 'vendroid/CRM/events_iframe_local.html', content)
 
 
