@@ -25,7 +25,7 @@ urlpatterns = patterns('',
                        url(r'^bridegroom/bg/promolist/$', 'yapjoy_files.views.promocodelist_bg', name='promocode_bg'),
                        url(r'^bridegroom/bg/promo/populate/(?P<id>.+)/$', 'yapjoy_files.views.populate_Promocode_bg', name='edit_Promocode_bg'),
                        url(r'^bridegroom/bg/promo/edit/$', 'yapjoy_files.views.edit_Promocode_bg', name='edit_Promocode_bg'),
-                       url(r'^LasVegasReg/$', 'yapjoy_files.views.LasVegasReg', name='LasVegasReg'),
+                       # url(r'^LasVegasReg/$', 'yapjoy_files.views.LasVegasReg', name='LasVegasReg'),
                        # new Search for bride & grooms, contracted vendors and interested vendors
                        url(r'^search/$', 'yapjoy_files.views.search', name='search'),
                        url(r'^searchcontracted/$', 'yapjoy_files.views.search_contracted', name='search_contracted'),
