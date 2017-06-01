@@ -1,39 +1,13 @@
-{% extends "base_bawf_blank.html" %}
+{% extends "vendroid/base_bawf.html" %}
 {% load pagination_tags %}
 {% load static %}
 {% load myfilters %}
 {% load humanize %}
 {% block content %}
-    {#    <script src="{% static "js/bootstrap.min.js" %}"></script>#}
-    {#    <script src="{% static "js/jquery-ui.min.js" %}"></script>#}
-    {##}
-    {#    <script src="{% static "vendroid/plugins/daterangepicker/daterangepicker.js" %}"></script>#}
     <link href={% static "css/jquery.datetimepicker.css" %} rel="stylesheet" type="text/css" media="all"/>
-{#    <link href={% static "css/chosen.css" %} rel="stylesheet" type="text/css" media="all"/>#}
     <script type="text/javascript" src="{% static "js/jquery.datetimepicker.js" %}"></script>
-    <script type="text/javascript"
-            src="https://raw.githubusercontent.com/igorescobar/jQuery-Mask-Plugin/master/src/jquery.mask.js"></script>
-    <script>
-        $(function () {
-            $('#id_wedding_date').datepicker();
-            $('#id_phone').mask('(000) 000-0000');
-
-            {#            $("#id_wedding_date").datetimepicker({#}
-            {#             'showTimepicker': false,#}
-            {#            });#}
-        });
-    </script>
-
-    {#    <link href="{% static "vendroid/plugins/tagsInput/jquery.tagsinput.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-switch/bootstrap-switch.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" %}" rel="stylesheet" type="text/css">#}
-    {#    <link href="{% static "vendroid/plugins/colorpicker/css/colorpicker.css" %}" rel="stylesheet" type="text/css">#}
 
 
-    <!-- Specific Page Scripts Put Here -->
-
-{#    <script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>#}
     <style>
         .red {
             color: red;
@@ -70,11 +44,6 @@
                                         <div class="col-md-12">
                                             <div class="panel widget" style="margin:0px;">
                                                 <div class="panel-body" style="min-height: 1056px;">
-                                                    {#                    <h2>Nav <span class="font-semibold">Tabs</span></h2>#}
-                                                    {#                    <ul class="nav nav-tabs">#}
-                                                    {##}
-                                                    {##}
-                                                    {#                    </ul>#}
                                                     <br>
 
                                                     <div class="tab-content mgbt-xs-20">
@@ -97,14 +66,13 @@
                                                                 <div class="clearfix"></div>
                                                                 <br/>
 
-                                                                <img src="http://bayareaweddingfairs.com/wp-content/themes/wedding-wp/images/rose/floral.png"/>
-                                                                <h3 style="color: #ba8c00;">APPLY NOW TO BECOME AN EXHIBITOR</h3>
+                                                                <h3 style="color: #26B8F3;">ADD AN EXHIBITOR</h3>
                                                                 <hr/>
                                                             </div>
 
                                                            <form class="form-horizontal" action="." method="post"
                                                                   role="form">
-{#                                                                {% csrf_token %}#}
+                                                                {% csrf_token %}
                                                                 <div class="clearfix"></div>
                                                                 <div class="col-sm-12">
                                                                     <div class="form-group col-md-12">
@@ -383,7 +351,7 @@
                                                                     <div align="center">
                                                                         <input id="notification_sig"
                                                                                name="notification_sig" hidden="hidden"/>
-                                                                        <button style="background-color: #DAA520 !important;margin-top: 10px;"
+                                                                        <button style="background-color: #26B8F3 !important;margin-top: 10px;"
                                                                                 type="submit"
                                                                                 class="btn vd_btn vd_bg-green">
                                                                             <span class="menu-icon"><i
@@ -433,23 +401,6 @@
 
         <!-- .content -->
 
-{#        <!-- Footer Start -->#}
-{#        <footer class="footer-1" id="footer">#}
-{#            <div class="vd_bottom ">#}
-{#                <div class="container">#}
-{#                    <div class="row">#}
-{#                        <div class=" col-xs-12">#}
-{#                            <div class="copyright">#}
-{#                                Copyright &copy;2015 YapJoy Inc. All Rights Reserved#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <!-- row -->#}
-{#                </div>#}
-{#                <!-- container -->#}
-{#            </div>#}
-{#        </footer>#}
-{#        <!-- Footer END -->#}
 
 
     </div>
@@ -459,11 +410,18 @@
 
 {% endblock content %}
 {% block script %}
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     {% if is_completed %}
          <script>
              notification("topright","success","fa fa-check-circle vd_green","Vendor Added.","Record successfully added.");
          </script>
+
     {% endif %}
+    <script>
+        $(function () {
+            $('#id_wedding_date').datepicker();
+            $('#id_phone').mask('(000) 000-0000');
+        });
+    </script>
 
 {% endblock script %}

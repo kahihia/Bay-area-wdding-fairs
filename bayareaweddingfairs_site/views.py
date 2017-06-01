@@ -28,7 +28,7 @@ def Index(request):
             'itemsList': shopItemList
         }
         vendorShopsList.append(vendorShop)
-    events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
+    events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False).order_by('date')
     events = sort_months(events_list)
     context = {
         'vendorShops': vendorShops,
@@ -113,7 +113,7 @@ def OurShows(request):
                         'response':'failed',
                         'message':'You are already subscribed for notifications.',
                     }))
-    events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False)
+    events_list = Event_fairs.objects.filter(date__gte=datetime.now(), is_expired=False).order_by('date')
     events = sort_months(events_list)
     return render(request, "bayareaweddingfairs/site/ourShows/ourShows.html", {
         'events':events,
