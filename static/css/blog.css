@@ -1,0 +1,94 @@
+h1 a{
+    color: #10be0f;
+    font-family: 'Lobster';
+
+}
+
+/* custom css made */
+.panel-primary > .panel-heading{
+    background: none;
+    background-color: #197929 !important;
+    border-color: #197929;
+}
+
+.panel-primary{
+    border-color: #197929;
+}
+
+.btn-primary{
+    background: none;
+    background-color: #197929 !important;
+}
+.comment {
+    margin: 20px 0px 20px 20px;
+}
+
+h2 a{
+
+    color: #5282be;
+    font-family: 'Lobster';
+
+}
+
+body{
+
+    padding-left: 15px;
+
+}
+
+.page-header{
+    background-color: #197929;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active{
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #197929;
+}
+
+.content{
+    margin-left: 40px;
+}
+
+.date{
+    color: #5282be;
+}
+
+.save{
+    float: right;
+
+}
+
+.post-form textarea, .post-form input{
+    width: 100%;
+
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited{
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
+
+.post{
+    margin-bottom: 70px;
+
+
+}
+
+.post h1 a, .post h1 a:visited {
+    color: #000000;
+    color:#197929;
+    /*color:#f5f5f5*/
+}
+
+.comment {
+    margin: 20px 0px 20px 20px;
+}

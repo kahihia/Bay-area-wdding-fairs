@@ -3,11 +3,17 @@ from bayareaweddingfairs_blogs.models import *
 # Register your models here.
 
 
-# class EventFairsDetailsAdmin(admin.ModelAdmin):
-#     list_display = ['id', 'eventFair', 'eventUpdate', 'created_at']
-#     search_fields = ['eventFair', 'eventUpdate']
+class PostsModelAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'post_slug': ('title',)}
+    list_display = ['title', 'post_slug', 'text', 'img']
 
-admin.site.register(PostModel)
-admin.site.register(CategoryModel)
+
+class CategoryModelAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'category_slug': ('category_title',)}
+
+admin.site.register(PostModel, PostsModelAdmin)
+admin.site.register(CategoryModel,CategoryModelAdmin)
+
+
 admin.site.register(CommentModel)
 

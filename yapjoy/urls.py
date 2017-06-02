@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
     url(r'^crm/', include('yapjoy_files.urls')),
     url(r'^', include('bayareaweddingfairs_site.urls')),
+    url(r'^blog/', include('bayareaweddingfairs_blogs.urls')),
     # url(r'^$',  'yapjoy_registration.views.redirect_view_select'),
 
     # url(r'^', include('yapjoy_events.urls')),
@@ -79,8 +80,8 @@ urlpatterns += patterns('', (
     {'document_root': settings.STATIC_ROOT}
 ))
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('',
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    )
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns += patterns('',
+#         url(r'^__debug__/', include(debug_toolbar.urls)),
+#     )
