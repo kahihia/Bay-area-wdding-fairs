@@ -3492,8 +3492,8 @@ def commission(request):
 
 @login_required(login_url='/login/')
 @staff_member_required
-@is_permitted
 @csrf_exempt
+@is_permitted
 def interested_contractor_detail(request, id):
     user = request.user
     noteForm = contractor_detail_note_form()
